@@ -4,158 +4,480 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Testează gratuit | SVT Energy Navigator</title>
-  <meta name="description" content="Alege întrebarea care te interesează cel mai mult și începe gratuit analiza SVT Energy Navigator." />
+  <meta name="description" content="Alege analiza dorită și începe gratuit SVT Energy Navigator." />
   <link rel="stylesheet" href="./styles.css" />
-  <link rel="stylesheet" href="./trial-v29.css" />
+
+  <style>
+    /* v29.5 FORCE SELF-CONTAINED TRIAL PAGE — nu depinde de trial-v29.css */
+    body.trial-force-page {
+      margin: 0 !important;
+      min-height: 100vh !important;
+      background:
+        radial-gradient(circle at 64% 36%, rgba(7, 148, 63, .09), transparent 28%),
+        radial-gradient(circle at 15% 92%, rgba(7, 148, 63, .07), transparent 24%),
+        #fbfdfc !important;
+      color: #071826 !important;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+      overflow-x: hidden !important;
+    }
+
+    body.trial-force-page::after {
+      content: "";
+      position: fixed;
+      left: -80px;
+      right: -80px;
+      bottom: -105px;
+      height: 230px;
+      pointer-events: none;
+      opacity: .26;
+      background: repeating-radial-gradient(ellipse at center, rgba(7,148,63,.18) 0 1px, transparent 1px 8px);
+      mask-image: linear-gradient(to top, #000, transparent 72%);
+      transform: skewY(-3deg);
+      z-index: 0;
+    }
+
+    .trial-force-shell {
+      position: relative;
+      z-index: 1;
+      width: min(1180px, calc(100% - 64px));
+      min-height: calc(100vh - 56px);
+      margin: 28px auto;
+      display: grid;
+      grid-template-columns: minmax(360px, 0.92fr) minmax(470px, 560px);
+      grid-template-rows: 1fr auto;
+      gap: 28px 58px;
+      align-items: center;
+    }
+
+    .trial-force-left {
+      padding-bottom: 34px;
+    }
+
+    .trial-force-kicker {
+      margin: 0 0 18px;
+      color: #07943f;
+      font-size: 16px;
+      line-height: 1;
+      letter-spacing: .13em;
+      font-weight: 1000;
+    }
+
+    .trial-force-left h1 {
+      max-width: 590px;
+      margin: 0;
+      color: #071826;
+      font-size: clamp(44px, 5.6vw, 74px);
+      line-height: .98;
+      letter-spacing: -.075em;
+      font-weight: 1000;
+    }
+
+    .trial-force-left p {
+      max-width: 520px;
+      margin: 22px 0 0;
+      color: #52627a;
+      font-size: 20px;
+      line-height: 1.45;
+      font-weight: 520;
+    }
+
+    .trial-force-benefits {
+      width: min(550px, 100%);
+      margin-top: 38px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      text-align: center;
+    }
+
+    .trial-force-benefit {
+      display: grid;
+      justify-items: center;
+      gap: 8px;
+    }
+
+    .trial-force-benefit span {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: #e8f6ed;
+      color: #07943f;
+      border: 1px solid #d6eee0;
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .trial-force-benefit strong {
+      color: #071826;
+      font-size: 14px;
+      font-weight: 1000;
+    }
+
+    .trial-force-benefit small {
+      color: #64748b;
+      font-size: 12.5px;
+      line-height: 1.32;
+      font-weight: 650;
+    }
+
+    .trial-force-panel {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 20px 18px 18px;
+      border: 1px solid #dce5ef;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, .93);
+      box-shadow: 0 30px 90px rgba(15, 23, 42, .08);
+      backdrop-filter: blur(16px);
+    }
+
+    .trial-force-panel h2 {
+      margin: 0 0 5px;
+      color: #071826;
+      font-size: 20px;
+      line-height: 1.16;
+      letter-spacing: -.03em;
+      font-weight: 1000;
+    }
+
+    .trial-force-panel > p {
+      margin: 0 0 12px;
+      color: #64748b;
+      font-size: 12.5px;
+      line-height: 1.35;
+      font-weight: 650;
+    }
+
+    .trial-force-options {
+      display: grid;
+      gap: 5px;
+    }
+
+    .trial-force-option {
+      position: relative;
+      width: 100%;
+      min-height: 44px;
+      box-sizing: border-box;
+      padding: 7px 84px 7px 56px;
+      border: 1px solid #dce5ef;
+      border-radius: 9px;
+      background: rgba(255,255,255,.96);
+      text-align: left;
+      display: block;
+      box-shadow: 0 6px 14px rgba(15, 23, 42, .025);
+    }
+
+    .trial-force-option.is-active {
+      border-color: #07943f;
+      background: linear-gradient(135deg, rgba(7,148,63,.09), rgba(255,255,255,.98));
+      cursor: pointer;
+      box-shadow: 0 14px 32px rgba(7,148,63,.10);
+    }
+
+    .trial-force-option.is-disabled {
+      cursor: not-allowed;
+      opacity: .64;
+      background: #f8fbf9;
+      filter: grayscale(.05);
+    }
+
+    .trial-force-option .nr {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      width: 31px;
+      height: 31px;
+      margin-top: -15.5px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      color: #07943f;
+      background: #e8f6ed;
+      font-size: 11.5px;
+      line-height: 1;
+      font-weight: 1000;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .trial-force-option strong {
+      display: block;
+      color: #071826;
+      font-size: 13.4px;
+      line-height: 1.12;
+      letter-spacing: -.01em;
+      font-weight: 1000;
+      white-space: normal;
+    }
+
+    .trial-force-option small {
+      display: block;
+      margin-top: 2px;
+      color: #64748b;
+      font-size: 10.9px;
+      line-height: 1.14;
+      font-weight: 650;
+      white-space: normal;
+    }
+
+    .trial-force-option .soon {
+      position: absolute;
+      right: 9px;
+      top: 50%;
+      transform: translateY(-50%);
+      min-width: 66px;
+      height: 21px;
+      padding: 0 7px;
+      border: 1px solid #d8e5dc;
+      border-radius: 999px;
+      display: inline-grid;
+      place-items: center;
+      color: #07943f;
+      background: #eef8f1;
+      font-size: 10px;
+      line-height: 1;
+      font-weight: 1000;
+      white-space: nowrap;
+    }
+
+    .trial-force-option .check {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      width: 25px;
+      height: 25px;
+      margin-top: -12.5px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: #07943f;
+      color: #fff;
+      font-size: 14px;
+      line-height: 1;
+      font-weight: 1000;
+      box-shadow: 0 10px 24px rgba(7,148,63,.22);
+    }
+
+    .trial-force-actions {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      padding-top: 0;
+    }
+
+    .trial-force-back,
+    .trial-force-continue {
+      width: 210px !important;
+      min-width: 210px !important;
+      max-width: 210px !important;
+      height: 52px !important;
+      margin: 0 !important;
+      padding: 0 18px !important;
+      box-sizing: border-box !important;
+      border-radius: 11px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 10px !important;
+      text-decoration: none !important;
+      font-size: 16px !important;
+      line-height: 1 !important;
+      font-weight: 1000 !important;
+    }
+
+    .trial-force-back {
+      color: #071826 !important;
+      background: rgba(255,255,255,.94) !important;
+      border: 1px solid #dce5ef !important;
+      box-shadow: 0 14px 34px rgba(15,23,42,.06) !important;
+    }
+
+    .trial-force-continue {
+      border: 0 !important;
+      color: #fff !important;
+      background: linear-gradient(135deg, #07943f, #05aa48) !important;
+      box-shadow: 0 16px 36px rgba(7,148,63,.22) !important;
+      cursor: pointer !important;
+    }
+
+    @media (max-width: 1050px) {
+      .trial-force-shell {
+        grid-template-columns: 1fr;
+        align-items: start;
+        gap: 26px;
+      }
+
+      .trial-force-panel {
+        max-width: 620px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .trial-force-shell {
+        width: calc(100% - 28px);
+        margin-top: 22px;
+      }
+
+      .trial-force-left h1 {
+        font-size: clamp(40px, 14vw, 58px);
+      }
+
+      .trial-force-benefits {
+        grid-template-columns: 1fr;
+        text-align: left;
+      }
+
+      .trial-force-benefit {
+        grid-template-columns: 50px 1fr;
+        justify-items: start;
+        text-align: left;
+        column-gap: 14px;
+      }
+
+      .trial-force-benefit small {
+        grid-column: 2;
+      }
+
+      .trial-force-option {
+        padding-right: 78px;
+      }
+
+      .trial-force-option small {
+        display: none;
+      }
+
+      .trial-force-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+      }
+
+      .trial-force-back,
+      .trial-force-continue {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: none !important;
+      }
+    }
+  </style>
 </head>
 
-<body class="trial-choice-page trial-v29-2">
-  <main class="trial-choice-main">
-    <section class="trial-choice-left" aria-labelledby="trialChoiceTitle">
-      <p class="trial-choice-kicker">SVT ENERGY NAVIGATOR</p>
+<body class="trial-force-page">
+  <main class="trial-force-shell">
+    <section class="trial-force-left">
+      <p class="trial-force-kicker">SVT ENERGY NAVIGATOR</p>
 
-      <h1 id="trialChoiceTitle">Alege întrebarea care te interesează cel mai mult</h1>
+      <h1>Alege întrebarea care te interesează cel mai mult</h1>
 
-      <p class="trial-choice-subtitle">
-        Începem cu un singur obiectiv,<br />
+      <p>
+        Începem cu un singur obiectiv,<br>
         apoi construim analiza pas cu pas.
       </p>
 
-      <div class="trial-choice-benefits" aria-label="Beneficii">
-        <div>
-          <span class="trial-benefit-icon">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 13h7l-1 9 9-12h-7l1-8Z"/></svg>
-          </span>
+      <div class="trial-force-benefits">
+        <div class="trial-force-benefit">
+          <span>⚡</span>
           <strong>Claritate rapidă</strong>
-          <small>Obții răspunsuri relevante<br />în câteva minute.</small>
+          <small>Obții răspunsuri relevante<br>în câteva minute.</small>
         </div>
 
-        <div>
-          <span class="trial-benefit-icon">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16M6 16v-5m6 5V4m6 12V8"/></svg>
-          </span>
+        <div class="trial-force-benefit">
+          <span>▥</span>
           <strong>Decizii informate</strong>
-          <small>Date clare, analize inteligente,<br />impact real.</small>
+          <small>Date clare, analize inteligente,<br>impact real.</small>
         </div>
 
-        <div>
-          <span class="trial-benefit-icon">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4c-7.2.4-12.2 3.6-15 9.6C3.7 16.7 4.8 20 8.6 20c5.8 0 9.7-7.4 11.4-16ZM4 20c2.3-4.7 5.5-7.8 10-9.5"/></svg>
-          </span>
+        <div class="trial-force-benefit">
+          <span>↘</span>
           <strong>Economii reale</strong>
-          <small>Reduci costurile și<br />consumi eficient.</small>
+          <small>Reduci costurile și<br>consumi eficient.</small>
         </div>
       </div>
     </section>
 
-    <section class="trial-choice-panel" id="optiuni" aria-labelledby="trialOptionsTitle">
-      <h2 id="trialOptionsTitle">10 opțiuni disponibile</h2>
-      <p class="trial-panel-subtitle">Alege una dintre opțiuni. Momentan este activă analiza pentru reducerea costurilor cu energia.</p>
+    <section class="trial-force-panel">
+      <h2>10 opțiuni disponibile</h2>
+      <p>Alege una dintre opțiuni. Momentan este activă doar analiza pentru reducerea costurilor cu energia.</p>
 
-      <div class="trial-options-grid" role="listbox" aria-label="Alege obiectivul principal">
-        <button class="trial-option is-selected" type="button" data-option="Reduc costurile cu energia">
-          <span class="trial-option-number">01</span>
-          <span class="trial-option-copy">
-            <strong>Reduc costurile cu energia</strong>
-            <small>Identific când energia este scumpă, unde pierd bani și ce pot face pentru economie.</small>
-          </span>
-          <span class="trial-option-check" aria-hidden="true">✓</span>
+      <div class="trial-force-options">
+        <button class="trial-force-option is-active" type="button">
+          <span class="nr">01</span>
+          <strong>Reduc costurile cu energia</strong>
+          <small>Identific când energia este scumpă, unde pierd bani și ce pot face pentru economie.</small>
+          <span class="check">✓</span>
         </button>
 
-        <button class="trial-option is-disabled" type="button" disabled aria-disabled="true">
-          <span class="trial-option-number">02</span>
-          <span class="trial-option-copy">
-            <strong>Monitorizez și înțeleg consumul</strong>
-            <small>Vreau o imagine clară asupra consumului electric și termic.</small>
-          </span>
-          <span class="trial-soon-badge">În curând</span>
+        <button class="trial-force-option is-disabled" type="button" disabled>
+          <span class="nr">02</span>
+          <strong>Monitorizez și înțeleg consumul</strong>
+          <small>Vreau o imagine clară asupra consumului electric și termic.</small>
+          <span class="soon">În curând</span>
         </button>
 
-        <button class="trial-option is-disabled" type="button" disabled aria-disabled="true">
-          <span class="trial-option-number">03</span>
-          <span class="trial-option-copy">
-            <strong>Compar ofertele de energie</strong>
-            <small>Vreau să știu ce ofertă sau tarif mi se potrivește mai bine.</small>
-          </span>
-          <span class="trial-soon-badge">În curând</span>
+        <button class="trial-force-option is-disabled" type="button" disabled>
+          <span class="nr">03</span>
+          <strong>Compar ofertele de energie</strong>
+          <small>Vreau să știu ce ofertă sau tarif mi se potrivește mai bine.</small>
+          <span class="soon">În curând</span>
         </button>
 
-        <button class="trial-option is-disabled" type="button" disabled aria-disabled="true">
-          <span class="trial-option-number">04</span>
-          <span class="trial-option-copy">
-            <strong>Planific consumul pe termen lung</strong>
-            <small>Vreau să bugetez, să anticipez costurile și să evit surprizele.</small>
-          </span>
-          <span class="trial-soon-badge">În curând</span>
+        <button class="trial-force-option is-disabled" type="button" disabled>
+          <span class="nr">04</span>
+          <strong>Planific consumul pe termen lung</strong>
+          <small>Vreau să bugetez, să anticipez costurile și să evit surprizele.</small>
+          <span class="soon">În curând</span>
         </button>
 
-        <button class="trial-option is-disabled" type="button" disabled aria-disabled="true">
-          <span class="trial-option-number">05</span>
-          <span class="trial-option-copy">
-            <strong>Optimizez procesele și echipamentele</strong>
-            <small>Vreau eficiență operațională și tehnică, fără să afectez activitatea.</small>
-          </span>
-          <span class="trial-soon-badge">În curând</span>
+        <button class="trial-force-option is-disabled" type="button" disabled>
+          <span class="nr">05</span>
+          <strong>Optimizez procesele și echipamentele</strong>
+          <small>Vreau eficiență operațională și tehnică, fără să afectez activitatea.</small>
+          <span class="soon">În curând</span>
         </button>
 
-        <button class="trial-option is-disabled" type="button" disabled aria-disabled="true">
-          <span class="trial-option-number">06</span>
-          <span class="trial-option-copy">
-            <strong>Gestionez facturile și alertele</strong>
-            <small>Vreau control, notificări și urmărirea costurilor la timp.</small>
-          </span>
-          <span class="trial-soon-badge">În curând</span>
+        <button class="trial-force-option is-disabled" type="button" disabled>
+          <span class="nr">06</span>
+          <strong>Gestionez facturile și alertele</strong>
+          <small>Vreau control, notificări și urmărirea costurilor la timp.</small>
+          <span class="soon">În curând</span>
         </button>
 
-        <button class="trial-option is-disabled" type="button" disabled aria-disabled="true">
-          <span class="trial-option-number">07</span>
-          <span class="trial-option-copy">
-            <strong>Îndeplinesc cerințele de conformitate</strong>
-            <small>Vreau să respect mai ușor cerințele de raportare și reglementare.</small>
-          </span>
-          <span class="trial-soon-badge">În curând</span>
+        <button class="trial-force-option is-disabled" type="button" disabled>
+          <span class="nr">07</span>
+          <strong>Îndeplinesc cerințele de conformitate</strong>
+          <small>Vreau să respect mai ușor cerințele de raportare și reglementare.</small>
+          <span class="soon">În curând</span>
         </button>
 
-        <button class="trial-option is-disabled" type="button" disabled aria-disabled="true">
-          <span class="trial-option-number">08</span>
-          <span class="trial-option-copy">
-            <strong>Raportez managementului cu ușurință</strong>
-            <small>Vreau rapoarte clare, ușor de prezentat și cu impact vizibil.</small>
-          </span>
-          <span class="trial-soon-badge">În curând</span>
+        <button class="trial-force-option is-disabled" type="button" disabled>
+          <span class="nr">08</span>
+          <strong>Raportez managementului cu ușurință</strong>
+          <small>Vreau rapoarte clare, ușor de prezentat și cu impact vizibil.</small>
+          <span class="soon">În curând</span>
         </button>
 
-        <button class="trial-option is-disabled" type="button" disabled aria-disabled="true">
-          <span class="trial-option-number">09</span>
-          <span class="trial-option-copy">
-            <strong>Evaluez impactul de mediu și ESG</strong>
-            <small>Vreau să văd impactul consumului și direcții de reducere CO₂.</small>
-          </span>
-          <span class="trial-soon-badge">În curând</span>
+        <button class="trial-force-option is-disabled" type="button" disabled>
+          <span class="nr">09</span>
+          <strong>Evaluez impactul de mediu și ESG</strong>
+          <small>Vreau să văd impactul consumului și direcții de reducere CO₂.</small>
+          <span class="soon">În curând</span>
         </button>
 
-        <button class="trial-option is-disabled" type="button" disabled aria-disabled="true">
-          <span class="trial-option-number">10</span>
-          <span class="trial-option-copy">
-            <strong>Vreau o recomandare personalizată</strong>
-            <small>Spune-mi ce pot îmbunătăți chiar acum pentru costuri mai mici.</small>
-          </span>
-          <span class="trial-soon-badge">În curând</span>
+        <button class="trial-force-option is-disabled" type="button" disabled>
+          <span class="nr">10</span>
+          <strong>Vreau o recomandare personalizată</strong>
+          <small>Spune-mi ce pot îmbunătăți chiar acum pentru costuri mai mici.</small>
+          <span class="soon">În curând</span>
         </button>
       </div>
     </section>
 
-    <nav class="trial-bottom-actions" aria-label="Acțiuni pagină">
-      <a class="trial-return-btn" href="./index.html">← Pagina principală</a>
-      <button class="trial-continue-btn" type="button" id="trialContinueButton">Continuă <span>→</span></button>
+    <nav class="trial-force-actions">
+      <a class="trial-force-back" href="./index.html">← Pagina principală</a>
+      <button class="trial-force-continue" type="button" onclick="alert('Ai ales: Reduc costurile cu energia\n\nUrmătorul pas: încărcarea datelor necesare pentru analiza de cost.')">Continuă <span>→</span></button>
     </nav>
   </main>
-
-  <script>
-    const continueButton = document.getElementById("trialContinueButton");
-    continueButton?.addEventListener("click", () => {
-      alert("Ai ales: Reduc costurile cu energia\\n\\nUrmătorul pas: încărcarea datelor necesare pentru analiza de cost.");
-    });
-  </script>
 </body>
 </html>
