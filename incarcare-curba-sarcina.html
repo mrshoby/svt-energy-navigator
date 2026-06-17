@@ -3,52 +3,172 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
-  <meta name="description" content="Încarcă fișierul cu consumul zilnic pentru analiza SVT Energy Navigator."/>
+  <title>Curba de sarcină | SVT Energy Navigator</title>
+  <meta name="description" content="Încarcă fișierul cu curba de sarcină și vezi graficul rezultat."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
   <style>
-    :root{--g:#07943f;--g2:#05aa48;--gs:#e8f6ed;--navy:#071826;--muted:#66758f;--border:#dce5ef;--shadow:0 22px 70px rgba(15,23,42,.08)}
+    :root{
+      --g:#07943f;--g2:#05aa48;--gs:#e8f6ed;--navy:#071826;--muted:#66758f;
+      --border:#dce5ef;--shadow:0 22px 70px rgba(15,23,42,.08);
+    }
     *{box-sizing:border-box}
-    body{margin:0;min-height:100vh;background:radial-gradient(circle at 70% 20%,rgba(7,148,63,.05),transparent 28%),linear-gradient(180deg,#fff 0%,#fbfdfc 100%);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--navy);overflow-x:hidden}
-    body::after{content:"";position:fixed;left:-70px;right:-70px;bottom:-90px;height:220px;z-index:0;pointer-events:none;opacity:.16;background:repeating-radial-gradient(ellipse at center,rgba(7,148,63,.32) 0 1px,transparent 1px 9px);mask-image:linear-gradient(to top,#000,transparent 80%);transform:skewY(-3deg)}
-    .shell{position:relative;z-index:1;width:min(760px,calc(100% - 40px));margin:42px auto 44px;background:rgba(255,255,255,.94);border:1px solid var(--border);border-radius:24px;box-shadow:var(--shadow);padding:28px 54px 30px}
-    .steps{width:min(520px,100%);margin:0 auto 32px;display:grid;grid-template-columns:44px 1fr 44px 1fr 44px 1fr 44px;align-items:start;gap:8px;text-align:center}
-    .step-dot{width:32px;height:32px;border-radius:999px;border:2px solid #cbd6e4;background:#fff;color:#64748b;display:grid;place-items:center;font-weight:1000;margin:0 auto}.step-dot.active{background:var(--g);border-color:var(--g);color:#fff;box-shadow:0 8px 18px rgba(7,148,63,.22)}
-    .step-line{height:2px;background:#dbe3ec;margin-top:15px;border-radius:999px}.step-label{grid-row:2;font-size:12px;font-weight:900;color:#53647d;margin-top:7px}.step-label.active{color:var(--g)}
-    .eyebrow{text-align:center;margin:0 0 15px;color:var(--g);font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:1000}
+    body{
+      margin:0;
+      min-height:100vh;
+      background:
+        radial-gradient(circle at 72% 18%,rgba(7,148,63,.055),transparent 28%),
+        linear-gradient(180deg,#fff 0%,#fbfdfc 100%);
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--navy);
+      overflow-x:hidden;
+    }
+    body::after{
+      content:"";
+      position:fixed;left:-70px;right:-70px;bottom:-90px;height:220px;
+      z-index:0;pointer-events:none;opacity:.16;
+      background:repeating-radial-gradient(ellipse at center,rgba(7,148,63,.32) 0 1px,transparent 1px 9px);
+      mask-image:linear-gradient(to top,#000,transparent 80%);
+      transform:skewY(-3deg);
+    }
+    .shell{
+      position:relative;
+      z-index:1;
+      width:min(860px,calc(100% - 40px));
+      margin:42px auto 44px;
+      background:rgba(255,255,255,.95);
+      border:1px solid var(--border);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:30px 44px 34px;
+    }
+    .steps{
+      width:min(520px,100%);
+      margin:0 auto 30px;
+      display:grid;
+      grid-template-columns:44px 1fr 44px 1fr 44px;
+      align-items:start;
+      gap:8px;
+      text-align:center;
+    }
+    .step-dot{
+      width:32px;height:32px;border-radius:999px;border:2px solid #cbd6e4;background:#fff;color:#64748b;
+      display:grid;place-items:center;font-weight:1000;margin:0 auto;
+    }
+    .step-dot.active{background:var(--g);border-color:var(--g);color:#fff;box-shadow:0 8px 18px rgba(7,148,63,.22)}
+    .step-line{height:2px;background:#dbe3ec;margin-top:15px;border-radius:999px}
+    .step-label{grid-row:2;font-size:12px;font-weight:900;color:#53647d;margin-top:7px}
+    .step-label.active{color:var(--g)}
+    .eyebrow{text-align:center;margin:0 0 14px;color:var(--g);font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:1000}
     h1{text-align:center;margin:0;color:var(--navy);font-size:38px;line-height:1.08;letter-spacing:-.055em;font-weight:1000}
-    .sub{text-align:center;margin:12px auto 30px;color:var(--muted);font-size:15px;line-height:1.45;max-width:560px;font-weight:580}
-    .tabs{width:390px;max-width:100%;margin:0 auto 24px;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff}
-    .tab{height:56px;border:0;background:#fff;color:#66758f;font-weight:1000;font-size:16px;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer}.tab.active{color:var(--g);background:linear-gradient(180deg,#fff,#f7fff9);box-shadow:inset 0 -3px 0 var(--g)}
-    .upload-zone{min-height:194px;border:1.5px dashed #9ed4b4;border-radius:14px;background:linear-gradient(180deg,#fff,#fbfefc);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;cursor:pointer;transition:.18s}
-    .upload-zone:hover,.upload-zone.drag{border-color:var(--g);background:#f4fbf6}.upload-zone.has-file{border-style:solid;border-color:var(--g);background:#f3fbf6}
-    .cloud{width:56px;height:56px;border-radius:999px;background:var(--gs);color:var(--g);display:grid;place-items:center;margin-bottom:14px}.cloud svg{width:34px;height:34px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-    .upload-main{font-size:15px;font-weight:1000;color:var(--navy)}.upload-sub{font-size:12px;color:var(--muted);margin-top:7px;font-weight:650}
-    .choose{height:38px;margin-top:18px;padding:0 22px;border:1.5px solid var(--g);border-radius:9px;background:#fff;color:var(--g);font-size:14px;font-weight:1000;font-family:inherit;cursor:pointer}
-    .upload-note{text-align:center;color:#738199;font-size:12px;font-weight:700;margin:13px 0 24px}.form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-    .field label{display:block;margin-bottom:7px;color:var(--navy);font-size:12px;font-weight:1000}.input-wrap{height:42px;border:1px solid var(--border);border-radius:8px;background:#fff;display:flex;align-items:center;overflow:hidden}
-    .input-wrap input,.input-wrap select{width:100%;height:100%;border:0;outline:0;background:#fff;padding:0 12px;font-family:inherit;font-size:14px;font-weight:700;color:#172846}.unit{height:100%;min-width:54px;border-left:1px solid var(--border);display:grid;place-items:center;color:#53647d;font-size:14px;font-weight:800;background:#fbfcfe}
-    .bottom{margin-top:36px;padding-top:18px;border-top:1px solid #e7edf4;display:flex;justify-content:space-between;align-items:center;gap:18px}.btn{width:168px;height:50px;border-radius:9px;border:1px solid var(--border);font-family:inherit;font-size:16px;font-weight:1000;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;cursor:pointer}
-    .btn.back{background:#fff;color:var(--navy)}.btn.next{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:0;box-shadow:0 13px 32px rgba(7,148,63,.22)}
-    .file-input{display:none}.alert{margin-top:14px;border-radius:12px;padding:12px 14px;font-size:13px;font-weight:750;line-height:1.4}.alert.ok{background:#e8f6ed;color:#075f32;border:1px solid #c8e8d2}.alert.err{background:#fcebeb;color:#a32d2d;border:1px solid #f7c1c1}.alert.warn{background:#fff7ed;color:#9a5a09;border:1px solid #fed7aa}
-    .detected{display:none;margin-top:14px;border:1px solid #e7edf4;border-radius:14px;padding:14px;background:#fbfcfe}.detected.visible{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.detected div{background:#fff;border:1px solid #eef2f6;border-radius:10px;padding:10px}.detected strong{display:block;color:var(--navy);font-size:15px}.detected small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
-    .preview{margin-top:12px;border:1px solid #e7edf4;border-radius:12px;max-height:160px;overflow:auto;display:none}.preview.visible{display:block}.preview table{width:100%;border-collapse:collapse;font-size:12px}.preview th,.preview td{padding:7px 9px;border-bottom:1px solid #eef2f6;text-align:left;white-space:nowrap}.preview th{background:#fbfcfe;color:#172846}
-    .termic-extra{display:none}.termic-extra.visible{display:block;margin-top:14px}
-    @media(max-width:900px){.shell{padding:26px 22px}.form-grid{grid-template-columns:1fr}.detected.visible{grid-template-columns:1fr 1fr}.bottom{flex-direction:column-reverse}.btn{width:100%}}
+    .sub{text-align:center;margin:12px auto 28px;color:var(--muted);font-size:15px;line-height:1.45;max-width:560px;font-weight:580}
+    .tabs{
+      width:390px;max-width:100%;
+      margin:0 auto 22px;
+      display:grid;grid-template-columns:1fr 1fr;
+      border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff;
+    }
+    .tab{
+      height:56px;border:0;background:#fff;color:#66758f;font-weight:1000;font-size:16px;
+      font-family:inherit;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;
+    }
+    .tab.active{color:var(--g);background:linear-gradient(180deg,#fff,#f7fff9);box-shadow:inset 0 -3px 0 var(--g)}
+    .upload-zone{
+      min-height:194px;
+      border:1.5px dashed #9ed4b4;
+      border-radius:14px;
+      background:linear-gradient(180deg,#fff,#fbfefc);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+      padding:24px;
+      cursor:pointer;
+      transition:.18s;
+    }
+    .upload-zone:hover,.upload-zone.drag{border-color:var(--g);background:#f4fbf6}
+    .upload-zone.has-file{border-style:solid;border-color:var(--g);background:#f3fbf6}
+    .cloud{width:56px;height:56px;border-radius:999px;background:var(--gs);color:var(--g);display:grid;place-items:center;margin-bottom:14px}
+    .cloud svg{width:34px;height:34px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .upload-main{font-size:15px;font-weight:1000;color:var(--navy)}
+    .upload-sub{font-size:12px;color:var(--muted);margin-top:7px;font-weight:650}
+    .choose{
+      height:38px;margin-top:18px;padding:0 22px;border:1.5px solid var(--g);border-radius:9px;background:#fff;
+      color:var(--g);font-size:14px;font-weight:1000;font-family:inherit;cursor:pointer;
+    }
+    .upload-note{text-align:center;color:#738199;font-size:12px;font-weight:700;margin:13px 0 0}
+    .file-input{display:none}
+    .alert{margin-top:14px;border-radius:12px;padding:12px 14px;font-size:13px;font-weight:750;line-height:1.4}
+    .alert.ok{background:#e8f6ed;color:#075f32;border:1px solid #c8e8d2}
+    .alert.err{background:#fcebeb;color:#a32d2d;border:1px solid #f7c1c1}
+    .alert.warn{background:#fff7ed;color:#9a5a09;border:1px solid #fed7aa}
+    .detected{
+      display:none;
+      margin-top:14px;
+      border:1px solid #e7edf4;
+      border-radius:14px;
+      padding:12px;
+      background:#fbfcfe;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+    }
+    .detected.visible{display:grid}
+    .detected div{background:#fff;border:1px solid #eef2f6;border-radius:10px;padding:10px}
+    .detected strong{display:block;color:var(--navy);font-size:15px}
+    .detected small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+    .chart-card{
+      display:none;
+      margin-top:18px;
+      border:1px solid #e7edf4;
+      border-radius:18px;
+      background:#fff;
+      padding:18px;
+      box-shadow:0 12px 34px rgba(15,23,42,.045);
+    }
+    .chart-card.visible{display:block}
+    .chart-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px}
+    .chart-head h2{margin:0;color:var(--navy);font-size:19px;letter-spacing:-.03em}
+    .chart-head p{margin:4px 0 0;color:var(--muted);font-size:12px;line-height:1.35;font-weight:650}
+    .chart-wrap{height:330px;position:relative}
+    .bottom{
+      margin-top:26px;
+      padding-top:18px;
+      border-top:1px solid #e7edf4;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+    }
+    .btn{
+      width:190px;height:50px;border-radius:9px;border:1px solid var(--border);font-family:inherit;font-size:16px;font-weight:1000;
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;cursor:pointer;
+    }
+    .btn.back{background:#fff;color:var(--navy)}
+    .btn.next{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:0;box-shadow:0 13px 32px rgba(7,148,63,.22)}
+    @media(max-width:900px){
+      .shell{padding:26px 20px;width:calc(100% - 24px)}
+      .detected.visible{grid-template-columns:1fr}
+      .bottom{flex-direction:column-reverse}
+      .btn{width:100%}
+      .chart-wrap{height:270px}
+    }
   </style>
 </head>
+
 <body>
   <main class="shell">
     <section class="steps" aria-label="Progres analiză">
-      <div class="step-dot active">1</div><div class="step-line"></div><div class="step-dot">2</div><div class="step-line"></div><div class="step-dot">3</div><div class="step-line"></div><div class="step-dot">4</div>
-      <div class="step-label active" style="grid-column:1">Consum</div><div class="step-label" style="grid-column:3">Procesare</div><div class="step-label" style="grid-column:5">Rezultate</div><div class="step-label" style="grid-column:7">Recomandări</div>
+      <div class="step-dot active">1</div><div class="step-line"></div>
+      <div class="step-dot">2</div><div class="step-line"></div>
+      <div class="step-dot">3</div>
+      <div class="step-label active" style="grid-column:1">Upload</div>
+      <div class="step-label" style="grid-column:3">Grafic</div>
+      <div class="step-label" style="grid-column:5">Raport</div>
     </section>
 
-    <p class="eyebrow">PAS 1 DIN 4</p>
-    <h1>Curba ta de consum zilnic</h1>
-    <p class="sub">Încarcă datele reale de consum. Acceptă exporturi DEER/IBD, Data-ora/EA+, Data+Ora+EA+ delim, CSV portal și fișiere Excel.</p>
+    <p class="eyebrow">CURBA DE SARCINĂ</p>
+    <h1>Încarcă fișierul</h1>
+    <p class="sub">După încărcare se afișează direct graficul curbei de sarcină. Nu mai sunt necesare câmpuri suplimentare.</p>
 
     <section class="tabs" aria-label="Tip consum">
       <button class="tab active" type="button" id="tabElectric">⚡ Electric</button>
@@ -57,37 +177,38 @@
 
     <section class="upload-zone" id="dropZone">
       <input class="file-input" id="fileInput" type="file" accept=".csv,.txt,.xlsx,.xls,.xlsm,.htm,.html"/>
-      <div class="cloud"><svg viewBox="0 0 24 24"><path d="M16 16 12 12l-4 4"/><path d="M12 12v9"/><path d="M20.4 17.4A5 5 0 0 0 18 8h-1.3A7 7 0 1 0 5 16.3"/></svg></div>
-      <div class="upload-main" id="uploadTitle">Încarcă fișierul cu consumul tău</div>
-      <div class="upload-sub" id="uploadSub">Excel (.xlsx, .xls, .xlsm), CSV sau HTML · max. 10 MB</div>
+      <div class="cloud">
+        <svg viewBox="0 0 24 24"><path d="M16 16 12 12l-4 4"/><path d="M12 12v9"/><path d="M20.4 17.4A5 5 0 0 0 18 8h-1.3A7 7 0 1 0 5 16.3"/></svg>
+      </div>
+      <div class="upload-main" id="uploadTitle">Încarcă fișierul cu consumul electric</div>
+      <div class="upload-sub" id="uploadSub">Excel, CSV sau HTML</div>
       <button class="choose" type="button" id="chooseBtn">Alege fișier</button>
     </section>
 
-    <p class="upload-note" id="uploadNote">ⓘ Parser v32: recunoaște matrice IBD/DEER, Data-ora + EA+[kWh], Data+Ora+EA+ delim și CSV portal.</p>
+    <p class="upload-note" id="uploadNote">ⓘ Acceptă exporturi DEER/IBD, Data-ora + EA+[kWh], matrice lunară, CSV portal.</p>
     <div id="message"></div>
 
     <section class="detected" id="detected">
       <div><strong id="detProfile">-</strong><small>profil detectat</small></div>
-      <div><strong id="detRows">-</strong><small>rânduri normalizate</small></div>
-      <div><strong id="detInterval">-</strong><small>interval</small></div>
-      <div><strong id="detUnit">-</strong><small>unitate sursă</small></div>
+      <div><strong id="detRows">-</strong><small>intervale citite</small></div>
+      <div><strong id="detInterval">-</strong><small>pas de timp</small></div>
     </section>
 
-    <div class="preview" id="preview"></div>
-
-    <section class="termic-extra" id="termicExtra">
-      <div class="field"><label for="gasFactor">Conversie gaz, dacă fișierul termic este în m³</label><div class="input-wrap"><input id="gasFactor" value="10.55" inputmode="decimal"><span class="unit">kWh/m³</span></div></div>
-    </section>
-
-    <section class="form-grid">
-      <div class="field"><label for="putere">Putere contractată</label><div class="input-wrap"><input id="putere" value="100" inputmode="decimal"><span class="unit">kW</span></div></div>
-      <div class="field"><label for="tarifActual">Tarif actual</label><div class="input-wrap"><input id="tarifActual" value="0.75" inputmode="decimal"><span class="unit">lei/kWh</span></div></div>
-      <div class="field"><label for="tipTarif">Tip de tarif</label><div class="input-wrap"><select id="tipTarif"><option>Simplu</option><option>Zi / noapte</option><option>Dinamic PZU</option></select></div></div>
+    <section class="chart-card" id="chartCard">
+      <div class="chart-head">
+        <div>
+          <h2>Curba de sarcină</h2>
+          <p id="chartMeta">Grafic generat din fișierul încărcat.</p>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="loadCurveChart"></canvas>
+      </div>
     </section>
 
     <footer class="bottom">
       <a class="btn back" href="./testeaza-gratuit.html">← Înapoi</a>
-      <button class="btn next" type="button" id="continueBtn">Continuă →</button>
+      <button class="btn next" type="button" id="continueBtn" disabled>Vezi grafic mărit →</button>
     </footer>
   </main>
 
@@ -98,92 +219,154 @@
     const input = document.getElementById('fileInput');
     const chooseBtn = document.getElementById('chooseBtn');
     const msg = document.getElementById('message');
-    const preview = document.getElementById('preview');
     const tabElectric = document.getElementById('tabElectric');
     const tabTermic = document.getElementById('tabTermic');
     const detected = document.getElementById('detected');
+    const chartCard = document.getElementById('chartCard');
+    const continueBtn = document.getElementById('continueBtn');
+
     let mode = 'electric';
     let dataset = null;
+    let chart = null;
 
     function setMode(nextMode){
       mode = nextMode;
       dataset = null;
       tabElectric.classList.toggle('active', mode === 'electric');
       tabTermic.classList.toggle('active', mode === 'termic');
-      document.getElementById('termicExtra').classList.toggle('visible', mode === 'termic');
-      document.getElementById('uploadTitle').textContent = mode === 'termic' ? 'Încarcă fișierul cu consumul termic' : 'Încarcă fișierul cu consumul tău';
-      document.getElementById('uploadSub').textContent = mode === 'termic' ? 'CSV/XLSX cu termic kWh sau gaz m³' : 'Excel (.xlsx, .xls, .xlsm), CSV sau HTML · max. 10 MB';
-      document.getElementById('uploadNote').textContent = mode === 'termic' ? 'ⓘ Pentru gaz m³, conversia implicită este configurabilă.' : 'ⓘ Parser v32: recunoaște matrice IBD/DEER, Data-ora + EA+[kWh], Data+Ora+EA+ delim și CSV portal.';
+      document.getElementById('uploadTitle').textContent = mode === 'termic' ? 'Încarcă fișierul cu consumul termic' : 'Încarcă fișierul cu consumul electric';
+      document.getElementById('uploadSub').textContent = mode === 'termic' ? 'CSV/XLSX cu termic kWh sau gaz m³' : 'Excel, CSV sau HTML';
+      document.getElementById('uploadNote').textContent = mode === 'termic' ? 'ⓘ Pentru termic se afișează curba termică, dacă fișierul are date termice.' : 'ⓘ Acceptă exporturi DEER/IBD, Data-ora + EA+[kWh], matrice lunară, CSV portal.';
       dropZone.classList.remove('has-file');
       detected.classList.remove('visible');
-      preview.classList.remove('visible');
+      chartCard.classList.remove('visible');
+      continueBtn.disabled = true;
       msg.innerHTML = '';
       input.value = '';
+      if (chart) { chart.destroy(); chart = null; }
     }
 
     tabElectric.addEventListener('click', () => setMode('electric'));
     tabTermic.addEventListener('click', () => setMode('termic'));
     chooseBtn.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); input.click(); });
     dropZone.addEventListener('click', e => { if (e.target !== chooseBtn) input.click(); });
+
     ['dragenter','dragover'].forEach(ev => dropZone.addEventListener(ev, e => { e.preventDefault(); dropZone.classList.add('drag'); }));
     ['dragleave','drop'].forEach(ev => dropZone.addEventListener(ev, e => { e.preventDefault(); dropZone.classList.remove('drag'); }));
     dropZone.addEventListener('drop', e => { const f = e.dataTransfer.files[0]; if(f) readFile(f); });
     input.addEventListener('change', e => { const f = e.target.files[0]; if(f) readFile(f); });
 
-    function n(v){ return Number(String(v||'').replace(',','.')) || 0; }
-
     async function readFile(file){
       try{
-        show('Se citește fișierul real: ' + file.name, 'warn');
+        show('Se citește fișierul: ' + file.name, 'warn');
         dataset = await SVTLoadCurveProfiles.parseFile(file, {
           mode,
-          fixedPriceRonKwh:n(document.getElementById('tarifActual').value) || 0.75,
-          contractPowerKw:n(document.getElementById('putere').value) || 100,
-          gasFactor:n(document.getElementById('gasFactor')?.value) || 10.55
+          fixedPriceRonKwh:0.75,
+          contractPowerKw:100,
+          gasFactor:10.55
         });
+
         dropZone.classList.add('has-file');
         document.getElementById('uploadTitle').textContent = 'Fișier încărcat: ' + file.name;
-        document.getElementById('uploadSub').textContent = `${dataset.meta.rowsCount} rânduri normalizate · ${dataset.meta.sourceProfile}`;
-        document.getElementById('detProfile').textContent = dataset.meta.sourceProfile;
-        document.getElementById('detRows').textContent = dataset.meta.rowsCount;
-        document.getElementById('detInterval').textContent = dataset.meta.intervalMinutes + ' min';
-        document.getElementById('detUnit').textContent = dataset.meta.unit;
+        document.getElementById('uploadSub').textContent = `${dataset.meta.rowsCount} intervale normalizate · ${dataset.meta.sourceProfile}`;
+
+        detProfile.textContent = dataset.meta.sourceProfile;
+        detRows.textContent = dataset.meta.rowsCount;
+        detInterval.textContent = dataset.meta.intervalMinutes + ' min';
         detected.classList.add('visible');
-        renderPreview(dataset);
-        show('Fișier recunoscut și normalizat. Poți continua.', 'ok');
+
+        const analysis = SVTAnalysisEngine.analyze(dataset);
+        analysis.wizardData = {
+          fileName: dataset.meta.fileName,
+          sourceProfile: dataset.meta.sourceProfile,
+          mode
+        };
+
+        sessionStorage.setItem('svtData', JSON.stringify(analysis.wizardData));
+        sessionStorage.setItem('svtDataset', JSON.stringify(dataset));
+        sessionStorage.setItem('svtAnalysis', JSON.stringify(analysis));
+
+        renderCurve(dataset);
+        chartCard.classList.add('visible');
+        continueBtn.disabled = false;
+        show('Fișier recunoscut. Graficul curbei de sarcină este generat mai jos.', 'ok');
       }catch(e){
         dataset = null;
         show(e.message || String(e), 'err');
+        continueBtn.disabled = true;
       }
     }
 
-    function renderPreview(data){
-      const rows = (data.rows||[]).slice(0,8);
-      preview.classList.add('visible');
-      preview.innerHTML = '<table><thead><tr><th>Data/oră</th><th>kWh electric</th><th>Export</th><th>Reactiva +</th><th>Reactiva -</th><th>Termic</th><th>Preț</th></tr></thead><tbody>' +
-        rows.map(r => `<tr><td>${escapeHtml(r.localLabel)}</td><td>${fmt(r.electricKwh)}</td><td>${fmt(r.electricExportKwh)}</td><td>${fmt(r.reactiveInductiveKvarh)}</td><td>${fmt(r.reactiveCapacitiveKvarh)}</td><td>${fmt(r.thermalKwh)}</td><td>${fmt(r.priceRonKwh,3)}</td></tr>`).join('') +
-        '</tbody></table>';
+    function renderCurve(data){
+      const rows = data.rows || [];
+      const step = Math.max(1, Math.ceil(rows.length / 220));
+      const sampled = rows.filter((_, i) => i % step === 0);
+      const hasThermal = sampled.some(r => Number(r.thermalKwh || 0) > 0);
+      const hasPv = sampled.some(r => Number(r.pvKwh || 0) > 0);
+
+      const datasets = [
+        {
+          label: mode === 'termic' && hasThermal ? 'Consum termic' : 'Consum electric',
+          data: sampled.map(r => mode === 'termic' && hasThermal ? Number(r.thermalKwh || 0) : Number(r.electricKwh || 0)),
+          borderColor: '#07943f',
+          backgroundColor: 'rgba(7,148,63,.12)',
+          fill: true,
+          tension: .28,
+          pointRadius: 0,
+          borderWidth: 2.3
+        }
+      ];
+
+      if (hasPv && mode === 'electric') {
+        datasets.push({
+          label: 'Producție locală / PV',
+          data: sampled.map(r => Number(r.pvKwh || 0)),
+          borderColor: '#2563eb',
+          backgroundColor: 'rgba(37,99,235,.08)',
+          fill: false,
+          tension: .28,
+          pointRadius: 0,
+          borderWidth: 2
+        });
+      }
+
+      if (chart) chart.destroy();
+
+      chartMeta.textContent = `${data.meta.fileName} · ${data.meta.sourceProfile} · ${data.meta.rowsCount} intervale · ${data.meta.intervalMinutes} min`;
+
+      chart = new Chart(document.getElementById('loadCurveChart'), {
+        type: 'line',
+        data: {
+          labels: sampled.map(r => r.localLabel || r.timestamp),
+          datasets
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { position: 'bottom' },
+            tooltip: {
+              callbacks: {
+                label: ctx => `${ctx.dataset.label}: ${Number(ctx.parsed.y || 0).toLocaleString('ro-RO', {maximumFractionDigits: 2})} kWh`
+              }
+            }
+          },
+          scales: {
+            x: { ticks: { maxTicksLimit: 8 } },
+            y: { beginAtZero: true, title: { display: true, text: 'kWh / interval' } }
+          }
+        }
+      });
     }
 
-    document.getElementById('continueBtn').addEventListener('click', () => {
-      if (!dataset) {
-        show('Încarcă un fișier real înainte de a continua.', 'err');
-        return;
-      }
-      dataset.meta.fixedPriceRonKwh = n(document.getElementById('tarifActual').value) || 0.75;
-      dataset.meta.contractPowerKw = n(document.getElementById('putere').value) || 100;
-      const svtData = {putereRacord:dataset.meta.contractPowerKw, tipTarif:document.getElementById('tipTarif').value, tarifActual:dataset.meta.fixedPriceRonKwh, sourceProfile:dataset.meta.sourceProfile, fileName:dataset.meta.fileName};
-      const analysis = SVTAnalysisEngine.analyze(dataset);
-      analysis.wizardData = svtData;
-      sessionStorage.setItem('svtData', JSON.stringify(svtData));
-      sessionStorage.setItem('svtDataset', JSON.stringify(dataset));
-      sessionStorage.setItem('svtAnalysis', JSON.stringify(analysis));
+    continueBtn.addEventListener('click', () => {
+      if (!dataset) return;
       window.location.href = './svt-analiza.html';
     });
 
     function show(text,type){ msg.innerHTML = '<div class="alert '+type+'">'+escapeHtml(text)+'</div>'; }
     function escapeHtml(s){ return String(s??'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])); }
-    function fmt(v,d=2){ return (Number(v)||0).toLocaleString('ro-RO',{maximumFractionDigits:d,minimumFractionDigits:d}); }
   </script>
 </body>
 </html>
