@@ -3,24 +3,13 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Curba de sarcină | SVT Energy Navigator</title>
+  <title>Când consum din rețea energie scumpă? | SVT Energy Navigator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <style>
-    :root{--g:#07943f;--navy:#071826;--muted:#64748b;--border:#dce5ef;--bg:#f8fafc}
-    *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);font-family:Inter,system-ui,sans-serif;color:var(--navy)}
-    .shell{width:min(1120px,calc(100% - 40px));margin:0 auto;padding:28px 0 50px}
-    .top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
-    .btn{height:44px;padding:0 18px;border-radius:11px;border:1px solid var(--border);background:#fff;color:var(--navy);font-weight:900;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-    .btn.green{background:linear-gradient(135deg,#07943f,#05aa48);color:#fff;border:0}
-    .card{background:#fff;border:1px solid var(--border);border-radius:24px;padding:24px;box-shadow:0 14px 40px rgba(15,23,42,.05)}
-    .card h1{margin:0;color:var(--navy);font-size:30px;letter-spacing:-.05em}
-    .card p{margin:8px 0 18px;color:var(--muted);font-size:13px;line-height:1.45}
-    .chart{height:520px;position:relative}
-    .empty{min-height:70vh;display:grid;place-items:center;text-align:center}
-    @media(max-width:780px){.chart{height:360px}.shell{width:calc(100% - 24px)}}
+    :root{--g:#07943f;--navy:#071826;--muted:#64748b;--border:#dce5ef;--bg:#f8fafc;--red:#dc2626;--blue:#2563eb}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,system-ui,sans-serif;color:var(--navy)}.shell{width:min(1120px,calc(100% - 40px));margin:0 auto;padding:28px 0 50px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}.btn{height:44px;padding:0 18px;border-radius:11px;border:1px solid var(--border);background:#fff;color:var(--navy);font-weight:900;text-decoration:none;display:inline-flex;align-items:center;gap:8px}.btn.green{background:linear-gradient(135deg,#07943f,#05aa48);color:#fff;border:0}.card{background:#fff;border:1px solid var(--border);border-radius:24px;padding:24px;box-shadow:0 14px 40px rgba(15,23,42,.05);margin-bottom:16px}.card h1{margin:0;color:var(--navy);font-size:30px;letter-spacing:-.05em}.card p{margin:8px 0 18px;color:var(--muted);font-size:13px;line-height:1.45}.chart{height:520px;position:relative}.intervals{display:grid;gap:8px}.interval{display:grid;grid-template-columns:36px 1fr auto;gap:10px;align-items:center;border:1px solid #e7edf4;border-radius:12px;padding:10px;background:#fff}.rank{width:28px;height:28px;border-radius:999px;background:#fee2e2;color:#b91c1c;display:grid;place-items:center;font-size:12px;font-weight:1000}.interval strong{display:block;font-size:13px}.interval small{display:block;color:var(--muted);font-size:12px;margin-top:2px}.cost{font-weight:1000;color:#b91c1c}.empty{min-height:70vh;display:grid;place-items:center;text-align:center}@media(max-width:780px){.chart{height:360px}.shell{width:calc(100% - 24px)}}
   </style>
 </head>
 <body>
@@ -31,83 +20,49 @@
     </div>
 
     <section class="card" id="content">
-      <h1>Curba de sarcină</h1>
+      <h1>Când consum din rețea energie scumpă?</h1>
       <p id="metaText">Grafic generat din fișierul încărcat.</p>
       <div class="chart"><canvas id="loadChart"></canvas></div>
+    </section>
+
+    <section class="card" id="topCard">
+      <h1 style="font-size:22px">Top intervale scumpe</h1>
+      <p>Cu tarif fix, intervalul scump este intervalul în care consumul din rețea este mare, deci costul este mare.</p>
+      <div class="intervals" id="intervals"></div>
     </section>
   </main>
 
   <script>
-    const dataset = JSON.parse(sessionStorage.getItem('svtDataset') || 'null');
-    if (!dataset || !dataset.rows || !dataset.rows.length) {
+    const data = JSON.parse(sessionStorage.getItem('svtAnalysis') || 'null');
+    if (!data || !data.chartRows || !data.chartRows.length) {
       content.innerHTML = '<div class="empty"><div><h1>Nu există fișier încărcat</h1><p>Revino la pagina de upload și încarcă o curbă de sarcină.</p><p><a class="btn green" href="./incarcare-curba-sarcina.html">Încarcă fișier</a></p></div></div>';
+      topCard.style.display='none';
     } else {
-      const rows = dataset.rows || [];
+      const rows = data.chartRows || [];
       const step = Math.max(1, Math.ceil(rows.length / 320));
       const sampled = rows.filter((_, i) => i % step === 0);
-      const hasPv = sampled.some(r => Number(r.pvKwh || 0) > 0);
-      const hasThermal = sampled.some(r => Number(r.thermalKwh || 0) > 0);
-      metaText.textContent = `${dataset.meta.fileName || '-'} · ${dataset.meta.sourceProfile || '-'} · ${dataset.meta.rowsCount || rows.length} intervale · ${dataset.meta.intervalMinutes || '-'} min`;
+      const hasProd = sampled.some(r => Number(r.productionKwh || 0) > 0);
+      metaText.textContent = `${data.meta.fileName || '-'} · tarif fix ${fmt(data.meta.fixedTariffRonKwh,3)} lei/kWh · consum din rețea calculat${hasProd ? ' cu producție locală' : ' fără producție locală'}.`;
 
-      const sets = [{
-        label: 'Consum electric',
-        data: sampled.map(r => Number(r.electricKwh || 0)),
-        borderColor: '#07943f',
-        backgroundColor: 'rgba(7,148,63,.12)',
-        fill: true,
-        tension: .28,
-        pointRadius: 0,
-        borderWidth: 2.4
-      }];
+      const sets = [
+        {label:'Consum total', data:sampled.map(r=>r.consumptionKwh), borderColor:'#94a3b8', backgroundColor:'rgba(148,163,184,.08)', fill:false, tension:.28, pointRadius:0, borderWidth:1.8},
+        {label:'Consum din rețea', data:sampled.map(r=>r.gridKwh), borderColor:'#07943f', backgroundColor:'rgba(7,148,63,.13)', fill:true, tension:.28, pointRadius:0, borderWidth:2.4},
+        {label:'Intervale scumpe', data:sampled.map(r=>r.isExpensive?r.gridKwh:null), borderColor:'#dc2626', backgroundColor:'#dc2626', showLine:false, pointRadius:4, pointHoverRadius:6}
+      ];
+      if (hasProd) sets.splice(1,0,{label:'Producție locală', data:sampled.map(r=>r.productionKwh), borderColor:'#2563eb', backgroundColor:'rgba(37,99,235,.08)', fill:false, tension:.28, pointRadius:0, borderWidth:2});
 
-      if (hasPv) {
-        sets.push({
-          label: 'Producție locală / PV',
-          data: sampled.map(r => Number(r.pvKwh || 0)),
-          borderColor: '#2563eb',
-          backgroundColor: 'rgba(37,99,235,.08)',
-          fill: false,
-          tension: .28,
-          pointRadius: 0,
-          borderWidth: 2
-        });
-      }
+      new Chart(loadChart,{type:'line',data:{labels:sampled.map(r=>r.label),datasets:sets},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${Number(ctx.parsed.y||0).toLocaleString('ro-RO',{maximumFractionDigits:2})} kWh`}}},scales:{x:{ticks:{maxTicksLimit:12}},y:{beginAtZero:true,title:{display:true,text:'kWh / interval'}}}}});
 
-      if (hasThermal) {
-        sets.push({
-          label: 'Consum termic',
-          data: sampled.map(r => Number(r.thermalKwh || 0)),
-          borderColor: '#f59e0b',
-          backgroundColor: 'rgba(245,158,11,.08)',
-          fill: false,
-          tension: .28,
-          pointRadius: 0,
-          borderWidth: 2
-        });
-      }
-
-      new Chart(loadChart, {
-        type: 'line',
-        data: { labels: sampled.map(r => r.localLabel || r.timestamp), datasets: sets },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          interaction: { mode: 'index', intersect: false },
-          plugins: {
-            legend: { position: 'bottom' },
-            tooltip: {
-              callbacks: {
-                label: ctx => `${ctx.dataset.label}: ${Number(ctx.parsed.y || 0).toLocaleString('ro-RO', {maximumFractionDigits: 2})} kWh`
-              }
-            }
-          },
-          scales: {
-            x: { ticks: { maxTicksLimit: 12 } },
-            y: { beginAtZero: true, title: { display: true, text: 'kWh / interval' } }
-          }
-        }
-      });
+      intervals.innerHTML = (data.expensiveIntervals || []).slice(0,8).map(x => `
+        <div class="interval">
+          <div class="rank">${x.rank}</div>
+          <div><strong>${esc(x.localLabel)}</strong><small>Consum rețea: ${fmt(x.gridKwh)} kWh · tarif fix: ${fmt(x.tariffRonKwh,3)} lei/kWh</small></div>
+          <div class="cost">${fmt(x.gridCostRon)} lei</div>
+        </div>
+      `).join('');
     }
+    function fmt(v,d=2){return (Number(v)||0).toLocaleString('ro-RO',{maximumFractionDigits:d,minimumFractionDigits:d});}
+    function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
   </script>
 </body>
 </html>
