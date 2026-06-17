@@ -360,3 +360,113 @@
     width: 100%;
   }
 }
+
+
+
+/* ===== v29.4 compact options alignment fix ===== */
+.trial-v29-2 .trial-choice-panel {
+  max-width: 570px;
+  padding: 22px 20px 18px;
+}
+
+.trial-v29-2 .trial-choice-panel h2 {
+  margin-bottom: 4px;
+  font-size: 20px;
+}
+
+.trial-v29-2 .trial-panel-subtitle {
+  margin-bottom: 12px;
+  font-size: 12.5px;
+}
+
+.trial-v29-2 .trial-options-grid {
+  gap: 6px;
+}
+
+.trial-v29-2 .trial-option,
+.trial-v29-2 .trial-option:not(.is-selected) {
+  min-height: 48px;
+  padding: 7px 86px 7px 60px;
+  border-radius: 9px;
+}
+
+.trial-v29-2 .trial-option-number,
+.trial-v29-2 .trial-option:not(.is-selected) .trial-option-number {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+  margin-top: -16px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: #e8f6ed;
+  color: #07943f;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 1000;
+}
+
+.trial-v29-2 .trial-option-copy strong {
+  font-size: 13.6px;
+  line-height: 1.12;
+}
+
+.trial-v29-2 .trial-option-copy small {
+  margin-top: 2px;
+  font-size: 11.1px;
+  line-height: 1.16;
+}
+
+.trial-v29-2 .trial-option-check {
+  right: 14px;
+  width: 26px;
+  height: 26px;
+  margin-top: -13px;
+  font-size: 15px;
+}
+
+.trial-v29-2 .trial-soon-badge {
+  right: 10px;
+  min-width: 68px;
+  height: 22px;
+  padding: 0 8px;
+  font-size: 10.2px;
+}
+
+.trial-v29-2 .trial-bottom-actions {
+  align-items: center;
+  padding-top: 0;
+}
+
+.trial-v29-2 .trial-return-btn,
+.trial-v29-2 .trial-continue-btn {
+  width: 210px;
+  min-width: 210px;
+  max-width: 210px;
+  height: 52px;
+  margin: 0;
+  padding: 0 18px;
+  box-sizing: border-box;
+  line-height: 1;
+}
+
+@media (max-width: 720px) {
+  .trial-v29-2 .trial-option,
+  .trial-v29-2 .trial-option:not(.is-selected) {
+    padding: 8px 78px 8px 58px;
+  }
+
+  .trial-v29-2 .trial-option-copy strong {
+    font-size: 13.2px;
+  }
+
+  .trial-v29-2 .trial-return-btn,
+  .trial-v29-2 .trial-continue-btn {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+}
