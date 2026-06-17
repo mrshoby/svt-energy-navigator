@@ -1,0 +1,2 @@
+Extrage arhiva și deschide index.html din folderul SVT_Energy_Navigator_Homepage_v26_REAL_SCREENSHOT_INTRO.
+Video-ul intro este în assets/01_video_introductiv.mp4.

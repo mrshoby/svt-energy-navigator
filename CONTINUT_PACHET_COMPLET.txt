@@ -1,0 +1,9 @@
+SVT Energy Navigator Homepage v28 - PAGINA TESTEAZĂ GRATUIT
+
+Adăugat:
+- pagină nouă testeaza-gratuit.html;
+- toate CTA-urile principale Testează gratuit / Creează cont gratuit trimit spre pagina nouă;
+- format intuitiv pentru utilizator ne-tehnic: alegere pe carduri, mini-asistent, date necesare și cele 10 întrebări traduse simplu;
+- design păstrat în stilul site-ului: alb/verde/navy, carduri, pași, CTA-uri.
+
+Deschide index.html, apoi apasă Testează gratuit.
