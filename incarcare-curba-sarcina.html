@@ -9,143 +9,38 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <style>
-    :root{
-      --g:#07943f;--g2:#05aa48;--gs:#e8f6ed;--navy:#071826;--muted:#66758f;--border:#dce5ef;--card:#fff;
-      --shadow:0 22px 70px rgba(15,23,42,.08);
-    }
+    :root{--g:#07943f;--g2:#05aa48;--gs:#e8f6ed;--navy:#071826;--muted:#66758f;--border:#dce5ef;--shadow:0 22px 70px rgba(15,23,42,.08)}
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      min-height:100vh;
-      background:
-        radial-gradient(circle at 70% 20%,rgba(7,148,63,.05),transparent 28%),
-        linear-gradient(180deg,#fff 0%,#fbfdfc 100%);
-      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      color:var(--navy);
-      overflow-x:hidden;
-    }
-    body::after{
-      content:"";
-      position:fixed;left:-70px;right:-70px;bottom:-90px;height:220px;z-index:0;pointer-events:none;opacity:.16;
-      background:repeating-radial-gradient(ellipse at center,rgba(7,148,63,.32) 0 1px,transparent 1px 9px);
-      mask-image:linear-gradient(to top,#000,transparent 80%);
-      transform:skewY(-3deg);
-    }
-    .topbar{
-      position:relative;z-index:2;
-      width:min(1240px,calc(100% - 72px));
-      height:72px;margin:30px auto 0;
-      background:rgba(255,255,255,.88);
-      border:1px solid var(--border);
-      border-radius:18px;
-      display:flex;align-items:center;justify-content:space-between;
-      padding:0 24px 0 28px;
-      box-shadow:0 12px 34px rgba(15,23,42,.045);
-    }
-    .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
-    .brand img{height:42px;width:auto;display:block}
-    .brand-text{font-size:14px;font-weight:900;color:var(--navy)}
-    .brand-text small{display:block;color:var(--g);font-size:10px;font-weight:800;margin-top:1px}
-    .nav{display:flex;align-items:center;gap:38px;font-size:15px;font-weight:800;color:#132642}
-    .nav a{text-decoration:none;color:inherit}
-    .nav-cta{height:48px;border-radius:11px;background:linear-gradient(135deg,var(--g),var(--g2));color:#fff!important;padding:0 24px;display:inline-flex;align-items:center;gap:10px;box-shadow:0 14px 32px rgba(7,148,63,.2)}
-    .shell{
-      position:relative;z-index:1;
-      width:min(710px,calc(100% - 40px));
-      margin:52px auto 44px;
-      background:rgba(255,255,255,.94);
-      border:1px solid var(--border);
-      border-radius:24px;
-      box-shadow:var(--shadow);
-      padding:28px 54px 30px;
-    }
-    .steps{
-      width:min(520px,100%);
-      margin:0 auto 32px;
-      display:grid;
-      grid-template-columns:44px 1fr 44px 1fr 44px 1fr 44px;
-      align-items:start;
-      gap:8px;
-      text-align:center;
-    }
-    .step-dot{width:32px;height:32px;border-radius:999px;border:2px solid #cbd6e4;background:#fff;color:#64748b;display:grid;place-items:center;font-weight:1000;margin:0 auto}
-    .step-dot.active{background:var(--g);border-color:var(--g);color:#fff;box-shadow:0 8px 18px rgba(7,148,63,.22)}
-    .step-line{height:2px;background:#dbe3ec;margin-top:15px;border-radius:999px}
-    .step-label{grid-row:2;font-size:12px;font-weight:900;color:#53647d;margin-top:7px}
-    .step-label.active{color:var(--g)}
+    body{margin:0;min-height:100vh;background:radial-gradient(circle at 70% 20%,rgba(7,148,63,.05),transparent 28%),linear-gradient(180deg,#fff 0%,#fbfdfc 100%);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--navy);overflow-x:hidden}
+    body::after{content:"";position:fixed;left:-70px;right:-70px;bottom:-90px;height:220px;z-index:0;pointer-events:none;opacity:.16;background:repeating-radial-gradient(ellipse at center,rgba(7,148,63,.32) 0 1px,transparent 1px 9px);mask-image:linear-gradient(to top,#000,transparent 80%);transform:skewY(-3deg)}
+    .shell{position:relative;z-index:1;width:min(710px,calc(100% - 40px));margin:42px auto 44px;background:rgba(255,255,255,.94);border:1px solid var(--border);border-radius:24px;box-shadow:var(--shadow);padding:28px 54px 30px}
+    .steps{width:min(520px,100%);margin:0 auto 32px;display:grid;grid-template-columns:44px 1fr 44px 1fr 44px 1fr 44px;align-items:start;gap:8px;text-align:center}
+    .step-dot{width:32px;height:32px;border-radius:999px;border:2px solid #cbd6e4;background:#fff;color:#64748b;display:grid;place-items:center;font-weight:1000;margin:0 auto}.step-dot.active{background:var(--g);border-color:var(--g);color:#fff;box-shadow:0 8px 18px rgba(7,148,63,.22)}
+    .step-line{height:2px;background:#dbe3ec;margin-top:15px;border-radius:999px}.step-label{grid-row:2;font-size:12px;font-weight:900;color:#53647d;margin-top:7px}.step-label.active{color:var(--g)}
     .eyebrow{text-align:center;margin:0 0 15px;color:var(--g);font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:1000}
     h1{text-align:center;margin:0;color:var(--navy);font-size:38px;line-height:1.08;letter-spacing:-.055em;font-weight:1000}
     .sub{text-align:center;margin:12px auto 30px;color:var(--muted);font-size:15px;line-height:1.45;max-width:560px;font-weight:580}
-    .tabs{
-      width:390px;max-width:100%;
-      margin:0 auto 24px;
-      display:grid;grid-template-columns:1fr 1fr;
-      border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff;
-    }
-    .tab{height:56px;border:0;background:#fff;color:#66758f;font-weight:1000;font-size:16px;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer}
-    .tab.active{color:var(--g);background:linear-gradient(180deg,#fff,#f7fff9);box-shadow:inset 0 -3px 0 var(--g)}
-    .upload-zone{
-      min-height:194px;
-      border:1.5px dashed #9ed4b4;
-      border-radius:14px;
-      background:linear-gradient(180deg,#fff,#fbfefc);
-      display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-      padding:24px;
-      cursor:pointer;
-      transition:.18s;
-    }
-    .upload-zone:hover,.upload-zone.drag{border-color:var(--g);background:#f4fbf6}
-    .upload-zone.has-file{border-style:solid;border-color:var(--g);background:#f3fbf6}
-    .cloud{width:56px;height:56px;border-radius:999px;background:var(--gs);color:var(--g);display:grid;place-items:center;margin-bottom:14px}
-    .cloud svg{width:34px;height:34px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-    .upload-main{font-size:15px;font-weight:1000;color:var(--navy)}
-    .upload-sub{font-size:12px;color:var(--muted);margin-top:7px;font-weight:650}
+    .tabs{width:390px;max-width:100%;margin:0 auto 24px;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff}
+    .tab{height:56px;border:0;background:#fff;color:#66758f;font-weight:1000;font-size:16px;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer}.tab.active{color:var(--g);background:linear-gradient(180deg,#fff,#f7fff9);box-shadow:inset 0 -3px 0 var(--g)}
+    .upload-zone{min-height:194px;border:1.5px dashed #9ed4b4;border-radius:14px;background:linear-gradient(180deg,#fff,#fbfefc);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;cursor:pointer;transition:.18s}
+    .upload-zone:hover,.upload-zone.drag{border-color:var(--g);background:#f4fbf6}.upload-zone.has-file{border-style:solid;border-color:var(--g);background:#f3fbf6}
+    .cloud{width:56px;height:56px;border-radius:999px;background:var(--gs);color:var(--g);display:grid;place-items:center;margin-bottom:14px}.cloud svg{width:34px;height:34px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .upload-main{font-size:15px;font-weight:1000;color:var(--navy)}.upload-sub{font-size:12px;color:var(--muted);margin-top:7px;font-weight:650}
     .choose{height:38px;margin-top:18px;padding:0 22px;border:1.5px solid var(--g);border-radius:9px;background:#fff;color:var(--g);font-size:14px;font-weight:1000;font-family:inherit;cursor:pointer}
-    .upload-note{text-align:center;color:#738199;font-size:12px;font-weight:700;margin:13px 0 24px}
-    .form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-    .field label{display:block;margin-bottom:7px;color:var(--navy);font-size:12px;font-weight:1000}
-    .input-wrap{height:42px;border:1px solid var(--border);border-radius:8px;background:#fff;display:flex;align-items:center;overflow:hidden}
-    .input-wrap input,.input-wrap select{width:100%;height:100%;border:0;outline:0;background:#fff;padding:0 12px;font-family:inherit;font-size:14px;font-weight:700;color:#172846}
-    .unit{height:100%;min-width:54px;border-left:1px solid var(--border);display:grid;place-items:center;color:#53647d;font-size:14px;font-weight:800;background:#fbfcfe}
-    .bottom{
-      margin-top:36px;padding-top:18px;border-top:1px solid #e7edf4;display:flex;justify-content:space-between;align-items:center;gap:18px
-    }
-    .btn{width:168px;height:50px;border-radius:9px;border:1px solid var(--border);font-family:inherit;font-size:16px;font-weight:1000;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;cursor:pointer}
-    .btn.back{background:#fff;color:var(--navy)}
-    .btn.next{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:0;box-shadow:0 13px 32px rgba(7,148,63,.22)}
-    .file-input{display:none}
-    .alert{margin-top:14px;border-radius:12px;padding:12px 14px;font-size:13px;font-weight:750;line-height:1.4}
-    .alert.ok{background:#e8f6ed;color:#075f32;border:1px solid #c8e8d2}
-    .alert.err{background:#fcebeb;color:#a32d2d;border:1px solid #f7c1c1}
-    @media(max-width:900px){.topbar{width:calc(100% - 28px)}.nav{display:none}.shell{padding:26px 22px}.form-grid{grid-template-columns:1fr}.bottom{flex-direction:column-reverse}.btn{width:100%}}
+    .upload-note{text-align:center;color:#738199;font-size:12px;font-weight:700;margin:13px 0 24px}.form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .field label{display:block;margin-bottom:7px;color:var(--navy);font-size:12px;font-weight:1000}.input-wrap{height:42px;border:1px solid var(--border);border-radius:8px;background:#fff;display:flex;align-items:center;overflow:hidden}
+    .input-wrap input,.input-wrap select{width:100%;height:100%;border:0;outline:0;background:#fff;padding:0 12px;font-family:inherit;font-size:14px;font-weight:700;color:#172846}.unit{height:100%;min-width:54px;border-left:1px solid var(--border);display:grid;place-items:center;color:#53647d;font-size:14px;font-weight:800;background:#fbfcfe}
+    .bottom{margin-top:36px;padding-top:18px;border-top:1px solid #e7edf4;display:flex;justify-content:space-between;align-items:center;gap:18px}.btn{width:168px;height:50px;border-radius:9px;border:1px solid var(--border);font-family:inherit;font-size:16px;font-weight:1000;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;cursor:pointer}
+    .btn.back{background:#fff;color:var(--navy)}.btn.next{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;border:0;box-shadow:0 13px 32px rgba(7,148,63,.22)}
+    .file-input{display:none}.alert{margin-top:14px;border-radius:12px;padding:12px 14px;font-size:13px;font-weight:750;line-height:1.4}.alert.ok{background:#e8f6ed;color:#075f32;border:1px solid #c8e8d2}.alert.err{background:#fcebeb;color:#a32d2d;border:1px solid #f7c1c1}.preview{margin-top:12px;border:1px solid #e7edf4;border-radius:12px;max-height:160px;overflow:auto;display:none}.preview.visible{display:block}.preview table{width:100%;border-collapse:collapse;font-size:12px}.preview th,.preview td{padding:7px 9px;border-bottom:1px solid #eef2f6;text-align:left;white-space:nowrap}.preview th{background:#fbfcfe;color:#172846}
+    @media(max-width:900px){.shell{padding:26px 22px}.form-grid{grid-template-columns:1fr}.bottom{flex-direction:column-reverse}.btn{width:100%}}
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand" href="./index.html" aria-label="Servelect">
-      <img src="./assets/logo_servelect.png" alt="Servelect" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-      <span class="brand-text" style="display:none">SERVELECT<small>Energy is money! We save both.</small></span>
-    </a>
-    <nav class="nav" aria-label="Navigare">
-      <a href="./index.html#solutii">Soluții</a>
-      <a href="./index.html#beneficii">Beneficii</a>
-      <a href="./index.html#cum-functioneaza">Cum funcționează</a>
-      <a href="./index.html#resurse">Resurse</a>
-      <a href="./index.html#despre-noi">Despre noi</a>
-      <a class="nav-cta" href="./testeaza-gratuit.html">Testează gratuit →</a>
-    </nav>
-  </header>
-
   <main class="shell">
     <section class="steps" aria-label="Progres analiză">
-      <div class="step-dot active">1</div><div class="step-line"></div>
-      <div class="step-dot">2</div><div class="step-line"></div>
-      <div class="step-dot">3</div><div class="step-line"></div>
-      <div class="step-dot">4</div>
-      <div class="step-label active" style="grid-column:1">Consum</div>
-      <div class="step-label" style="grid-column:3">Procesare</div>
-      <div class="step-label" style="grid-column:5">Rezultate</div>
-      <div class="step-label" style="grid-column:7">Recomandări</div>
+      <div class="step-dot active">1</div><div class="step-line"></div><div class="step-dot">2</div><div class="step-line"></div><div class="step-dot">3</div><div class="step-line"></div><div class="step-dot">4</div>
+      <div class="step-label active" style="grid-column:1">Consum</div><div class="step-label" style="grid-column:3">Procesare</div><div class="step-label" style="grid-column:5">Rezultate</div><div class="step-label" style="grid-column:7">Recomandări</div>
     </section>
 
     <p class="eyebrow">PAS 1 DIN 4</p>
@@ -153,47 +48,25 @@
     <p class="sub">Încarcă datele de consum și completează detaliile pentru o analiză precisă.</p>
 
     <section class="tabs" aria-label="Tip consum">
-      <button class="tab active" type="button" data-tab="electric">⚡ Electric</button>
-      <button class="tab" type="button" data-tab="termic">♨️ Termic</button>
+      <button class="tab active" type="button" id="tabElectric">⚡ Electric</button>
+      <button class="tab" type="button" id="tabTermic">♨️ Termic</button>
     </section>
 
     <section class="upload-zone" id="dropZone">
       <input class="file-input" id="fileInput" type="file" accept=".csv,.txt,.xlsx,.xls,.pdf"/>
-      <div class="cloud" aria-hidden="true">
-        <svg viewBox="0 0 24 24"><path d="M16 16 12 12l-4 4"/><path d="M12 12v9"/><path d="M20.4 17.4A5 5 0 0 0 18 8h-1.3A7 7 0 1 0 5 16.3"/></svg>
-      </div>
+      <div class="cloud"><svg viewBox="0 0 24 24"><path d="M16 16 12 12l-4 4"/><path d="M12 12v9"/><path d="M20.4 17.4A5 5 0 0 0 18 8h-1.3A7 7 0 1 0 5 16.3"/></svg></div>
       <div class="upload-main" id="uploadTitle">Încarcă fișierul cu consumul tău</div>
       <div class="upload-sub" id="uploadSub">Excel (.xlsx, .xls) sau CSV · max. 10 MB</div>
-      <button class="choose" type="button">Alege fișier</button>
+      <button class="choose" type="button" id="chooseBtn">Alege fișier</button>
     </section>
     <p class="upload-note" id="uploadNote">ⓘ Asigură-te că fișierul conține valorile de consum orar (kWh).</p>
     <div id="message"></div>
+    <div class="preview" id="preview"></div>
 
     <section class="form-grid">
-      <div class="field">
-        <label for="putere">Putere contractată</label>
-        <div class="input-wrap"><input id="putere" value="100" inputmode="decimal"><span class="unit">kW</span></div>
-      </div>
-      <div class="field">
-        <label for="tarifDistributie">Tarif de distribuție</label>
-        <div class="input-wrap">
-          <select id="tarifDistributie">
-            <option>Joasă tensiune</option>
-            <option>Medie tensiune</option>
-            <option>Înaltă tensiune</option>
-          </select>
-        </div>
-      </div>
-      <div class="field">
-        <label for="tipTarif">Tip de tarif</label>
-        <div class="input-wrap">
-          <select id="tipTarif">
-            <option>Simplu</option>
-            <option>Zi / noapte</option>
-            <option>Dinamic PZU</option>
-          </select>
-        </div>
-      </div>
+      <div class="field"><label for="putere">Putere contractată</label><div class="input-wrap"><input id="putere" value="100" inputmode="decimal"><span class="unit">kW</span></div></div>
+      <div class="field"><label for="tarifDistributie">Tarif de distribuție</label><div class="input-wrap"><select id="tarifDistributie"><option>Joasă tensiune</option><option>Medie tensiune</option><option>Înaltă tensiune</option></select></div></div>
+      <div class="field"><label for="tipTarif">Tip de tarif</label><div class="input-wrap"><select id="tipTarif"><option>Simplu</option><option>Zi / noapte</option><option>Dinamic PZU</option></select></div></div>
     </section>
 
     <footer class="bottom">
@@ -202,86 +75,189 @@
     </footer>
   </main>
 
-  <script src="./assets/js/svt-upload-parser.js"></script>
-  <script src="./assets/js/svt-price-profiles.js"></script>
-  <script src="./assets/js/svt-analysis-engine.js"></script>
   <script>
     const dropZone = document.getElementById('dropZone');
     const input = document.getElementById('fileInput');
+    const chooseBtn = document.getElementById('chooseBtn');
     const msg = document.getElementById('message');
+    const preview = document.getElementById('preview');
+    const tabElectric = document.getElementById('tabElectric');
+    const tabTermic = document.getElementById('tabTermic');
+    let mode = 'electric';
     let parsed = null;
 
-    dropZone.addEventListener('click', () => input.click());
+    function setMode(nextMode){
+      mode = nextMode;
+      tabElectric.classList.toggle('active', mode === 'electric');
+      tabTermic.classList.toggle('active', mode === 'termic');
+      document.getElementById('uploadTitle').textContent = mode === 'termic' ? 'Încarcă fișierul cu consumul termic' : 'Încarcă fișierul cu consumul tău';
+      document.getElementById('uploadSub').textContent = mode === 'termic' ? 'CSV sau XLSX cu energie termică / gaz' : 'Excel (.xlsx, .xls) sau CSV · max. 10 MB';
+      document.getElementById('uploadNote').textContent = mode === 'termic' ? 'ⓘ Fișierul termic este opțional și poate fi adăugat ulterior.' : 'ⓘ Asigură-te că fișierul conține valorile de consum orar (kWh).';
+    }
+
+    tabElectric.addEventListener('click', () => setMode('electric'));
+    tabTermic.addEventListener('click', () => setMode('termic'));
+    chooseBtn.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); input.click(); });
+    dropZone.addEventListener('click', e => { if (e.target !== chooseBtn) input.click(); });
+
     ['dragenter','dragover'].forEach(ev => dropZone.addEventListener(ev, e => { e.preventDefault(); dropZone.classList.add('drag'); }));
     ['dragleave','drop'].forEach(ev => dropZone.addEventListener(ev, e => { e.preventDefault(); dropZone.classList.remove('drag'); }));
     dropZone.addEventListener('drop', e => { const f = e.dataTransfer.files[0]; if(f) readFile(f); });
     input.addEventListener('change', e => { const f = e.target.files[0]; if(f) readFile(f); });
 
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        const isTermic = tab.dataset.tab === 'termic';
-        document.getElementById('uploadTitle').textContent = isTermic ? 'Încarcă fișierul cu consumul termic' : 'Încarcă fișierul cu consumul tău';
-        document.getElementById('uploadSub').textContent = isTermic ? 'CSV sau XLSX cu energie termică / gaz' : 'Excel (.xlsx, .xls) sau CSV · max. 10 MB';
-        document.getElementById('uploadNote').textContent = isTermic ? 'ⓘ Fișierul termic este opțional și poate fi adăugat ulterior.' : 'ⓘ Asigură-te că fișierul conține valorile de consum orar (kWh).';
+    function parseNumber(v){
+      if(v === undefined || v === null) return 0;
+      let s = String(v).trim().replace(/\s/g,'');
+      if(!s) return 0;
+      if(s.includes(',') && s.includes('.')) s = s.lastIndexOf(',') > s.lastIndexOf('.') ? s.replace(/\./g,'').replace(',','.') : s.replace(/,/g,'');
+      else if(s.includes(',')) s = s.replace(',','.');
+      const n = Number(s);
+      return Number.isFinite(n) ? n : 0;
+    }
+
+    function parseDate(v){
+      if(v instanceof Date && !isNaN(v)) return v;
+      let s = String(v || '').trim();
+      if(!s) return null;
+      s = s.replace('T',' ').replace(/\//g,'-');
+      let m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})[,\s]+(\d{1,2}):(\d{2})(?::(\d{2}))?/);
+      if(m) return new Date(+m[1], +m[2]-1, +m[3], +m[4], +m[5], +(m[6]||0));
+      m = s.match(/^(\d{1,2})[.\-](\d{1,2})[.\-](\d{4})[,\s]+(\d{1,2}):(\d{2})(?::(\d{2}))?/);
+      if(m) return new Date(+m[3], +m[2]-1, +m[1], +m[4], +m[5], +(m[6]||0));
+      const d = new Date(s);
+      return isNaN(d) ? null : d;
+    }
+
+    function detectDelimiter(text){
+      const first = text.split(/\r?\n/).find(l => l.trim()) || '';
+      return [',',';','\t','|'].map(d => ({d, n:(first.match(new RegExp('\\\\'+d,'g'))||[]).length})).sort((a,b)=>b.n-a.n)[0].d;
+    }
+
+    function parseCSV(text){
+      const delim = detectDelimiter(text);
+      const lines = text.split(/\r?\n/).filter(l => l.trim());
+      if(lines.length < 2) throw new Error('Fișierul nu are suficiente rânduri.');
+      const headers = lines[0].split(delim).map(x => x.trim().replace(/^"|"$/g,''));
+      const rows = lines.slice(1).map(line => {
+        const vals = line.split(delim).map(x => x.trim().replace(/^"|"$/g,''));
+        const obj = {};
+        headers.forEach((h,i) => obj[h] = vals[i] ?? '');
+        return obj;
       });
-    });
+      return {columns:headers, rows};
+    }
+
+    async function parseFile(file){
+      const name = file.name.toLowerCase();
+      if((name.endsWith('.xlsx') || name.endsWith('.xls')) && window.XLSX){
+        const buf = await file.arrayBuffer();
+        const wb = XLSX.read(buf, {type:'array', cellDates:true});
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const rows = XLSX.utils.sheet_to_json(ws, {defval:'', raw:false});
+        if(!rows.length) throw new Error('Fișierul Excel nu conține date.');
+        return {columns:Object.keys(rows[0]), rows};
+      }
+      if(name.endsWith('.pdf')) throw new Error('PDF-ul este acceptat vizual, dar pentru calcul imediat folosește CSV sau XLSX.');
+      return parseCSV(await file.text());
+    }
+
+    function detectColumns(data){
+      const norm = s => String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+      const find = words => data.columns.find(c => words.some(w => norm(c).includes(w)));
+      return {
+        timestamp: find(['timestamp','data_ora','data ora','datetime','timp','ora','data']),
+        electric: find(['consum electric','electric','energie activa','kwh','consum_kwh','load','sarcina','putere','consum']),
+        thermal: find(['termic','thermal','gaz','caldura','abur']),
+        pv: find(['pv','solar','productie','fotovoltaic']),
+        price: find(['pret','price','ron','tarif','pzu'])
+      };
+    }
 
     async function readFile(file){
       try{
         show('Se citește fișierul: ' + file.name, 'ok');
-        if (!window.SVTUploadParser) {
-          throw new Error('Lipsește parserul SVT. Aplică întâi patch-ul v30/v30.1 sau încarcă CSV manual.');
+        parsed = await parseFile(file);
+        parsed.fileName = file.name;
+        parsed.detected = detectColumns(parsed);
+        if(!parsed.detected.timestamp || !parsed.detected.electric) {
+          show('Fișier citit, dar nu am detectat automat coloanele de dată/oră și consum. Raportul va folosi modelul demonstrativ dacă nu sunt clare.', 'ok');
+        } else {
+          show('Fișier validat: ' + parsed.rows.length + ' rânduri detectate.', 'ok');
         }
-        parsed = await SVTUploadParser.parseFile(file);
         dropZone.classList.add('has-file');
         document.getElementById('uploadTitle').textContent = 'Fișier încărcat: ' + file.name;
-        document.getElementById('uploadSub').textContent = parsed.rows.length + ' rânduri detectate · ' + parsed.detected.intervalLabel;
-        show('Fișier validat. Poți continua către procesare.', 'ok');
+        document.getElementById('uploadSub').textContent = parsed.rows.length + ' rânduri · ' + parsed.columns.length + ' coloane';
+        renderPreview(parsed);
       }catch(e){
         show(e.message || String(e), 'err');
       }
     }
 
+    function renderPreview(data){
+      const rows = data.rows.slice(0, 6);
+      preview.classList.add('visible');
+      preview.innerHTML = '<table><thead><tr>' + data.columns.map(c => '<th>'+escapeHtml(c)+'</th>').join('') + '</tr></thead><tbody>' +
+        rows.map(r => '<tr>' + data.columns.map(c => '<td>'+escapeHtml(r[c] ?? '')+'</td>').join('') + '</tr>').join('') + '</tbody></table>';
+    }
+
+    function fallbackDataset(){
+      const base = [];
+      const prices = [0.31,0.30,0.29,0.28,0.29,0.34,0.42,0.88,0.92,0.85,0.72,0.55,0.48,0.50,0.52,0.60,0.72,0.89,0.91,0.82,0.70,0.58,0.45,0.36];
+      const load = [12,11,10,10,11,14,22,76,92,84,78,74,70,72,76,73,65,48,38,31,25,21,18,15];
+      for(let h=0;h<24;h++){
+        base.push({timestamp:new Date(2025,5,16,h,0,0).toISOString(), localLabel:String(h).padStart(2,'0')+':00', hour:h, electricKwh:load[h], thermalKwh:0, pvKwh:h>=7&&h<=17?Math.max(0,48-Math.abs(12-h)*8):0, priceRonKwh:prices[h]});
+      }
+      return {meta:{fileName:'model demonstrativ', intervalMinutes:60, fixedPriceRonKwh:0.75, contractPowerKw:Number(document.getElementById('putere').value)||100}, rows:base};
+    }
+
+    function normalizeDataset(){
+      if(!parsed) return fallbackDataset();
+      const d = parsed.detected || detectColumns(parsed);
+      if(!d.timestamp || !d.electric) return fallbackDataset();
+      const rows = parsed.rows.map(r => {
+        const dt = parseDate(r[d.timestamp]);
+        if(!dt) return null;
+        return {
+          timestamp: dt.toISOString(),
+          localLabel: dt.toLocaleString('ro-RO',{dateStyle:'short',timeStyle:'short'}),
+          hour: dt.getHours(),
+          electricKwh: Math.max(0, parseNumber(r[d.electric])),
+          thermalKwh: d.thermal ? Math.max(0, parseNumber(r[d.thermal])) : 0,
+          pvKwh: d.pv ? Math.max(0, parseNumber(r[d.pv])) : 0,
+          priceRonKwh: d.price ? Math.max(0, parseNumber(r[d.price])) : priceForHour(dt.getHours())
+        };
+      }).filter(Boolean);
+      if(rows.length < 2) return fallbackDataset();
+      return {meta:{fileName:parsed.fileName, intervalMinutes:60, fixedPriceRonKwh:0.75, contractPowerKw:Number(document.getElementById('putere').value)||100}, rows};
+    }
+
+    function priceForHour(h){
+      return [0.31,0.30,0.29,0.28,0.29,0.34,0.42,0.88,0.92,0.85,0.72,0.55,0.48,0.50,0.52,0.60,0.72,0.89,0.91,0.82,0.70,0.58,0.45,0.36][h] || 0.75;
+    }
+
+    function analyze(dataset){
+      if(window.SVTAnalysisEngine) return SVTAnalysisEngine.analyze(dataset);
+      const total = dataset.rows.reduce((a,r)=>a+r.electricKwh,0);
+      const fixed = total * 0.75;
+      const pzu = dataset.rows.reduce((a,r)=>a+r.electricKwh*r.priceRonKwh,0);
+      return {meta:dataset.meta, totals:{electricKwh:total, fixedCostRon:fixed, pzuCostRon:pzu, totalPossibleSavingRon:Math.max(0,fixed-pzu), maxDemandKw:Math.max(...dataset.rows.map(r=>r.electricKwh)), avgPzuPriceRonKwh:pzu/Math.max(1,total)}, expensiveIntervals:[], charts:{loadCurve:dataset.rows,costByHour:[],prices:[]}, recommendations:[], tomorrowPlan:[]};
+    }
+
     document.getElementById('continueBtn').addEventListener('click', () => {
       const putere = Number(String(document.getElementById('putere').value).replace(',', '.')) || 100;
-      const tipTarif = document.getElementById('tipTarif').value;
-      const tarifDistributie = document.getElementById('tarifDistributie').value;
-
-      const svtData = {
-        putereRacord: putere,
-        tipTarif,
-        tarifDistributie,
-        tarifActual: tipTarif === 'Dinamic PZU' ? '0.60' : '0.75',
-        firma:'Firma dvs.',
-        judet:'Cluj'
-      };
+      const svtData = {putereRacord:putere, tipTarif:document.getElementById('tipTarif').value, tarifDistributie:document.getElementById('tarifDistributie').value, tarifActual:'0.75', firma:'Firma dvs.', judet:'Cluj'};
+      const dataset = normalizeDataset();
+      dataset.meta.contractPowerKw = putere;
       sessionStorage.setItem('svtData', JSON.stringify(svtData));
-
-      if (parsed && window.SVTUploadParser && window.SVTAnalysisEngine) {
-        const dataset = SVTUploadParser.normalize(parsed, {
-          timestamp: parsed.detected.timestamp,
-          electric: parsed.detected.electric,
-          thermal: parsed.detected.thermal,
-          pv: parsed.detected.pv,
-          price: parsed.detected.price,
-          unitElectric: 'kwh',
-          fixedPrice: svtData.tarifActual,
-          contractPower: putere
-        });
-        sessionStorage.setItem('svtDataset', JSON.stringify(dataset));
-        const analysis = SVTAnalysisEngine.analyze(dataset);
-        analysis.wizardData = svtData;
-        sessionStorage.setItem('svtAnalysis', JSON.stringify(analysis));
-      }
-
+      sessionStorage.setItem('svtDataset', JSON.stringify(dataset));
+      const analysis = analyze(dataset);
+      analysis.wizardData = svtData;
+      sessionStorage.setItem('svtAnalysis', JSON.stringify(analysis));
       window.location.href = './svt-analiza.html';
     });
 
-    function show(text,type){
-      msg.innerHTML = '<div class="alert '+type+'">'+String(text).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\\"":"&quot;","'":"&#039;"}[m]))+'</div>';
-    }
+    function show(text,type){ msg.innerHTML = '<div class="alert '+type+'">'+escapeHtml(text)+'</div>'; }
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])); }
   </script>
 </body>
 </html>
