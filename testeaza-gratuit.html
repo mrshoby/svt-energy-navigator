@@ -147,7 +147,7 @@
       {id:9, icon:'🏗️', title:'Cât m-ar costa o investiție integrată care reduce costurile electrice și termice?', groups:['electric','thermal','investment']},
       {id:10, icon:'🎯', title:'Ce ar trebui să fac mâine pentru a reduce costul?', groups:['electric','thermal','forecast']}
     ];
-    let activeChart = null;
+    let activeCharts = {};
 
     function getContext(){
       try { return JSON.parse(sessionStorage.getItem('svtNavigatorContext') || localStorage.getItem('svtNavigatorContext') || '{}'); }
@@ -189,7 +189,8 @@
       `;
 
       grid.innerHTML = questions.map((q, idx) => {
-        const isActive = q.id === 1 && mode === 'electric' && analysis?.chartRows?.length;
+        const hasPvData = !!(ctx.hasProduction || analysis?.meta?.hasProduction || (analysis?.chartRows || []).some(r => Number(r.productionKwh || 0) > 0));
+        const isActive = mode === 'electric' && analysis?.chartRows?.length && (q.id === 1 || (q.id === 2 && hasPvData));
         return `
           <div class="q-item" data-q-item="${q.id}">
             <button class="q-card ${isActive ? 'available' : 'soon'}" type="button" data-q="${q.id}" ${isActive ? '' : 'disabled'}>
@@ -197,7 +198,7 @@
               <span class="q-title">${esc(q.title)}</span>
               ${isActive ? '<span class="answer-slot" title="Aici apare bifa după răspuns">✓</span>' : '<span class="badge">În curând</span>'}
             </button>
-            ${isActive ? '<div class="details" id="details-q1"></div>' : ''}
+            ${isActive ? `<div class="details" id="details-q${q.id}"></div>` : ''}
           </div>
         `;
       }).join('');
@@ -207,14 +208,23 @@
       } else if(!analysis?.chartRows?.length){
         info.textContent = 'Ai ales modul Electric, dar nu există încă analiză salvată. Revino la pagina de date și încarcă fișierul orar sau introdu factura lunară.';
       } else {
-        info.textContent = 'Ai ales modul Electric. Întrebarea 1 este disponibilă și folosește 100% datele încărcate în pagina anterioară.';
+        const hasPvInfo = !!(ctx.hasProduction || analysis?.meta?.hasProduction || (analysis?.chartRows || []).some(r => Number(r.productionKwh || 0) > 0));
+        info.textContent = hasPvInfo
+          ? 'Ai ales modul Electric cu producție locală/PV. Întrebările 1 și 2 sunt disponibile și folosesc datele încărcate în pagina anterioară.'
+          : 'Ai ales modul Electric. Întrebarea 1 este disponibilă și folosește 100% datele încărcate în pagina anterioară.';
       }
 
-      document.querySelector('.q-card.available')?.addEventListener('click', handleQuestion1);
+      document.querySelectorAll('.q-card.available').forEach(card => {
+        card.addEventListener('click', () => {
+          const q = Number(card.getAttribute('data-q'));
+          if(q === 1) handleQuestion1(card);
+          if(q === 2) handleQuestion2(card);
+        });
+      });
     }
 
-    function handleQuestion1(){
-      const card = document.querySelector('.q-card.available');
+    function handleQuestion1(cardArg){
+      const card = cardArg || document.querySelector('.q-card.available[data-q="1"]');
       const box = document.getElementById('details-q1');
       const analysis = getAnalysis();
       if(!box || !analysis?.chartRows?.length) return;
@@ -276,8 +286,8 @@
       ];
       if(hasProd) datasets.splice(1,0,{label:'Producție locală',data:sampled.map(r=>r.productionKwh),borderColor:'#2563eb',backgroundColor:'rgba(37,99,235,.08)',fill:false,tension:.28,pointRadius:0,borderWidth:2});
 
-      if(activeChart) activeChart.destroy();
-      activeChart = new Chart(document.getElementById('question1Chart'), {
+      if(activeCharts.q1) activeCharts.q1.destroy();
+      activeCharts.q1 = new Chart(document.getElementById('question1Chart'), {
         type:'line',
         data:{labels:sampled.map(r=>r.label), datasets},
         options:{
@@ -295,6 +305,109 @@
           <div class="cost">${fmt(x.gridCostRon)} lei</div>
         </div>
       `).join('');
+    }
+
+    function handleQuestion2(cardArg){
+      const card = cardArg || document.querySelector('.q-card.available[data-q="2"]');
+      const box = document.getElementById('details-q2');
+      const analysis = getAnalysis();
+      if(!box || !analysis?.chartRows?.length) return;
+
+      card.classList.add('loading');
+      card.classList.remove('done');
+      box.classList.add('open');
+      box.innerHTML = `
+        <div class="loading-panel">
+          <div class="spinner"></div>
+          <div>Se analizează producția locală, autoconsumul și surplusul neutilizat...</div>
+        </div>
+      `;
+
+      window.setTimeout(() => {
+        renderQuestion2Result(box, analysis);
+        card.classList.remove('loading');
+        card.classList.add('done');
+      }, 850);
+    }
+
+    function renderQuestion2Result(box, data){
+      const rows = data.chartRows || [];
+      const step = Math.max(1, Math.ceil(rows.length / 280));
+      const sampled = rows.filter((_, i) => i % step === 0).map(r => {
+        const production = Number(r.productionKwh || 0);
+        const consumption = Number(r.consumptionKwh || 0);
+        const self = Math.min(production, consumption);
+        const surplus = Math.max(production - consumption, Number(r.surplusKwh || 0), 0);
+        return {...r, productionKwh:production, selfConsumedKwh:self, surplusKwh:surplus};
+      });
+
+      const totals = rows.reduce((acc, r) => {
+        const production = Number(r.productionKwh || 0);
+        const consumption = Number(r.consumptionKwh || 0);
+        const self = Math.min(production, consumption);
+        const surplus = Math.max(production - consumption, Number(r.surplusKwh || 0), 0);
+        acc.production += production;
+        acc.self += self;
+        acc.surplus += surplus;
+        return acc;
+      }, {production:0, self:0, surplus:0});
+
+      const selfRate = totals.production > 0 ? totals.self / totals.production * 100 : 0;
+      const topSurplus = rows.slice().map(r => {
+        const production = Number(r.productionKwh || 0);
+        const consumption = Number(r.consumptionKwh || 0);
+        const surplus = Math.max(production - consumption, Number(r.surplusKwh || 0), 0);
+        return {...r, surplusKwh:surplus};
+      }).filter(r => r.surplusKwh > 0).sort((a,b)=>b.surplusKwh - a.surplusKwh).slice(0,5);
+
+      box.innerHTML = `
+        <div class="result-head">
+          <div>
+            <h2>Când nu valorific optim energia produsă local?</h2>
+            <p>Răspuns calculat din consum + producție locală/PV. Zonele cu surplus mare arată când energia produsă nu este consumată local.</p>
+          </div>
+        </div>
+        <div class="answer-summary" id="answerSummaryQ2">
+          <div class="summary-card"><strong>${fmt(totals.production)} kWh</strong><span>producție locală totală</span></div>
+          <div class="summary-card"><strong>${fmt(totals.self)} kWh</strong><span>energie consumată local</span></div>
+          <div class="summary-card"><strong>${fmt(totals.surplus)} kWh</strong><span>surplus / export estimat · autoconsum ${fmt(selfRate,1)}%</span></div>
+        </div>
+        <div class="chart-wrap"><canvas id="question2Chart"></canvas></div>
+        <div class="top-list" id="topSurplusIntervals"></div>
+      `;
+
+      if(activeCharts.q2) activeCharts.q2.destroy();
+      activeCharts.q2 = new Chart(document.getElementById('question2Chart'), {
+        type:'line',
+        data:{
+          labels:sampled.map(r=>r.label),
+          datasets:[
+            {label:'Producție locală',data:sampled.map(r=>r.productionKwh),borderColor:'#2563eb',backgroundColor:'rgba(37,99,235,.08)',fill:false,tension:.28,pointRadius:0,borderWidth:2},
+            {label:'Autoconsum',data:sampled.map(r=>r.selfConsumedKwh),borderColor:'#07943f',backgroundColor:'rgba(7,148,63,.12)',fill:true,tension:.28,pointRadius:0,borderWidth:2.2},
+            {label:'Surplus / export',data:sampled.map(r=>r.surplusKwh),borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,.12)',fill:true,tension:.28,pointRadius:0,borderWidth:2}
+          ]
+        },
+        options:{
+          responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
+          plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${Number(ctx.parsed.y||0).toLocaleString('ro-RO',{maximumFractionDigits:2})} kWh`}}},
+          scales:{x:{ticks:{maxTicksLimit:9}}, y:{beginAtZero:true,title:{display:true,text:'kWh / interval'}}}
+        }
+      });
+
+      const target = document.getElementById('topSurplusIntervals');
+      target.innerHTML = topSurplus.length ? topSurplus.map((x, i) => `
+        <div class="top-row">
+          <div class="rank">${i+1}</div>
+          <div><strong>${esc(x.localLabel)}</strong><small>Producție: ${fmt(x.productionKwh)} kWh · consum: ${fmt(x.consumptionKwh)} kWh</small></div>
+          <div class="cost" style="color:#b45309">${fmt(x.surplusKwh)} kWh surplus</div>
+        </div>
+      `).join('') : `
+        <div class="top-row">
+          <div class="rank">✓</div>
+          <div><strong>Nu am detectat surplus local relevant</strong><small>Producția este consumată local în intervalele analizate.</small></div>
+          <div class="cost" style="color:#07943f">OK</div>
+        </div>
+      `;
     }
 
     // Momentan butonul Continuă nu face nimic.
