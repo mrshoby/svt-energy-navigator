@@ -4,6 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <!-- SVT V46 EXACT PVGIS -->
+  <!-- SVT V48 Q2 INLINE PRODUCTION UPLOAD -->
   <title>Întrebări disponibile | SVT Energy Navigator</title>
   <meta name="description" content="Alege întrebarea care poate fi răspunsă pe baza datelor încărcate."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -152,6 +153,49 @@
       .q-card.is-long .q-title,.q-card.is-xlong .q-title{font-size:12.8px !important}
     }
 
+  
+    /* v48 Q2 incomplete-data action */
+    .badge.incomplete{
+      background:#fff7ed !important;
+      border-color:#fed7aa !important;
+      color:#b45309 !important;
+      right:18px !important;
+      height:26px !important;
+      padding:0 10px !important;
+    }
+    .q-card.needs-data{
+      cursor:pointer !important;
+      border-color:#f59e0b !important;
+      background:linear-gradient(135deg,rgba(245,158,11,.08),rgba(255,255,255,.98)) !important;
+      box-shadow:0 14px 32px rgba(245,158,11,.10) !important;
+    }
+    .q2-upload-box{
+      border:1px dashed #b9d7c5;
+      background:linear-gradient(180deg,#fbfefc,#f6fbf8);
+      border-radius:16px;
+      padding:16px;
+      display:grid;
+      gap:12px;
+    }
+    .q2-upload-title{margin:0;color:var(--navy);font-size:18px;font-weight:1000;letter-spacing:-.025em}
+    .q2-upload-text{margin:0;color:var(--muted);font-size:13px;line-height:1.45;font-weight:700}
+    .q2-drop{
+      min-height:118px;
+      border:1.5px dashed #b8d8c5;
+      border-radius:15px;
+      background:#fff;
+      display:grid;
+      place-items:center;
+      text-align:center;
+      padding:16px;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+    .q2-drop.drag,.q2-drop:hover{border-color:var(--green);background:#f6fcf8}
+    .q2-drop strong{display:block;color:var(--navy);font-size:16px;font-weight:1000;margin-bottom:5px}
+    .q2-drop span{display:block;color:var(--muted);font-size:12px;font-weight:750}
+    .q2-file-name{color:#0b6f37;font-size:12px;font-weight:900;line-height:1.35}
+
   </style>
 </head>
 <body>
@@ -170,6 +214,8 @@
     </footer>
   </main>
 
+  <script src="./assets/js/svt-load-curve-profiles.js?v=48-q2-inline-upload"></script>
+  <script src="./assets/js/svt-analysis-engine.js?v=48-q2-inline-upload"></script>
   <script>
     const allQuestions = [
       {id:1, icon:'📈', title:'Când consum din rețea energie scumpă?', groups:['electric'], active:true},
@@ -217,20 +263,22 @@
 
       grid.innerHTML = questions.map((q, idx) => {
         const hasPvData = !!(ctx.hasProduction || analysis?.meta?.hasProduction || (analysis?.chartRows || []).some(r => Number(r.productionKwh || 0) > 0));
-        const isActive = mode === 'electric' && analysis?.chartRows?.length && (q.id === 1 || (q.id === 2 && hasPvData));
+        const isAvailable = mode === 'electric' && analysis?.chartRows?.length && (q.id === 1 || q.id === 2);
+        const needsData = mode === 'electric' && analysis?.chartRows?.length && q.id === 2 && !hasPvData;
+        const isActive = isAvailable;
         return `
           <div class="q-item" data-q-item="${q.id}">
-            <button class="q-card ${q.title.length > 92 ? 'is-xlong' : q.title.length > 64 ? 'is-long' : ''} ${isActive ? 'available' : 'soon'}" type="button" data-q="${q.id}" ${isActive ? '' : 'disabled'}>
+            <button class="q-card ${q.title.length > 92 ? 'is-xlong' : q.title.length > 64 ? 'is-long' : ''} ${needsData ? 'needs-data' : isActive ? 'available' : 'soon'}" type="button" data-q="${q.id}" ${isActive ? '' : 'disabled'}>
               <span class="q-no">${displayNumber(idx)}</span>
               <span class="q-title">${esc(q.title)}</span>
-              ${isActive ? '<span class="answer-slot" title="Aici apare bifa după răspuns">✓</span>' : '<span class="badge">În curând</span>'}
+              ${needsData ? '<span class="badge incomplete">Date incomplete · adaugă producție</span>' : isActive ? '<span class="answer-slot" title="Aici apare bifa după răspuns">✓</span>' : '<span class="badge">În curând</span>'}
             </button>
             ${isActive ? `<div class="details" id="details-q${q.id}"></div>` : ''}
           </div>
         `;
       }).join('');
 
-      document.querySelectorAll('.q-card.available').forEach(card => {
+      document.querySelectorAll('.q-card.available, .q-card.needs-data').forEach(card => {
         card.addEventListener('click', () => {
           const q = Number(card.getAttribute('data-q'));
           if(q === 1) handleQuestion1(card);
@@ -324,14 +372,25 @@
     }
 
     function handleQuestion2(cardArg){
-      const card = cardArg || document.querySelector('.q-card.available[data-q="2"]');
+      const card = cardArg || document.querySelector('.q-card[data-q="2"]');
       const box = document.getElementById('details-q2');
       const analysis = getAnalysis();
       if(!box || !analysis?.chartRows?.length) return;
 
+      const hasPvData = !!(getContext().hasProduction || analysis?.meta?.hasProduction || (analysis?.chartRows || []).some(r => Number(r.productionKwh || 0) > 0));
+
       card.classList.add('loading');
       card.classList.remove('done');
       box.classList.add('open');
+
+      if(!hasPvData){
+        window.setTimeout(() => {
+          card.classList.remove('loading');
+          renderQuestion2Upload(box, card);
+        }, 450);
+        return;
+      }
+
       box.innerHTML = `
         <div class="loading-panel">
           <div class="spinner"></div>
@@ -344,6 +403,128 @@
         card.classList.remove('loading');
         card.classList.add('done');
       }, 850);
+    }
+
+    function renderQuestion2Upload(box, card){
+      box.innerHTML = `
+        <div class="q2-upload-box">
+          <div>
+            <h2 class="q2-upload-title">Date incomplete pentru această întrebare</h2>
+            <p class="q2-upload-text">Pentru „Când nu valorific optim energia produsă local?” este necesar un fișier de producție locală/PV. Încarcă PVGIS Timeseries, export inverter sau CSV/XLSX cu producție pe interval.</p>
+          </div>
+          <label class="q2-drop" id="q2Drop">
+            <input id="q2ProductionInput" type="file" multiple hidden accept=".csv,.txt,.xlsx,.xls,.xlsm,.html,.htm">
+            <span>
+              <strong>Încarcă fișier / fișiere producție locală</strong>
+              <span>PVGIS Timeseries, export inverter, CSV/XLSX/HTML</span>
+            </span>
+          </label>
+          <div class="q2-file-name" id="q2FileName"></div>
+        </div>
+      `;
+
+      const drop = document.getElementById('q2Drop');
+      const input = document.getElementById('q2ProductionInput');
+      const fileName = document.getElementById('q2FileName');
+      ['dragenter','dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('drag'); }));
+      ['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('drag'); }));
+      drop.addEventListener('click', e => { if(e.target !== input) input.click(); });
+      drop.addEventListener('drop', async e => {
+        e.preventDefault();
+        const files = Array.from(e.dataTransfer.files || []);
+        if(files.length) await processInlineProduction(files, fileName, box, card);
+      });
+      input.addEventListener('change', async e => {
+        const files = Array.from(e.target.files || []);
+        if(files.length) await processInlineProduction(files, fileName, box, card);
+      });
+    }
+
+    async function processInlineProduction(files, fileNameEl, box, card){
+      try{
+        fileNameEl.textContent = files.length === 1 ? `Fișier selectat: ${files[0].name}` : `Fișiere selectate (${files.length}): ${files.map(f=>f.name).join(', ')}`;
+        box.innerHTML = `
+          <div class="loading-panel">
+            <div class="spinner"></div>
+            <div>Se citește producția locală și se aliniază peste curba de consum...</div>
+          </div>
+        `;
+
+        const currentDataset = JSON.parse(sessionStorage.getItem('svtDataset') || '{}');
+        if(!currentDataset?.rows?.length) throw new Error('Nu există curba de consum salvată. Revino la pagina de încărcare și încarcă întâi consumul electric.');
+
+        const tariff = Number(currentDataset.meta?.fixedPriceRonKwh || getContext().fixedTariffRonKwh || 0.75);
+        const datasets = [];
+        for(const file of files){
+          const ds = await SVTLoadCurveProfiles.parseFile(file, {mode:'production', fixedPriceRonKwh:tariff});
+          datasets.push(ds);
+        }
+
+        const productionDataset = mergeInlineProductionDatasets(datasets, tariff);
+        const merged = SVTAnalysisEngine.mergeProduction(currentDataset, productionDataset);
+        merged.meta.fixedPriceRonKwh = tariff;
+        merged.meta.productionFileNames = productionDataset.meta.fileNames || files.map(f=>f.name);
+
+        const updatedAnalysis = SVTAnalysisEngine.analyzeQuestion1(merged, {fixedTariffRonKwh:tariff});
+        updatedAnalysis.meta.loadMethod = currentDataset.meta?.sourceProfile || getContext().loadMethod || 'file';
+        updatedAnalysis.meta.hasProduction = true;
+        updatedAnalysis.meta.productionFileNames = merged.meta.productionFileNames;
+
+        const ctx = getContext();
+        ctx.hasProduction = true;
+        ctx.productionFileCount = files.length;
+        ctx.createdAt = new Date().toISOString();
+
+        sessionStorage.setItem('svtDataset', JSON.stringify(merged));
+        sessionStorage.setItem('svtAnalysis', JSON.stringify(updatedAnalysis));
+        sessionStorage.setItem('svtNavigatorContext', JSON.stringify(ctx));
+        localStorage.setItem('svtNavigatorContext', JSON.stringify(ctx));
+
+        renderQuestion2Result(box, updatedAnalysis);
+        card.classList.remove('loading','needs-data');
+        card.classList.add('available','done');
+        const badge = card.querySelector('.badge.incomplete');
+        if(badge) badge.outerHTML = '<span class="answer-slot" title="Răspuns calculat">✓</span>';
+      } catch(err){
+        console.error(err);
+        box.innerHTML = `
+          <div class="q2-upload-box">
+            <h2 class="q2-upload-title">Nu am putut procesa producția</h2>
+            <p class="q2-upload-text">${esc(err.message || 'Fișierul de producție nu a putut fi citit.')}</p>
+            <button class="btn back" type="button" onclick="renderQuestion2Upload(document.getElementById('details-q2'), document.querySelector('.q-card[data-q=&quot;2&quot;]'))">Încearcă alt fișier</button>
+          </div>
+        `;
+        card.classList.remove('loading');
+      }
+    }
+
+    function mergeInlineProductionDatasets(datasets, tariff){
+      const map = new Map();
+      const fileNames = [];
+      for(const ds of datasets){
+        if(ds.meta?.fileName) fileNames.push(ds.meta.fileName);
+        for(const r of ds.rows || []){
+          const t = new Date(r.timestamp).getTime();
+          if(!Number.isFinite(t)) continue;
+          const key = String(t);
+          const d = new Date(t);
+          const existing = map.get(key) || {
+            timestamp:d.toISOString(),
+            localLabel:d.toLocaleString('ro-RO',{dateStyle:'short',timeStyle:'short'}),
+            hour:d.getHours(),
+            minute:d.getMinutes(),
+            electricKwh:0,
+            electricExportKwh:0,
+            thermalKwh:0,
+            pvKwh:0,
+            priceRonKwh:tariff
+          };
+          existing.pvKwh += Number(r.pvKwh || r.electricKwh || 0);
+          map.set(key, existing);
+        }
+      }
+      const rows = Array.from(map.values()).sort((a,b)=>new Date(a.timestamp)-new Date(b.timestamp));
+      return {rows, meta:{fileName:fileNames.length > 1 ? `${fileNames.length} fișiere producție` : (fileNames[0] || 'producție locală'), fileNames, fixedPriceRonKwh:tariff, sourceProfile:'inline_production_upload'}};
     }
 
     function renderQuestion2Result(box, data){

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <!-- SVT V47 ALIGN PVGIS TO CONSUMPTION PERIOD -->
+  <!-- SVT V48 REQUIRED CONSUMPTION BEFORE CONTINUE -->
   <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
   <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -286,8 +286,8 @@
     </main>
   </div>
 
-  <script src="./assets/js/svt-load-curve-profiles.js?v=47-align-pvgis"></script>
-  <script src="./assets/js/svt-analysis-engine.js?v=47-align-pvgis"></script>
+  <script src="./assets/js/svt-load-curve-profiles.js?v=48-q2-inline-upload"></script>
+  <script src="./assets/js/svt-analysis-engine.js?v=48-q2-inline-upload"></script>
   <script>
     const tabElectric = document.getElementById('tabElectric');
     const tabTermic = document.getElementById('tabTermic');
@@ -479,7 +479,7 @@
         targetNameEl.textContent = fileListText(arr, 'Fișier de producție selectat', 'Fișiere de producție selectate');
         productionBox.classList.remove('embedded');
         embeddedProductionDetected = false;
-        showMessage('ok', `${arr.length === 1 ? 'Fișier de producție selectat' : 'Fișiere de producție selectate'}: ${arr.length}. Datele PVGIS/inverter vor fi unite cronologic.`);
+        showMessage(consumptionFiles.length ? 'ok' : 'warn', `${arr.length === 1 ? 'Fișier de producție selectat' : 'Fișiere de producție selectate'}: ${arr.length}. Producția este opțională; pentru Continuă este obligatoriu și fișierul de consum electric.`);
       }
 
       if(targetType === 'invoice'){
@@ -588,6 +588,10 @@
         let dataset;
 
         if(currentTab === 'electric' && loadMethod === 'file'){
+          if(!consumptionFiles || !consumptionFiles.length){
+            showMessage('err', 'Pentru a continua este obligatoriu să încarci fișierul / fișierele cu consumul electric. Fișierele de producție PVGIS/inverter sunt opționale și nu pot înlocui curba de consum.');
+            return;
+          }
           dataset = await parseAndMergeFiles(consumptionFiles, 'electric', tariff);
         } else {
           dataset = buildInvoiceDataset();
