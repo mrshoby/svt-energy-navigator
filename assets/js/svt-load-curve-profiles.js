@@ -147,7 +147,7 @@
 
 
     // PVGIS compact timestamp: YYYYMMDD:HHMM or YYYYMMDD:HHMMSS
-    m = s.match(/^(\d{4})(\d{2})(\d{2})[:\s]?(\d{2})(\d{2})(?:\d{2})?$/);
+    m = s.match(/^(\d{4})(\d{2})(\d{2})\s*[:_\-]?\s*(\d{2})(\d{2})(?:\d{2})?$/);
     if (m) {
       return new Date(+m[1], +m[2]-1, +m[3], +m[4], +m[5], 0);
     }
@@ -157,9 +157,23 @@
   }
 
   function detectDelimiter(text){
-    const first = text.split(/\r?\n/).find(l => l.trim()) || "";
+    const lines = String(text || "").split(/\r?\n/).slice(0,80).filter(l => l.trim());
     const candidates = [",",";","\t","|"];
-    return candidates.map(d => ({d, n:(first.match(new RegExp("\\"+d,"g"))||[]).length})).sort((a,b)=>b.n-a.n)[0].d;
+    const scores = candidates.map(d => {
+      let score = 0, useful = 0;
+      for (const line of lines){
+        const trimmed = line.trim();
+        if (!trimmed || /^#/.test(trimmed)) continue;
+        const count = (trimmed.match(new RegExp("\\"+d,"g")) || []).length;
+        if (count > 0) {
+          useful++;
+          score += count;
+          if (/time|data|ora|p\b|p\s*\[|power|putere|product|produc|pv|solar|pac|yield/i.test(trimmed)) score += count * 2;
+        }
+      }
+      return {d, score, useful};
+    }).sort((a,b) => (b.score - a.score) || (b.useful - a.useful));
+    return scores[0]?.score > 0 ? scores[0].d : ",";
   }
 
   function parseCsvText(text){
@@ -184,7 +198,20 @@
       row.push(cell);
       if (row.some(v => String(v).trim() !== "")) rows.push(row);
     }
-    return cleanAoa(rows);
+    let cleaned = cleanAoa(rows);
+    const wideRows = cleaned.filter(r => r.length > 1).length;
+    if (wideRows === 0) {
+      const rawLines = String(text || "").split(/\r?\n/).filter(l => l.trim());
+      const altDelims = [";", "\t", ",", "|"];
+      for (const d of altDelims) {
+        const split = rawLines.map(l => l.split(d).map(x => x.trim())).filter(r => r.some(v => v !== ""));
+        if (split.some(r => r.length >= 2 && r.some(c => /time|data|ora/i.test(c)) && r.some(c => /^p(\s|\[|$)|power|putere|product|produc|pv|solar|pac|yield/i.test(c)))) {
+          cleaned = cleanAoa(split);
+          break;
+        }
+      }
+    }
+    return cleaned;
   }
 
   function aoaToObjects(aoa, headerRow){
@@ -436,12 +463,20 @@
 
   function looksLikeProductionHeader(row){
     const n = (row || []).map(norm);
-    const hasTime = n.some(h => /^(time|data|ora|timestamp|datetime|data ora|data\/ora)$/.test(h) || /(data.?ora|timestamp|datetime)/.test(h));
+    const joined = n.join(" ");
+    const hasTime = n.some(h =>
+      /^(time|data|ora|timestamp|datetime|data ora|data\/ora)$/.test(h) ||
+      /(data.?ora|timestamp|datetime)/.test(h) ||
+      /^time\b/.test(h) ||
+      /time\s*\(/.test(h)
+    );
     const hasPv = n.some(h =>
       /^(p|p_ac|pac|power|putere)$/.test(h) ||
-      /(pvgis|pv|solar|fotovoltaic|productie|producție|generation|generated|yield|energie produsa|energia produsa|eac|pac|p_ac|active power|ac power|inverter power|putere activa|putere produsa)/.test(h)
+      /^p\s*(\[|\(|$)/.test(h) ||
+      /(pvgis|pv|solar|fotovoltaic|productie|producție|produc|generation|generated|yield|energie produsa|energia produsa|eac|pac|p_ac|active power|ac power|inverter power|putere activa|putere produsa|energie activa produsa|produsa)/.test(h)
     );
-    return hasTime && hasPv;
+    const pvgisCompact = /\btime\b/.test(joined) && (/\bp\b/.test(joined) || /\bp\s*\[/.test(joined)) && /(g\(i\)|h_sun|t2m|ws10m|int)/.test(joined);
+    return (hasTime && hasPv) || pvgisCompact;
   }
 
   function findProductionHeaderRow(aoa){
@@ -453,7 +488,12 @@
 
   function pickProductionColumns(headers){
     const n = headers.map(norm);
-    let timestamp = n.findIndex(h => /^(time|timestamp|datetime)$/.test(h) || /(data.?ora|data\/ora|datetime|timestamp)/.test(h));
+    let timestamp = n.findIndex(h =>
+      /^(time|timestamp|datetime)$/.test(h) ||
+      /^time\b/.test(h) ||
+      /time\s*\(/.test(h) ||
+      /(data.?ora|data\/ora|datetime|timestamp)/.test(h)
+    );
     let date = n.findIndex(h => h === "data" || /^data\b/.test(h));
     let hour = n.findIndex(h => h === "ora" || /^ora\b/.test(h) || h === "hour");
     if (timestamp < 0 && date >= 0) timestamp = date;
@@ -466,12 +506,16 @@
       if (i === timestamp || i === date || i === hour) continue;
 
       let score = 0;
-      if (/^(p|p_ac|pac)$/.test(h)) score += 12;                 // PVGIS P / inverter PAC
-      if (/(pvgis|pv|solar|fotovoltaic)/.test(h)) score += 8;
-      if (/(productie|produc|generation|generated|energie produsa|energia produsa|yield)/.test(h)) score += 8;
-      if (/(active power|ac power|inverter power|putere activa|putere produsa|putere)/.test(h)) score += 5;
+      if (/^(p|p_ac|pac)$/.test(h)) score += 20;
+      if (/^p\s*(\[|\(|$)/.test(h)) score += 20;
+      if (/(pvgis|pv|solar|fotovoltaic)/.test(h)) score += 10;
+      if (/(productie|producție|produc|generation|generated|energie produsa|energia produsa|yield|produsa|energie activa produsa)/.test(h)) score += 10;
+      if (/(active power|ac power|inverter power|putere activa|putere produsa|putere)/.test(h)) score += 7;
+      if (/(pac|p_ac|eac)/.test(h)) score += 8;
       if (/(kwh|mwh|wh|kw|w)/.test(h)) score += 2;
-      if (/(consum|import|ea\+|reactiv|kvar|tensiune|voltage|curent|current|temperatura|ghi|g\(i\)|h_sun|wind|int)/.test(h)) score -= 7;
+
+      if (/(g\(i\)|gb\(i\)|gd\(i\)|gr\(i\)|ghi|dni|dhi|h_sun|t2m|ws10m|temp|temperatura|wind|int|int\.|intensity|radia|irradiance)/.test(h)) score -= 12;
+      if (/(consum|import|ea\+|reactiv|kvar|tensiune|voltage|curent|current)/.test(h)) score -= 9;
 
       if (score > 0) candidates.push({i, score, h});
     }
@@ -483,7 +527,7 @@
     if (/\bmwh\b/.test(headerText)) { unit = "MWh"; multiplier = 1000; }
     else if (/\bwh\b/.test(headerText) && !/\bkwh\b/.test(headerText)) { unit = "Wh"; multiplier = 1/1000; }
     else if (/\bkw\b/.test(headerText) && !/\bkwh\b/.test(headerText)) { unit = "kW"; multiplier = null; }
-    else if ((/^(p|p_ac|pac)$/.test(headerText) || /\bw\b/.test(headerText)) && !/\bkwh\b/.test(headerText)) { unit = "W"; multiplier = null; }
+    else if ((/^p\s*(\[|\(|$)/.test(headerText) || /^(p|p_ac|pac)$/.test(headerText) || /\bw\b/.test(headerText)) && !/\bkwh\b/.test(headerText)) { unit = "W"; multiplier = null; }
 
     return {timestamp, date, hour, pv, unit, multiplier};
   }
@@ -543,9 +587,9 @@
         sourceRow:x.sourceRow,
         productionOnly:true
       };
-    }).filter(r => r.pvKwh > 0);
+    });
 
-    if (rows.length < 2) return null;
+    if (rows.length < 2 || !rows.some(r => r.pvKwh > 0)) return null;
     return finishDataset(rows, {...ctx, profile: /^timeseries/i.test(ctx.fileName||"") || /pvgis/.test(norm(ctx.fileName||"")) ? "pvgis_timeseries_production" : "production_timeseries_generic", unit:cols.unit, headerRow:headerRow+1});
   }
 
