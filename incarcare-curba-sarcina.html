@@ -83,7 +83,7 @@
     .inline-text{margin-top:3px;font-size:12px;color:var(--muted);line-height:1.45}
     .adv{display:none}
     .adv.visible,.production-box.visible,.invoice-box.visible{display:block}
-    .production-box,.invoice-box{display:none;margin-top:18px}
+    .production-box,.invoice-box{display:none;margin-top:18px}.production-box.embedded{position:relative}.production-box.embedded #productionDrop{opacity:.38;pointer-events:none}.production-existing-banner{display:none;position:absolute;inset:10px;z-index:5;pointer-events:none;align-items:center;justify-content:center;transform:rotate(-15deg);font-size:22px;line-height:1.15;font-weight:1000;letter-spacing:.03em;color:#067436;text-align:center;text-transform:uppercase;text-shadow:0 2px 0 rgba(255,255,255,.75)}.production-box.embedded .production-existing-banner{display:flex}
     .mini-title{margin:0 0 12px;color:var(--navy);font-size:15px;font-weight:900}
     .actions{display:flex;justify-content:space-between;gap:18px;margin-top:26px;padding-top:22px;border-top:1px solid #e7edf4}
     .btn{min-width:190px;height:52px;border-radius:12px;font-size:16px;font-weight:900;font-family:inherit;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;cursor:pointer}
@@ -228,6 +228,7 @@
 
             <div class="production-box" id="productionBox">
               <h3 class="mini-title">Producție locală (opțional)</h3>
+              <div class="production-existing-banner" id="productionExistingBanner">DATE PRODUCȚIE EXISTENTE ÎN FIȘIERUL DE CONSUM ÎNCĂRCAT MAI SUS</div>
               <div class="upload-zone" id="productionDrop" style="min-height:170px">
                 <input id="productionInput" type="file" hidden accept=".csv,.txt,.xlsx,.xls,.xlsm,.html,.htm">
                 <div class="upload-ico">☀</div>
@@ -318,6 +319,7 @@
     let consumptionFile = null;
     let productionFile = null;
     let invoiceFile = null;
+    let embeddedProductionDetected = false;
 
     function showMessage(type, text){ message.className = 'message ' + type; message.textContent = text; }
 
@@ -341,15 +343,42 @@
       validateForm();
     }
 
-    function handlePickedFile(file, targetNameEl, targetZoneEl, targetType){
+    async function handlePickedFile(file, targetNameEl, targetZoneEl, targetType){
       if(!file) return;
       if(file.size > 10 * 1024 * 1024){ showMessage('err', 'Fișierul este prea mare. Dimensiunea maximă permisă este 10 MB.'); return; }
       targetNameEl.textContent = `Fișier selectat: ${file.name}`;
       targetZoneEl.classList.add('has-file');
-      if(targetType === 'consumption') consumptionFile = file;
-      if(targetType === 'production') productionFile = file;
-      if(targetType === 'invoice') invoiceFile = file;
-      showMessage('ok', `Fișier selectat: ${file.name}`);
+      if(targetType === 'consumption') {
+        consumptionFile = file;
+        embeddedProductionDetected = false;
+        try {
+          const previewDataset = await SVTLoadCurveProfiles.parseFile(file, {mode:'electric', fixedPriceRonKwh:Number(fixedTariff.value || 0.75)});
+          embeddedProductionDetected = !!(previewDataset?.meta?.productionDetectedInMainFile || previewDataset?.rows?.some(r => Number(r.pvKwh || 0) > 0));
+          if(embeddedProductionDetected){
+            hasProduction.checked = true;
+            productionBox.classList.add('visible','embedded');
+            const banner = document.getElementById('productionExistingBanner');
+            if(banner) banner.textContent = 'DATE PRODUCȚIE EXISTENTE ÎN FIȘIERUL DE CONSUM ÎNCĂRCAT MAI SUS';
+            showMessage('ok', `Fișier selectat: ${file.name}. Am detectat și date de producție locală în acest fișier.`);
+          } else {
+            productionBox.classList.remove('embedded');
+            if(!hasProduction.checked) productionBox.classList.remove('visible');
+            showMessage('ok', `Fișier selectat: ${file.name}`);
+          }
+        } catch(e) {
+          showMessage('ok', `Fișier selectat: ${file.name}`);
+        }
+      }
+      if(targetType === 'production') {
+        productionFile = file;
+        productionBox.classList.remove('embedded');
+        embeddedProductionDetected = false;
+        showMessage('ok', `Fișier de producție selectat: ${file.name}`);
+      }
+      if(targetType === 'invoice') {
+        invoiceFile = file;
+        showMessage('ok', `Factură selectată: ${file.name}`);
+      }
       validateForm();
     }
 
@@ -448,9 +477,14 @@
           dataset = buildInvoiceDataset();
         }
 
-        if(hasProduction.checked && productionFile){
-          const productionDataset = await SVTLoadCurveProfiles.parseFile(productionFile, {mode:'electric', fixedPriceRonKwh:tariff});
+        if(hasProduction.checked && productionFile && !embeddedProductionDetected){
+          const productionDataset = await SVTLoadCurveProfiles.parseFile(productionFile, {mode:'production', fixedPriceRonKwh:tariff});
           dataset = SVTAnalysisEngine.mergeProduction(dataset, productionDataset);
+        }
+
+        if(embeddedProductionDetected || dataset?.meta?.productionDetectedInMainFile || dataset?.rows?.some(r => Number(r.pvKwh || 0) > 0)){
+          dataset.meta.hasEmbeddedProduction = true;
+          dataset.meta.productionDetectedInMainFile = true;
         }
 
         dataset.meta.fixedPriceRonKwh = tariff;
@@ -464,7 +498,7 @@
           question:analysis.question,
           fixedTariffRonKwh:tariff,
           loadMethod,
-          hasProduction:analysis.meta.hasProduction,
+          hasProduction:analysis.meta.hasProduction || !!dataset.meta.hasEmbeddedProduction,
           invoiceFileName:invoiceFile ? invoiceFile.name : null
         }));
 
@@ -473,7 +507,7 @@
           loadMethod,
           hasElectricData: currentTab === 'electric',
           hasThermalData: currentTab === 'termic',
-          hasProduction: !!hasProduction.checked && !!productionFile,
+          hasProduction: !!((hasProduction.checked && productionFile) || embeddedProductionDetected),
           hasInvoiceOnly: loadMethod === 'invoice',
           hasHourlyFile: loadMethod === 'file' && !!consumptionFile,
           fixedTariffRonKwh: tariff,
@@ -499,7 +533,13 @@
     tabTermic.addEventListener('click', () => setTab('termic'));
     methodFileCard.addEventListener('click', () => setLoadMethod('file'));
     methodInvoiceCard.addEventListener('click', () => setLoadMethod('invoice'));
-    hasProduction.addEventListener('change', () => productionBox.classList.toggle('visible', hasProduction.checked));
+    hasProduction.addEventListener('change', () => {
+      productionBox.classList.toggle('visible', hasProduction.checked);
+      if(!hasProduction.checked){
+        productionBox.classList.remove('embedded');
+        embeddedProductionDetected = false;
+      }
+    });
     fixedTariff.addEventListener('input', validateForm);
     document.getElementById('invoiceConsumption').addEventListener('input', validateForm);
     document.getElementById('invoiceDays').addEventListener('input', validateForm);

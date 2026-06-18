@@ -35,7 +35,7 @@
     .subtitle{margin:7px 0 0;color:var(--muted);font-size:18px;line-height:1.25;font-weight:550}
     .context{margin-top:8px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
     .pill{height:32px;padding:0 12px;border-radius:999px;border:1px solid #dceee2;background:#f6faf8;color:#0b6f37;font-size:12px;font-weight:900;display:inline-flex;align-items:center}
-    .questions{display:grid;grid-template-columns:1fr;gap:12px;margin-top:6px}
+    .questions{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
     .q-item{display:block;width:100%}
     .q-card{position:relative;width:100%;height:72px;min-height:72px;padding:12px 150px 12px 82px;border:1px solid #e0e8f1;border-radius:16px;
       background:rgba(255,255,255,.95);box-shadow:var(--shadow);display:flex;align-items:center;text-align:left;color:var(--navy);overflow:hidden;
@@ -120,13 +120,10 @@
     <section aria-labelledby="trialTitle">
       <p class="kicker">SVT ENERGY NAVIGATOR</p>
       <h1 id="trialTitle">Alege întrebarea care te interesează cel mai mult</h1>
-      <p class="subtitle" id="subtitle">Îți afișăm doar întrebările relevante pentru datele încărcate.</p>
-      <div class="context" id="contextPills"></div>
+      
     </section>
 
     <section class="questions" id="questions" aria-label="Întrebări disponibile"></section>
-
-    <div class="info" id="infoBox"></div>
 
     <footer class="bottom">
       <a class="btn back" href="./incarcare-curba-sarcina.html">← Înapoi la date</a>
@@ -172,21 +169,12 @@
       const analysis = getAnalysis();
       const questions = relevantQuestions(ctx);
       const grid = document.getElementById('questions');
-      const pills = document.getElementById('contextPills');
-      const info = document.getElementById('infoBox');
 
       const modeLabel = mode === 'termic' ? 'Termic' : 'Electric';
       const dataLabel = mode === 'termic'
         ? (ctx.thermal?.annualValue ? `Consum termic: ${ctx.thermal.annualValue} ${ctx.thermal.unit || ''}` : 'Date termice de bază')
         : (ctx.hasHourlyFile ? 'Curba orară încărcată' : ctx.hasInvoiceOnly ? 'Factură lunară / estimare' : 'Date electrice');
       const prodLabel = ctx.hasProduction ? 'Producție locală inclusă' : 'Fără producție locală';
-
-      pills.innerHTML = `
-        <span class="pill">${modeLabel}</span>
-        <span class="pill">${dataLabel}</span>
-        ${mode === 'electric' ? `<span class="pill">${prodLabel}</span>` : ''}
-        ${ctx.fixedTariffRonKwh ? `<span class="pill">Tarif fix: ${Number(ctx.fixedTariffRonKwh).toLocaleString('ro-RO',{maximumFractionDigits:3})} lei/kWh</span>` : ''}
-      `;
 
       grid.innerHTML = questions.map((q, idx) => {
         const hasPvData = !!(ctx.hasProduction || analysis?.meta?.hasProduction || (analysis?.chartRows || []).some(r => Number(r.productionKwh || 0) > 0));
@@ -202,17 +190,6 @@
           </div>
         `;
       }).join('');
-
-      if(mode === 'termic'){
-        info.textContent = 'Ai ales modul Termic. Întrebările termice sunt renumerotate de la 1 și sunt afișate doar cele relevante pentru consum termic / flexibilitate / investiții. Momentan rămân în curând.';
-      } else if(!analysis?.chartRows?.length){
-        info.textContent = 'Ai ales modul Electric, dar nu există încă analiză salvată. Revino la pagina de date și încarcă fișierul orar sau introdu factura lunară.';
-      } else {
-        const hasPvInfo = !!(ctx.hasProduction || analysis?.meta?.hasProduction || (analysis?.chartRows || []).some(r => Number(r.productionKwh || 0) > 0));
-        info.textContent = hasPvInfo
-          ? 'Ai ales modul Electric cu producție locală/PV. Întrebările 1 și 2 sunt disponibile și folosesc datele încărcate în pagina anterioară.'
-          : 'Ai ales modul Electric. Întrebarea 1 este disponibilă și folosește 100% datele încărcate în pagina anterioară.';
-      }
 
       document.querySelectorAll('.q-card.available').forEach(card => {
         card.addEventListener('click', () => {

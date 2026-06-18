@@ -145,6 +145,13 @@
       return d;
     }
 
+
+    // PVGIS compact timestamp: YYYYMMDD:HHMM or YYYYMMDD:HHMMSS
+    m = s.match(/^(\d{4})(\d{2})(\d{2})[:\s]?(\d{2})(\d{2})(?:\d{2})?$/);
+    if (m) {
+      return new Date(+m[1], +m[2]-1, +m[3], +m[4], +m[5], 0);
+    }
+
     const d = new Date(s);
     return isNaN(d) ? null : d;
   }
@@ -426,6 +433,134 @@
     return finishDataset(rows, {...ctx, profile:"day_hour_cs_mas", unit:unit.unit, headerRow:headerRow+1, period});
   }
 
+
+  function looksLikeProductionHeader(row){
+    const n = (row || []).map(norm);
+    const hasTime = n.some(h => /^(time|data|ora|timestamp|datetime|data ora|data\/ora)$/.test(h) || /(data.?ora|timestamp|datetime)/.test(h));
+    const hasPv = n.some(h =>
+      /^(p|p_ac|pac|power|putere)$/.test(h) ||
+      /(pvgis|pv|solar|fotovoltaic|productie|producție|generation|generated|yield|energie produsa|energia produsa|eac|pac|p_ac|active power|ac power|inverter power|putere activa|putere produsa)/.test(h)
+    );
+    return hasTime && hasPv;
+  }
+
+  function findProductionHeaderRow(aoa){
+    for (let r=0; r<Math.min(80, aoa.length); r++){
+      if (looksLikeProductionHeader(aoa[r] || [])) return r;
+    }
+    return -1;
+  }
+
+  function pickProductionColumns(headers){
+    const n = headers.map(norm);
+    let timestamp = n.findIndex(h => /^(time|timestamp|datetime)$/.test(h) || /(data.?ora|data\/ora|datetime|timestamp)/.test(h));
+    let date = n.findIndex(h => h === "data" || /^data\b/.test(h));
+    let hour = n.findIndex(h => h === "ora" || /^ora\b/.test(h) || h === "hour");
+    if (timestamp < 0 && date >= 0) timestamp = date;
+
+    let pv = -1, unit = "kWh", multiplier = 1;
+    const candidates = [];
+
+    for (let i=0; i<n.length; i++){
+      const h = n[i];
+      if (i === timestamp || i === date || i === hour) continue;
+
+      let score = 0;
+      if (/^(p|p_ac|pac)$/.test(h)) score += 12;                 // PVGIS P / inverter PAC
+      if (/(pvgis|pv|solar|fotovoltaic)/.test(h)) score += 8;
+      if (/(productie|produc|generation|generated|energie produsa|energia produsa|yield)/.test(h)) score += 8;
+      if (/(active power|ac power|inverter power|putere activa|putere produsa|putere)/.test(h)) score += 5;
+      if (/(kwh|mwh|wh|kw|w)/.test(h)) score += 2;
+      if (/(consum|import|ea\+|reactiv|kvar|tensiune|voltage|curent|current|temperatura|ghi|g\(i\)|h_sun|wind|int)/.test(h)) score -= 7;
+
+      if (score > 0) candidates.push({i, score, h});
+    }
+
+    candidates.sort((a,b)=>b.score-a.score);
+    if (candidates.length) pv = candidates[0].i;
+
+    const headerText = n[pv] || "";
+    if (/\bmwh\b/.test(headerText)) { unit = "MWh"; multiplier = 1000; }
+    else if (/\bwh\b/.test(headerText) && !/\bkwh\b/.test(headerText)) { unit = "Wh"; multiplier = 1/1000; }
+    else if (/\bkw\b/.test(headerText) && !/\bkwh\b/.test(headerText)) { unit = "kW"; multiplier = null; }
+    else if ((/^(p|p_ac|pac)$/.test(headerText) || /\bw\b/.test(headerText)) && !/\bkwh\b/.test(headerText)) { unit = "W"; multiplier = null; }
+
+    return {timestamp, date, hour, pv, unit, multiplier};
+  }
+
+  function parseProductionProfile(aoa, ctx){
+    const headerRow = findProductionHeaderRow(aoa);
+    if (headerRow < 0) return null;
+
+    const headers = aoa[headerRow].map((h,i)=>String(h || `Coloana ${i+1}`).trim());
+    const cols = pickProductionColumns(headers);
+    if (cols.timestamp < 0 || cols.pv < 0) return null;
+
+    const raw = [];
+    for (let r=headerRow+1; r<aoa.length; r++){
+      const line = aoa[r] || [];
+      const d = parseDate(line[cols.timestamp], cols.hour >= 0 ? line[cols.hour] : undefined);
+      if (!d || isNaN(d)) continue;
+      const val = toNumber(line[cols.pv]);
+      if (!Number.isFinite(val)) continue;
+      raw.push({d, val, sourceRow:r+1});
+    }
+    if (raw.length < 2) return null;
+
+    const diffs = [];
+    for (let i=1; i<Math.min(raw.length, 200); i++){
+      const minutes = Math.round((raw[i].d - raw[i-1].d)/60000);
+      if (minutes > 0 && minutes <= 1440) diffs.push(minutes);
+    }
+    diffs.sort((a,b)=>a-b);
+    const intervalMinutes = diffs[Math.floor(diffs.length/2)] || 60;
+    const hours = intervalMinutes / 60;
+
+    const rows = raw.map(x => {
+      let kwh;
+      if (cols.multiplier === null) {
+        // PVGIS P and most inverter PAC exports are average power; convert to energy for interval.
+        // If values are very high, treat as W; if small, treat as kW.
+        const isProbablyW = Math.abs(x.val) > 1000 || cols.unit === "W";
+        kwh = isProbablyW ? (x.val / 1000) * hours : x.val * hours;
+      } else {
+        kwh = x.val * cols.multiplier;
+      }
+
+      kwh = Math.max(0, kwh || 0);
+      return {
+        timestamp:x.d.toISOString(),
+        localLabel:x.d.toLocaleString("ro-RO",{dateStyle:"short", timeStyle:"short"}),
+        hour:x.d.getHours(),
+        minute:x.d.getMinutes(),
+        electricKwh:0,
+        electricExportKwh:0,
+        reactiveInductiveKvarh:0,
+        reactiveCapacitiveKvarh:0,
+        thermalKwh:0,
+        pvKwh:kwh,
+        priceRonKwh:0,
+        sourceRow:x.sourceRow,
+        productionOnly:true
+      };
+    }).filter(r => r.pvKwh > 0);
+
+    if (rows.length < 2) return null;
+    return finishDataset(rows, {...ctx, profile: /^timeseries/i.test(ctx.fileName||"") || /pvgis/.test(norm(ctx.fileName||"")) ? "pvgis_timeseries_production" : "production_timeseries_generic", unit:cols.unit, headerRow:headerRow+1});
+  }
+
+  function markEmbeddedProduction(dataset){
+    if (!dataset || !dataset.rows) return dataset;
+    const hasPv = dataset.rows.some(r => Number(r.pvKwh || 0) > 0);
+    const hasExport = dataset.rows.some(r => Number(r.electricExportKwh || 0) > 0);
+    dataset.meta = dataset.meta || {};
+    dataset.meta.hasEmbeddedProduction = !!hasPv;
+    dataset.meta.hasExport = !!hasExport;
+    dataset.meta.productionDetectedInMainFile = !!(hasPv || hasExport);
+    return dataset;
+  }
+
+
   function parseInvoiceFallback(aoa, ctx){
     const text = norm(extractText(aoa,120));
     if (!/(cantfact|tipfact|pod|denclient|umf|sf\.per|inc\.per)/.test(text)) return null;
@@ -526,13 +661,13 @@
   function parseAoa(aoa, options={}){
     const cleaned = cleanAoa(aoa);
     const ctx = { fileName:options.fileName||"", sheetName:options.sheetName||"", mode:options.mode||"electric", gasFactor:options.gasFactor||10.55, fixedPriceRonKwh:options.fixedPriceRonKwh||0.75, contractPowerKw:options.contractPowerKw||100 };
-    const parsers = [parseLongTimestamp, parseSplitDateOra, parseMonthlyMatrix, parseDayHourCs, parseInvoiceFallback];
+    const parsers = ctx.mode === "production" ? [parseProductionProfile, parseLongTimestamp, parseSplitDateOra, parseMonthlyMatrix, parseDayHourCs] : [parseLongTimestamp, parseSplitDateOra, parseProductionProfile, parseMonthlyMatrix, parseDayHourCs, parseInvoiceFallback];
     const results = parsers.map(fn => {
       try { return fn(cleaned, ctx); } catch(e) { return null; }
     }).filter(Boolean);
-    if (!results.length) throw new Error("Nu am putut recunoaște formatul curbei de sarcină. Încarcă CSV/XLSX cu dată/oră și consum sau matrice IBD.");
+    if (!results.length) throw new Error(ctx.mode === "production" ? "Nu am putut recunoaște formatul producției. Încarcă PVGIS Timeseries CSV, export inverter cu dată/oră și putere/producție, sau CSV/XLSX cu producție locală." : "Nu am putut recunoaște formatul curbei de sarcină. Încarcă CSV/XLSX cu dată/oră și consum, matrice IBD sau fișier cu consum + producție.");
     results.sort((a,b)=>b.rows.length-a.rows.length);
-    return results[0];
+    return markEmbeddedProduction(results[0]);
   }
 
   function parseWorkbookLike(input, options={}){
@@ -545,7 +680,7 @@
     }
     if (!results.length) throw new Error("Nu am putut citi nicio foaie cu date valide.");
     results.sort((a,b)=>b.rows.length-a.rows.length);
-    return results[0];
+    return markEmbeddedProduction(results[0]);
   }
 
   function parseHtmlTables(text){
