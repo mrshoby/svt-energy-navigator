@@ -6,6 +6,7 @@
   <!-- SVT V46 EXACT PVGIS -->
   <!-- SVT V48 Q2 INLINE PRODUCTION UPLOAD -->
   <!-- SVT V49 PROFESSIONAL INCOMPLETE LABEL -->
+  <!-- SVT V50 Q3 REAL WEATHER PV FORECAST -->
   <title>Întrebări disponibile | SVT Energy Navigator</title>
   <meta name="description" content="Alege întrebarea care poate fi răspunsă pe baza datelor încărcate."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -197,6 +198,38 @@
     .q2-drop span{display:block;color:var(--muted);font-size:12px;font-weight:750}
     .q2-file-name{color:#0b6f37;font-size:12px;font-weight:900;line-height:1.35}
 
+  
+    /* v50 Q3 real weather PV forecast */
+    .q3-form{
+      border:1px dashed #b9d7c5;
+      background:linear-gradient(180deg,#fbfefc,#f6fbf8);
+      border-radius:16px;
+      padding:16px;
+      display:grid;
+      gap:14px;
+    }
+    .q3-form h2{margin:0;color:var(--navy);font-size:19px;font-weight:1000;letter-spacing:-.03em}
+    .q3-form p{margin:0;color:var(--muted);font-size:13px;line-height:1.45;font-weight:700}
+    .q3-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .q3-field{display:grid;gap:6px}
+    .q3-field label{color:var(--navy);font-size:11.5px;font-weight:1000;text-transform:uppercase;letter-spacing:.04em}
+    .q3-field input,.q3-field select{
+      width:100%;height:42px;border:1px solid #dce5ef;border-radius:11px;background:#fff;padding:0 11px;
+      font-family:inherit;font-size:13px;font-weight:750;color:var(--navy);outline:none;
+    }
+    .q3-field input:focus,.q3-field select:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(7,148,63,.10)}
+    .q3-actions{display:flex;justify-content:flex-end;gap:10px;align-items:center}
+    .q3-api-note{font-size:12px;color:#64748b;font-weight:700;line-height:1.35}
+    .q3-result-meta{
+      margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;
+    }
+    .q3-chip{
+      height:28px;padding:0 10px;border-radius:999px;background:#f1f8f4;border:1px solid #d4ecdc;color:#086b36;
+      display:inline-flex;align-items:center;font-size:11px;font-weight:1000;
+    }
+    @media(max-width:900px){.q3-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:620px){.q3-grid{grid-template-columns:1fr}.q3-actions{justify-content:stretch}.q3-actions .btn{width:100%;min-width:0}}
+
   </style>
 </head>
 <body>
@@ -264,8 +297,9 @@
 
       grid.innerHTML = questions.map((q, idx) => {
         const hasPvData = !!(ctx.hasProduction || analysis?.meta?.hasProduction || (analysis?.chartRows || []).some(r => Number(r.productionKwh || 0) > 0));
-        const isAvailable = mode === 'electric' && analysis?.chartRows?.length && (q.id === 1 || q.id === 2);
-        const needsData = mode === 'electric' && analysis?.chartRows?.length && q.id === 2 && !hasPvData;
+        const q3Stored = !!sessionStorage.getItem('svtForecastQ3');
+        const isAvailable = mode === 'electric' && analysis?.chartRows?.length && (q.id === 1 || q.id === 2 || q.id === 3);
+        const needsData = mode === 'electric' && analysis?.chartRows?.length && ((q.id === 2 && !hasPvData) || (q.id === 3 && !q3Stored));
         const isActive = isAvailable;
         return `
           <div class="q-item" data-q-item="${q.id}">
@@ -284,6 +318,7 @@
           const q = Number(card.getAttribute('data-q'));
           if(q === 1) handleQuestion1(card);
           if(q === 2) handleQuestion2(card);
+          if(q === 3) handleQuestion3(card);
         });
       });
     }
@@ -607,6 +642,251 @@
         </div>
       `;
     }
+
+
+    function handleQuestion3(cardArg){
+      const card = cardArg || document.querySelector('.q-card[data-q="3"]');
+      const box = document.getElementById('details-q3');
+      if(!box) return;
+
+      const stored = sessionStorage.getItem('svtForecastQ3');
+      card.classList.add('loading');
+      card.classList.remove('done');
+      box.classList.add('open');
+
+      window.setTimeout(() => {
+        card.classList.remove('loading');
+        if(stored){
+          try{
+            renderQuestion3Result(box, JSON.parse(stored));
+            card.classList.add('done');
+            return;
+          }catch(e){}
+        }
+        renderQuestion3Form(box, card);
+      }, 450);
+    }
+
+    function getDefaultPvInputs(){
+      const ds = (() => { try{return JSON.parse(sessionStorage.getItem('svtDataset') || '{}')}catch(e){return {}} })();
+      const names = [
+        ...(ds?.meta?.productionFileNames || []),
+        ...(ds?.meta?.fileNames || [])
+      ].join(' ');
+      const m = names.match(/Timeseries_(-?\d+(?:\.\d+)?)_(-?\d+(?:\.\d+)?).*?_(\d+(?:\.\d+)?)kWp.*?_(\d+(?:\.\d+)?)deg_(-?\d+(?:\.\d+)?)deg/i);
+      if(m){
+        return {lat:m[1], lon:m[2], kwp:m[3], tilt:m[4], azimuth:m[5]};
+      }
+      return {lat:'46.455', lon:'23.464', kwp:'150', tilt:'15', azimuth:'0'};
+    }
+
+    function renderQuestion3Form(box, card){
+      const d = getDefaultPvInputs();
+      box.innerHTML = `
+        <div class="q3-form">
+          <div>
+            <h2>Estimare producție PV următoarele 24 ore</h2>
+            <p>Pentru această întrebare sunt necesare datele sistemului fotovoltaic și o prognoză meteo reală. Folosim radiația solară orară din Open-Meteo și calculăm o estimare operațională pe 24h.</p>
+          </div>
+          <div class="q3-grid">
+            <div class="q3-field">
+              <label for="q3Kwp">Putere sistem</label>
+              <input id="q3Kwp" type="number" min="0" step="0.1" value="${esc(d.kwp)}" placeholder="kWp">
+            </div>
+            <div class="q3-field">
+              <label for="q3Lat">Latitudine</label>
+              <input id="q3Lat" type="number" step="0.000001" value="${esc(d.lat)}" placeholder="46.455">
+            </div>
+            <div class="q3-field">
+              <label for="q3Lon">Longitudine</label>
+              <input id="q3Lon" type="number" step="0.000001" value="${esc(d.lon)}" placeholder="23.464">
+            </div>
+            <div class="q3-field">
+              <label for="q3Tilt">Înclinare</label>
+              <input id="q3Tilt" type="number" min="0" max="90" step="1" value="${esc(d.tilt)}" placeholder="15">
+            </div>
+            <div class="q3-field">
+              <label for="q3Azimuth">Azimut</label>
+              <input id="q3Azimuth" type="number" min="-180" max="180" step="1" value="${esc(d.azimuth)}" placeholder="0">
+            </div>
+            <div class="q3-field">
+              <label for="q3Losses">Pierderi sistem</label>
+              <input id="q3Losses" type="number" min="0" max="40" step="0.5" value="14" placeholder="%">
+            </div>
+            <div class="q3-field">
+              <label for="q3Weather">Sursă meteo</label>
+              <select id="q3Weather">
+                <option value="openmeteo">Open-Meteo Forecast API</option>
+              </select>
+            </div>
+            <div class="q3-field">
+              <label for="q3Model">Model calcul</label>
+              <select id="q3Model">
+                <option value="operational">Estimare operațională rapidă</option>
+              </select>
+            </div>
+            <div class="q3-field">
+              <label for="q3Horizon">Orizont</label>
+              <select id="q3Horizon">
+                <option value="24">Următoarele 24 ore</option>
+              </select>
+            </div>
+          </div>
+          <div class="q3-actions">
+            <span class="q3-api-note">Azimut: 0° = sud, -90° = est, 90° = vest. Pentru rezultat bancabil ar trebui model transpoziție pe plan înclinat; aici este estimare operațională cu API meteo real.</span>
+            <button class="btn next" type="button" id="q3RunBtn">Calculează ›</button>
+          </div>
+        </div>
+      `;
+      document.getElementById('q3RunBtn')?.addEventListener('click', () => calculateQ3Forecast(box, card));
+    }
+
+    function clamp(v,min,max){ return Math.min(max, Math.max(min, v)); }
+
+    async function calculateQ3Forecast(box, card){
+      try{
+        const kwp = Number(document.getElementById('q3Kwp')?.value || 0);
+        const lat = Number(document.getElementById('q3Lat')?.value || 0);
+        const lon = Number(document.getElementById('q3Lon')?.value || 0);
+        const tilt = Number(document.getElementById('q3Tilt')?.value || 0);
+        const azimuth = Number(document.getElementById('q3Azimuth')?.value || 0);
+        const losses = Number(document.getElementById('q3Losses')?.value || 14);
+
+        if(!(kwp > 0)) throw new Error('Introdu puterea sistemului în kWp.');
+        if(!(lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180)) throw new Error('Coordonatele nu sunt valide.');
+
+        box.innerHTML = `
+          <div class="loading-panel">
+            <div class="spinner"></div>
+            <div>Se preia prognoza meteo reală și se calculează producția PV pe 24h...</div>
+          </div>
+        `;
+
+        const url = new URL('https://api.open-meteo.com/v1/forecast');
+        url.searchParams.set('latitude', String(lat));
+        url.searchParams.set('longitude', String(lon));
+        url.searchParams.set('hourly', 'shortwave_radiation,temperature_2m,cloud_cover');
+        url.searchParams.set('forecast_days', '2');
+        url.searchParams.set('timezone', 'auto');
+
+        const res = await fetch(url.toString());
+        if(!res.ok) throw new Error('API-ul meteo nu a răspuns corect.');
+        const meteo = await res.json();
+        const hourly = meteo.hourly || {};
+        const times = hourly.time || [];
+        const ghi = hourly.shortwave_radiation || [];
+        const temp = hourly.temperature_2m || [];
+        const cloud = hourly.cloud_cover || [];
+
+        const now = Date.now();
+        let rows = times.map((t,i) => ({
+          time:t,
+          date:new Date(t),
+          ghi:Number(ghi[i] || 0),
+          temp:Number(temp[i] || 0),
+          cloud:Number(cloud[i] || 0)
+        })).filter(r => !isNaN(r.date) && r.date.getTime() >= now - 3600000).slice(0,24);
+
+        if(rows.length < 6) rows = times.map((t,i)=>({time:t,date:new Date(t),ghi:Number(ghi[i]||0),temp:Number(temp[i]||0),cloud:Number(cloud[i]||0)})).slice(0,24);
+        if(!rows.length) throw new Error('Nu am primit date orare de radiație solară din API.');
+
+        const orientationFactor = clamp(1 - Math.abs(azimuth) / 180 * 0.28, 0.62, 1.02);
+        const tiltFactor = clamp(1 - Math.abs(tilt - 30) / 120, 0.72, 1.03);
+        const lossFactor = clamp(1 - losses / 100, 0.50, 1.00);
+
+        let total = 0, irradiation = 0, peak = {kwh:0,label:'-'};
+        const forecastRows = rows.map(r => {
+          const moduleTemp = r.temp + (r.ghi / 800) * 20;
+          const tempDerate = clamp(1 - 0.004 * (moduleTemp - 25), 0.78, 1.06);
+          const kwh = Math.max(0, kwp * (r.ghi / 1000) * orientationFactor * tiltFactor * lossFactor * tempDerate);
+          const label = r.date.toLocaleString('ro-RO', {hour:'2-digit', minute:'2-digit', day:'2-digit', month:'2-digit'});
+          total += kwh;
+          irradiation += Math.max(0, r.ghi) / 1000;
+          if(kwh > peak.kwh) peak = {kwh,label};
+          return {label, time:r.time, productionKwh:kwh, irradiationKwhM2:r.ghi/1000, temperature:r.temp, cloud:r.cloud};
+        });
+
+        const payload = {
+          source:'Open-Meteo Forecast API',
+          url:url.toString(),
+          inputs:{kwp,lat,lon,tilt,azimuth,losses,orientationFactor,tiltFactor,lossFactor},
+          totals:{productionKwh:total, irradiationKwhM2:irradiation, peakKwh:peak.kwh, peakLabel:peak.label},
+          rows:forecastRows,
+          createdAt:new Date().toISOString()
+        };
+        sessionStorage.setItem('svtForecastQ3', JSON.stringify(payload));
+        renderQuestion3Result(box, payload);
+        card.classList.remove('loading','needs-data');
+        card.classList.add('available','done');
+        const badge = card.querySelector('.badge.incomplete');
+        if(badge) badge.outerHTML = '<span class="answer-slot" title="Răspuns calculat">✓</span>';
+      }catch(err){
+        console.error(err);
+        box.innerHTML = `
+          <div class="q3-form">
+            <h2>Nu am putut calcula prognoza</h2>
+            <p>${esc(err.message || 'Verifică datele introduse și conexiunea la internet.')}</p>
+            <button class="btn back" type="button" onclick="renderQuestion3Form(document.getElementById('details-q3'), document.querySelector('.q-card[data-q=&quot;3&quot;]'))">Încearcă din nou</button>
+          </div>
+        `;
+        card.classList.remove('loading');
+      }
+    }
+
+    function renderQuestion3Result(box, data){
+      const total = data.totals?.productionKwh || 0;
+      const peak = data.totals?.peakKwh || 0;
+      const peakLabel = data.totals?.peakLabel || '-';
+      const irradiation = data.totals?.irradiationKwhM2 || 0;
+      box.innerHTML = `
+        <div class="result-head">
+          <div>
+            <h2>Cât va produce estimativ sistemul meu în următoarele 24 ore?</h2>
+            <p>Estimare calculată cu prognoză meteo reală Open-Meteo și parametrii sistemului PV introduși.</p>
+            <div class="q3-result-meta">
+              <span class="q3-chip">${fmt(data.inputs?.kwp || 0,1)} kWp</span>
+              <span class="q3-chip">${fmt(data.inputs?.tilt || 0,0)}° înclinare</span>
+              <span class="q3-chip">${fmt(data.inputs?.azimuth || 0,0)}° azimut</span>
+              <span class="q3-chip">${fmt(data.inputs?.losses || 0,1)}% pierderi</span>
+            </div>
+          </div>
+        </div>
+        <div class="answer-summary">
+          <div class="summary-card"><strong>${fmt(total)} kWh</strong><span>producție estimată următoarele 24h</span></div>
+          <div class="summary-card"><strong>${fmt(peak)} kWh</strong><span>vârf orar estimat · ${esc(peakLabel)}</span></div>
+          <div class="summary-card"><strong>${fmt(irradiation,2)} kWh/m²</strong><span>radiație solară orară cumulată</span></div>
+        </div>
+        <div class="chart-wrap"><canvas id="question3Chart"></canvas></div>
+        <div class="top-list" id="q3HourlyList"></div>
+      `;
+
+      if(activeCharts.q3) activeCharts.q3.destroy();
+      activeCharts.q3 = new Chart(document.getElementById('question3Chart'), {
+        type:'line',
+        data:{
+          labels:data.rows.map(r=>r.label),
+          datasets:[
+            {label:'Producție PV estimată',data:data.rows.map(r=>r.productionKwh),borderColor:'#07943f',backgroundColor:'rgba(7,148,63,.14)',fill:true,tension:.28,pointRadius:2,borderWidth:2.4},
+            {label:'Radiație solară',data:data.rows.map(r=>r.irradiationKwhM2),borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,.10)',fill:false,tension:.28,pointRadius:0,borderWidth:1.8}
+          ]
+        },
+        options:{
+          responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
+          plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${Number(ctx.parsed.y||0).toLocaleString('ro-RO',{maximumFractionDigits:2})}${ctx.dataset.label.includes('Radia') ? ' kWh/m²' : ' kWh'}`}}},
+          scales:{x:{ticks:{maxTicksLimit:9}}, y:{beginAtZero:true,title:{display:true,text:'kWh / oră'}}}
+        }
+      });
+
+      const top = data.rows.slice().sort((a,b)=>b.productionKwh-a.productionKwh).slice(0,5);
+      document.getElementById('q3HourlyList').innerHTML = top.map((x,i)=>`
+        <div class="top-row">
+          <div class="rank">${i+1}</div>
+          <div><strong>${esc(x.label)}</strong><small>Temperatură: ${fmt(x.temperature,1)} °C · nebulozitate: ${fmt(x.cloud,0)}%</small></div>
+          <div class="cost" style="color:#067436">${fmt(x.productionKwh)} kWh</div>
+        </div>
+      `).join('');
+    }
+
 
     // Momentan butonul Continuă nu face nimic.
     document.getElementById('continueBtn')?.addEventListener('click', () => {});
