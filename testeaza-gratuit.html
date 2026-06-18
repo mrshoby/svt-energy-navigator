@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <!-- SVT V46 EXACT PVGIS -->
   <!-- SVT V48 Q2 INLINE PRODUCTION UPLOAD -->
+  <!-- SVT V49 PROFESSIONAL INCOMPLETE LABEL -->
   <title>Întrebări disponibile | SVT Energy Navigator</title>
   <meta name="description" content="Alege întrebarea care poate fi răspunsă pe baza datelor încărcate."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -271,7 +272,7 @@
             <button class="q-card ${q.title.length > 92 ? 'is-xlong' : q.title.length > 64 ? 'is-long' : ''} ${needsData ? 'needs-data' : isActive ? 'available' : 'soon'}" type="button" data-q="${q.id}" ${isActive ? '' : 'disabled'}>
               <span class="q-no">${displayNumber(idx)}</span>
               <span class="q-title">${esc(q.title)}</span>
-              ${needsData ? '<span class="badge incomplete">Date incomplete · adaugă producție</span>' : isActive ? '<span class="answer-slot" title="Aici apare bifa după răspuns">✓</span>' : '<span class="badge">În curând</span>'}
+              ${needsData ? '<span class="badge incomplete">Date incomplete · completează datele necesare</span>' : isActive ? '<span class="answer-slot" title="Aici apare bifa după răspuns">✓</span>' : '<span class="badge">În curând</span>'}
             </button>
             ${isActive ? `<div class="details" id="details-q${q.id}"></div>` : ''}
           </div>
