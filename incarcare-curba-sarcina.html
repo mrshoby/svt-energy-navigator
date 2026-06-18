@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <style>
     :root{
       --green:#0a9f49;
@@ -75,6 +76,7 @@
     .hint{font-size:12px;color:var(--muted);font-weight:600;line-height:1.35;margin-top:-2px}
     .control{height:48px;border:1px solid var(--border);border-radius:12px;background:#fff;padding:0 14px;font-family:inherit;font-size:15px;color:var(--navy);font-weight:700;outline:none}
     .control:focus{border-color:#93d6ad;box-shadow:0 0 0 3px rgba(10,159,73,.09)}
+    .fixed-pill{height:48px;border:1px solid #cfe9d8;border-radius:12px;background:#f7fff9;display:flex;align-items:center;padding:0 14px;color:#067436;font-size:15px;font-weight:900}
     .inline-row{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border:1px solid var(--border);border-radius:16px;background:#fff}
     .inline-row input[type="checkbox"]{width:18px;height:18px;margin-top:2px;accent-color:var(--green)}
     .inline-title{font-size:14px;font-weight:900;color:var(--navy)}
@@ -133,17 +135,17 @@
               <label class="method-card active" id="methodFileCard">
                 <input type="radio" name="loadMethod" value="file" checked>
                 <div class="method-title">📂 Încarc fișierul orar</div>
-                <div class="method-text">Am curba de sarcină în XLSX / CSV / HTML exportată din portalul distribuitorului.</div>
+                <div class="method-text">Varianta recomandată pentru răspuns real: curbă de sarcină XLSX / CSV / HTML.</div>
               </label>
               <label class="method-card" id="methodInvoiceCard">
                 <input type="radio" name="loadMethod" value="invoice">
                 <div class="method-title">🧾 Am doar factura lunară</div>
-                <div class="method-text">Pot începe cu valori agregate, dar precizia va fi mai mică decât la fișierul orar.</div>
+                <div class="method-text">Introduci manual valorile principale. Poți atașa și factura pentru verificare, dar răspunsul va fi estimativ.</div>
               </label>
             </div>
 
             <p class="note"> <strong>Cum preferi să încarci datele de consum electric?</strong><br>
-              Dacă ai fișierul orar, acesta este varianta recomandată. <strong>De unde obții fișierul?</strong> Intri pe portalul distribuitorului tău (ex. myeer.ro, myeon.ro) → Consum → Export date orare. Dacă nu ai acces, îl poate solicita contabilul sau responsabilul tehnic.
+              Dacă ai fișierul orar, acesta este varianta recomandată. <strong>De unde obții fișierul?</strong> Intri pe portalul distribuitorului tău (ex. myeer.ro, myeon.ro) → Consum → Export date orare.
             </p>
 
             <div id="fileModeBox">
@@ -163,17 +165,17 @@
                 <div class="field">
                   <label for="invoiceConsumption">Consum total facturat</label>
                   <input class="control" id="invoiceConsumption" type="number" min="0" step="0.01" placeholder="ex. 12450">
-                  <div class="hint">Introduce kWh consumați în perioada facturată.</div>
+                  <div class="hint">kWh consumați în perioada facturată. Este câmpul principal.</div>
                 </div>
                 <div class="field">
                   <label for="invoiceDays">Număr zile facturate</label>
                   <input class="control" id="invoiceDays" type="number" min="1" step="1" value="30">
-                  <div class="hint">Folosim valoarea pentru o distribuție zilnică orientativă.</div>
+                  <div class="hint">Necesar pentru estimare zilnică/orară.</div>
                 </div>
                 <div class="field">
                   <label for="invoiceValue">Valoare factură energie (opțional)</label>
                   <input class="control" id="invoiceValue" type="number" min="0" step="0.01" placeholder="ex. 18670">
-                  <div class="hint">Poate ajuta la verificarea tarifului total estimat.</div>
+                  <div class="hint">Ajută la verificarea tarifului total mediu.</div>
                 </div>
                 <div class="field">
                   <label for="workSchedule">Program de lucru</label>
@@ -187,6 +189,18 @@
                   <div class="hint">Ne ajută să repartizăm mai realist consumul pe ore.</div>
                 </div>
               </div>
+
+              <div style="margin-top:16px">
+                <div class="upload-zone" id="invoiceDrop" style="min-height:148px">
+                  <input id="invoiceInput" type="file" hidden accept=".pdf,.jpg,.jpeg,.png,.xlsx,.xls,.csv">
+                  <div class="upload-ico">🧾</div>
+                  <div class="upload-title">Încarcă factura lunară (opțional)</div>
+                  <div class="upload-meta">Atașarea facturii este utilă pentru verificare, dar calculul pornește din valorile introduse manual.</div>
+                  <button type="button" class="upload-btn" id="invoiceChoose">Alege factură</button>
+                  <div class="file-name" id="invoiceFileName"></div>
+                </div>
+              </div>
+
             </div>
 
             <div class="divider"></div>
@@ -195,34 +209,12 @@
               <div class="field">
                 <label for="fixedTariff">Tarif fix actual</label>
                 <input class="control" id="fixedTariff" type="number" min="0" step="0.0001" value="0.75">
-                <div class="hint">Lei/kWh. Dacă introduci <strong>tariful total final</strong> din contract/factură, nivelul de tensiune nu mai este obligatoriu.</div>
+                <div class="hint">Lei/kWh. Dacă introduci tariful total mediu din contract/factură, nu mai cerem nivelul de tensiune.</div>
               </div>
               <div class="field">
-                <label for="tariffMode">Tip tarif actual</label>
-                <select class="control" id="tariffMode">
-                  <option value="fixed" selected>Tarif fix</option>
-                  <option value="components">Tarif calculat din componente</option>
-                </select>
-                <div class="hint">Pentru întrebarea 1 folosim tarif fix, nu PZU. PZU este relevant pentru întrebarea 8.</div>
-              </div>
-            </div>
-
-            <div class="adv" id="distributionBox" style="margin-top:16px">
-              <div class="form-grid">
-                <div class="field">
-                  <label for="voltageLevel">Nivel de tensiune / distribuție</label>
-                  <select class="control" id="voltageLevel">
-                    <option>Joasă tensiune</option>
-                    <option>Medie tensiune</option>
-                    <option>Înaltă tensiune</option>
-                  </select>
-                  <div class="hint">Este necesar doar dacă nu introduci un tarif total și vrei să reconstruim costul din componente.</div>
-                </div>
-                <div class="field">
-                  <label for="distributionNote">Observație</label>
-                  <input class="control" id="distributionNote" type="text" value="Opțional în modul tarif fix total" readonly>
-                  <div class="hint">Dacă tariful fix introdus este deja all-in, acest câmp poate fi ignorat.</div>
-                </div>
+                <label>Tip tarif actual</label>
+                <div class="fixed-pill">Tarif fix</div>
+                <div class="hint">Pentru PZU / tarif dinamic folosim o întrebare separată.</div>
               </div>
             </div>
 
@@ -292,31 +284,31 @@
     </main>
   </div>
 
+  <script src="./assets/js/svt-load-curve-profiles.js"></script>
+  <script src="./assets/js/svt-analysis-engine.js"></script>
   <script>
     const tabElectric = document.getElementById('tabElectric');
     const tabTermic = document.getElementById('tabTermic');
     const electricSection = document.getElementById('electricSection');
     const termicSection = document.getElementById('termicSection');
-
     const methodFileCard = document.getElementById('methodFileCard');
     const methodInvoiceCard = document.getElementById('methodInvoiceCard');
     const fileModeBox = document.getElementById('fileModeBox');
     const invoiceBox = document.getElementById('invoiceBox');
-
     const dropZone = document.getElementById('dropZone');
     const fileInput = document.getElementById('fileInput');
     const chooseBtn = document.getElementById('chooseBtn');
     const fileName = document.getElementById('fileName');
-
+    const invoiceDrop = document.getElementById('invoiceDrop');
+    const invoiceInput = document.getElementById('invoiceInput');
+    const invoiceChoose = document.getElementById('invoiceChoose');
+    const invoiceFileName = document.getElementById('invoiceFileName');
     const productionBox = document.getElementById('productionBox');
     const hasProduction = document.getElementById('hasProduction');
     const productionDrop = document.getElementById('productionDrop');
     const productionInput = document.getElementById('productionInput');
     const productionChoose = document.getElementById('productionChoose');
     const productionFileName = document.getElementById('productionFileName');
-
-    const tariffMode = document.getElementById('tariffMode');
-    const distributionBox = document.getElementById('distributionBox');
     const fixedTariff = document.getElementById('fixedTariff');
     const continueBtn = document.getElementById('continueBtn');
     const message = document.getElementById('message');
@@ -325,11 +317,9 @@
     let loadMethod = 'file';
     let consumptionFile = null;
     let productionFile = null;
+    let invoiceFile = null;
 
-    function showMessage(type, text){
-      message.className = 'message ' + type;
-      message.textContent = text;
-    }
+    function showMessage(type, text){ message.className = 'message ' + type; message.textContent = text; }
 
     function setTab(tab){
       currentTab = tab;
@@ -338,10 +328,8 @@
       tabTermic.classList.toggle('active', !electric);
       electricSection.style.display = electric ? 'block' : 'none';
       termicSection.style.display = electric ? 'none' : 'block';
-      showMessage('warn', electric
-        ? 'Completează minim tariful și alege modul de încărcare. Pentru varianta recomandată, încarcă fișierul orar de consum.'
-        : 'Partea termică poate fi completată separat. Pentru întrebarea 1, analiza principală se face pe electric.'
-      );
+      showMessage(electric ? 'warn' : 'ok', electric ? 'Completează tariful și alege modul de încărcare. Fișierul orar este recomandat pentru răspuns real.' : 'Datele termice sunt salvate pentru analiza integrată, dar întrebarea 1 se calculează pe consum electric.');
+      validateForm();
     }
 
     function setLoadMethod(method){
@@ -353,25 +341,15 @@
       validateForm();
     }
 
-    function updateTariffMode(){
-      distributionBox.classList.toggle('visible', tariffMode.value === 'components');
-    }
-
     function handlePickedFile(file, targetNameEl, targetZoneEl, targetType){
       if(!file) return;
-      if(file.size > 10 * 1024 * 1024){
-        showMessage('err', 'Fișierul este prea mare. Dimensiunea maximă permisă este 10 MB.');
-        return;
-      }
+      if(file.size > 10 * 1024 * 1024){ showMessage('err', 'Fișierul este prea mare. Dimensiunea maximă permisă este 10 MB.'); return; }
       targetNameEl.textContent = `Fișier selectat: ${file.name}`;
       targetZoneEl.classList.add('has-file');
-      if(targetType === 'consumption'){
-        consumptionFile = file;
-        showMessage('ok', `Fișierul de consum a fost selectat: ${file.name}. Poți continua mai departe.`);
-      } else {
-        productionFile = file;
-        showMessage('ok', `Fișierul de producție a fost selectat: ${file.name}. Poți continua mai departe.`);
-      }
+      if(targetType === 'consumption') consumptionFile = file;
+      if(targetType === 'production') productionFile = file;
+      if(targetType === 'invoice') invoiceFile = file;
+      showMessage('ok', `Fișier selectat: ${file.name}`);
       validateForm();
     }
 
@@ -387,44 +365,91 @@
     function validateForm(){
       const tariffOk = Number(fixedTariff.value) > 0;
       let dataOk = true;
-
       if(currentTab === 'electric'){
-        if(loadMethod === 'file'){
-          dataOk = !!consumptionFile;
-        } else {
+        if(loadMethod === 'file') dataOk = !!consumptionFile;
+        else {
           const c = Number(document.getElementById('invoiceConsumption').value || 0);
           const d = Number(document.getElementById('invoiceDays').value || 0);
           dataOk = c > 0 && d > 0;
         }
       }
-
       continueBtn.disabled = !(tariffOk && dataOk);
     }
 
-    function buildPayload(){
-      return {
-        question: 1,
-        tab: currentTab,
-        method: loadMethod,
-        fixedTariffLeiPerKwh: Number(fixedTariff.value || 0),
-        tariffMode: tariffMode.value,
-        voltageLevel: tariffMode.value === 'components' ? document.getElementById('voltageLevel').value : null,
-        hasProduction: !!hasProduction.checked,
-        consumptionFileName: consumptionFile ? consumptionFile.name : null,
-        productionFileName: productionFile ? productionFile.name : null,
-        invoice: loadMethod === 'invoice' ? {
-          consumptionKwh: Number(document.getElementById('invoiceConsumption').value || 0),
-          days: Number(document.getElementById('invoiceDays').value || 0),
-          billLei: Number(document.getElementById('invoiceValue').value || 0),
-          schedule: document.getElementById('workSchedule').value
-        } : null,
-        thermal: currentTab === 'termic' ? {
-          monitored: document.getElementById('thermalMonitored').value,
-          source: document.getElementById('thermalSource').value,
-          annualValue: Number(document.getElementById('annualThermal').value || 0),
-          unit: document.getElementById('thermalUnit').value
-        } : null
-      };
+    function buildInvoiceDataset(){
+      const total = Number(document.getElementById('invoiceConsumption').value || 0);
+      const days = Number(document.getElementById('invoiceDays').value || 30);
+      const schedule = document.getElementById('workSchedule').value;
+      const rows = [];
+      const now = new Date();
+      const start = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0);
+      const hourlyWeights = Array.from({length:24}, (_,h) => {
+        if(schedule.includes('24/7')) return 1;
+        if(schedule.includes('6–22')) return h>=6 && h<22 ? 1.6 : .35;
+        if(schedule.includes('8–18')) return h>=8 && h<18 ? 2.2 : .25;
+        if(schedule.includes('Luni–Sâmbătă')) return h>=7 && h<19 ? 1.7 : .35;
+        return h>=8 && h<18 ? 2 : .4;
+      });
+      const totalWeight = hourlyWeights.reduce((a,b)=>a+b,0) * days;
+      for(let d=0; d<days; d++){
+        for(let h=0; h<24; h++){
+          const ts = new Date(start.getTime() + (d*24+h)*3600000);
+          const kwh = total * hourlyWeights[h] / totalWeight;
+          rows.push({
+            timestamp: ts.toISOString(),
+            localLabel: ts.toLocaleString('ro-RO', {day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit'}),
+            hour: h, minute: 0, electricKwh: kwh, pvKwh: 0, priceRonKwh: Number(fixedTariff.value || 0)
+          });
+        }
+      }
+      return { rows, meta:{
+        fileName:'Estimare din factura lunară',
+        sourceProfile:'invoice_monthly_manual_estimate',
+        rowsCount:rows.length,
+        intervalMinutes:60,
+        fixedPriceRonKwh:Number(fixedTariff.value || 0),
+        invoiceFileName: invoiceFile ? invoiceFile.name : null,
+        warning:'Estimare: factura lunară nu conține distribuția reală pe ore.'
+      }};
+    }
+
+    async function continueFlow(){
+      try{
+        showMessage('warn', 'Procesăm datele...');
+        const tariff = Number(fixedTariff.value || 0.75);
+        let dataset;
+
+        if(currentTab === 'electric' && loadMethod === 'file'){
+          dataset = await SVTLoadCurveProfiles.parseFile(consumptionFile, {mode:'electric', fixedPriceRonKwh:tariff});
+        } else {
+          dataset = buildInvoiceDataset();
+        }
+
+        if(hasProduction.checked && productionFile){
+          const productionDataset = await SVTLoadCurveProfiles.parseFile(productionFile, {mode:'electric', fixedPriceRonKwh:tariff});
+          dataset = SVTAnalysisEngine.mergeProduction(dataset, productionDataset);
+        }
+
+        dataset.meta.fixedPriceRonKwh = tariff;
+        const analysis = SVTAnalysisEngine.analyzeQuestion1(dataset, {fixedTariffRonKwh:tariff});
+        analysis.meta.loadMethod = loadMethod;
+        analysis.meta.invoiceFileName = invoiceFile ? invoiceFile.name : null;
+
+        sessionStorage.setItem('svtDataset', JSON.stringify(dataset));
+        sessionStorage.setItem('svtAnalysis', JSON.stringify(analysis));
+        sessionStorage.setItem('svtData', JSON.stringify({
+          question:analysis.question,
+          fixedTariffRonKwh:tariff,
+          loadMethod,
+          hasProduction:analysis.meta.hasProduction,
+          invoiceFileName:invoiceFile ? invoiceFile.name : null
+        }));
+
+        window.location.href = './svt-analiza.html';
+      } catch(err){
+        console.error(err);
+        showMessage('err', err.message || 'Nu am putut procesa datele încărcate.');
+      }
     }
 
     tabElectric.addEventListener('click', () => setTab('electric'));
@@ -432,21 +457,15 @@
     methodFileCard.addEventListener('click', () => setLoadMethod('file'));
     methodInvoiceCard.addEventListener('click', () => setLoadMethod('invoice'));
     hasProduction.addEventListener('change', () => productionBox.classList.toggle('visible', hasProduction.checked));
-    tariffMode.addEventListener('change', () => { updateTariffMode(); validateForm(); });
     fixedTariff.addEventListener('input', validateForm);
     document.getElementById('invoiceConsumption').addEventListener('input', validateForm);
     document.getElementById('invoiceDays').addEventListener('input', validateForm);
+    continueBtn.addEventListener('click', continueFlow);
 
     wireDropZone(dropZone, fileInput, chooseBtn, fileName, 'consumption');
     wireDropZone(productionDrop, productionInput, productionChoose, productionFileName, 'production');
+    wireDropZone(invoiceDrop, invoiceInput, invoiceChoose, invoiceFileName, 'invoice');
 
-    continueBtn.addEventListener('click', () => {
-      const payload = buildPayload();
-      localStorage.setItem('svtQuestion1Input', JSON.stringify(payload));
-      showMessage('ok', 'Datele au fost pregătite. În această versiune am salvat setările local în browser pentru pasul următor.');
-    });
-
-    updateTariffMode();
     validateForm();
   </script>
 </body>
