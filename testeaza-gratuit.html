@@ -15,6 +15,7 @@
   <!-- SVT V56 Q2 HORIZONTAL SURPLUS TABLE -->
   <!-- SVT V57 Q5 USEFUL ADDITIONAL ENERGY -->
   <!-- SVT V58 Q5 STORAGE QUOTA FIX -->
+  <!-- SVT V59 Q5 NATIVE BARS LAYOUT FIX -->
   <title>Întrebări disponibile | SVT Energy Navigator</title>
   <meta name="description" content="Alege întrebarea care poate fi răspunsă pe baza datelor încărcate."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -480,6 +481,78 @@
     .q5-surplus-val{color:#b45309 !important;font-weight:1000 !important}
     @media(max-width:900px){.q5-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
     @media(max-width:620px){.q5-grid{grid-template-columns:1fr}.q5-actions{justify-content:stretch}.q5-actions .btn{width:100%;min-width:0}}
+
+  
+    /* v59: Q5 native bars and layout containment */
+    .q-details, .details-panel, .question-details{
+      max-width:100%;
+      overflow-x:hidden;
+      box-sizing:border-box;
+    }
+    .q5-result-wrap{
+      max-width:100%;
+      width:100%;
+      overflow:hidden;
+      box-sizing:border-box;
+    }
+    .q5-bars{
+      margin-top:14px;
+      border:1px solid #e1eadf;
+      background:#fbfefc;
+      border-radius:18px;
+      padding:14px;
+      display:grid;
+      gap:10px;
+      box-sizing:border-box;
+    }
+    .q5-bar-row{
+      display:grid;
+      grid-template-columns:180px 1fr 90px;
+      gap:12px;
+      align-items:center;
+    }
+    .q5-bar-name{
+      color:#0f172a;
+      font-size:12px;
+      font-weight:1000;
+      white-space:nowrap;
+    }
+    .q5-bar-track{
+      height:16px;
+      border-radius:999px;
+      background:#eaf2ed;
+      overflow:hidden;
+      border:1px solid #dcebe2;
+    }
+    .q5-bar-fill{
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background:linear-gradient(90deg,#07943f,#4ade80);
+    }
+    .q5-bar-fill.warn{background:linear-gradient(90deg,#f59e0b,#facc15)}
+    .q5-bar-fill.danger{background:linear-gradient(90deg,#ef4444,#fb7185)}
+    .q5-bar-value{
+      text-align:right;
+      color:#334155;
+      font-size:12px;
+      font-weight:1000;
+      white-space:nowrap;
+    }
+    .q5-day-board{
+      max-width:100%;
+      width:100%;
+      box-sizing:border-box;
+      overscroll-behavior-x:contain;
+    }
+    .q5-day-grid{
+      width:max-content;
+      max-width:none;
+    }
+    @media(max-width:700px){
+      .q5-bar-row{grid-template-columns:1fr;gap:6px}
+      .q5-bar-value{text-align:left}
+    }
 
   </style>
 </head>
@@ -1872,6 +1945,7 @@
     function renderQuestion5CompactResult(box, data){
       const t = data.totals || {};
       box.innerHTML = `
+        <div class="q5-result-wrap">
         <div class="q5-result-meta">
           <span class="q5-chip">PV suplimentar: ${fmt((data.source?.q4AdditionalKwp || 0),1)} kWp</span>
           <span class="q5-chip">Rezumat salvat compact</span>
@@ -1914,6 +1988,32 @@
     }
 
 
+
+    function renderQ5Bars(t){
+      const values = [
+        {name:'Utilizat direct', value:Number(t.direct || 0), tone:'ok'},
+        {name:'Flexibilitate', value:Number(t.flexUseful || 0), tone:'ok'},
+        {name:'BESS', value:Number(t.bessUseful || 0), tone:'ok'},
+        {name:'Export', value:Number(t.exportKwh || 0), tone:'warn'},
+        {name:'Limitat / pierdut', value:Number(t.curtailedKwh || 0), tone:'danger'}
+      ];
+      const max = Math.max(1, ...values.map(x => x.value));
+      return `
+        <div class="q5-bars" aria-label="Distribuție energie suplimentară utilizabilă">
+          ${values.map(x => `
+            <div class="q5-bar-row">
+              <div class="q5-bar-name">${esc(x.name)}</div>
+              <div class="q5-bar-track">
+                <div class="q5-bar-fill ${x.tone === 'warn' ? 'warn' : x.tone === 'danger' ? 'danger' : ''}" style="width:${Math.max(2, Math.round(x.value / max * 100))}%"></div>
+              </div>
+              <div class="q5-bar-value">${fmt(x.value/1000,1)} MWh</div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+
     function renderQuestion5Result(box, data){
       const t = data.totals || {};
       box.innerHTML = `
@@ -1929,7 +2029,7 @@
           <div class="summary-card"><strong>${fmt(t.usefulPercent,1)}%</strong><span>procent utilizabil local</span></div>
         </div>
 
-        <div class="chart-wrap"><canvas id="question5Chart"></canvas></div>
+        ${renderQ5Bars(t)}
 
         <div class="top-list">
           <div class="top-row">
@@ -1960,27 +2060,8 @@
         </div>
 
         ${renderQ5DayBoard(data.intervalRows || [])}
+        </div>
       `;
-
-      if(activeCharts.q5) activeCharts.q5.destroy();
-      activeCharts.q5 = new Chart(document.getElementById('question5Chart'), {
-        type:'bar',
-        data:{
-          labels:['Utilizat direct','Flexibil','BESS','Export','Limitat/pierdut'],
-          datasets:[{
-            label:'Energie suplimentară',
-            data:[t.direct/1000,t.flexUseful/1000,t.bessUseful/1000,t.exportKwh/1000,t.curtailedKwh/1000],
-            backgroundColor:['rgba(7,148,63,.68)','rgba(37,99,235,.58)','rgba(124,58,237,.58)','rgba(245,158,11,.62)','rgba(239,68,68,.55)'],
-            borderRadius:8
-          }]
-        },
-        options:{
-          responsive:true, maintainAspectRatio:false,
-          plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${Number(ctx.parsed.y||0).toLocaleString('ro-RO',{maximumFractionDigits:1})} MWh/an`}}},
-          scales:{x:{grid:{display:false}}, y:{beginAtZero:true,title:{display:true,text:'MWh/an'}}}
-        }
-      });
-    }
 
     function renderQ5DayBoard(rows){
       const relevant = (rows || []).filter(r => Number(r.additionalPvKwh || 0) > 0 || Number(r.directKwh || 0) > 0 || Number(r.surplusKwh || 0) > 0);
