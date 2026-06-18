@@ -14,6 +14,7 @@
   <!-- SVT V55 CLEAN DROPDOWN SCROLL LISTS -->
   <!-- SVT V56 Q2 HORIZONTAL SURPLUS TABLE -->
   <!-- SVT V57 Q5 USEFUL ADDITIONAL ENERGY -->
+  <!-- SVT V58 Q5 STORAGE QUOTA FIX -->
   <title>Întrebări disponibile | SVT Energy Navigator</title>
   <meta name="description" content="Alege întrebarea care poate fi răspunsă pe baza datelor încărcate."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -1590,7 +1591,12 @@
         card.classList.remove('loading');
         if(stored){
           try{
-            renderQuestion5Result(box, JSON.parse(stored));
+            const parsed = JSON.parse(stored);
+            if(parsed?.compact){
+              renderQuestion5CompactResult(box, parsed);
+            }else{
+              renderQuestion5Result(box, parsed);
+            }
             card.classList.add('done');
             return;
           }catch(e){}
@@ -1739,6 +1745,25 @@
       return rows.map((r,i) => ({timestamp:r.timestamp, additionalPvKwh:weights[i] / totalWeight * targetPeriodKwh}));
     }
 
+
+    function safeStoreQ5Payload(payload){
+      const compact = {
+        compact:true,
+        inputs:payload.inputs,
+        source:payload.source,
+        totals:payload.totals,
+        createdAt:payload.createdAt
+      };
+      try{
+        sessionStorage.setItem('svtUsefulEnergyQ5', JSON.stringify(compact));
+        return true;
+      }catch(err){
+        console.warn('Q5 compact storage failed; continuing without persisted result', err);
+        try{ sessionStorage.removeItem('svtUsefulEnergyQ5'); }catch(e){}
+        return false;
+      }
+    }
+
     function calculateQ5UsefulEnergy(box, card){
       try{
         const ds = JSON.parse(sessionStorage.getItem('svtDataset') || '{}');
@@ -1826,7 +1851,7 @@
           createdAt:new Date().toISOString()
         };
 
-        sessionStorage.setItem('svtUsefulEnergyQ5', JSON.stringify(payload));
+        safeStoreQ5Payload(payload);
         renderQuestion5Result(box, payload);
         card.classList.remove('loading','needs-data');
         card.classList.add('available','done');
@@ -1842,6 +1867,52 @@
         `;
       }
     }
+
+
+    function renderQuestion5CompactResult(box, data){
+      const t = data.totals || {};
+      box.innerHTML = `
+        <div class="q5-result-meta">
+          <span class="q5-chip">PV suplimentar: ${fmt((data.source?.q4AdditionalKwp || 0),1)} kWp</span>
+          <span class="q5-chip">Rezumat salvat compact</span>
+          <span class="q5-chip">Pentru tabel orar complet, recalculează</span>
+        </div>
+
+        <div class="answer-summary">
+          <div class="summary-card"><strong>${fmt((t.totalAdd || 0)/1000,1)} MWh/an</strong><span>producție suplimentară estimată</span></div>
+          <div class="summary-card"><strong>${fmt((t.usefulTotal || 0)/1000,1)} MWh/an</strong><span>energie utilizabilă local direct/flexibil/BESS</span></div>
+          <div class="summary-card"><strong>${fmt(t.usefulPercent || 0,1)}%</strong><span>procent utilizabil local</span></div>
+        </div>
+
+        <div class="top-list">
+          <div class="top-row">
+            <div class="rank">1</div>
+            <div><strong>Utilizare directă locală</strong><small>PV suplimentar consumat simultan cu consumul disponibil</small></div>
+            <div class="cost" style="color:#067436">${fmt((t.direct || 0)/1000,1)} MWh</div>
+          </div>
+          <div class="top-row">
+            <div class="rank">2</div>
+            <div><strong>Flexibilitate + BESS</strong><small>energie suplimentară valorificată prin mutare consum sau stocare</small></div>
+            <div class="cost" style="color:#067436">${fmt(((t.flexUseful || 0)+(t.bessUseful || 0))/1000,1)} MWh</div>
+          </div>
+          <div class="top-row">
+            <div class="rank">3</div>
+            <div><strong>Export / limitare</strong><small>surplus care nu este utilizat local</small></div>
+            <div class="cost" style="color:#b45309">${fmt(((t.exportKwh || 0)+(t.curtailedKwh || 0))/1000,1)} MWh</div>
+          </div>
+        </div>
+
+        <div class="q5-actions" style="margin-top:14px">
+          <span class="q5-note">Rezumatul este salvat compact pentru a nu depăși limita browserului. Tabelul orar complet se generează din nou la recalculare.</span>
+          <button class="btn next" type="button" id="q5RecalcBtn">Recalculează tabelul complet ›</button>
+        </div>
+      `;
+      document.getElementById('q5RecalcBtn')?.addEventListener('click', () => {
+        sessionStorage.removeItem('svtUsefulEnergyQ5');
+        renderQuestion5Form(box, document.querySelector('.q-card[data-q="5"]'));
+      });
+    }
+
 
     function renderQuestion5Result(box, data){
       const t = data.totals || {};
