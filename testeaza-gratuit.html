@@ -37,8 +37,7 @@
     .pill{height:32px;padding:0 12px;border-radius:999px;border:1px solid #dceee2;background:#f6faf8;color:#0b6f37;font-size:12px;font-weight:900;display:inline-flex;align-items:center}
     .questions{display:grid;grid-template-columns:1fr;gap:12px;margin-top:6px}
     .q-item{display:block;width:100%}
-    .q-card{
-      position:relative;width:100%;height:72px;min-height:72px;padding:12px 150px 12px 128px;border:1px solid #e0e8f1;border-radius:16px;
+    .q-card{position:relative;width:100%;height:72px;min-height:72px;padding:12px 150px 12px 82px;border:1px solid #e0e8f1;border-radius:16px;
       background:rgba(255,255,255,.95);box-shadow:var(--shadow);display:flex;align-items:center;text-align:left;color:var(--navy);overflow:hidden;
       transition:.18s ease;border-color:.18s ease;cursor:not-allowed;
     }
@@ -51,10 +50,7 @@
       position:absolute;left:22px;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:999px;display:grid;place-items:center;
       background:#fff;border:1px solid #e1e9f2;color:var(--green);font-size:14px;font-weight:1000;font-variant-numeric:tabular-nums;
     }
-    .q-ico{
-      position:absolute;left:78px;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:999px;display:grid;place-items:center;
-      background:var(--soft);color:var(--green);font-size:20px;
-    }
+    .q-ico{display:none!important}
     .q-title{
       display:block;font-size:17px;line-height:1;letter-spacing:-.018em;font-weight:950;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;
     }
@@ -81,6 +77,20 @@
     .result-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:10px}
     .result-head h2{margin:0;color:var(--navy);font-size:22px;letter-spacing:-.03em}
     .result-head p{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.4;font-weight:650}
+    .answer-summary{
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0 12px;
+    }
+    .summary-card{
+      border:1px solid #e4ebf2;border-radius:14px;background:#fbfcfe;padding:12px 13px;
+    }
+    .summary-card strong{
+      display:block;color:var(--navy);font-size:17px;line-height:1.05;font-weight:1000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .summary-card span{
+      display:block;margin-top:5px;color:var(--muted);font-size:11.5px;line-height:1.3;font-weight:750;
+    }
+    @media(max-width:760px){.answer-summary{grid-template-columns:1fr}}
+
     .chart-wrap{height:360px;position:relative;border:1px solid #eef2f6;border-radius:16px;padding:12px;background:#fbfcfe}
     .top-list{margin-top:14px;display:grid;gap:8px}
     .top-row{display:grid;grid-template-columns:38px 1fr auto;gap:10px;align-items:center;border:1px solid #e7edf4;border-radius:12px;padding:10px 12px;background:#fff}
@@ -96,9 +106,9 @@
     @media(max-width:760px){
       .shell{width:calc(100% - 28px)}
       h1{white-space:normal}
-      .q-card{height:auto;min-height:78px;padding:12px 82px 12px 110px}
+      .q-card{height:auto;min-height:78px;padding:12px 82px 12px 72px}
       .q-title{font-size:14px;line-height:1.2;white-space:normal}
-      .q-no{left:16px}.q-ico{left:66px}
+      .q-no{left:16px}.q-ico{display:none!important}
       .badge{right:14px}.answer-slot{right:18px}
       .chart-wrap{height:300px}
       .bottom{flex-direction:column-reverse;align-items:stretch}.btn{width:100%;min-width:0}
@@ -184,7 +194,6 @@
           <div class="q-item" data-q-item="${q.id}">
             <button class="q-card ${isActive ? 'available' : 'soon'}" type="button" data-q="${q.id}" ${isActive ? '' : 'disabled'}>
               <span class="q-no">${displayNumber(idx)}</span>
-              <span class="q-ico">${q.icon}</span>
               <span class="q-title">${esc(q.title)}</span>
               ${isActive ? '<span class="answer-slot" title="Aici apare bifa după răspuns">✓</span>' : '<span class="badge">În curând</span>'}
             </button>
@@ -243,9 +252,22 @@
             <p>${isInvoice ? 'Estimare din factura lunară. Pentru răspuns exact, folosește curba orară.' : 'Răspuns calculat din curba încărcată.'} Tarif fix: ${fmt(data.meta?.fixedTariffRonKwh || ctx.fixedTariffRonKwh,3)} lei/kWh.</p>
           </div>
         </div>
+        <div class="answer-summary" id="answerSummary"></div>
         <div class="chart-wrap"><canvas id="question1Chart"></canvas></div>
         <div class="top-list" id="topIntervals"></div>
       `;
+
+      const topInterval = (data.expensiveIntervals || [])[0] || {};
+      const totals = data.totals || {};
+      const summary = document.getElementById('answerSummary');
+      if(summary){
+        const pvText = hasProd ? `Producție locală: ${fmt(totals.productionKwh || 0)} kWh` : 'Fără producție locală inclusă';
+        summary.innerHTML = `
+          <div class="summary-card"><strong>${esc(topInterval.localLabel || '-')}</strong><span>intervalul cu cel mai mare cost</span></div>
+          <div class="summary-card"><strong>${fmt(topInterval.gridCostRon || 0)} lei</strong><span>cost în acel interval</span></div>
+          <div class="summary-card"><strong>${fmt(totals.gridKwh || 0)} kWh</strong><span>consum total din rețea · ${pvText}</span></div>
+        `;
+      }
 
       const datasets = [
         {label:'Consum total',data:sampled.map(r=>r.consumptionKwh),borderColor:'#94a3b8',backgroundColor:'rgba(148,163,184,.08)',fill:false,tension:.28,pointRadius:0,borderWidth:1.8},
