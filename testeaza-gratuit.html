@@ -172,6 +172,30 @@
       .svt-trial-bottom{flex-direction:column-reverse;align-items:stretch}
       .svt-bottom-btn{width:100%;min-width:0}
     }
+
+    /* v37.2 hard override: keep questions in 2 columns on desktop/tablet */
+    .svt-trial-options{
+      grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+      gap:8px 16px !important;
+    }
+    .svt-option-card{
+      min-height:58px !important;
+      padding-top:8px !important;
+      padding-bottom:8px !important;
+      padding-left:108px !important;
+      padding-right:40px !important;
+    }
+    .svt-option-title{
+      font-size:12.8px !important;
+      white-space:nowrap !important;
+      overflow:hidden !important;
+      text-overflow:ellipsis !important;
+    }
+    @media(max-width:560px){
+      .svt-trial-options{grid-template-columns:1fr !important}
+      .svt-trial-title{white-space:normal !important}
+    }
+
   </style>
 </head>
 
@@ -207,5 +231,18 @@
       window.location.href = './incarcare-curba-sarcina.html';
     });
   </script>
+
+  <script>
+    // v37.2 safety: force two columns except on very small phones.
+    function svtForceTrialTwoColumns(){
+      const grid = document.querySelector('.svt-trial-options');
+      if(!grid) return;
+      grid.style.gridTemplateColumns = window.innerWidth <= 560 ? '1fr' : 'repeat(2, minmax(0, 1fr))';
+    }
+    window.addEventListener('load', svtForceTrialTwoColumns);
+    window.addEventListener('resize', svtForceTrialTwoColumns);
+    svtForceTrialTwoColumns();
+  </script>
+
 </body>
 </html>
