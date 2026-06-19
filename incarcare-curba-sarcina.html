@@ -22,6 +22,7 @@
   <!-- SVT V69 UPLOAD PAGE 1TO1 AUDIT REBUILD -->
   <!-- SVT V70 HOTFIX NO DUPLICATE ELECTRIC TERMIC -->
   <!-- SVT V70.1 APPLY SCRIPT FALSE POSITIVE FIX -->
+  <!-- SVT V71 SINGLE FLOW REFERENCE REBUILD -->
   <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
   <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -1582,6 +1583,487 @@
       display:grid!important;
     }
 
+  
+    /* v71: single-flow rebuild based on exact reference image */
+    body{
+      background:
+        radial-gradient(circle at 11% 30%, rgba(7,148,63,.055), transparent 30%),
+        radial-gradient(circle at 86% 40%, rgba(7,148,63,.055), transparent 32%),
+        #fbfdfc!important;
+    }
+    body::after{display:none!important}
+    .page{
+      width:100%!important;
+      max-width:none!important;
+      min-height:100vh!important;
+      margin:0!important;
+      padding:22px 18px!important;
+      display:flex!important;
+      justify-content:center!important;
+      align-items:flex-start!important;
+    }
+    .hero{
+      width:min(1188px, calc(100vw - 64px))!important;
+      min-height:auto!important;
+      margin:0 auto!important;
+      padding:34px 54px 28px!important;
+      border-radius:30px!important;
+      border:1px solid #d8e4ee!important;
+      background:rgba(255,255,255,.955)!important;
+      box-shadow:0 28px 76px rgba(15,23,42,.085)!important;
+    }
+    .wizard{
+      width:100%!important;
+      max-width:none!important;
+      margin:0 auto!important;
+    }
+    .steps{
+      max-width:642px!important;
+      margin:0 auto 24px!important;
+      grid-template-columns:38px minmax(78px,1fr) 38px minmax(78px,1fr) 38px minmax(78px,1fr) 38px!important;
+      gap:9px!important;
+    }
+    .step-dot{
+      width:36px!important;
+      height:36px!important;
+      font-size:14px!important;
+    }
+    .step-line{
+      height:2px!important;
+      margin-top:17px!important;
+      background:#d5e2ed!important;
+    }
+    .step-label{
+      font-size:12px!important;
+      font-weight:1000!important;
+      margin-top:3px!important;
+    }
+    h1,.wizard h1{
+      font-size:52px!important;
+      line-height:1.02!important;
+      letter-spacing:-.06em!important;
+      margin:0 0 14px!important;
+      text-align:center!important;
+      color:#071826!important;
+      font-weight:1000!important;
+    }
+    .sub{
+      max-width:770px!important;
+      margin:0 auto 28px!important;
+      color:#64748b!important;
+      font-size:15.5px!important;
+      line-height:1.45!important;
+      font-weight:750!important;
+      text-align:center!important;
+    }
+    .v71-panel{
+      width:min(920px,100%)!important;
+      max-width:920px!important;
+      margin:0 auto!important;
+      padding:0!important;
+      border:0!important;
+      background:transparent!important;
+      box-shadow:none!important;
+    }
+    .v71-flow,
+    .v71-subflow{
+      width:100%!important;
+      display:grid!important;
+      gap:14px!important;
+    }
+    .v71-subflow[hidden],
+    #electricSection[hidden],
+    #termicSection[hidden]{
+      display:none!important;
+      visibility:hidden!important;
+      height:0!important;
+      overflow:hidden!important;
+      opacity:0!important;
+      pointer-events:none!important;
+    }
+    body[data-energy-mode="electric"] #termicSection{display:none!important}
+    body[data-energy-mode="termic"] #electricSection{display:none!important}
+    body[data-energy-mode="electric"] #electricSection{display:grid!important}
+    body[data-energy-mode="termic"] #termicSection{display:grid!important}
+    .v71-row{
+      width:100%!important;
+      min-height:96px!important;
+      display:grid!important;
+      grid-template-columns:54px 34px minmax(250px,330px) minmax(350px,1fr) 24px!important;
+      gap:14px!important;
+      align-items:center!important;
+      padding:14px 18px!important;
+      border:1px solid #dce7f0!important;
+      border-radius:18px!important;
+      background:#fff!important;
+      box-shadow:0 12px 28px rgba(15,23,42,.045)!important;
+      position:relative!important;
+      overflow:visible!important;
+    }
+    .v71-icon{
+      width:48px!important;
+      height:48px!important;
+      border-radius:999px!important;
+      background:#e8f8ef!important;
+      color:#07943f!important;
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      font-size:22px!important;
+      font-weight:1000!important;
+    }
+    .v71-number{
+      width:28px!important;
+      height:28px!important;
+      border-radius:999px!important;
+      background:#07943f!important;
+      color:#fff!important;
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      font-size:13px!important;
+      font-weight:1000!important;
+      box-shadow:0 10px 20px rgba(7,148,63,.20)!important;
+    }
+    .v71-copy h3{
+      margin:0!important;
+      color:#071826!important;
+      font-size:18px!important;
+      line-height:1.08!important;
+      font-weight:1000!important;
+      letter-spacing:-.025em!important;
+    }
+    .v71-copy p{
+      margin:5px 0 0!important;
+      color:#64748b!important;
+      font-size:12.5px!important;
+      line-height:1.35!important;
+      font-weight:800!important;
+      max-width:340px!important;
+    }
+    .v71-check{
+      color:#07943f!important;
+      font-size:24px!important;
+      font-weight:1000!important;
+      justify-self:center!important;
+      line-height:1!important;
+    }
+    .v71-controls,
+    .v71-energy-controls,
+    .v71-methods{
+      display:grid!important;
+      grid-template-columns:1fr 1fr!important;
+      gap:12px!important;
+      width:100%!important;
+      max-width:420px!important;
+      justify-self:end!important;
+    }
+    .segment,
+    .method-card{
+      min-width:0!important;
+      height:46px!important;
+      min-height:46px!important;
+      border-radius:13px!important;
+      border:1px solid #d9e4ee!important;
+      background:#fff!important;
+      color:#64748b!important;
+      box-shadow:none!important;
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      padding:0 16px!important;
+      font-size:15px!important;
+      font-weight:1000!important;
+      cursor:pointer!important;
+      text-decoration:none!important;
+    }
+    .segment.active,
+    .method-card.active{
+      border-color:#07943f!important;
+      color:#07943f!important;
+      background:#fff!important;
+      box-shadow:0 0 0 3px rgba(7,148,63,.045)!important;
+    }
+    .method-card input{display:none!important}
+    .method-title{
+      margin:0!important;
+      font-size:15px!important;
+      font-weight:1000!important;
+      color:inherit!important;
+      line-height:1!important;
+    }
+    .method-text{display:none!important}
+    .v71-upload-row{
+      grid-template-columns:54px 34px minmax(250px,330px) minmax(350px,1fr) 24px!important;
+    }
+    .source-help-link{
+      display:inline-flex!important;
+      margin-top:6px!important;
+      color:#2563eb!important;
+      font-size:12px!important;
+      line-height:1.2!important;
+      font-weight:1000!important;
+      text-decoration:underline!important;
+      text-underline-offset:3px!important;
+    }
+    #dropZone.upload-zone{
+      width:100%!important;
+      min-height:58px!important;
+      height:58px!important;
+      display:grid!important;
+      grid-template-columns:minmax(150px,1fr) 126px!important;
+      align-items:center!important;
+      gap:10px!important;
+      padding:8px 12px!important;
+      border:1px dashed #95d8ae!important;
+      border-radius:14px!important;
+      background:#fff!important;
+      text-align:left!important;
+    }
+    #dropZone .upload-ico,
+    #dropZone .upload-title{display:none!important}
+    #dropZone .upload-btn{
+      grid-column:1!important;
+      justify-self:start!important;
+      height:38px!important;
+      margin:0!important;
+      border-radius:11px!important;
+      padding:0 18px!important;
+      border:1px solid #07943f!important;
+      background:#fff!important;
+      color:#07943f!important;
+      font-size:14px!important;
+      font-weight:1000!important;
+      box-shadow:none!important;
+    }
+    #dropZone .upload-meta{
+      grid-column:2!important;
+      margin:0!important;
+      color:#64748b!important;
+      font-size:11px!important;
+      line-height:1.18!important;
+      font-weight:850!important;
+      text-align:left!important;
+    }
+    #dropZone .file-name{
+      grid-column:1 / -1!important;
+      margin:0!important;
+      color:#067436!important;
+      font-size:11px!important;
+      font-weight:950!important;
+      white-space:nowrap!important;
+      overflow:hidden!important;
+      text-overflow:ellipsis!important;
+    }
+    .v71-tariff-controls{
+      display:grid!important;
+      grid-template-columns:1fr 1fr!important;
+      gap:12px!important;
+      max-width:420px!important;
+      width:100%!important;
+      justify-self:end!important;
+      align-items:start!important;
+    }
+    #consumptionDataSource{display:none!important}
+    .field{gap:5px!important}
+    .field label{
+      font-size:11px!important;
+      line-height:1.15!important;
+      color:#071826!important;
+      font-weight:1000!important;
+      text-transform:none!important;
+      letter-spacing:0!important;
+    }
+    .control,
+    .fixed-pill{
+      width:100%!important;
+      height:42px!important;
+      border-radius:12px!important;
+      border:1px solid #d9e4ee!important;
+      background:#fff!important;
+      color:#071826!important;
+      font-size:14px!important;
+      font-weight:900!important;
+      padding:0 12px!important;
+      box-sizing:border-box!important;
+    }
+    .fixed-pill{
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      background:#f5fbf7!important;
+      border-color:#cde8d6!important;
+      color:#07943f!important;
+      text-align:center!important;
+    }
+    .hint{
+      margin:0!important;
+      color:#64748b!important;
+      font-size:11px!important;
+      line-height:1.25!important;
+      font-weight:750!important;
+    }
+    .v71-pv-toggle{
+      width:100%!important;
+      max-width:420px!important;
+      justify-self:end!important;
+      display:flex!important;
+      align-items:center!important;
+      gap:10px!important;
+      color:#071826!important;
+      font-size:14px!important;
+      font-weight:1000!important;
+      cursor:pointer!important;
+    }
+    .v71-pv-toggle input{
+      width:18px!important;
+      height:18px!important;
+      accent-color:#07943f!important;
+    }
+    .invoice-box,
+    .production-box{
+      display:none;
+      width:100%!important;
+      margin:0!important;
+      border:1px solid #dce7f0!important;
+      border-radius:18px!important;
+      background:#fff!important;
+      padding:16px!important;
+      box-shadow:0 12px 28px rgba(15,23,42,.045)!important;
+    }
+    .invoice-box.visible,
+    .production-box.visible{display:block!important}
+    .invoice-box .form-grid{grid-template-columns:1fr 1fr!important;gap:12px!important}
+    .invoice-upload,
+    .production-upload{
+      min-height:145px!important;
+      margin-top:14px!important;
+      border-radius:16px!important;
+      padding:18px!important;
+    }
+    .mini-title{
+      margin:0 0 12px!important;
+      color:#071826!important;
+      font-size:15px!important;
+      font-weight:1000!important;
+    }
+    .v71-thermal-controls,
+    .v71-thermal-grid,
+    .v71-termic-note{
+      width:100%!important;
+      max-width:420px!important;
+      justify-self:end!important;
+    }
+    .v71-thermal-grid{
+      display:grid!important;
+      grid-template-columns:1fr 1fr!important;
+      gap:12px!important;
+    }
+    .v71-termic-note{
+      min-height:46px!important;
+      border:1px solid #cde8d6!important;
+      border-radius:13px!important;
+      background:#f5fbf7!important;
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      padding:0 14px!important;
+      color:#07943f!important;
+      font-size:14px!important;
+      font-weight:1000!important;
+      text-align:center!important;
+    }
+    .message.warn{display:none!important}
+    .message.ok,
+    .message.err{
+      display:block!important;
+      margin-top:14px!important;
+      border-radius:13px!important;
+      padding:11px 14px!important;
+    }
+    .v71-actions{
+      width:100%!important;
+      margin-top:18px!important;
+      padding-top:18px!important;
+      border-top:1px solid #dfe9e4!important;
+      display:flex!important;
+      justify-content:space-between!important;
+      align-items:center!important;
+      gap:18px!important;
+    }
+    .btn{
+      height:50px!important;
+      border-radius:13px!important;
+      font-size:15px!important;
+      font-weight:1000!important;
+      padding:0 28px!important;
+    }
+    .btn-back{
+      min-width:210px!important;
+      border:1px solid #07943f!important;
+      background:#fff!important;
+      color:#07943f!important;
+    }
+    .btn-next{
+      min-width:180px!important;
+      border:0!important;
+      background:linear-gradient(180deg,#09a64c,#07943f)!important;
+      color:#fff!important;
+      box-shadow:0 14px 28px rgba(7,148,63,.22)!important;
+    }
+    @media(max-width:1050px){
+      .hero{width:calc(100vw - 32px)!important;padding:26px 20px 22px!important}
+      .v71-panel{width:100%!important;max-width:100%!important}
+      .v71-row{
+        grid-template-columns:48px 30px minmax(0,1fr)!important;
+        padding-right:42px!important;
+      }
+      .v71-controls,
+      .v71-methods,
+      .v71-energy-controls,
+      .upload-zone,
+      .v71-tariff-controls,
+      .v71-pv-toggle,
+      .v71-thermal-controls,
+      .v71-thermal-grid,
+      .v71-termic-note{
+        grid-column:1 / -1!important;
+        max-width:none!important;
+        justify-self:stretch!important;
+      }
+      .v71-check{
+        position:absolute!important;
+        right:16px!important;
+        top:50%!important;
+        transform:translateY(-50%)!important;
+      }
+    }
+    @media(max-width:680px){
+      h1,.wizard h1{font-size:36px!important}
+      .sub{font-size:14px!important}
+      .v71-energy-controls,
+      .v71-methods,
+      .v71-tariff-controls,
+      .v71-thermal-grid,
+      .invoice-box .form-grid{
+        grid-template-columns:1fr!important;
+      }
+      #dropZone.upload-zone{
+        height:auto!important;
+        min-height:96px!important;
+        grid-template-columns:1fr!important;
+        text-align:center!important;
+      }
+      #dropZone .upload-btn,
+      #dropZone .upload-meta{
+        grid-column:1!important;
+        justify-self:center!important;
+        text-align:center!important;
+      }
+      .v71-actions{display:grid!important;gap:12px!important}
+      .btn-back,.btn-next{width:100%!important;min-width:0!important}
+    }
+
   </style>
 </head>
 <body data-energy-mode="electric">
@@ -1596,253 +2078,240 @@
         <h1>Curba ta de consum zilnic</h1>
         <p class="sub">Încarcă datele de consum și completează detaliile minime necesare pentru a identifica exact când consumi energie scumpă din rețea. Dacă ai și producție locală, o poți adăuga opțional.</p>
 
-        <section class="panel upload-ref-panel">
-          <div id="electricSection" class="ref-flow" data-energy-section="electric">
+        <section class="panel v71-panel">
+          <div class="v71-flow">
 
-            <div class="ref-step-row ref-step-energy">
-              <div class="ref-icon ref-icon-energy">⚡</div>
-              <div class="ref-number">1</div>
-              <div class="ref-copy">
+            <div class="v71-row v71-energy-row">
+              <div class="v71-icon">⚡</div>
+              <div class="v71-number">1</div>
+              <div class="v71-copy">
                 <h3>Tip energie</h3>
                 <p>Alege tipul de energie pentru care încarci consumul.</p>
               </div>
-              <div class="ref-controls ref-energy-controls" aria-label="Tip consum">
+              <div class="v71-controls v71-energy-controls">
                 <button class="segment active" type="button" id="tabElectric">⚡ Electric</button>
                 <button class="segment" type="button" id="tabTermic">♨️ Termic</button>
               </div>
-              <div class="ref-indicator">⌄</div>
+              <div class="v71-check">⌄</div>
             </div>
 
-            <div class="ref-step-row ref-step-source">
-              <div class="ref-icon ref-icon-folder">📁</div>
-              <div class="ref-number">2</div>
-              <div class="ref-copy">
-                <h3>Sursa datelor</h3>
-                <p>Spune-ne de unde provin datele tale.</p>
-              </div>
-              <div class="ref-methods" aria-label="Metodă încărcare consum electric">
-                <label class="method-card active" id="methodFileCard">
-                  <input type="radio" name="loadMethod" value="file" checked>
-                  <span class="method-title">📂 Încarc fișierul orar</span>
-                </label>
-                <label class="method-card" id="methodInvoiceCard">
-                  <input type="radio" name="loadMethod" value="invoice">
-                  <span class="method-title">🧾 Am doar factura lunară</span>
-                </label>
-              </div>
-              <div class="ref-indicator">⌄</div>
-            </div>
+            <div id="electricSection" class="v71-subflow" data-energy-section="electric">
 
-            <div class="ref-step-row ref-step-upload" id="fileModeBox">
-              <div class="ref-icon ref-icon-upload">☁</div>
-              <div class="ref-number">3</div>
-              <div class="ref-copy">
-                <h3>Încarcă fișierul</h3>
-                <p>Fișier cu consum orar exportat de pe contor.</p>
-                <a href="#" class="source-help-link" id="openDistributorHelp" data-open-distributor-help="true">De unde obții fișierul?</a>
-              </div>
-              <div class="upload-zone" id="dropZone">
-                <input id="fileInput" type="file" hidden multiple accept=".csv,.txt,.xlsx,.xls,.xlsm,.html,.htm">
-                <button type="button" class="upload-btn" id="chooseBtn">↥ Alege fișier</button>
-                <div class="upload-meta">.xlsx, .xls, .csv, .html<br>Max. 10 MB</div>
-                <div class="file-name" id="fileName"></div>
-              </div>
-              <div class="ref-indicator">⌄</div>
-            </div>
-
-            <div class="invoice-box" id="invoiceBox">
-              <h3 class="mini-title">Date minime din factura lunară</h3>
-              <div class="form-grid">
-                <div class="field">
-                  <label for="invoiceConsumption">Consum total facturat</label>
-                  <input class="control" id="invoiceConsumption" type="number" min="0" step="0.01" placeholder="ex. 12450">
-                  <div class="hint">kWh consumați în perioada facturată.</div>
+              <div class="v71-row">
+                <div class="v71-icon">📁</div>
+                <div class="v71-number">2</div>
+                <div class="v71-copy">
+                  <h3>Sursa datelor</h3>
+                  <p>Spune-ne de unde provin datele tale.</p>
                 </div>
-                <div class="field">
-                  <label for="invoiceDays">Număr zile facturate</label>
-                  <input class="control" id="invoiceDays" type="number" min="1" step="1" value="30">
-                  <div class="hint">Necesar pentru estimare zilnică/orară.</div>
+                <div class="v71-controls v71-methods">
+                  <label class="method-card active" id="methodFileCard">
+                    <input type="radio" name="loadMethod" value="file" checked>
+                    <span class="method-title">📂 Încarc fișierul orar</span>
+                  </label>
+                  <label class="method-card" id="methodInvoiceCard">
+                    <input type="radio" name="loadMethod" value="invoice">
+                    <span class="method-title">🧾 Am doar factura lunară</span>
+                  </label>
                 </div>
-                <div class="field">
-                  <label for="invoiceValue">Valoare factură energie (opțional)</label>
-                  <input class="control" id="invoiceValue" type="number" min="0" step="0.01" placeholder="ex. 18670">
-                  <div class="hint">Ajută la verificarea tarifului total mediu.</div>
-                </div>
-                <div class="field">
-                  <label for="workSchedule">Program de lucru</label>
-                  <select class="control" id="workSchedule">
-                    <option>Luni–Vineri, 8–18</option>
-                    <option>Luni–Vineri, 6–22</option>
-                    <option>3 schimburi (24/7)</option>
-                    <option>Luni–Sâmbătă</option>
-                    <option>Alt program</option>
-                  </select>
-                  <div class="hint">Ne ajută să repartizăm mai realist consumul pe ore.</div>
-                </div>
+                <div class="v71-check">⌄</div>
               </div>
 
-              <div class="invoice-upload-wrap">
+              <div class="v71-row v71-upload-row" id="fileModeBox">
+                <div class="v71-icon">☁</div>
+                <div class="v71-number">3</div>
+                <div class="v71-copy">
+                  <h3>Încarcă fișierul</h3>
+                  <p>Fișier cu consum orar exportat de pe contor.</p>
+                  <a href="#" class="source-help-link" id="openDistributorHelp" data-open-distributor-help="true">De unde obții fișierul?</a>
+                </div>
+                <div class="upload-zone" id="dropZone">
+                  <input id="fileInput" type="file" hidden multiple accept=".csv,.txt,.xlsx,.xls,.xlsm,.html,.htm">
+                  <button type="button" class="upload-btn" id="chooseBtn">↥ Alege fișier</button>
+                  <div class="upload-meta">.xlsx, .xls, .csv, .html<br>Max. 10 MB</div>
+                  <div class="file-name" id="fileName"></div>
+                </div>
+                <div class="v71-check">⌄</div>
+              </div>
+
+              <div class="invoice-box" id="invoiceBox">
+                <h3 class="mini-title">Date minime din factura lunară</h3>
+                <div class="form-grid">
+                  <div class="field">
+                    <label for="invoiceConsumption">Consum total facturat</label>
+                    <input class="control" id="invoiceConsumption" type="number" min="0" step="0.01" placeholder="ex. 12450">
+                    <div class="hint">kWh consumați în perioada facturată.</div>
+                  </div>
+                  <div class="field">
+                    <label for="invoiceDays">Număr zile facturate</label>
+                    <input class="control" id="invoiceDays" type="number" min="1" step="1" value="30">
+                    <div class="hint">Necesar pentru estimare zilnică/orară.</div>
+                  </div>
+                  <div class="field">
+                    <label for="invoiceValue">Valoare factură energie (opțional)</label>
+                    <input class="control" id="invoiceValue" type="number" min="0" step="0.01" placeholder="ex. 18670">
+                    <div class="hint">Ajută la verificarea tarifului total mediu.</div>
+                  </div>
+                  <div class="field">
+                    <label for="workSchedule">Program de lucru</label>
+                    <select class="control" id="workSchedule">
+                      <option>Luni–Vineri, 8–18</option>
+                      <option>Luni–Vineri, 6–22</option>
+                      <option>3 schimburi (24/7)</option>
+                      <option>Luni–Sâmbătă</option>
+                      <option>Alt program</option>
+                    </select>
+                    <div class="hint">Ne ajută să repartizăm realist consumul pe ore.</div>
+                  </div>
+                </div>
                 <div class="upload-zone invoice-upload" id="invoiceDrop">
                   <input id="invoiceInput" type="file" hidden accept=".pdf,.jpg,.jpeg,.png,.xlsx,.xls,.csv">
                   <div class="upload-ico">🧾</div>
                   <div class="upload-title">Încarcă factura lunară (opțional)</div>
-                  <div class="upload-meta">Poți atașa factura pentru verificare, dar calculul pornește din valorile introduse manual.</div>
+                  <div class="upload-meta">Poți atașa factura pentru verificare.</div>
                   <button type="button" class="upload-btn" id="invoiceChoose">Alege factură</button>
                   <div class="file-name" id="invoiceFileName"></div>
                 </div>
               </div>
-            </div>
 
-            <div class="ref-step-row ref-step-tariff">
-              <div class="ref-icon ref-icon-tariff">▦</div>
-              <div class="ref-number">4</div>
-              <div class="ref-copy">
-                <h3>Detalii tarif</h3>
-                <p>Completează informațiile despre tariful tău actual.</p>
-              </div>
-              <div class="ref-tariff-grid">
-                <div class="field">
-                  <label for="fixedTariff">Tarif fix actual (lei/kWh)</label>
-                  <input class="control" id="fixedTariff" type="number" min="0" step="0.0001" value="0.75">
-                  <div class="hint">Introdu tariful total mediu din contract/factură.</div>
+              <div class="v71-row v71-tariff-row">
+                <div class="v71-icon">▦</div>
+                <div class="v71-number">4</div>
+                <div class="v71-copy">
+                  <h3>Detalii tarif</h3>
+                  <p>Completează informațiile despre tariful tău actual.</p>
                 </div>
-                <div class="field">
-                  <label>Tip tarif actual</label>
-                  <div class="fixed-pill">Tarif fix</div>
-                  <div class="hint">Tariful dinamic se tratează separat.</div>
-                </div>
-                <select id="consumptionDataSource" hidden>
-                  <option value="total" selected>Consum total al amplasamentului</option>
-                  <option value="grid">Consum din rețea / import din rețea</option>
-                  <option value="unknown">Nu știu</option>
-                </select>
-
-              </div>
-              <div class="ref-indicator">⌄</div>
-            </div>
-
-            <div class="ref-step-row ref-step-pv">
-              <div class="ref-icon ref-icon-pv">▦</div>
-              <div class="ref-number">5</div>
-              <div class="ref-copy">
-                <h3>Producție locală / fotovoltaică (opțional)</h3>
-                <p>Adaugă-ți producția locală dacă o ai.</p>
-              </div>
-              <label class="ref-pv-toggle" for="hasProduction">
-                <input type="checkbox" id="hasProduction">
-                <span>Am și producție locală / fotovoltaică</span>
-              </label>
-              <div class="ref-indicator">⌄</div>
-            </div>
-
-            <div class="production-box" id="productionBox">
-              <h3 class="mini-title">Producție locală (opțional)</h3>
-              <div class="production-existing-banner" id="productionExistingBanner">DATE PRODUCȚIE EXISTENTE ÎN FIȘIERUL DE CONSUM ÎNCĂRCAT MAI SUS</div>
-              <div class="upload-zone production-upload" id="productionDrop">
-                <input id="productionInput" type="file" hidden multiple accept=".csv,.txt,.xlsx,.xls,.xlsm,.html,.htm">
-                <div class="upload-ico">☀</div>
-                <div class="upload-title">Încarcă fișierul cu producția locală</div>
-                <div class="upload-meta">Excel, CSV, HTML, PVGIS Timeseries sau export inverter · poți selecta mai multe fișiere</div>
-                <button type="button" class="upload-btn" id="productionChoose">Alege fișier</button>
-                <div class="file-name" id="productionFileName"></div>
-              </div>
-            </div>
-
-          </div>
-
-          <div id="termicSection" class="ref-flow termic-flow" data-energy-section="termic" hidden style="display:none">
-            <div class="ref-step-row ref-step-energy">
-              <div class="ref-icon ref-icon-energy">⚡</div>
-              <div class="ref-number">1</div>
-              <div class="ref-copy">
-                <h3>Tip energie</h3>
-                <p>Alege tipul de energie pentru care încarci consumul.</p>
-              </div>
-              <div class="ref-controls ref-energy-controls" aria-label="Tip consum">
-                <button class="segment" type="button" id="tabElectricThermalMirror">⚡ Electric</button>
-                <button class="segment active" type="button" id="tabTermicMirror">♨️ Termic</button>
-              </div>
-              <div class="ref-indicator">⌄</div>
-            </div>
-
-            <div class="ref-step-row termic-info-row">
-              <div class="ref-icon ref-icon-folder">📁</div>
-              <div class="ref-number">2</div>
-              <div class="ref-copy">
-                <h3>Date termice minime</h3>
-                <p>Introdu doar informațiile esențiale pentru analiza integrată.</p>
-              </div>
-              <div class="termic-status-card">Introducere ghidată · simplă și rapidă</div>
-              <div class="ref-indicator">⌄</div>
-            </div>
-
-            <div class="ref-step-row termic-fields-row">
-              <div class="ref-icon ref-icon-upload">☁</div>
-              <div class="ref-number">3</div>
-              <div class="ref-copy">
-                <h3>Date despre consumul termic</h3>
-                <p>Spune-ne dacă ai monitorizare și care este sursa principală de căldură.</p>
-              </div>
-              <div class="termic-grid">
-                <div class="field">
-                  <label for="thermalMonitored">Ai consum termic monitorizat?</label>
-                  <select class="control" id="thermalMonitored">
-                    <option>Da</option>
-                    <option selected>Nu / nu știu</option>
+                <div class="v71-tariff-controls">
+                  <div class="field">
+                    <label for="fixedTariff">Tarif fix actual (lei/kWh)</label>
+                    <input class="control" id="fixedTariff" type="number" min="0" step="0.0001" value="0.75">
+                  </div>
+                  <div class="field">
+                    <label>Tip tarif actual</label>
+                    <div class="fixed-pill">Tarif fix</div>
+                  </div>
+                  <select id="consumptionDataSource" hidden>
+                    <option value="total" selected>Consum total al amplasamentului</option>
+                    <option value="grid">Consum din rețea / import din rețea</option>
+                    <option value="unknown">Nu știu</option>
                   </select>
                 </div>
-                <div class="field">
-                  <label for="thermalSource">Sursa principală de căldură</label>
-                  <select class="control" id="thermalSource">
-                    <option>Gaz natural</option>
-                    <option>Boiler electric</option>
-                    <option>Pompă de căldură</option>
-                    <option>Abur / agent termic extern</option>
-                    <option>Altă sursă</option>
-                  </select>
+                <div class="v71-check">⌄</div>
+              </div>
+
+              <div class="v71-row v71-pv-row">
+                <div class="v71-icon">▦</div>
+                <div class="v71-number">5</div>
+                <div class="v71-copy">
+                  <h3>Producție locală / fotovoltaică (opțional)</h3>
+                  <p>Adaugă-ți producția locală dacă o ai.</p>
+                </div>
+                <label class="v71-pv-toggle" for="hasProduction">
+                  <input type="checkbox" id="hasProduction">
+                  <span>Am și producție locală / fotovoltaică</span>
+                </label>
+                <div class="v71-check">⌄</div>
+              </div>
+
+              <div class="production-box" id="productionBox">
+                <h3 class="mini-title">Producție locală (opțional)</h3>
+                <div class="production-existing-banner" id="productionExistingBanner">DATE PRODUCȚIE EXISTENTE ÎN FIȘIERUL DE CONSUM ÎNCĂRCAT MAI SUS</div>
+                <div class="upload-zone production-upload" id="productionDrop">
+                  <input id="productionInput" type="file" hidden multiple accept=".csv,.txt,.xlsx,.xls,.xlsm,.html,.htm">
+                  <div class="upload-ico">☀</div>
+                  <div class="upload-title">Încarcă fișierul cu producția locală</div>
+                  <div class="upload-meta">Excel, CSV, HTML, PVGIS Timeseries sau export inverter.</div>
+                  <button type="button" class="upload-btn" id="productionChoose">Alege fișier</button>
+                  <div class="file-name" id="productionFileName"></div>
                 </div>
               </div>
-              <div class="ref-indicator">⌄</div>
+
             </div>
 
-            <div class="ref-step-row termic-fields-row">
-              <div class="ref-icon ref-icon-tariff">▦</div>
-              <div class="ref-number">4</div>
-              <div class="ref-copy">
-                <h3>Consum anual estimat</h3>
-                <p>Completează valoarea anuală și unitatea de măsură.</p>
-              </div>
-              <div class="termic-grid">
-                <div class="field">
-                  <label for="annualThermal">Consum anual estimat</label>
-                  <input class="control" id="annualThermal" type="number" min="0" step="0.01" placeholder="ex. 850">
+            <div id="termicSection" class="v71-subflow v71-termic-subflow" data-energy-section="termic" hidden style="display:none">
+
+              <div class="v71-row">
+                <div class="v71-icon">🔥</div>
+                <div class="v71-number">2</div>
+                <div class="v71-copy">
+                  <h3>Sursa termică</h3>
+                  <p>Spune-ne cum este produsă energia termică.</p>
                 </div>
-                <div class="field">
-                  <label for="thermalUnit">Unitate</label>
-                  <select class="control" id="thermalUnit">
-                    <option>MWh</option>
-                    <option>m³ gaz</option>
-                  </select>
+                <div class="v71-thermal-controls">
+                  <div class="field">
+                    <label for="thermalSource">Sursa principală de căldură</label>
+                    <select class="control" id="thermalSource">
+                      <option>Gaz natural</option>
+                      <option>Boiler electric</option>
+                      <option>Pompă de căldură</option>
+                      <option>Abur / agent termic extern</option>
+                      <option>Altă sursă</option>
+                    </select>
+                  </div>
                 </div>
+                <div class="v71-check">⌄</div>
               </div>
-              <div class="ref-indicator">⌄</div>
+
+              <div class="v71-row">
+                <div class="v71-icon">📊</div>
+                <div class="v71-number">3</div>
+                <div class="v71-copy">
+                  <h3>Monitorizare</h3>
+                  <p>Ai date reale sau doar estimare anuală?</p>
+                </div>
+                <div class="v71-thermal-controls">
+                  <div class="field">
+                    <label for="thermalMonitored">Ai consum termic monitorizat?</label>
+                    <select class="control" id="thermalMonitored">
+                      <option>Da</option>
+                      <option selected>Nu / nu știu</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="v71-check">⌄</div>
+              </div>
+
+              <div class="v71-row">
+                <div class="v71-icon">▦</div>
+                <div class="v71-number">4</div>
+                <div class="v71-copy">
+                  <h3>Consum anual estimat</h3>
+                  <p>Completează valoarea și unitatea.</p>
+                </div>
+                <div class="v71-thermal-grid">
+                  <div class="field">
+                    <label for="annualThermal">Consum anual estimat</label>
+                    <input class="control" id="annualThermal" type="number" min="0" step="0.01" placeholder="ex. 850">
+                  </div>
+                  <div class="field">
+                    <label for="thermalUnit">Unitate</label>
+                    <select class="control" id="thermalUnit">
+                      <option>MWh</option>
+                      <option>m³ gaz</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="v71-check">⌄</div>
+              </div>
+
+              <div class="v71-row">
+                <div class="v71-icon">✓</div>
+                <div class="v71-number">5</div>
+                <div class="v71-copy">
+                  <h3>Pregătit pentru analiză</h3>
+                  <p>Datele termice sunt salvate pentru analiza integrată.</p>
+                </div>
+                <div class="v71-termic-note">Poți reveni oricând la Electric din primul rând.</div>
+                <div class="v71-check">⌄</div>
+              </div>
+
             </div>
 
-            <div class="ref-step-row termic-info-row compact-note-row">
-              <div class="ref-icon ref-icon-pv">▦</div>
-              <div class="ref-number">5</div>
-              <div class="ref-copy">
-                <h3>Integrare în analiză</h3>
-                <p>Datele termice sunt salvate pentru analiza integrată, dar întrebarea 1 se calculează pe consum electric.</p>
-              </div>
-              <div class="termic-status-card soft">Date salvate pentru analiza integrată</div>
-              <div class="ref-indicator">⌄</div>
-            </div>
           </div>
 
           <div id="message" class="message warn">Completează minim tariful și alege modul de încărcare. Pentru varianta recomandată, încarcă fișierul orar de consum.</div>
 
-          <div class="actions ref-actions">
+          <div class="actions v71-actions">
             <a class="btn btn-back" href="./testeaza-gratuit.html">← Pagina principală</a>
             <button class="btn btn-next" type="button" id="continueBtn">Continuă →</button>
           </div>
@@ -1902,19 +2371,13 @@
 
       tabElectric.classList.toggle('active', electric);
       tabTermic.classList.toggle('active', !electric);
-      document.getElementById('tabElectricThermalMirror')?.classList.toggle('active', electric);
-      document.getElementById('tabTermicMirror')?.classList.toggle('active', !electric);
 
       electricSection.hidden = !electric;
       termicSection.hidden = electric;
       electricSection.style.display = electric ? 'grid' : 'none';
       termicSection.style.display = electric ? 'none' : 'grid';
 
-      if(electric){
-        document.body.setAttribute('data-energy-mode','electric');
-      } else {
-        document.body.setAttribute('data-energy-mode','termic');
-      }
+      document.body.setAttribute('data-energy-mode', electric ? 'electric' : 'termic');
 
       showMessage(electric ? 'warn' : 'ok', electric
         ? 'Completează minim tariful și alege modul de încărcare. Pentru varianta recomandată, încarcă fișierul orar de consum.'
