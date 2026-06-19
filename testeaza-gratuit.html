@@ -17,6 +17,7 @@
   <!-- SVT V58 Q5 STORAGE QUOTA FIX -->
   <!-- SVT V59 Q5 NATIVE BARS LAYOUT FIX -->
   <!-- SVT V60 HOTFIX TESTEAZA RENDER RESTORE -->
+  <!-- SVT V61 Q5 STABLE RESULT LAYOUT -->
   <title>Întrebări disponibile | SVT Energy Navigator</title>
   <meta name="description" content="Alege întrebarea care poate fi răspunsă pe baza datelor încărcate."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -553,6 +554,165 @@
     @media(max-width:700px){
       .q5-bar-row{grid-template-columns:1fr;gap:6px}
       .q5-bar-value{text-align:left}
+    }
+
+  
+    /* v61: stable Q5 result layout */
+    .q5-result-wrap{
+      max-width:100%;
+      width:100%;
+      overflow:hidden;
+      box-sizing:border-box;
+      contain:layout paint;
+    }
+    .q5-safe-card{
+      border:1px solid #e1eadf;
+      background:#fbfefc;
+      border-radius:18px;
+      padding:16px;
+      margin-top:14px;
+      box-sizing:border-box;
+    }
+    .q5-safe-card h3{
+      margin:0 0 8px;
+      color:#0f172a;
+      font-size:15px;
+      font-weight:1000;
+      letter-spacing:-.02em;
+    }
+    .q5-safe-card p,.q5-safe-card li{
+      color:#475569;
+      font-size:13px;
+      line-height:1.48;
+      font-weight:750;
+    }
+    .q5-safe-card ul{
+      margin:8px 0 0 18px;
+      padding:0;
+      display:grid;
+      gap:6px;
+    }
+    .q5-distribution{
+      display:grid;
+      gap:10px;
+      margin-top:14px;
+    }
+    .q5-distribution-row{
+      display:grid;
+      grid-template-columns:minmax(130px,180px) minmax(0,1fr) minmax(76px,96px);
+      gap:10px;
+      align-items:center;
+    }
+    .q5-distribution-label{
+      color:#0f172a;
+      font-size:12px;
+      font-weight:1000;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .q5-distribution-track{
+      min-width:0;
+      height:15px;
+      border-radius:99px;
+      background:#eaf2ed;
+      border:1px solid #dcebe2;
+      overflow:hidden;
+    }
+    .q5-distribution-fill{
+      height:100%;
+      width:0%;
+      border-radius:99px;
+      background:linear-gradient(90deg,#07943f,#4ade80);
+    }
+    .q5-distribution-fill.warn{background:linear-gradient(90deg,#f59e0b,#facc15)}
+    .q5-distribution-fill.danger{background:linear-gradient(90deg,#ef4444,#fb7185)}
+    .q5-distribution-value{
+      text-align:right;
+      color:#334155;
+      font-size:12px;
+      font-weight:1000;
+      white-space:nowrap;
+    }
+    .q5-detail-box{
+      max-width:100%;
+      width:100%;
+      box-sizing:border-box;
+      border:1px solid #e1eadf;
+      border-radius:18px;
+      background:#fff;
+      overflow:hidden;
+      margin-top:14px;
+    }
+    .q5-detail-head{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      padding:13px 14px;
+      background:#fbfefc;
+      border-bottom:1px solid #e1eadf;
+    }
+    .q5-detail-head strong{
+      color:#0f172a;
+      font-size:13px;
+      font-weight:1000;
+    }
+    .q5-detail-head span{
+      color:#64748b;
+      font-size:12px;
+      font-weight:800;
+    }
+    .q5-detail-scroll{
+      max-height:360px;
+      overflow:auto;
+      max-width:100%;
+      width:100%;
+      box-sizing:border-box;
+    }
+    .q5-stable-table{
+      width:100%;
+      min-width:760px;
+      border-collapse:collapse;
+      table-layout:fixed;
+      font-size:11.5px;
+    }
+    .q5-stable-table th,
+    .q5-stable-table td{
+      padding:8px 9px;
+      border-bottom:1px solid #edf3ef;
+      text-align:right;
+      color:#334155;
+      font-weight:800;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .q5-stable-table th{
+      position:sticky;
+      top:0;
+      z-index:1;
+      background:#f8fbf9;
+      color:#64748b;
+      text-transform:uppercase;
+      font-size:10px;
+      letter-spacing:.04em;
+      font-weight:1000;
+    }
+    .q5-stable-table td:first-child,
+    .q5-stable-table td:nth-child(2),
+    .q5-stable-table th:first-child,
+    .q5-stable-table th:nth-child(2){
+      text-align:left;
+    }
+    .q5-rebuild-btn{
+      margin-top:12px;
+    }
+    @media(max-width:720px){
+      .q5-distribution-row{grid-template-columns:1fr;gap:6px}
+      .q5-distribution-value{text-align:left}
+      .q5-detail-head{display:block}
+      .q5-detail-head span{display:block;margin-top:4px}
     }
 
   </style>
@@ -2017,53 +2177,139 @@
 
     function renderQuestion5Result(box, data){
       const t = data.totals || {};
+      const usefulMwh = (Number(t.usefulTotal || 0) / 1000);
+      const totalMwh = (Number(t.totalAdd || 0) / 1000);
+      const exportMwh = ((Number(t.exportKwh || 0) + Number(t.curtailedKwh || 0)) / 1000);
+      const usefulPct = Number(t.usefulPercent || 0);
+      const source = data.source || {};
+      const inputs = data.inputs || {};
+      const directMwh = Number(t.direct || 0) / 1000;
+      const flexMwh = Number(t.flexUseful || 0) / 1000;
+      const bessMwh = Number(t.bessUseful || 0) / 1000;
+      const valueRon = Number(t.localValue || 0) + Number(t.exportValue || 0);
+
+      const interpretation = usefulPct >= 80
+        ? 'Producția suplimentară estimată se potrivește bine cu profilul de consum. Cea mai mare parte poate fi folosită local, deci investiția are șanse bune să reducă energia cumpărată din rețea.'
+        : usefulPct >= 50
+          ? 'O parte importantă din producția suplimentară poate fi utilizată local, dar rămâne și surplus. Pentru creșterea valorii, trebuie analizate consumuri mutabile, BESS sau limitări de injecție.'
+          : 'Producția suplimentară estimată depășește consumul disponibil în multe intervale. Fără flexibilitate, stocare sau export avantajos, o parte mare poate deveni surplus sau energie limitată.';
+
+      const recommendations = [
+        usefulPct < 70 ? 'Dimensionează PV suplimentar în raport cu consumul diurn real, nu doar cu suprafața disponibilă.' : 'Menține dimensionarea PV suplimentară aproape de consumul diurn disponibil.',
+        exportMwh > usefulMwh * 0.25 ? 'Analizează BESS sau mutarea consumurilor flexibile în orele cu surplus.' : 'Surplusul este relativ controlat; prioritizează consum local direct.',
+        inputs.zeroExport === 'yes' ? 'Pentru zero-export, verifică limitarea invertorului și consumatorii care pot absorbi surplusul în timp real.' : 'Compară valoarea exportului cu valoarea autoconsumului pentru decizia economică finală.'
+      ];
+
       box.innerHTML = `
-        <div class="q5-result-meta">
-          <span class="q5-chip">PV suplimentar: ${fmt((data.source?.q4AdditionalKwp || 0),1)} kWp</span>
-          <span class="q5-chip">Tarif consum: ${fmt(data.inputs?.tariffConsumption || 0,3)} lei/kWh</span>
-          <span class="q5-chip">Export: ${data.inputs?.zeroExport === 'yes' ? 'zero-export' : fmt(data.inputs?.exportTariff || 0,3) + ' lei/kWh'}</span>
-        </div>
+        <div class="q5-result-wrap">
+          <div class="q5-result-meta">
+            <span class="q5-chip">PV suplimentar: ${fmt((source.q4AdditionalKwp || 0),1)} kWp</span>
+            <span class="q5-chip">Utilizabil local: ${fmt(usefulPct,1)}%</span>
+            <span class="q5-chip">Valoare estimată: ${fmt(valueRon,0)} lei/an</span>
+          </div>
 
-        <div class="answer-summary">
-          <div class="summary-card"><strong>${fmt(t.totalAdd/1000,1)} MWh/an</strong><span>producție suplimentară estimată</span></div>
-          <div class="summary-card"><strong>${fmt(t.usefulTotal/1000,1)} MWh/an</strong><span>energie utilizabilă local direct/flexibil/BESS</span></div>
-          <div class="summary-card"><strong>${fmt(t.usefulPercent,1)}%</strong><span>procent utilizabil local</span></div>
-        </div>
+          <div class="answer-summary">
+            <div class="summary-card"><strong>${fmt(totalMwh,1)} MWh/an</strong><span>producție suplimentară estimată</span></div>
+            <div class="summary-card"><strong>${fmt(usefulMwh,1)} MWh/an</strong><span>energie utilizabilă local</span></div>
+            <div class="summary-card"><strong>${fmt(exportMwh,1)} MWh/an</strong><span>export / surplus / limitare</span></div>
+          </div>
 
-        ${renderQ5Bars(t)}
+          ${renderQ5StableBars(t)}
 
-        <div class="top-list">
-          <div class="top-row">
-            <div class="rank">1</div>
-            <div><strong>Utilizare directă locală</strong><small>PV suplimentar consumat simultan cu consumul disponibil</small></div>
-            <div class="cost" style="color:#067436">${fmt(t.direct/1000,1)} MWh</div>
+          <div class="insight-grid">
+            <div class="insight-card">
+              <h3>Interpretare rezultat</h3>
+              <p>${esc(interpretation)}</p>
+            </div>
+            <div class="insight-card">
+              <h3>Recomandări</h3>
+              <ul>${recommendations.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+            </div>
           </div>
-          <div class="top-row">
-            <div class="rank">2</div>
-            <div><strong>Flexibilitate / mutare consum</strong><small>energie suplimentară absorbită prin procese mutabile</small></div>
-            <div class="cost" style="color:#067436">${fmt(t.flexUseful/1000,1)} MWh</div>
-          </div>
-          <div class="top-row">
-            <div class="rank">3</div>
-            <div><strong>BESS / stocare</strong><small>surplus stocat și consumat ulterior, cu randamentul introdus</small></div>
-            <div class="cost" style="color:#067436">${fmt(t.bessUseful/1000,1)} MWh</div>
-          </div>
-          <div class="top-row">
-            <div class="rank">4</div>
-            <div><strong>Export / surplus rămas</strong><small>energie care nu este utilizată local direct, flexibil sau prin BESS</small></div>
-            <div class="cost" style="color:#b45309">${fmt((t.exportKwh+t.curtailedKwh)/1000,1)} MWh</div>
-          </div>
-          <div class="top-row">
-            <div class="rank">5</div>
-            <div><strong>Valoare economică estimată</strong><small>valoare locală + valoare export; oportunitate pierdută calculată separat</small></div>
-            <div class="cost">${fmt(t.localValue + t.exportValue,0)} lei/an</div>
-          </div>
-        </div>
 
-        ${renderQ5DayBoard(data.intervalRows || [])}
+          <div class="q5-safe-card">
+            <h3>Rezumat energetic</h3>
+            <ul>
+              <li>Utilizare directă locală: <strong>${fmt(directMwh,1)} MWh/an</strong></li>
+              <li>Flexibilitate / mutare consum: <strong>${fmt(flexMwh,1)} MWh/an</strong></li>
+              <li>BESS / stocare: <strong>${fmt(bessMwh,1)} MWh/an</strong></li>
+              <li>Export sau energie limitată: <strong>${fmt(exportMwh,1)} MWh/an</strong></li>
+            </ul>
+          </div>
+
+          ${renderQ5StableTable(data.intervalRows || [])}
         </div>
       `;
     }
+
+    function renderQ5StableBars(t){
+      const values = [
+        {name:'Utilizat direct', value:Number(t.direct || 0), tone:'ok'},
+        {name:'Flexibilitate', value:Number(t.flexUseful || 0), tone:'ok'},
+        {name:'BESS', value:Number(t.bessUseful || 0), tone:'ok'},
+        {name:'Export', value:Number(t.exportKwh || 0), tone:'warn'},
+        {name:'Limitat / pierdut', value:Number(t.curtailedKwh || 0), tone:'danger'}
+      ];
+      const max = Math.max(1, ...values.map(x => x.value));
+      return `
+        <div class="q5-safe-card">
+          <h3>Distribuția energiei suplimentare</h3>
+          <div class="q5-distribution">
+            ${values.map(x => `
+              <div class="q5-distribution-row">
+                <div class="q5-distribution-label">${esc(x.name)}</div>
+                <div class="q5-distribution-track">
+                  <div class="q5-distribution-fill ${x.tone === 'warn' ? 'warn' : x.tone === 'danger' ? 'danger' : ''}" style="width:${Math.max(1, Math.round(x.value / max * 100))}%"></div>
+                </div>
+                <div class="q5-distribution-value">${fmt(x.value/1000,1)} MWh</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderQ5StableTable(rows){
+      const relevant = (rows || []).filter(r => Number(r.additionalPvKwh || 0) > 0 || Number(r.directKwh || 0) > 0 || Number(r.surplusKwh || 0) > 0);
+      if(!relevant.length) return '';
+      const shown = relevant.slice(0, 2000);
+      const hidden = relevant.length - shown.length;
+      return `
+        <div class="q5-detail-box">
+          <div class="q5-detail-head">
+            <strong>Tabel detaliat pe intervale</strong>
+            <span>${shown.length} intervale afișate${hidden > 0 ? ` · încă ${hidden} intervale nu sunt afișate în browser pentru stabilitate` : ''}</span>
+          </div>
+          <div class="q5-detail-scroll">
+            <table class="q5-stable-table">
+              <thead>
+                <tr>
+                  <th>Ziua</th>
+                  <th>Ora</th>
+                  <th>Consum disp.</th>
+                  <th>PV supl.</th>
+                  <th>Utilizat</th>
+                  <th>Surplus</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${shown.map(x => `
+                  <tr>
+                    <td>${esc(x.day || '')}</td>
+                    <td>${esc(x.hour || '')}</td>
+                    <td>${fmt(x.demandAfterExisting)} kWh</td>
+                    <td>${fmt(x.additionalPvKwh)} kWh</td>
+                    <td>${fmt(x.directKwh)} kWh</td>
+                    <td>${fmt(x.surplusKwh)} kWh</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
 
     function renderQ5DayBoard(rows){
       const relevant = (rows || []).filter(r => Number(r.additionalPvKwh || 0) > 0 || Number(r.directKwh || 0) > 0 || Number(r.surplusKwh || 0) > 0);
