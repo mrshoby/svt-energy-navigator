@@ -24,6 +24,7 @@
   <!-- SVT V70.1 APPLY SCRIPT FALSE POSITIVE FIX -->
   <!-- SVT V72 COMPACT TOP ALIGN ICON CLEANUP -->
   <!-- SVT V73 FIX UPLOAD ROW GRID TEXT -->
+  <!-- SVT V74 REBUILD UPLOAD PAGE REAL 1TO1 GRID -->
   <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
   <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -2435,47 +2436,536 @@
       }
     }
 
+  
+    /* v74: real isolated grid rebuild — no inherited broken row layout */
+    body{
+      background:
+        radial-gradient(circle at 11% 30%, rgba(7,148,63,.055), transparent 30%),
+        radial-gradient(circle at 86% 40%, rgba(7,148,63,.055), transparent 32%),
+        #fbfdfc!important;
+    }
+    body::after{display:none!important}
+    .page{
+      width:100%!important;
+      max-width:none!important;
+      min-height:100vh!important;
+      margin:0!important;
+      padding:10px 18px 22px!important;
+      display:flex!important;
+      justify-content:center!important;
+      align-items:flex-start!important;
+    }
+    .hero{
+      width:min(1160px, calc(100vw - 58px))!important;
+      margin:0 auto!important;
+      padding:10px 46px 26px!important;
+      border-radius:30px!important;
+      border:1px solid #d8e4ee!important;
+      background:rgba(255,255,255,.96)!important;
+      box-shadow:0 28px 76px rgba(15,23,42,.085)!important;
+    }
+    .wizard{
+      width:100%!important;
+      max-width:none!important;
+      margin:0 auto!important;
+      padding:0!important;
+    }
+    .v74-steps{
+      display:grid!important;
+      grid-template-columns:34px minmax(78px,1fr) 34px minmax(78px,1fr) 34px minmax(78px,1fr) 34px!important;
+      gap:9px!important;
+      align-items:center!important;
+      max-width:560px!important;
+      margin:0 auto 8px!important;
+    }
+    .v74-step-dot{
+      width:34px!important;
+      height:34px!important;
+      border-radius:999px!important;
+      border:2px solid #c8d5e4!important;
+      background:#fff!important;
+      color:#607086!important;
+      display:grid!important;
+      place-items:center!important;
+      font-weight:900!important;
+      font-size:13px!important;
+    }
+    .v74-step-dot.active{
+      background:#07943f!important;
+      border-color:#07943f!important;
+      color:#fff!important;
+      box-shadow:0 10px 18px rgba(7,148,63,.25)!important;
+    }
+    .v74-step-line{
+      height:2px!important;
+      background:#d5e2ed!important;
+      border-radius:999px!important;
+    }
+    .v74-step-label{
+      grid-row:2!important;
+      text-align:center!important;
+      font-size:11.5px!important;
+      font-weight:1000!important;
+      color:#5f7086!important;
+      margin-top:1px!important;
+    }
+    .v74-step-label.active{color:#07943f!important}
+    h1,.wizard h1{
+      font-size:43px!important;
+      line-height:1.02!important;
+      letter-spacing:-.058em!important;
+      margin:0 0 8px!important;
+      text-align:center!important;
+      color:#071826!important;
+      font-weight:1000!important;
+    }
+    .sub{
+      max-width:760px!important;
+      margin:0 auto 16px!important;
+      color:#64748b!important;
+      font-size:14px!important;
+      line-height:1.45!important;
+      font-weight:750!important;
+      text-align:center!important;
+    }
+    .v74-panel{
+      width:min(930px,100%)!important;
+      max-width:930px!important;
+      margin:0 auto!important;
+      padding:0!important;
+      border:0!important;
+      background:transparent!important;
+      box-shadow:none!important;
+    }
+    .v74-flow,
+    .v74-subflow{
+      display:grid!important;
+      gap:13px!important;
+      width:100%!important;
+    }
+    .v74-subflow[hidden],
+    #electricSection[hidden],
+    #termicSection[hidden]{
+      display:none!important;
+      visibility:hidden!important;
+      height:0!important;
+      min-height:0!important;
+      overflow:hidden!important;
+      pointer-events:none!important;
+      opacity:0!important;
+    }
+    body[data-energy-mode="electric"] #termicSection{display:none!important}
+    body[data-energy-mode="termic"] #electricSection{display:none!important}
+    body[data-energy-mode="electric"] #electricSection{display:grid!important}
+    body[data-energy-mode="termic"] #termicSection{display:grid!important}
+    .v74-row{
+      width:100%!important;
+      min-height:88px!important;
+      display:grid!important;
+      grid-template-columns:34px minmax(300px,360px) minmax(360px,1fr) 24px!important;
+      gap:16px!important;
+      align-items:center!important;
+      padding:13px 18px!important;
+      border:1px solid #dce7f0!important;
+      border-radius:18px!important;
+      background:#fff!important;
+      box-shadow:0 12px 28px rgba(15,23,42,.045)!important;
+      box-sizing:border-box!important;
+    }
+    .v74-number{
+      width:28px!important;
+      height:28px!important;
+      border-radius:999px!important;
+      background:#07943f!important;
+      color:#fff!important;
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      font-size:13px!important;
+      font-weight:1000!important;
+      box-shadow:0 10px 20px rgba(7,148,63,.20)!important;
+      grid-column:1!important;
+      justify-self:center!important;
+    }
+    .v74-copy{
+      grid-column:2!important;
+      min-width:0!important;
+    }
+    .v74-copy h3{
+      margin:0 0 2px!important;
+      color:#071826!important;
+      font-size:18px!important;
+      line-height:1.1!important;
+      font-weight:1000!important;
+      letter-spacing:-.025em!important;
+      white-space:normal!important;
+      word-break:normal!important;
+    }
+    .v74-copy p{
+      margin:3px 0 0!important;
+      color:#64748b!important;
+      font-size:12.5px!important;
+      line-height:1.35!important;
+      font-weight:800!important;
+      max-width:330px!important;
+      white-space:normal!important;
+      word-break:normal!important;
+    }
+    .v74-ok{
+      grid-column:4!important;
+      color:#07943f!important;
+      font-size:20px!important;
+      line-height:1!important;
+      font-weight:1000!important;
+      justify-self:center!important;
+    }
+    .v74-actions,
+    .v74-energy-actions,
+    .v74-method-actions,
+    .v74-tariff-actions,
+    .v74-pv-toggle,
+    .v74-thermal-actions,
+    .v74-thermal-grid,
+    .v74-termic-note,
+    .upload-zone{
+      grid-column:3!important;
+      justify-self:end!important;
+      width:100%!important;
+      max-width:450px!important;
+    }
+    .v74-energy-actions,
+    .v74-method-actions,
+    .v74-tariff-actions,
+    .v74-thermal-grid{
+      display:grid!important;
+      grid-template-columns:1fr 1fr!important;
+      gap:12px!important;
+    }
+    .segment,
+    .method-card{
+      min-width:0!important;
+      height:44px!important;
+      min-height:44px!important;
+      border-radius:13px!important;
+      border:1px solid #d9e4ee!important;
+      background:#fff!important;
+      color:#64748b!important;
+      box-shadow:none!important;
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      padding:0 15px!important;
+      font-size:14px!important;
+      line-height:1.15!important;
+      font-weight:1000!important;
+      cursor:pointer!important;
+      text-decoration:none!important;
+    }
+    .segment.active,
+    .method-card.active{
+      border-color:#07943f!important;
+      color:#07943f!important;
+      background:#fff!important;
+      box-shadow:0 0 0 3px rgba(7,148,63,.045)!important;
+    }
+    .method-card input{display:none!important}
+    .method-title{
+      margin:0!important;
+      color:inherit!important;
+      font-size:14px!important;
+      line-height:1.15!important;
+      font-weight:1000!important;
+      text-align:center!important;
+    }
+    .source-help-link{
+      display:inline-flex!important;
+      width:auto!important;
+      max-width:none!important;
+      white-space:nowrap!important;
+      margin-top:6px!important;
+      color:#2563eb!important;
+      font-size:12px!important;
+      line-height:1.2!important;
+      font-weight:1000!important;
+      text-decoration:underline!important;
+      text-underline-offset:3px!important;
+    }
+    #dropZone.upload-zone{
+      height:58px!important;
+      min-height:58px!important;
+      display:grid!important;
+      grid-template-columns:minmax(145px,1fr) 118px!important;
+      gap:10px!important;
+      align-items:center!important;
+      padding:8px 12px!important;
+      border:1px dashed #95d8ae!important;
+      border-radius:14px!important;
+      background:#fff!important;
+      text-align:left!important;
+    }
+    #dropZone .upload-ico,
+    #dropZone .upload-title{display:none!important}
+    #dropZone .upload-btn{
+      grid-column:1!important;
+      justify-self:start!important;
+      height:38px!important;
+      margin:0!important;
+      border-radius:10px!important;
+      padding:0 18px!important;
+      border:1px solid #07943f!important;
+      background:#fff!important;
+      color:#07943f!important;
+      font-size:14px!important;
+      font-weight:1000!important;
+      box-shadow:none!important;
+    }
+    #dropZone .upload-meta{
+      grid-column:2!important;
+      margin:0!important;
+      color:#64748b!important;
+      font-size:11px!important;
+      line-height:1.18!important;
+      font-weight:850!important;
+      text-align:left!important;
+    }
+    #dropZone .file-name{
+      grid-column:1 / -1!important;
+      margin:0!important;
+      color:#067436!important;
+      font-size:11px!important;
+      font-weight:950!important;
+      white-space:nowrap!important;
+      overflow:hidden!important;
+      text-overflow:ellipsis!important;
+    }
+    .field{gap:5px!important}
+    .field label{
+      font-size:11px!important;
+      line-height:1.15!important;
+      color:#071826!important;
+      font-weight:1000!important;
+      text-transform:none!important;
+      letter-spacing:0!important;
+    }
+    .control,
+    .fixed-pill{
+      width:100%!important;
+      height:40px!important;
+      min-height:40px!important;
+      border-radius:12px!important;
+      border:1px solid #d9e4ee!important;
+      background:#fff!important;
+      color:#071826!important;
+      font-size:14px!important;
+      font-weight:900!important;
+      padding:0 12px!important;
+      box-sizing:border-box!important;
+    }
+    .fixed-pill{
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      background:#f5fbf7!important;
+      border-color:#cde8d6!important;
+      color:#07943f!important;
+      text-align:center!important;
+    }
+    #consumptionDataSource{display:none!important}
+    .hint{
+      margin:0!important;
+      color:#64748b!important;
+      font-size:10.5px!important;
+      line-height:1.25!important;
+      font-weight:750!important;
+    }
+    .v74-pv-toggle{
+      display:flex!important;
+      align-items:center!important;
+      gap:10px!important;
+      color:#071826!important;
+      font-size:14px!important;
+      font-weight:1000!important;
+      cursor:pointer!important;
+    }
+    .v74-pv-toggle input{
+      width:18px!important;
+      height:18px!important;
+      accent-color:#07943f!important;
+    }
+    .invoice-box,
+    .production-box{
+      display:none;
+      width:100%!important;
+      margin:0!important;
+      border:1px solid #dce7f0!important;
+      border-radius:18px!important;
+      background:#fff!important;
+      padding:16px!important;
+      box-shadow:0 12px 28px rgba(15,23,42,.045)!important;
+    }
+    .invoice-box.visible,
+    .production-box.visible{display:block!important}
+    .invoice-box .form-grid{
+      grid-template-columns:1fr 1fr!important;
+      gap:12px!important;
+    }
+    .invoice-upload,
+    .production-upload{
+      min-height:145px!important;
+      margin-top:14px!important;
+      border-radius:16px!important;
+      padding:18px!important;
+      display:flex!important;
+      flex-direction:column!important;
+      align-items:center!important;
+      justify-content:center!important;
+      text-align:center!important;
+    }
+    .mini-title{
+      margin:0 0 12px!important;
+      color:#071826!important;
+      font-size:15px!important;
+      font-weight:1000!important;
+    }
+    .message.warn{display:none!important}
+    .message.ok,
+    .message.err{
+      display:block!important;
+      margin-top:14px!important;
+      border-radius:13px!important;
+      padding:11px 14px!important;
+    }
+    .v74-actions{
+      width:100%!important;
+      margin-top:14px!important;
+      padding-top:14px!important;
+      border-top:1px solid #dfe9e4!important;
+      display:flex!important;
+      justify-content:space-between!important;
+      align-items:center!important;
+      gap:18px!important;
+    }
+    .btn{
+      height:44px!important;
+      border-radius:13px!important;
+      font-size:14px!important;
+      font-weight:1000!important;
+      padding:0 28px!important;
+    }
+    .btn-back{
+      min-width:188px!important;
+      border:1px solid #07943f!important;
+      background:#fff!important;
+      color:#07943f!important;
+    }
+    .btn-next{
+      min-width:170px!important;
+      border:0!important;
+      background:linear-gradient(180deg,#09a64c,#07943f)!important;
+      color:#fff!important;
+      box-shadow:0 14px 28px rgba(7,148,63,.22)!important;
+    }
+    @media(max-width:1050px){
+      .hero{width:calc(100vw - 32px)!important;padding:12px 20px 24px!important}
+      .v74-panel{width:100%!important;max-width:100%!important}
+      .v74-row{
+        grid-template-columns:32px minmax(0,1fr)!important;
+        min-height:auto!important;
+      }
+      .v74-actions,
+      .v74-energy-actions,
+      .v74-method-actions,
+      .v74-tariff-actions,
+      .v74-pv-toggle,
+      .v74-thermal-actions,
+      .v74-thermal-grid,
+      .v74-termic-note,
+      .upload-zone{
+        grid-column:1 / -1!important;
+        max-width:none!important;
+        justify-self:stretch!important;
+      }
+      .v74-ok{
+        position:absolute!important;
+        right:16px!important;
+        top:50%!important;
+        transform:translateY(-50%)!important;
+      }
+    }
+    @media(max-width:680px){
+      h1,.wizard h1{font-size:34px!important}
+      .sub{font-size:14px!important}
+      .v74-energy-actions,
+      .v74-method-actions,
+      .v74-tariff-actions,
+      .v74-thermal-grid,
+      .invoice-box .form-grid{
+        grid-template-columns:1fr!important;
+      }
+      #dropZone.upload-zone{
+        height:auto!important;
+        min-height:96px!important;
+        grid-template-columns:1fr!important;
+        text-align:center!important;
+      }
+      #dropZone .upload-btn,
+      #dropZone .upload-meta{
+        grid-column:1!important;
+        justify-self:center!important;
+        text-align:center!important;
+      }
+      .v74-actions{display:grid!important;gap:12px!important}
+      .btn-back,.btn-next{width:100%!important;min-width:0!important}
+    }
+
   </style>
 </head>
 <body data-energy-mode="electric">
   <div class="page">
     <main class="hero">
       <div class="wizard">
-        <section class="steps" aria-label="Progres analiză">
-          <div class="step-dot active">1</div><div class="step-line"></div><div class="step-dot">2</div><div class="step-line"></div><div class="step-dot">3</div><div class="step-line"></div><div class="step-dot">4</div>
-          <div class="step-label active" style="grid-column:1">Consum</div><div class="step-label" style="grid-column:3">Procesare</div><div class="step-label" style="grid-column:5">Rezultate</div><div class="step-label" style="grid-column:7">Recomandări</div>
+        <section class="v74-steps" aria-label="Progres analiză">
+          <div class="v74-step-dot active">1</div>
+          <div class="v74-step-line"></div>
+          <div class="v74-step-dot">2</div>
+          <div class="v74-step-line"></div>
+          <div class="v74-step-dot">3</div>
+          <div class="v74-step-line"></div>
+          <div class="v74-step-dot">4</div>
+          <div class="v74-step-label active" style="grid-column:1">Consum</div>
+          <div class="v74-step-label" style="grid-column:3">Procesare</div>
+          <div class="v74-step-label" style="grid-column:5">Rezultate</div>
+          <div class="v74-step-label" style="grid-column:7">Recomandări</div>
         </section>
 
         <h1>Curba ta de consum zilnic</h1>
         <p class="sub">Încarcă datele de consum și completează detaliile minime necesare pentru a identifica exact când consumi energie scumpă din rețea. Dacă ai și producție locală, o poți adăuga opțional.</p>
 
-        <section class="panel v71-panel">
-          <div class="v71-flow">
+        <section class="v74-panel">
+          <div class="v74-flow">
 
-            <div class="v71-row v71-energy-row">
-              <div class="v71-icon">⚡</div>
-              <div class="v71-number">1</div>
-              <div class="v71-copy">
+            <div class="v74-row v74-row-energy">
+              <div class="v74-number">1</div>
+              <div class="v74-copy">
                 <h3>Tip energie</h3>
                 <p>Alege tipul de energie pentru care încarci consumul.</p>
               </div>
-              <div class="v71-controls v71-energy-controls">
+              <div class="v74-actions v74-energy-actions">
                 <button class="segment active" type="button" id="tabElectric">Electric</button>
                 <button class="segment" type="button" id="tabTermic">Termic</button>
               </div>
-              <div class="v71-check">⌄</div>
+              <div class="v74-ok">✓</div>
             </div>
 
-            <div id="electricSection" class="v71-subflow" data-energy-section="electric">
+            <div id="electricSection" class="v74-subflow" data-energy-section="electric">
 
-              <div class="v71-row">
-                <div class="v71-icon">📁</div>
-                <div class="v71-number">2</div>
-                <div class="v71-copy">
+              <div class="v74-row">
+                <div class="v74-number">2</div>
+                <div class="v74-copy">
                   <h3>Sursa datelor</h3>
                   <p>Spune-ne de unde provin datele tale.</p>
                 </div>
-                <div class="v71-controls v71-methods">
+                <div class="v74-actions v74-method-actions">
                   <label class="method-card active" id="methodFileCard">
                     <input type="radio" name="loadMethod" value="file" checked>
                     <span class="method-title">Încarc fișierul orar</span>
@@ -2485,13 +2975,12 @@
                     <span class="method-title">Am doar factura lunară</span>
                   </label>
                 </div>
-                <div class="v71-check">⌄</div>
+                <div class="v74-ok">✓</div>
               </div>
 
-              <div class="v71-row v71-upload-row" id="fileModeBox">
-                <div class="v71-icon">☁</div>
-                <div class="v71-number">3</div>
-                <div class="v71-copy">
+              <div class="v74-row v74-row-upload" id="fileModeBox">
+                <div class="v74-number">3</div>
+                <div class="v74-copy">
                   <h3>Încarcă fișierul</h3>
                   <p>Fișier cu consum orar exportat de pe contor.</p>
                   <a href="#" class="source-help-link" id="openDistributorHelp" data-open-distributor-help="true">De unde obții fișierul?</a>
@@ -2502,7 +2991,7 @@
                   <div class="upload-meta">.xlsx, .xls, .csv, .html<br>Max. 10 MB</div>
                   <div class="file-name" id="fileName"></div>
                 </div>
-                <div class="v71-check">⌄</div>
+                <div class="v74-ok">✓</div>
               </div>
 
               <div class="invoice-box" id="invoiceBox">
@@ -2535,9 +3024,9 @@
                     <div class="hint">Ne ajută să repartizăm realist consumul pe ore.</div>
                   </div>
                 </div>
+
                 <div class="upload-zone invoice-upload" id="invoiceDrop">
                   <input id="invoiceInput" type="file" hidden accept=".pdf,.jpg,.jpeg,.png,.xlsx,.xls,.csv">
-                  <div class="upload-ico">🧾</div>
                   <div class="upload-title">Încarcă factura lunară (opțional)</div>
                   <div class="upload-meta">Poți atașa factura pentru verificare.</div>
                   <button type="button" class="upload-btn" id="invoiceChoose">Alege factură</button>
@@ -2545,14 +3034,13 @@
                 </div>
               </div>
 
-              <div class="v71-row v71-tariff-row">
-                <div class="v71-icon">▦</div>
-                <div class="v71-number">4</div>
-                <div class="v71-copy">
+              <div class="v74-row v74-row-tariff">
+                <div class="v74-number">4</div>
+                <div class="v74-copy">
                   <h3>Detalii tarif</h3>
                   <p>Completează informațiile despre tariful tău actual.</p>
                 </div>
-                <div class="v71-tariff-controls">
+                <div class="v74-tariff-actions">
                   <div class="field">
                     <label for="fixedTariff">Tarif fix actual (lei/kWh)</label>
                     <input class="control" id="fixedTariff" type="number" min="0" step="0.0001" value="0.75">
@@ -2567,21 +3055,20 @@
                     <option value="unknown">Nu știu</option>
                   </select>
                 </div>
-                <div class="v71-check">⌄</div>
+                <div class="v74-ok">✓</div>
               </div>
 
-              <div class="v71-row v71-pv-row">
-                <div class="v71-icon">▦</div>
-                <div class="v71-number">5</div>
-                <div class="v71-copy">
+              <div class="v74-row v74-row-pv">
+                <div class="v74-number">5</div>
+                <div class="v74-copy">
                   <h3>Producție locală / fotovoltaică (opțional)</h3>
                   <p>Adaugă-ți producția locală dacă o ai.</p>
                 </div>
-                <label class="v71-pv-toggle" for="hasProduction">
+                <label class="v74-pv-toggle" for="hasProduction">
                   <input type="checkbox" id="hasProduction">
                   <span>Am și producție locală / fotovoltaică</span>
                 </label>
-                <div class="v71-check">⌄</div>
+                <div class="v74-ok">✓</div>
               </div>
 
               <div class="production-box" id="productionBox">
@@ -2589,7 +3076,6 @@
                 <div class="production-existing-banner" id="productionExistingBanner">DATE PRODUCȚIE EXISTENTE ÎN FIȘIERUL DE CONSUM ÎNCĂRCAT MAI SUS</div>
                 <div class="upload-zone production-upload" id="productionDrop">
                   <input id="productionInput" type="file" hidden multiple accept=".csv,.txt,.xlsx,.xls,.xlsm,.html,.htm">
-                  <div class="upload-ico"></div>
                   <div class="upload-title">Încarcă fișierul cu producția locală</div>
                   <div class="upload-meta">Excel, CSV, HTML, PVGIS Timeseries sau export inverter.</div>
                   <button type="button" class="upload-btn" id="productionChoose">Alege fișier</button>
@@ -2599,16 +3085,15 @@
 
             </div>
 
-            <div id="termicSection" class="v71-subflow v71-termic-subflow" data-energy-section="termic" hidden style="display:none">
+            <div id="termicSection" class="v74-subflow v74-termic-subflow" data-energy-section="termic" hidden style="display:none">
 
-              <div class="v71-row">
-                <div class="v71-icon">🔥</div>
-                <div class="v71-number">2</div>
-                <div class="v71-copy">
+              <div class="v74-row">
+                <div class="v74-number">2</div>
+                <div class="v74-copy">
                   <h3>Sursa termică</h3>
                   <p>Spune-ne cum este produsă energia termică.</p>
                 </div>
-                <div class="v71-thermal-controls">
+                <div class="v74-thermal-actions">
                   <div class="field">
                     <label for="thermalSource">Sursa principală de căldură</label>
                     <select class="control" id="thermalSource">
@@ -2620,17 +3105,16 @@
                     </select>
                   </div>
                 </div>
-                <div class="v71-check">⌄</div>
+                <div class="v74-ok">✓</div>
               </div>
 
-              <div class="v71-row">
-                <div class="v71-icon">📊</div>
-                <div class="v71-number">3</div>
-                <div class="v71-copy">
+              <div class="v74-row">
+                <div class="v74-number">3</div>
+                <div class="v74-copy">
                   <h3>Monitorizare</h3>
                   <p>Ai date reale sau doar estimare anuală?</p>
                 </div>
-                <div class="v71-thermal-controls">
+                <div class="v74-thermal-actions">
                   <div class="field">
                     <label for="thermalMonitored">Ai consum termic monitorizat?</label>
                     <select class="control" id="thermalMonitored">
@@ -2639,17 +3123,16 @@
                     </select>
                   </div>
                 </div>
-                <div class="v71-check">⌄</div>
+                <div class="v74-ok">✓</div>
               </div>
 
-              <div class="v71-row">
-                <div class="v71-icon">▦</div>
-                <div class="v71-number">4</div>
-                <div class="v71-copy">
+              <div class="v74-row">
+                <div class="v74-number">4</div>
+                <div class="v74-copy">
                   <h3>Consum anual estimat</h3>
                   <p>Completează valoarea și unitatea.</p>
                 </div>
-                <div class="v71-thermal-grid">
+                <div class="v74-thermal-grid">
                   <div class="field">
                     <label for="annualThermal">Consum anual estimat</label>
                     <input class="control" id="annualThermal" type="number" min="0" step="0.01" placeholder="ex. 850">
@@ -2662,18 +3145,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="v71-check">⌄</div>
-              </div>
-
-              <div class="v71-row">
-                <div class="v71-icon">✓</div>
-                <div class="v71-number">5</div>
-                <div class="v71-copy">
-                  <h3>Pregătit pentru analiză</h3>
-                  <p>Datele termice sunt salvate pentru analiza integrată.</p>
-                </div>
-                <div class="v71-termic-note">Poți reveni oricând la Electric din primul rând.</div>
-                <div class="v71-check">⌄</div>
+                <div class="v74-ok">✓</div>
               </div>
 
             </div>
@@ -2682,7 +3154,7 @@
 
           <div id="message" class="message warn">Completează minim tariful și alege modul de încărcare. Pentru varianta recomandată, încarcă fișierul orar de consum.</div>
 
-          <div class="actions v71-actions">
+          <div class="actions v74-actions">
             <a class="btn btn-back" href="./testeaza-gratuit.html">← Pagina principală</a>
             <button class="btn btn-next" type="button" id="continueBtn">Continuă →</button>
           </div>
@@ -3126,8 +3598,6 @@
 
     tabElectric.addEventListener('click', () => setTab('electric'));
     tabTermic.addEventListener('click', () => setTab('termic'));
-    document.getElementById('tabElectricThermalMirror')?.addEventListener('click', (e) => { e.preventDefault(); setTab('electric'); });
-    document.getElementById('tabTermicMirror')?.addEventListener('click', (e) => { e.preventDefault(); setTab('termic'); });
     methodFileCard.addEventListener('click', () => setLoadMethod('file'));
     methodInvoiceCard.addEventListener('click', () => setLoadMethod('invoice'));
     hasProduction.addEventListener('change', () => {
