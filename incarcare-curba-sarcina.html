@@ -22,7 +22,7 @@
   <!-- SVT V69 UPLOAD PAGE 1TO1 AUDIT REBUILD -->
   <!-- SVT V70 HOTFIX NO DUPLICATE ELECTRIC TERMIC -->
   <!-- SVT V70.1 APPLY SCRIPT FALSE POSITIVE FIX -->
-  <!-- SVT V71 SINGLE FLOW REFERENCE REBUILD -->
+  <!-- SVT V72 COMPACT TOP ALIGN ICON CLEANUP -->
   <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
   <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -2064,6 +2064,176 @@
       .btn-back,.btn-next{width:100%!important;min-width:0!important}
     }
 
+  
+    /* v72 compact top align + icon cleanup */
+    .hero{
+      padding:14px 46px 26px!important;
+    }
+    .wizard{
+      max-width:1040px!important;
+      padding-top:0!important;
+    }
+    .steps{
+      max-width:520px!important;
+      margin:0 auto 10px!important;
+      align-items:center!important;
+    }
+    .step-dot{
+      width:33px!important;
+      height:33px!important;
+      font-size:13px!important;
+    }
+    .step-line{
+      margin-top:0!important;
+      align-self:center!important;
+    }
+    .step-label{
+      margin-top:1px!important;
+      font-size:11.5px!important;
+    }
+    h1,.wizard h1{
+      margin:2px 0 10px!important;
+      font-size:44px!important;
+      line-height:1.02!important;
+    }
+    .sub{
+      margin:0 auto 18px!important;
+      max-width:760px!important;
+      font-size:14px!important;
+      line-height:1.45!important;
+    }
+    .v71-panel{
+      max-width:930px!important;
+      width:min(930px,100%)!important;
+      margin-top:0!important;
+    }
+    .v71-flow,
+    .v71-subflow{
+      gap:13px!important;
+    }
+    .v71-row{
+      grid-template-columns:34px minmax(245px,330px) minmax(350px,1fr)!important;
+      min-height:92px!important;
+      padding:14px 20px!important;
+      gap:16px!important;
+      border-radius:18px!important;
+    }
+    .v71-icon{
+      display:none!important;
+    }
+    .v71-check{
+      display:none!important;
+    }
+    .v71-number{
+      width:28px!important;
+      height:28px!important;
+      font-size:13px!important;
+      justify-self:center!important;
+      align-self:center!important;
+      margin-left:2px!important;
+    }
+    .v71-copy h3{
+      font-size:18px!important;
+      margin:0 0 2px!important;
+    }
+    .v71-copy p{
+      font-size:12px!important;
+      line-height:1.35!important;
+      margin:3px 0 0!important;
+      max-width:330px!important;
+    }
+    .source-help-link{
+      margin-top:6px!important;
+      font-size:12px!important;
+    }
+    .v71-controls,
+    .v71-energy-controls,
+    .v71-methods{
+      max-width:440px!important;
+      gap:11px!important;
+    }
+    .segment,
+    .method-card{
+      height:46px!important;
+      min-height:46px!important;
+      border-radius:13px!important;
+      font-size:14px!important;
+      padding:0 15px!important;
+    }
+    .method-title{font-size:14px!important}
+    #dropZone.upload-zone{
+      min-height:60px!important;
+      height:60px!important;
+      grid-template-columns:minmax(145px,1fr) 120px!important;
+      padding:8px 14px!important;
+      border-radius:14px!important;
+    }
+    #dropZone .upload-btn{
+      height:38px!important;
+      border-radius:10px!important;
+      padding:0 18px!important;
+      font-size:14px!important;
+    }
+    #dropZone .upload-meta{
+      font-size:11px!important;
+      line-height:1.2!important;
+    }
+    .v71-tariff-controls,
+    .v71-thermal-controls,
+    .v71-thermal-grid,
+    .v71-termic-note,
+    .v71-pv-toggle{
+      max-width:450px!important;
+    }
+    .v71-tariff-controls{
+      grid-template-columns:1fr 1fr!important;
+      align-items:start!important;
+      gap:12px!important;
+    }
+    .control,
+    .fixed-pill{
+      height:42px!important;
+      border-radius:12px!important;
+      font-size:14px!important;
+    }
+    .field label{
+      font-size:11px!important;
+      line-height:1.15!important;
+    }
+    .hint{
+      font-size:10.5px!important;
+      line-height:1.25!important;
+    }
+    .v71-pv-toggle{
+      font-size:14px!important;
+    }
+    .production-box,
+    .invoice-box{
+      border-radius:18px!important;
+      padding:16px!important;
+    }
+    .v71-actions{
+      margin-top:18px!important;
+      padding-top:16px!important;
+    }
+    .btn{
+      height:44px!important;
+      border-radius:13px!important;
+      font-size:14px!important;
+    }
+    .btn-back{min-width:188px!important}
+    .btn-next{min-width:170px!important}
+    @media(max-width:1050px){
+      .hero{padding:16px 20px 24px!important}
+      .v71-row{
+        grid-template-columns:32px minmax(0,1fr)!important;
+        min-height:auto!important;
+      }
+      .v71-controls,.v71-methods,.v71-energy-controls,.upload-zone,.v71-tariff-controls,.v71-pv-toggle,.v71-thermal-controls,.v71-thermal-grid,.v71-termic-note{
+        grid-column:1 / -1!important;
+      }
+    }
+
   </style>
 </head>
 <body data-energy-mode="electric">
@@ -2089,8 +2259,8 @@
                 <p>Alege tipul de energie pentru care încarci consumul.</p>
               </div>
               <div class="v71-controls v71-energy-controls">
-                <button class="segment active" type="button" id="tabElectric">⚡ Electric</button>
-                <button class="segment" type="button" id="tabTermic">♨️ Termic</button>
+                <button class="segment active" type="button" id="tabElectric">Electric</button>
+                <button class="segment" type="button" id="tabTermic">Termic</button>
               </div>
               <div class="v71-check">⌄</div>
             </div>
@@ -2107,11 +2277,11 @@
                 <div class="v71-controls v71-methods">
                   <label class="method-card active" id="methodFileCard">
                     <input type="radio" name="loadMethod" value="file" checked>
-                    <span class="method-title">📂 Încarc fișierul orar</span>
+                    <span class="method-title">Încarc fișierul orar</span>
                   </label>
                   <label class="method-card" id="methodInvoiceCard">
                     <input type="radio" name="loadMethod" value="invoice">
-                    <span class="method-title">🧾 Am doar factura lunară</span>
+                    <span class="method-title">Am doar factura lunară</span>
                   </label>
                 </div>
                 <div class="v71-check">⌄</div>
@@ -2127,7 +2297,7 @@
                 </div>
                 <div class="upload-zone" id="dropZone">
                   <input id="fileInput" type="file" hidden multiple accept=".csv,.txt,.xlsx,.xls,.xlsm,.html,.htm">
-                  <button type="button" class="upload-btn" id="chooseBtn">↥ Alege fișier</button>
+                  <button type="button" class="upload-btn" id="chooseBtn">Alege fișier</button>
                   <div class="upload-meta">.xlsx, .xls, .csv, .html<br>Max. 10 MB</div>
                   <div class="file-name" id="fileName"></div>
                 </div>
@@ -2218,7 +2388,7 @@
                 <div class="production-existing-banner" id="productionExistingBanner">DATE PRODUCȚIE EXISTENTE ÎN FIȘIERUL DE CONSUM ÎNCĂRCAT MAI SUS</div>
                 <div class="upload-zone production-upload" id="productionDrop">
                   <input id="productionInput" type="file" hidden multiple accept=".csv,.txt,.xlsx,.xls,.xlsm,.html,.htm">
-                  <div class="upload-ico">☀</div>
+                  <div class="upload-ico"></div>
                   <div class="upload-title">Încarcă fișierul cu producția locală</div>
                   <div class="upload-meta">Excel, CSV, HTML, PVGIS Timeseries sau export inverter.</div>
                   <button type="button" class="upload-btn" id="productionChoose">Alege fișier</button>
