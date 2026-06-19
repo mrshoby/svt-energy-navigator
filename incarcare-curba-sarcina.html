@@ -20,6 +20,8 @@
   <!-- SVT V67 COMPACT 1TO1 LAYOUT THERMAL RESTORE -->
   <!-- SVT V68 THERMIC BACK TO ELECTRIC 1TO1 FIX -->
   <!-- SVT V69 UPLOAD PAGE 1TO1 AUDIT REBUILD -->
+  <!-- SVT V70 HOTFIX NO DUPLICATE ELECTRIC TERMIC -->
+  <!-- SVT V70.1 APPLY SCRIPT FALSE POSITIVE FIX -->
   <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
   <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -1423,7 +1425,6 @@
     }
     .termic-flow{
       width:100%!important;
-      display:grid!important;
       gap:14px!important;
     }
     .termic-status-card{
@@ -1552,9 +1553,38 @@
       .btn-back,.btn-next{width:100%!important;min-width:0!important}
     }
 
+  
+    /* v70: hotfix hard section visibility — never show Electric and Termic together */
+    #electricSection[hidden],
+    #termicSection[hidden],
+    [data-energy-section][hidden]{
+      display:none!important;
+      visibility:hidden!important;
+      opacity:0!important;
+      pointer-events:none!important;
+      height:0!important;
+      min-height:0!important;
+      overflow:hidden!important;
+      margin:0!important;
+      padding:0!important;
+      border:0!important;
+    }
+    body[data-energy-mode="electric"] #termicSection{
+      display:none!important;
+    }
+    body[data-energy-mode="termic"] #electricSection{
+      display:none!important;
+    }
+    body[data-energy-mode="electric"] #electricSection{
+      display:grid!important;
+    }
+    body[data-energy-mode="termic"] #termicSection{
+      display:grid!important;
+    }
+
   </style>
 </head>
-<body>
+<body data-energy-mode="electric">
   <div class="page">
     <main class="hero">
       <div class="wizard">
@@ -1567,7 +1597,7 @@
         <p class="sub">Încarcă datele de consum și completează detaliile minime necesare pentru a identifica exact când consumi energie scumpă din rețea. Dacă ai și producție locală, o poți adăuga opțional.</p>
 
         <section class="panel upload-ref-panel">
-          <div id="electricSection" class="ref-flow">
+          <div id="electricSection" class="ref-flow" data-energy-section="electric">
 
             <div class="ref-step-row ref-step-energy">
               <div class="ref-icon ref-icon-energy">⚡</div>
@@ -1720,7 +1750,7 @@
 
           </div>
 
-          <div id="termicSection" class="ref-flow termic-flow" style="display:none">
+          <div id="termicSection" class="ref-flow termic-flow" data-energy-section="termic" hidden style="display:none">
             <div class="ref-step-row ref-step-energy">
               <div class="ref-icon ref-icon-energy">⚡</div>
               <div class="ref-number">1</div>
@@ -1869,13 +1899,26 @@
     function setTab(tab){
       currentTab = tab;
       const electric = tab === 'electric';
+
       tabElectric.classList.toggle('active', electric);
       tabTermic.classList.toggle('active', !electric);
       document.getElementById('tabElectricThermalMirror')?.classList.toggle('active', electric);
       document.getElementById('tabTermicMirror')?.classList.toggle('active', !electric);
+
+      electricSection.hidden = !electric;
+      termicSection.hidden = electric;
       electricSection.style.display = electric ? 'grid' : 'none';
       termicSection.style.display = electric ? 'none' : 'grid';
-      showMessage(electric ? 'warn' : 'ok', electric ? 'Completează tariful și alege modul de încărcare. Fișierul orar este recomandat pentru răspuns real.' : 'Datele termice sunt salvate pentru analiza integrată, dar întrebarea 1 se calculează pe consum electric.');
+
+      if(electric){
+        document.body.setAttribute('data-energy-mode','electric');
+      } else {
+        document.body.setAttribute('data-energy-mode','termic');
+      }
+
+      showMessage(electric ? 'warn' : 'ok', electric
+        ? 'Completează minim tariful și alege modul de încărcare. Pentru varianta recomandată, încarcă fișierul orar de consum.'
+        : 'Datele termice sunt salvate pentru analiza integrată. Poți reveni oricând la Electric.');
       validateForm();
     }
 
