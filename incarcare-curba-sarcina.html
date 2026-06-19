@@ -13,6 +13,7 @@
   <!-- SVT V64 Q1 PROFESSIONAL HEATMAP VISUAL KIT -->
   <!-- SVT V65 DISTRIBUTOR EXPORT TUTORIAL MODAL -->
   <!-- SVT V65.1 FORCE DISTRIBUTOR HELP VISIBLE -->
+  <!-- SVT V65.2 INLINE DISTRIBUTOR HELP MODAL TABS FIX -->
   <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
   <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -358,46 +359,30 @@
       .svt-modal-close{margin-top:12px}
     }
 
-  
-    /* v65.1 force visible distributor help block */
-    .svt-force-help-block{
-      margin-top:14px;
-      border:1px solid #cfe8d8;
-      background:linear-gradient(135deg,#f7fdf9,#ffffff);
-      border-radius:16px;
-      padding:14px 15px;
-      display:grid;
-      gap:8px;
-      box-shadow:0 12px 26px rgba(15,23,42,.045);
-    }
-    .svt-force-help-block strong{
-      color:#071826;
-      font-size:14px;
-      font-weight:1000;
-      letter-spacing:-.015em;
-    }
-    .svt-force-help-block p{
-      margin:0;
+    /* v65.2 inline help link refinements */
+    .load-method-copy{
+      margin-top:8px;
       color:#64748b;
       font-size:13px;
-      line-height:1.45;
+      line-height:1.5;
       font-weight:750;
     }
-    .svt-force-help-btn{
+    .load-method-copy .source-help-link,
+    .load-method-copy [data-open-distributor-help]{
       appearance:none;
-      width:max-content;
-      border:1px solid #07943f;
-      background:#07943f;
-      color:#fff;
-      border-radius:999px;
-      padding:9px 13px;
+      border:0;
+      background:transparent;
+      padding:0;
+      margin-top:2px;
+      color:#07943f;
       font:inherit;
-      font-size:12.5px;
       font-weight:1000;
+      text-decoration:underline;
+      text-underline-offset:3px;
       cursor:pointer;
-      box-shadow:0 10px 24px rgba(7,148,63,.20);
     }
-    .svt-force-help-btn:hover{background:#067a35}
+    .load-method-copy .source-help-link:hover,
+    .load-method-copy [data-open-distributor-help]:hover{color:#047333}
 
   </style>
 </head>
@@ -434,15 +419,13 @@
             </div>
 
             <p class="note"> <strong>Cum preferi să încarci datele de consum electric?</strong><br>
-              Dacă ai fișierul orar, acesta este varianta recomandată. <strong>De unde obții fișierul?</strong> Intri pe portalul distribuitorului tău (ex. myeer.ro, myeon.ro) → Consum → Export date orare.
+              <div class="load-method-copy">
+                  Dacă ai fișierul orar, aceasta este varianta recomandată.<br>
+                  <button type="button" class="source-help-link" data-open-distributor-help="true">De unde obții fișierul?</button>
+                  <span> Intri pe portalul distribuitorului tău și descarci curba de sarcină / datele orare.</span>
+                </div> <strong>De unde obții fișierul?</strong> Intri pe portalul distribuitorului tău (ex. myeer.ro, myeon.ro) → Consum → Export date orare.
             </p>
-                <div class="svt-force-help-block" data-v65-force-help="true">
-                  <strong>De unde obții fișierul?</strong>
-                  <p>Fișierul orar / curba de sarcină se descarcă de obicei din portalul distribuitorului: DEER, Rețele Electrice, Delgaz Grid sau Distribuție Oltenia. Apasă pe buton pentru pași clari și exemple vizuale.</p>
-                  <button type="button" class="svt-force-help-btn" id="openDistributorHelpForced">Vezi tutorial distribuitori</button>
-                </div>
-
-            <div id="fileModeBox">
+<div id="fileModeBox">
               <div class="upload-zone" id="dropZone">
                 <input id="fileInput" type="file" hidden multiple accept=".csv,.txt,.xlsx,.xls,.xlsm,.html,.htm">
                 <div class="upload-ico">☁</div>
@@ -1036,54 +1019,70 @@
     wireDropZone(invoiceDrop, invoiceInput, invoiceChoose, invoiceFileName, 'invoice');
 
     validateForm();
-  
 
     function initDistributorHelpModal(){
       const modal = document.getElementById('distributorHelpModal');
-      const openBtn = document.getElementById('openDistributorHelp');
       const closeBtn = document.getElementById('closeDistributorHelp');
+      const openButtons = Array.from(document.querySelectorAll('[data-open-distributor-help], #openDistributorHelp'));
       const tabs = Array.from(document.querySelectorAll('[data-dist-tab]'));
       const panels = Array.from(document.querySelectorAll('[data-dist-panel]'));
-      if(!modal || !openBtn || !closeBtn) return;
 
-      const open = () => {
+      if(!modal || !closeBtn || !openButtons.length) return;
+
+      const openModal = () => {
         modal.classList.add('open');
         modal.setAttribute('aria-hidden','false');
         document.body.style.overflow = 'hidden';
       };
-      const close = () => {
+
+      const closeModal = () => {
         modal.classList.remove('open');
         modal.setAttribute('aria-hidden','true');
         document.body.style.overflow = '';
       };
-      const activate = (id) => {
-        tabs.forEach(t => t.classList.toggle('active', t.dataset.distTab === id));
-        panels.forEach(p => p.classList.toggle('active', p.dataset.distPanel === id));
+
+      const activateTab = (id) => {
+        tabs.forEach(tab => {
+          const active = tab.getAttribute('data-dist-tab') === id;
+          tab.classList.toggle('active', active);
+          tab.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        panels.forEach(panel => {
+          const active = panel.getAttribute('data-dist-panel') === id;
+          panel.classList.toggle('active', active);
+          panel.style.display = active ? 'grid' : 'none';
+        });
       };
 
-      openBtn.addEventListener('click', open);
-      closeBtn.addEventListener('click', close);
-      modal.addEventListener('click', (e) => { if(e.target === modal) close(); });
-      document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && modal.classList.contains('open')) close(); });
-      tabs.forEach(t => t.addEventListener('click', () => activate(t.dataset.distTab)));
-    }
-
-
-    document.addEventListener('DOMContentLoaded', initDistributorHelpModal);
-
-
-    function initDistributorHelpModalForcedV651(){
-      const openBtn = document.getElementById('openDistributorHelpForced');
-      const modal = document.getElementById('distributorHelpModal');
-      if(!openBtn || !modal) return;
-      openBtn.addEventListener('click', () => {
-        modal.classList.add('open');
-        modal.setAttribute('aria-hidden','false');
-        document.body.style.overflow = 'hidden';
+      openButtons.forEach(btn => {
+        btn.addEventListener('click', (event) => {
+          event.preventDefault();
+          openModal();
+          const active = tabs.find(t => t.classList.contains('active'))?.getAttribute('data-dist-tab') || tabs[0]?.getAttribute('data-dist-tab');
+          if(active) activateTab(active);
+        });
       });
+
+      closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', (event) => {
+        if(event.target === modal) closeModal();
+      });
+      document.addEventListener('keydown', (event) => {
+        if(event.key === 'Escape' && modal.classList.contains('open')) closeModal();
+      });
+
+      tabs.forEach(tab => {
+        tab.setAttribute('role','tab');
+        tab.addEventListener('click', (event) => {
+          event.preventDefault();
+          activateTab(tab.getAttribute('data-dist-tab'));
+        });
+      });
+
+      panels.forEach(panel => panel.setAttribute('role','tabpanel'));
+      activateTab(tabs.find(t => t.classList.contains('active'))?.getAttribute('data-dist-tab') || tabs[0]?.getAttribute('data-dist-tab') || 'deer');
     }
 
-    document.addEventListener('DOMContentLoaded', initDistributorHelpModalForcedV651);
 
     document.addEventListener('DOMContentLoaded', initDistributorHelpModal);
 </script>
