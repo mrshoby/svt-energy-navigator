@@ -15,6 +15,7 @@
   <!-- SVT V65.1 FORCE DISTRIBUTOR HELP VISIBLE -->
   <!-- SVT V65.2 INLINE DISTRIBUTOR HELP MODAL TABS FIX -->
   <!-- SVT V65.3 CLEAN DISTRIBUTOR MODAL TEXT -->
+  <!-- SVT V65.4 SINGLE HYPERLINK FIX -->
   <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
   <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -393,6 +394,26 @@
     .svt-dist-card{max-width:100%}
     .svt-shot-stack,.svt-mock-shot{display:none!important}
 
+  
+    /* v65.4 single hyperlink strict fix */
+    .load-method-copy{
+      margin-top:8px;
+      color:#64748b;
+      font-size:13px;
+      line-height:1.5;
+      font-weight:750;
+    }
+    .load-method-copy .source-help-link{
+      color:#07943f;
+      font-weight:1000;
+      text-decoration:underline;
+      text-underline-offset:3px;
+      cursor:pointer;
+      display:inline-block;
+      margin-top:2px;
+    }
+    .load-method-copy .source-help-link:hover{color:#047333}
+
   </style>
 </head>
 <body>
@@ -427,18 +448,18 @@
               </label>
             </div>
 
-            <p class="note"> <strong>Cum preferi să încarci datele de consum electric?</strong><br>
-              <div class="load-method-copy">
-                  Dacă ai fișierul orar, aceasta este varianta recomandată.<br>
-                  <button type="button" class="source-help-link" data-open-distributor-help="true">De unde obții fișierul?</button>
-                </div> <strong>De unde obții fișierul?</strong> Intri pe portalul distribuitorului tău (ex. myeer.ro, myeon.ro) → Consum → Export date orare.
+            <p class="note">
+              <strong>Cum preferi să încarci datele de consum electric?</strong><br>
+              Dacă ai fișierul orar, aceasta este varianta recomandată.<br>
+              <a href="#" class="source-help-link" id="openDistributorHelp" data-open-distributor-help="true">De unde obții fișierul?</a>
             </p>
 <div id="fileModeBox">
               <div class="upload-zone" id="dropZone">
                 <input id="fileInput" type="file" hidden multiple accept=".csv,.txt,.xlsx,.xls,.xlsm,.html,.htm">
                 <div class="upload-ico">☁</div>
                 <div class="upload-title">Încarcă fișierul / fișierele cu consumul tău electric</div>
-                <div class="upload-meta">Excel (.xlsx, .xls), CSV sau HTML exportat din portal · poți selecta mai multe fișiere · max. 10 MB / fișier</div>
+                <div class="upload-meta">Excel (.xlsx, .xls), CSV sau HTML exportat din porta
+l · poți selecta mai multe fișiere · max. 10 MB / fișier</div>
                 <button type="button" class="upload-btn" id="chooseBtn">Alege fișier</button>
                 <div class="file-name" id="fileName"></div>
               </div>
