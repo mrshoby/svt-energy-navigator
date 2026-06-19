@@ -14,6 +14,7 @@
   <!-- SVT V65 DISTRIBUTOR EXPORT TUTORIAL MODAL -->
   <!-- SVT V65.1 FORCE DISTRIBUTOR HELP VISIBLE -->
   <!-- SVT V65.2 INLINE DISTRIBUTOR HELP MODAL TABS FIX -->
+  <!-- SVT V65.3 CLEAN DISTRIBUTOR MODAL TEXT -->
   <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
   <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -384,6 +385,14 @@
     .load-method-copy .source-help-link:hover,
     .load-method-copy [data-open-distributor-help]:hover{color:#047333}
 
+  
+    /* v65.3 clean distributor modal text */
+    .svt-help-head{align-items:center}
+    .svt-help-head p{display:none!important}
+    .svt-dist-grid{grid-template-columns:1fr!important}
+    .svt-dist-card{max-width:100%}
+    .svt-shot-stack,.svt-mock-shot{display:none!important}
+
   </style>
 </head>
 <body>
@@ -422,7 +431,6 @@
               <div class="load-method-copy">
                   Dacă ai fișierul orar, aceasta este varianta recomandată.<br>
                   <button type="button" class="source-help-link" data-open-distributor-help="true">De unde obții fișierul?</button>
-                  <span> Intri pe portalul distribuitorului tău și descarci curba de sarcină / datele orare.</span>
                 </div> <strong>De unde obții fișierul?</strong> Intri pe portalul distribuitorului tău (ex. myeer.ro, myeon.ro) → Consum → Export date orare.
             </p>
 <div id="fileModeBox">
@@ -1092,7 +1100,7 @@
       <div class="svt-help-head">
         <div>
           <h2 id="distHelpTitle">Cum obții fișierul orar / curba de sarcină?</h2>
-          <p>Alege distribuitorul tău. Pașii sunt orientativi și bazați pe documentația publică disponibilă. În portaluri pot apărea denumiri ușor diferite, în funcție de tipul contului, POD, contor inteligent și zonă.</p>
+          
         </div>
         <button class="svt-modal-close" type="button" id="closeDistributorHelp" aria-label="Închide">×</button>
       </div>
@@ -1106,11 +1114,7 @@
       </div>
 
       <div class="svt-help-body">
-        <div class="svt-help-note">
-          Capturile de mai jos sunt mock-up-uri explicative realizate pentru tutorial. Nu sunt capturi oficiale din conturile clienților, deoarece portalurile reale sunt în spatele autentificării și pot conține date personale.
-        </div>
-
-        <section class="svt-dist-panel active" data-dist-panel="deer">
+<section class="svt-dist-panel active" data-dist-panel="deer">
           <div class="svt-dist-grid">
             <div class="svt-dist-card">
               <h3>DEER — Transilvania Nord, Transilvania Sud, Muntenia Nord</h3>
@@ -1129,11 +1133,8 @@
                 <a href="https://www.distributie-energie.ro/acces-la-portal/" target="_blank" rel="noopener">Sursă: DEER — Acces la portal</a>
               </div>
             </div>
-            <div class="svt-shot-stack">
-              <div class="svt-mock-shot"><div class="svt-mock-top"><span class="svt-mock-dot"></span><span class="svt-mock-dot"></span><span class="svt-mock-dot"></span> Portal date DEER</div><div class="svt-mock-screen"><div class="svt-mock-row svt-mock-focus">Selectează POD / loc de consum <span class="tag">Pas 1</span></div><div class="svt-mock-row">Date de măsurare <span class="tag">Meniu</span></div><div class="svt-mock-row">Curbe de sarcină măsurate <span class="tag">Alege</span></div><div class="svt-mock-row">Export tabel / Excel <span class="tag">Descarcă</span></div></div></div>
-            </div>
           </div>
-        </section>
+</section>
 
         <section class="svt-dist-panel" data-dist-panel="retele">
           <div class="svt-dist-grid">
@@ -1153,11 +1154,8 @@
                 <a href="https://www.reteleelectrice.ro/masurare/cum-masuram/" target="_blank" rel="noopener">Sursă: Rețele Electrice — Date de consum / curba de sarcină</a>
               </div>
             </div>
-            <div class="svt-shot-stack">
-              <div class="svt-mock-shot"><div class="svt-mock-top"><span class="svt-mock-dot"></span><span class="svt-mock-dot"></span><span class="svt-mock-dot"></span> Rețele Electrice</div><div class="svt-mock-screen"><div class="svt-mock-row svt-mock-focus">Serviciu online: Date de consum <span class="tag">Pas 1</span></div><div class="svt-mock-row">POD / adresă consum <span class="tag">Selectează</span></div><div class="svt-mock-row">Curba de sarcină + istoric citiri <span class="tag">Vizualizează</span></div><div class="svt-mock-row">Export date <span class="tag">Descarcă</span></div></div></div>
-            </div>
           </div>
-        </section>
+</section>
 
         <section class="svt-dist-panel" data-dist-panel="delgaz">
           <div class="svt-dist-grid">
@@ -1177,11 +1175,8 @@
                 <a href="https://delgaz.ro/platforma-smart-gestionare-consum" target="_blank" rel="noopener">Sursă: Delgaz Grid — Rapoarte date măsură</a>
               </div>
             </div>
-            <div class="svt-shot-stack">
-              <div class="svt-mock-shot"><div class="svt-mock-top"><span class="svt-mock-dot"></span><span class="svt-mock-dot"></span><span class="svt-mock-dot"></span> Delgaz Grid</div><div class="svt-mock-screen"><div class="svt-mock-row svt-mock-focus">Rapoarte date măsură <span class="tag">Meniu</span></div><div class="svt-mock-row">Solicitare raport nou <span class="tag">Pas 2</span></div><div class="svt-mock-row">POD + perioadă <span class="tag">Completează</span></div><div class="svt-mock-row">Raport generat <span class="tag">Descarcă</span></div></div></div>
-            </div>
           </div>
-        </section>
+</section>
 
         <section class="svt-dist-panel" data-dist-panel="oltenia">
           <div class="svt-dist-grid">
@@ -1202,11 +1197,8 @@
                 <a href="https://www.distributieoltenia.ro/ro/suport/accesare-istoric-de-consum.html" target="_blank" rel="noopener">Sursă: Distribuție Oltenia — istoric de consum</a>
               </div>
             </div>
-            <div class="svt-shot-stack">
-              <div class="svt-mock-shot"><div class="svt-mock-top"><span class="svt-mock-dot"></span><span class="svt-mock-dot"></span><span class="svt-mock-dot"></span> DEO Connect</div><div class="svt-mock-screen"><div class="svt-mock-row svt-mock-focus">Reads / Curba de sarcină <span class="tag">Meniu</span></div><div class="svt-mock-row">Tab selecție: loc consum + perioadă <span class="tag">Alege</span></div><div class="svt-mock-row">Tab afișare: tabel + grafic 15 min <span class="tag">Verifică</span></div><div class="svt-mock-row">Tab export: tabel <span class="tag">Descarcă</span></div></div></div>
-            </div>
           </div>
-        </section>
+</section>
 
         <section class="svt-dist-panel" data-dist-panel="furnizor">
           <div class="svt-dist-grid">
@@ -1225,11 +1217,8 @@
                 <a href="https://www.eon.ro/transmitere-index" target="_blank" rel="noopener">Sursă: E.ON — cont Myline / index</a>
               </div>
             </div>
-            <div class="svt-shot-stack">
-              <div class="svt-mock-shot"><div class="svt-mock-top"><span class="svt-mock-dot"></span><span class="svt-mock-dot"></span><span class="svt-mock-dot"></span> Aplicație furnizor</div><div class="svt-mock-screen"><div class="svt-mock-row svt-mock-focus">Consum / Istoric consum <span class="tag">Verifică</span></div><div class="svt-mock-row">Dacă vezi doar lunar <span class="tag">Nu ajunge</span></div><div class="svt-mock-row">Caută export orar / 15 min <span class="tag">Ideal</span></div><div class="svt-mock-row">Folosește portalul distribuitorului <span class="tag">Recomandat</span></div></div></div>
-            </div>
           </div>
-        </section>
+</section>
       </div>
     </div>
   </div>
