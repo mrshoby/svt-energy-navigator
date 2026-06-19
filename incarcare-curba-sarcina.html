@@ -23,6 +23,7 @@
   <!-- SVT V70 HOTFIX NO DUPLICATE ELECTRIC TERMIC -->
   <!-- SVT V70.1 APPLY SCRIPT FALSE POSITIVE FIX -->
   <!-- SVT V72 COMPACT TOP ALIGN ICON CLEANUP -->
+  <!-- SVT V73 FIX UPLOAD ROW GRID TEXT -->
   <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
   <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -2231,6 +2232,206 @@
       }
       .v71-controls,.v71-methods,.v71-energy-controls,.upload-zone,.v71-tariff-controls,.v71-pv-toggle,.v71-thermal-controls,.v71-thermal-grid,.v71-termic-note{
         grid-column:1 / -1!important;
+      }
+    }
+
+  
+    /* v73: fix broken row grid after icon cleanup */
+    .page{
+      padding-top:10px!important;
+    }
+    .hero{
+      padding-top:10px!important;
+      width:min(1160px, calc(100vw - 52px))!important;
+    }
+    .steps{
+      margin-top:0!important;
+      margin-bottom:8px!important;
+    }
+    h1,.wizard h1{
+      margin-top:0!important;
+      margin-bottom:8px!important;
+      font-size:43px!important;
+    }
+    .sub{
+      margin-bottom:16px!important;
+    }
+
+    .v71-panel{
+      max-width:930px!important;
+      width:min(930px,100%)!important;
+    }
+
+    .v71-panel .v71-row,
+    .v71-panel .v71-row.v71-energy-row,
+    .v71-panel .v71-row.v71-upload-row,
+    .v71-panel .v71-row.v71-tariff-row,
+    .v71-panel .v71-row.v71-pv-row,
+    .v71-panel .v71-termic-subflow .v71-row{
+      grid-template-columns:34px minmax(310px, 360px) minmax(360px, 1fr)!important;
+      min-height:86px!important;
+      padding:13px 18px!important;
+      gap:16px!important;
+      align-items:center!important;
+    }
+
+    .v71-panel .v71-icon,
+    .v71-panel .v71-check{
+      display:none!important;
+    }
+
+    .v71-panel .v71-number{
+      grid-column:1!important;
+      justify-self:center!important;
+      align-self:center!important;
+      width:28px!important;
+      height:28px!important;
+      margin:0!important;
+    }
+
+    .v71-panel .v71-copy{
+      grid-column:2!important;
+      min-width:0!important;
+      max-width:none!important;
+    }
+
+    .v71-panel .v71-copy h3{
+      white-space:normal!important;
+      word-break:normal!important;
+      overflow-wrap:normal!important;
+      max-width:none!important;
+      font-size:18px!important;
+      line-height:1.1!important;
+    }
+
+    .v71-panel .v71-copy p{
+      white-space:normal!important;
+      word-break:normal!important;
+      overflow-wrap:normal!important;
+      max-width:330px!important;
+      font-size:12.5px!important;
+      line-height:1.35!important;
+    }
+
+    .v71-panel .v71-copy .source-help-link{
+      display:inline-flex!important;
+      white-space:nowrap!important;
+      width:auto!important;
+      max-width:none!important;
+      margin-top:6px!important;
+      font-size:12px!important;
+      line-height:1.2!important;
+    }
+
+    .v71-panel .v71-controls,
+    .v71-panel .v71-energy-controls,
+    .v71-panel .v71-methods,
+    .v71-panel .upload-zone,
+    .v71-panel .v71-tariff-controls,
+    .v71-panel .v71-pv-toggle,
+    .v71-panel .v71-thermal-controls,
+    .v71-panel .v71-thermal-grid,
+    .v71-panel .v71-termic-note{
+      grid-column:3!important;
+      justify-self:end!important;
+      width:100%!important;
+      max-width:450px!important;
+    }
+
+    .v71-panel .v71-energy-controls,
+    .v71-panel .v71-methods{
+      grid-template-columns:1fr 1fr!important;
+      gap:11px!important;
+    }
+
+    .v71-panel .segment,
+    .v71-panel .method-card{
+      height:44px!important;
+      min-height:44px!important;
+      border-radius:13px!important;
+      font-size:14px!important;
+    }
+
+    .v71-panel #dropZone.upload-zone{
+      min-height:58px!important;
+      height:58px!important;
+      grid-template-columns:minmax(145px,1fr) 118px!important;
+      padding:8px 12px!important;
+    }
+
+    .v71-panel #dropZone .upload-btn{
+      grid-column:1!important;
+      height:38px!important;
+      margin:0!important;
+      justify-self:start!important;
+    }
+
+    .v71-panel #dropZone .upload-meta{
+      grid-column:2!important;
+      text-align:left!important;
+      font-size:11px!important;
+      line-height:1.18!important;
+    }
+
+    .v71-panel .v71-tariff-controls,
+    .v71-panel .v71-thermal-grid{
+      grid-template-columns:1fr 1fr!important;
+      gap:12px!important;
+    }
+
+    .v71-panel .control,
+    .v71-panel .fixed-pill{
+      height:40px!important;
+      min-height:40px!important;
+    }
+
+    .v71-panel .field label{
+      font-size:11px!important;
+    }
+
+    .v71-panel .hint{
+      font-size:10.5px!important;
+      line-height:1.25!important;
+    }
+
+    .v71-actions{
+      margin-top:14px!important;
+      padding-top:14px!important;
+    }
+
+    @media(max-width:1050px){
+      .v71-panel .v71-row,
+      .v71-panel .v71-row.v71-energy-row,
+      .v71-panel .v71-row.v71-upload-row,
+      .v71-panel .v71-row.v71-tariff-row,
+      .v71-panel .v71-row.v71-pv-row,
+      .v71-panel .v71-termic-subflow .v71-row{
+        grid-template-columns:32px minmax(0,1fr)!important;
+      }
+      .v71-panel .v71-controls,
+      .v71-panel .v71-energy-controls,
+      .v71-panel .v71-methods,
+      .v71-panel .upload-zone,
+      .v71-panel .v71-tariff-controls,
+      .v71-panel .v71-pv-toggle,
+      .v71-panel .v71-thermal-controls,
+      .v71-panel .v71-thermal-grid,
+      .v71-panel .v71-termic-note{
+        grid-column:1 / -1!important;
+        max-width:none!important;
+        justify-self:stretch!important;
+      }
+    }
+
+    @media(max-width:680px){
+      .v71-panel .v71-energy-controls,
+      .v71-panel .v71-methods,
+      .v71-panel .v71-tariff-controls,
+      .v71-panel .v71-thermal-grid{
+        grid-template-columns:1fr!important;
+      }
+      h1,.wizard h1{
+        font-size:34px!important;
       }
     }
 
