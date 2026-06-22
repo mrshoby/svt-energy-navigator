@@ -10,6 +10,7 @@
   <!-- SVT V79 WIDE COMPACT ROWS NO BOTTOM WARN -->
   <!-- SVT V80 REMOVE CHEVRONS NARROW ONE ROW -->
   <!-- SVT V81 PV UPLOAD INLINE FIT CONTENT -->
+  <!-- SVT V82 SOURCE HELP SPACING PV CHECKBOX BELOW -->
   <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
   <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -771,6 +772,75 @@
       }
     }
 
+  
+    /* v82: source helper spacing + PV checkbox below subtitle */
+    .source-help{
+      margin-top:10px!important;
+    }
+    .pv-check-under-title{
+      margin-top:8px!important;
+      display:flex!important;
+      align-items:center!important;
+      justify-content:flex-start!important;
+      width:max-content!important;
+      max-width:100%!important;
+      font-size:12.5px!important;
+      line-height:1.2!important;
+    }
+    .pv-check-under-title input{
+      width:15px!important;
+      height:15px!important;
+    }
+    .pv-flow-row{
+      grid-template-columns:minmax(0,405px) minmax(0,1fr)!important;
+      align-items:center!important;
+    }
+    .pv-row-right{
+      justify-content:flex-end!important;
+      align-items:center!important;
+      overflow:visible!important;
+      min-width:0!important;
+    }
+    .production-box-inline{
+      max-width:100%!important;
+      min-width:0!important;
+    }
+    .production-box-inline.visible{
+      display:flex!important;
+      align-items:center!important;
+      justify-content:flex-end!important;
+      max-width:100%!important;
+      min-width:0!important;
+    }
+    .production-box-inline .production-inline{
+      max-width:100%!important;
+      overflow:hidden!important;
+    }
+    .production-box-inline .production-inline .file-meta{
+      min-width:0!important;
+      overflow:hidden!important;
+    }
+    .production-box-inline .production-inline .file-meta strong,
+    .production-box-inline .production-inline .file-meta span{
+      overflow:hidden!important;
+      text-overflow:ellipsis!important;
+    }
+    @media(max-width:1100px){
+      .pv-flow-row{
+        grid-template-columns:minmax(0,1fr)!important;
+      }
+      .pv-row-right{
+        justify-content:flex-start!important;
+      }
+      .production-box-inline.visible{
+        justify-content:flex-start!important;
+        width:100%!important;
+      }
+      .pv-check-under-title{
+        width:100%!important;
+      }
+    }
+
   </style>
 </head>
 <body data-energy-mode="electric">
@@ -924,10 +994,10 @@
                 <div class="title-wrap">
                   <h3 class="row-title">Producție locală / fotovoltaică (opțional)</h3>
                   <p class="row-subtitle">Adaugă-ți producția locală dacă o ai.</p>
+                  <label class="check-line pv-check-under-title" for="hasProduction"><input type="checkbox" id="hasProduction"> Am și producție locală / fotovoltaică</label>
                 </div>
               </div>
               <div class="row-right pv-row-right" style="width:100%">
-                <label class="check-line" for="hasProduction"><input type="checkbox" id="hasProduction"> Am și producție locală / fotovoltaică</label>
                 <div class="production-box production-box-inline" id="productionBox">
                   <div class="file-inline upload-zone production-inline" id="productionDrop">
                     <input id="productionInput" type="file" hidden multiple accept=".csv,.txt,.xlsx,.xls,.xlsm,.html,.htm">
