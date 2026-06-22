@@ -27,6 +27,7 @@
   <!-- SVT V65.3 CLEAN DISTRIBUTOR MODAL TEXT -->
   <!-- SVT V65.4 SINGLE HYPERLINK FIX -->
   <!-- SVT V76 SINGLE WINDOW SWITCH FIX -->
+  <!-- SVT V77 EXTERNAL_STEPPER_RESULTS_ACTIVE -->
   <title>Întrebări disponibile | SVT Energy Navigator</title>
   <meta name="description" content="Alege întrebarea care poate fi răspunsă pe baza datelor încărcate."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -1036,10 +1037,96 @@
       .svt-hour-value{text-align:left}
     }
 
+  
+    /* v77: shared outside stepper */
+    .svt-progress-outside{
+      position:relative;
+      z-index:5;
+      display:grid;
+      grid-template-columns:28px minmax(70px,118px) 28px minmax(70px,118px) 28px minmax(70px,118px) 28px;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      width:min(520px,calc(100vw - 40px));
+      margin:0 auto 10px;
+    }
+    .svt-progress-dot{
+      width:28px;
+      height:28px;
+      border-radius:999px;
+      border:2px solid #c9d8e8;
+      background:#fff;
+      color:#63748d;
+      display:grid;
+      place-items:center;
+      font-size:12px;
+      line-height:1;
+      font-weight:900;
+      box-shadow:0 5px 14px rgba(15,23,42,.045);
+    }
+    .svt-progress-dot.active{
+      background:#07943f;
+      border-color:#07943f;
+      color:#fff;
+      box-shadow:0 10px 20px rgba(7,148,63,.22);
+    }
+    .svt-progress-line{
+      height:2px;
+      background:#d6e3ef;
+      border-radius:999px;
+    }
+    .svt-progress-label{
+      grid-row:2;
+      text-align:center;
+      color:#61728a;
+      font-size:10.5px;
+      line-height:1.1;
+      font-weight:1000;
+      margin-top:1px;
+    }
+    .svt-progress-label.active{color:#07943f}
+
+    /* v77: question page outside stepper */
+    .svt-progress-outside{
+      margin-top:14px;
+      margin-bottom:8px;
+    }
+    .shell{
+      padding-top:16px!important;
+      min-height:calc(100vh - 62px)!important;
+    }
+    body[data-svt-stage="results"] .svt-progress-dot[data-step-dot="2"],
+    body[data-svt-stage="results"] .svt-progress-label[data-step-label="2"]{
+      background:#fff;
+      border-color:#c9d8e8;
+      color:#63748d;
+      box-shadow:0 5px 14px rgba(15,23,42,.045);
+    }
+    body[data-svt-stage="results"] .svt-progress-dot[data-step-dot="3"]{
+      background:#07943f;
+      border-color:#07943f;
+      color:#fff;
+      box-shadow:0 10px 20px rgba(7,148,63,.22);
+    }
+    body[data-svt-stage="results"] .svt-progress-label[data-step-label="3"]{color:#07943f}
+
   </style>
 </head>
-<body>
-  <main class="shell">
+<body data-svt-stage="processing">
+  <section class="svt-progress svt-progress-outside" aria-label="Progres analiză" data-active-step="2">
+  <div class="svt-progress-dot" data-step-dot="1">1</div>
+  <div class="svt-progress-line"></div>
+  <div class="svt-progress-dot active" data-step-dot="2">2</div>
+  <div class="svt-progress-line"></div>
+  <div class="svt-progress-dot" data-step-dot="3">3</div>
+  <div class="svt-progress-line"></div>
+  <div class="svt-progress-dot" data-step-dot="4">4</div>
+  <div class="svt-progress-label" data-step-label="1" style="grid-column:1">Consum</div>
+  <div class="svt-progress-label active" data-step-label="2" style="grid-column:3">Procesare</div>
+  <div class="svt-progress-label" data-step-label="3" style="grid-column:5">Rezultate</div>
+  <div class="svt-progress-label" data-step-label="4" style="grid-column:7">Recomandări</div>
+</section>
+<main class="shell">
     <section aria-labelledby="trialTitle">
       <p class="kicker">SVT ENERGY NAVIGATOR</p>
       <h1 id="trialTitle">Alege întrebarea care te interesează cel mai mult</h1>
@@ -1070,6 +1157,19 @@
       {id:10, icon:'🎯', title:'Ce ar trebui să fac mâine pentru a reduce costul?', groups:['electric','thermal','forecast']}
     ];
     let activeCharts = {};
+
+    function setSVTProgressStep(step){
+      const stage = Number(step) === 3 ? 'results' : 'processing';
+      document.body.setAttribute('data-svt-stage', stage);
+      document.querySelectorAll('[data-step-dot]').forEach(dot => {
+        const active = Number(dot.getAttribute('data-step-dot')) === Number(step);
+        dot.classList.toggle('active', active);
+      });
+      document.querySelectorAll('[data-step-label]').forEach(label => {
+        const active = Number(label.getAttribute('data-step-label')) === Number(step);
+        label.classList.toggle('active', active);
+      });
+    }
 
     function getContext(){
       try { return JSON.parse(sessionStorage.getItem('svtNavigatorContext') || localStorage.getItem('svtNavigatorContext') || '{}'); }
@@ -1162,6 +1262,7 @@
 
       document.querySelectorAll('.q-card.available, .q-card.needs-data').forEach(card => {
         card.addEventListener('click', () => {
+          setSVTProgressStep(3);
           const q = Number(card.getAttribute('data-q'));
           if(q === 1) handleQuestion1(card);
           if(q === 2) handleQuestion2(card);

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <!-- SVT V75 REFERENCE EXACT UPLOAD LAYOUT -->
   <!-- SVT V76 SINGLE WINDOW SWITCH FIX -->
+  <!-- SVT V77 EXTERNAL STEPPER RESULTS ACTIVE -->
   <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
   <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -167,18 +168,103 @@
     body[data-energy-mode="termic"] #electricSection{display:none!important}
     body[data-energy-mode="termic"] #termicSection{display:block!important}
 
+  
+    /* v77: shared outside stepper */
+    .svt-progress-outside{
+      position:relative;
+      z-index:5;
+      display:grid;
+      grid-template-columns:28px minmax(70px,118px) 28px minmax(70px,118px) 28px minmax(70px,118px) 28px;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      width:min(520px,calc(100vw - 40px));
+      margin:0 auto 10px;
+    }
+    .svt-progress-dot{
+      width:28px;
+      height:28px;
+      border-radius:999px;
+      border:2px solid #c9d8e8;
+      background:#fff;
+      color:#63748d;
+      display:grid;
+      place-items:center;
+      font-size:12px;
+      line-height:1;
+      font-weight:900;
+      box-shadow:0 5px 14px rgba(15,23,42,.045);
+    }
+    .svt-progress-dot.active{
+      background:#07943f;
+      border-color:#07943f;
+      color:#fff;
+      box-shadow:0 10px 20px rgba(7,148,63,.22);
+    }
+    .svt-progress-line{
+      height:2px;
+      background:#d6e3ef;
+      border-radius:999px;
+    }
+    .svt-progress-label{
+      grid-row:2;
+      text-align:center;
+      color:#61728a;
+      font-size:10.5px;
+      line-height:1.1;
+      font-weight:1000;
+      margin-top:1px;
+    }
+    .svt-progress-label.active{color:#07943f}
+
+    /* v77: upload page top alignment */
+    .page{
+      display:block!important;
+      padding-top:12px!important;
+    }
+    .hero{
+      margin-top:0!important;
+      padding-top:22px!important;
+    }
+    .wizard-shell{
+      padding-top:0!important;
+    }
+    .wizard-shell h1,
+    h1{
+      margin-top:0!important;
+      font-size:58px!important;
+      line-height:1.02!important;
+    }
+    .sub{
+      margin-top:14px!important;
+      margin-bottom:22px!important;
+    }
+    @media(max-width:900px){
+      .wizard-shell h1,
+      h1{font-size:40px!important}
+      .svt-progress-outside{margin-bottom:8px}
+    }
+
   </style>
 </head>
 <body data-energy-mode="electric">
   <div class="page">
-    <main class="hero">
+    <section class="svt-progress svt-progress-outside" aria-label="Progres analiză" data-active-step="1">
+  <div class="svt-progress-dot active" data-step-dot="1">1</div>
+  <div class="svt-progress-line"></div>
+  <div class="svt-progress-dot" data-step-dot="2">2</div>
+  <div class="svt-progress-line"></div>
+  <div class="svt-progress-dot" data-step-dot="3">3</div>
+  <div class="svt-progress-line"></div>
+  <div class="svt-progress-dot" data-step-dot="4">4</div>
+  <div class="svt-progress-label active" data-step-label="1" style="grid-column:1">Consum</div>
+  <div class="svt-progress-label" data-step-label="2" style="grid-column:3">Procesare</div>
+  <div class="svt-progress-label" data-step-label="3" style="grid-column:5">Rezultate</div>
+  <div class="svt-progress-label" data-step-label="4" style="grid-column:7">Recomandări</div>
+</section>
+<main class="hero">
       <div class="wizard-shell">
-        <section class="steps" aria-label="Progres analiză">
-          <div class="step-dot active">1</div><div class="step-line"></div><div class="step-dot">2</div><div class="step-line"></div><div class="step-dot">3</div><div class="step-line"></div><div class="step-dot">4</div>
-          <div class="step-label active" style="grid-column:1">Consum</div><div class="step-label" style="grid-column:3">Procesare</div><div class="step-label" style="grid-column:5">Rezultate</div><div class="step-label" style="grid-column:7">Recomandări</div>
-        </section>
-
-        <h1>Curba ta de consum zilnic</h1>
+<h1>Curba ta de consum zilnic</h1>
         <p class="sub">Încarcă datele de consum și completează detaliile minime necesare pentru a identifica exact când consumi energie scumpă din rețea. Dacă ai și producție locală, o poți adăuga opțional.</p>
 
         <div class="flow-list energy-switch-list">
