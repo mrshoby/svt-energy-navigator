@@ -1470,6 +1470,118 @@
     }
 
   </style>
+<!-- SVT_UPLOAD_WIDTH_EQUALIZER_START -->
+<style id="svt-upload-width-equalizer-css">
+  :root { --svt-upload-window-width: 372px; }
+
+  @media (min-width: 900px) {
+    .svt-upload-window-equalized {
+      width: var(--svt-upload-window-width) !important;
+      min-width: var(--svt-upload-window-width) !important;
+      max-width: var(--svt-upload-window-width) !important;
+      justify-self: end !important;
+      align-self: center !important;
+      box-sizing: border-box !important;
+      flex: 0 0 var(--svt-upload-window-width) !important;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .svt-upload-window-equalized {
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      flex: 1 1 auto !important;
+    }
+  }
+</style>
+<script id="svt-upload-width-equalizer-js">
+(function () {
+  function textOf(el) {
+    return (el && el.textContent ? el.textContent : '').replace(/\s+/g, ' ').trim();
+  }
+
+  function visibleRect(el) {
+    if (!el || !el.getBoundingClientRect) return null;
+    var r = el.getBoundingClientRect();
+    if (!r || r.width < 20 || r.height < 10) return null;
+    return r;
+  }
+
+  function findReferenceWidth() {
+    var pairs = [
+      [/Electric/i, /Termic/i],
+      [/Încarc fișierul/i, /Am doar factura/i]
+    ];
+    var refs = [];
+    var all = Array.prototype.slice.call(document.querySelectorAll('div, section, fieldset, form'));
+
+    pairs.forEach(function (pair) {
+      var best = null;
+      all.forEach(function (el) {
+        var t = textOf(el);
+        if (!pair[0].test(t) || !pair[1].test(t)) return;
+        if (t.length > 260) return;
+        var r = visibleRect(el);
+        if (!r) return;
+        if (r.width < 280 || r.width > 520 || r.height > 110) return;
+        if (r.left < window.innerWidth * 0.48) return;
+        var area = r.width * r.height;
+        if (!best || area < best.area) best = { el: el, width: r.width, area: area };
+      });
+      if (best) refs.push(best.width);
+    });
+
+    if (!refs.length) return 372;
+    return Math.round(Math.max.apply(Math, refs));
+  }
+
+  function pickUploadBox(seed) {
+    var node = seed;
+    var best = null;
+    for (var i = 0; node && i < 8; i++, node = node.parentElement) {
+      var t = textOf(node);
+      var r = visibleRect(node);
+      if (!r) continue;
+      var style = window.getComputedStyle(node);
+      var hasUploadText = /Alege fișier/i.test(t);
+      var hasFileHint = /\.xlsx|\.xls|\.csv|\.html|Max\.\s*10\s*MB|Producție\s*PV|inverter|PVGIS/i.test(t);
+      var borderLooksLikeUpload = /dashed|dotted/i.test(style.borderTopStyle + style.borderRightStyle + style.borderBottomStyle + style.borderLeftStyle);
+      var isRightSide = r.left > window.innerWidth * 0.48;
+      var isReasonableBox = r.width >= 260 && r.width <= 620 && r.height >= 42 && r.height <= 120;
+      if (hasUploadText && hasFileHint && isRightSide && isReasonableBox) {
+        var score = (borderLooksLikeUpload ? 1000 : 0) + r.width - Math.abs(r.height - 62);
+        if (!best || score > best.score) best = { el: node, score: score };
+      }
+    }
+    return best && best.el;
+  }
+
+  function applyUploadWidthFix() {
+    var targetWidth = findReferenceWidth();
+    document.documentElement.style.setProperty('--svt-upload-window-width', targetWidth + 'px');
+
+    var seeds = Array.prototype.slice.call(document.querySelectorAll('button, a, label, div, span'))
+      .filter(function (el) { return /Alege fișier/i.test(textOf(el)); });
+
+    var applied = new Set();
+    seeds.forEach(function (seed) {
+      var box = pickUploadBox(seed);
+      if (!box || applied.has(box)) return;
+      applied.add(box);
+      box.classList.add('svt-upload-window-equalized');
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyUploadWidthFix);
+  } else {
+    applyUploadWidthFix();
+  }
+  window.addEventListener('resize', applyUploadWidthFix, { passive: true });
+})();
+</script>
+<!-- SVT_UPLOAD_WIDTH_EQUALIZER_END -->
 </head>
 <body data-energy-mode="electric">
   <div class="page">
@@ -2102,3 +2214,5 @@
 
 </body>
 </html>
+
+
