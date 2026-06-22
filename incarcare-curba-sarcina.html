@@ -20,6 +20,7 @@
   <!-- SVT V89 UPLOAD CENTER TERMIC STEPPER LINES FIX -->
   <!-- SVT V90 ROW3 TEXT TRUE VERTICAL CENTER -->
   <!-- SVT V91 ROW3 VISUAL CENTER SCREENSHOT FIX -->
+  <!-- SVT V92 INVOICE MODE COMPACT RIGHT UPLOAD -->
   <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
   <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -1878,6 +1879,151 @@
       margin-bottom:0!important;
     }
 
+  
+    /* v92: compact monthly invoice inputs + upload box to the right */
+    #invoiceBox{
+      width:100%!important;
+      max-width:100%!important;
+      box-sizing:border-box!important;
+    }
+    #invoiceBox[style*="grid"]{
+      display:grid!important;
+      grid-template-columns:minmax(0,520px) var(--svt-combo-w,318px)!important;
+      column-gap:20px!important;
+      row-gap:8px!important;
+      align-items:center!important;
+      padding-top:10px!important;
+      margin-top:0!important;
+    }
+    #invoiceBox .invoice-grid{
+      display:grid!important;
+      grid-template-columns:250px 250px!important;
+      gap:8px 10px!important;
+      width:510px!important;
+      max-width:510px!important;
+      align-items:start!important;
+      justify-content:start!important;
+    }
+    #invoiceBox .field{
+      gap:4px!important;
+      min-width:0!important;
+    }
+    #invoiceBox .field label{
+      font-size:10.8px!important;
+      line-height:1.05!important;
+      white-space:nowrap!important;
+      overflow:hidden!important;
+      text-overflow:ellipsis!important;
+      margin:0!important;
+    }
+    #invoiceBox .field .control{
+      height:34px!important;
+      width:250px!important;
+      min-width:250px!important;
+      max-width:250px!important;
+      padding:0 10px!important;
+      font-size:12.2px!important;
+      border-radius:10px!important;
+      box-sizing:border-box!important;
+    }
+    #invoiceBox .field-hint{
+      font-size:9.8px!important;
+      line-height:1.15!important;
+      margin-top:2px!important;
+      min-height:22px!important;
+    }
+    #invoiceBox .invoice-attach{
+      grid-column:2!important;
+      grid-row:1!important;
+      align-self:center!important;
+      justify-self:end!important;
+      width:var(--svt-combo-w,318px)!important;
+      max-width:var(--svt-combo-w,318px)!important;
+      margin:0!important;
+      padding:0!important;
+      display:flex!important;
+      flex-direction:column!important;
+      justify-content:center!important;
+      align-items:stretch!important;
+    }
+    #invoiceBox #invoiceDrop.file-inline{
+      width:var(--svt-combo-w,318px)!important;
+      min-width:var(--svt-combo-w,318px)!important;
+      max-width:var(--svt-combo-w,318px)!important;
+      min-height:46px!important;
+      height:auto!important;
+      padding:6px 10px!important;
+      gap:8px!important;
+      border-radius:12px!important;
+      box-sizing:border-box!important;
+      justify-content:flex-start!important;
+      overflow:hidden!important;
+      margin:0!important;
+    }
+    #invoiceBox #invoiceDrop .file-button{
+      height:34px!important;
+      padding:0 12px!important;
+      font-size:12.5px!important;
+      border-radius:10px!important;
+      gap:6px!important;
+      flex:0 0 auto!important;
+    }
+    #invoiceBox #invoiceDrop .file-button svg{
+      width:14px!important;
+      height:14px!important;
+    }
+    #invoiceBox #invoiceDrop .file-meta{
+      max-width:170px!important;
+      min-width:0!important;
+      flex:0 1 170px!important;
+      overflow:hidden!important;
+      white-space:nowrap!important;
+      font-size:10.2px!important;
+      line-height:1.12!important;
+    }
+    #invoiceBox #invoiceDrop .file-meta strong,
+    #invoiceBox #invoiceDrop .file-meta span{
+      display:block!important;
+      white-space:nowrap!important;
+      overflow:hidden!important;
+      text-overflow:ellipsis!important;
+      line-height:1.12!important;
+    }
+    #invoiceBox #invoiceFileName{
+      width:100%!important;
+      max-width:100%!important;
+      margin-top:6px!important;
+      font-size:10px!important;
+      line-height:1.15!important;
+    }
+    @media(max-width:1100px){
+      #invoiceBox[style*="grid"]{
+        grid-template-columns:1fr!important;
+      }
+      #invoiceBox .invoice-grid{
+        width:100%!important;
+        max-width:100%!important;
+        grid-template-columns:1fr 1fr!important;
+      }
+      #invoiceBox .field .control{
+        width:100%!important;
+        min-width:0!important;
+        max-width:100%!important;
+      }
+      #invoiceBox .invoice-attach{
+        grid-column:1!important;
+        grid-row:auto!important;
+        justify-self:start!important;
+        width:100%!important;
+        max-width:100%!important;
+      }
+      #invoiceBox #invoiceDrop.file-inline{
+        width:100%!important;
+        min-width:0!important;
+        max-width:100%!important;
+      }
+    }
+
   </style>
 </head>
 <body data-energy-mode="electric">
@@ -2157,7 +2303,7 @@
       methodFileCard.classList.toggle('active', method === 'file');
       methodInvoiceCard.classList.toggle('active', method === 'invoice');
       fileModeBox.style.display = method === 'file' ? 'grid' : 'none';
-      invoiceBox.style.display = method === 'invoice' ? 'block' : 'none';
+      invoiceBox.style.display = method === 'invoice' ? 'grid' : 'none';
       validateForm();
     }
 
