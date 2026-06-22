@@ -9,6 +9,7 @@
   <!-- SVT V78 NARROW ROWS INLINE HELP TERMIC CLEAN -->
   <!-- SVT V79 WIDE COMPACT ROWS NO BOTTOM WARN -->
   <!-- SVT V80 REMOVE CHEVRONS NARROW ONE ROW -->
+  <!-- SVT V81 PV UPLOAD INLINE FIT CONTENT -->
   <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
   <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -671,6 +672,105 @@
       }
     }
 
+  
+    /* v81: PV upload inline + dashed upload boxes fit their text */
+    .file-inline.upload-zone{
+      width:max-content!important;
+      max-width:100%!important;
+      flex:0 0 auto!important;
+      justify-content:flex-start!important;
+    }
+    .file-inline .file-meta{
+      width:max-content!important;
+      max-width:none!important;
+      white-space:nowrap!important;
+      flex:0 0 auto!important;
+    }
+    .file-inline .file-meta strong,
+    .file-inline .file-meta span{
+      white-space:nowrap!important;
+    }
+    #dropZone.file-inline{
+      width:max-content!important;
+      max-width:100%!important;
+    }
+    .pv-flow-row{
+      grid-template-columns:minmax(0,350px) minmax(0,1fr)!important;
+    }
+    .pv-row-right{
+      display:flex!important;
+      align-items:center!important;
+      justify-content:flex-start!important;
+      flex-wrap:nowrap!important;
+      gap:14px!important;
+      min-width:0!important;
+    }
+    .pv-row-right .check-line{
+      flex:0 0 auto!important;
+      margin:0!important;
+      white-space:nowrap!important;
+      max-width:max-content!important;
+    }
+    .production-box-inline{
+      display:none!important;
+      margin:0!important;
+      padding:0!important;
+      border:0!important;
+      background:transparent!important;
+      box-shadow:none!important;
+      grid-column:auto!important;
+      width:auto!important;
+      max-width:none!important;
+      flex:0 0 auto!important;
+    }
+    .production-box-inline.visible{
+      display:block!important;
+    }
+    .production-box-inline .production-inline{
+      margin:0!important;
+      width:max-content!important;
+      max-width:100%!important;
+      min-height:46px!important;
+      padding:6px 12px!important;
+      gap:10px!important;
+    }
+    .production-box-inline .selected-files{
+      margin-top:4px!important;
+      max-width:360px!important;
+      white-space:nowrap!important;
+      overflow:hidden!important;
+      text-overflow:ellipsis!important;
+    }
+    .production-box-inline .embedded-note{
+      margin-top:4px!important;
+      max-width:360px!important;
+      white-space:normal!important;
+    }
+    @media(max-width:1100px){
+      .pv-row-right{
+        flex-wrap:wrap!important;
+      }
+      .production-box-inline,
+      .production-box-inline.visible{
+        flex:1 1 100%!important;
+      }
+      .file-inline.upload-zone,
+      #dropZone.file-inline,
+      .production-box-inline .production-inline{
+        width:100%!important;
+        max-width:100%!important;
+      }
+      .file-inline .file-meta{
+        width:auto!important;
+        min-width:0!important;
+        white-space:normal!important;
+      }
+      .file-inline .file-meta strong,
+      .file-inline .file-meta span{
+        white-space:normal!important;
+      }
+    }
+
   </style>
 </head>
 <body data-energy-mode="electric">
@@ -817,7 +917,7 @@
               </div>
             </div>
 
-            <div class="flow-row">
+            <div class="flow-row pv-flow-row">
               <div class="flow-left">
                 <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="M6 20V9l3 2 3-7 3 7 3-2v11"/><path d="M9 20v-4M12 20v-6M15 20v-4"/></svg></div>
                 <div class="count-badge">5</div>
@@ -826,18 +926,17 @@
                   <p class="row-subtitle">Adaugă-ți producția locală dacă o ai.</p>
                 </div>
               </div>
-              <div class="row-right" style="width:100%">
+              <div class="row-right pv-row-right" style="width:100%">
                 <label class="check-line" for="hasProduction"><input type="checkbox" id="hasProduction"> Am și producție locală / fotovoltaică</label>
-              </div>
-              <div class="production-box" id="productionBox">
-                <div class="production-note">Încarcă separat fișierul de producție locală doar dacă acesta nu este deja inclus în fișierul principal de consum.</div>
-                <div class="file-inline upload-zone production-inline" id="productionDrop">
-                  <input id="productionInput" type="file" hidden multiple accept=".csv,.txt,.xlsx,.xls,.xlsm,.html,.htm">
-                  <button type="button" class="file-button" id="productionChoose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M20 16.7A4 4 0 0 1 16.3 21H7.7A4 4 0 0 1 4 16.7"/></svg>Alege fișier</button>
-                  <div class="file-meta"><strong>Producție PV / inverter / PVGIS</strong><span>.xlsx, .xls, .csv, .html</span></div>
+                <div class="production-box production-box-inline" id="productionBox">
+                  <div class="file-inline upload-zone production-inline" id="productionDrop">
+                    <input id="productionInput" type="file" hidden multiple accept=".csv,.txt,.xlsx,.xls,.xlsm,.html,.htm">
+                    <button type="button" class="file-button" id="productionChoose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M20 16.7A4 4 0 0 1 16.3 21H7.7A4 4 0 0 1 4 16.7"/></svg>Alege fișier</button>
+                    <div class="file-meta"><strong>Producție PV / inverter / PVGIS</strong><span>.xlsx, .xls, .csv, .html</span></div>
+                  </div>
+                  <div class="selected-files" id="productionFileName"></div>
+                  <div class="embedded-note" id="productionExistingBanner">Date producție existente în fișierul de consum încărcat mai sus</div>
                 </div>
-                <div class="selected-files" id="productionFileName"></div>
-                <div class="embedded-note" id="productionExistingBanner">Date producție existente în fișierul de consum încărcat mai sus</div>
               </div>
             </div>
           </div>
