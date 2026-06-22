@@ -39,6 +39,7 @@
   <!-- SVT V86 UPLOAD ROW CARD FIX HOME HELP TEXT -->
   <!-- SVT V87 UPLOAD ROW HEIGHT AND EQUAL DASHED BOXES -->
   <!-- SVT V88 EQUAL WIDTHS STEPPER ALIGN FIX -->
+  <!-- SVT V89 UPLOAD CENTER TERMIC STEPPER LINES FIX -->
   <title>Întrebări disponibile | SVT Energy Navigator</title>
   <meta name="description" content="Alege întrebarea care poate fi răspunsă pe baza datelor încărcate."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -1154,6 +1155,21 @@
     .svt-progress-label[data-step-label="2"]{grid-column:3!important}
     .svt-progress-label[data-step-label="3"]{grid-column:5!important}
     .svt-progress-label[data-step-label="4"]{grid-column:7!important}
+
+  
+    /* v89: restore horizontal lines between progress circles */
+    .svt-progress-outside .svt-progress-line{
+      width:100%!important;
+      min-width:82px!important;
+      justify-self:stretch!important;
+      align-self:center!important;
+      display:block!important;
+      opacity:1!important;
+      visibility:visible!important;
+      height:2px!important;
+      background:#d6e3ef!important;
+      border-radius:999px!important;
+    }
 
   </style>
 </head>
