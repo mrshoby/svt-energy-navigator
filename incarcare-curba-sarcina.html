@@ -14,6 +14,7 @@
   <!-- SVT V83 SMALL SOURCE BUTTONS EQUAL UPLOADS -->
   <!-- SVT V84 SOURCE ALIGN UPLOAD TARIFF COMPACT -->
   <!-- SVT V85 RIGHT ALIGN COMPACT UPLOAD TARIFF FIX -->
+  <!-- SVT V86 UPLOAD ROW CARD FIX HOME HELP TEXT -->
   <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
   <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -1254,6 +1255,110 @@
       }
     }
 
+  
+    /* v86: restore upload box size, compact only row 3 card, fix home link/help text */
+    .upload-flow-row{
+      min-height:58px!important;
+      padding-top:7px!important;
+      padding-bottom:7px!important;
+      align-items:center!important;
+    }
+    .upload-flow-row .flow-left{
+      align-items:center!important;
+    }
+    .upload-flow-row .row-subtitle{
+      margin-top:2px!important;
+      line-height:1.18!important;
+    }
+    .upload-flow-row .row-right{
+      justify-content:flex-end!important;
+      align-items:center!important;
+      width:100%!important;
+      margin-left:auto!important;
+    }
+    .upload-flow-row #dropZone.file-inline{
+      width:390px!important;
+      min-width:390px!important;
+      max-width:390px!important;
+      height:auto!important;
+      min-height:46px!important;
+      padding:6px 12px!important;
+      gap:10px!important;
+      margin-left:auto!important;
+      justify-self:end!important;
+      align-self:center!important;
+      border-radius:12px!important;
+    }
+    .upload-flow-row #dropZone .file-button{
+      height:34px!important;
+      padding:0 14px!important;
+      font-size:13px!important;
+      border-radius:10px!important;
+      gap:7px!important;
+    }
+    .upload-flow-row #dropZone .file-button svg{
+      width:15px!important;
+      height:15px!important;
+    }
+    .upload-flow-row #dropZone .file-meta{
+      font-size:10.5px!important;
+      line-height:1.15!important;
+    }
+    .upload-flow-row #dropZone .file-meta strong,
+    .upload-flow-row #dropZone .file-meta span{
+      line-height:1.15!important;
+    }
+
+    .production-box-inline.visible{
+      max-width:390px!important;
+      flex:0 0 390px!important;
+    }
+    .production-box-inline .production-inline{
+      width:390px!important;
+      min-width:390px!important;
+      max-width:390px!important;
+      height:auto!important;
+      min-height:46px!important;
+      padding:6px 12px!important;
+      gap:10px!important;
+      border-radius:12px!important;
+    }
+    .production-box-inline .production-inline .file-button{
+      height:34px!important;
+      padding:0 14px!important;
+      font-size:13px!important;
+      border-radius:10px!important;
+      gap:7px!important;
+    }
+    .production-box-inline .production-inline .file-button svg{
+      width:15px!important;
+      height:15px!important;
+    }
+    .production-box-inline .production-inline .file-meta{
+      font-size:10.5px!important;
+      line-height:1.15!important;
+    }
+
+    .source-help{
+      gap:12px!important;
+    }
+    .source-help .source-help-text{
+      margin:0!important;
+      font-size:13px!important;
+      font-weight:700!important;
+    }
+
+    @media(max-width:1100px){
+      .upload-flow-row #dropZone.file-inline,
+      .production-box-inline .production-inline,
+      .production-box-inline.visible{
+        width:100%!important;
+        min-width:0!important;
+        max-width:100%!important;
+        flex:1 1 100%!important;
+      }
+    }
+
   </style>
 </head>
 <body data-energy-mode="electric">
@@ -1311,7 +1416,6 @@
                 <button class="choice-btn method source-choice" type="button" id="methodInvoiceCard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4"/><path d="M9 11h6M9 15h6"/></svg><span>Am doar factura<br>lunară</span></button>
               </div>
               <div class="source-help">
-                <div class="source-help-title">Cum preferi să încarci datele de consum electric?</div>
                 <div class="source-help-text">Dacă ai fișierul orar, aceasta este varianta recomandată.</div>
                 <button type="button" class="source-help-link" id="openDistributorHelp" data-open-distributor-help="true">De unde obții fișierul?</button>
               </div>
@@ -1464,7 +1568,7 @@
         <div id="message" class="message" aria-live="polite"></div>
 
         <div class="actions">
-          <a class="btn btn-back" href="./testeaza-gratuit.html">← Pagina principală</a>
+          <a class="btn btn-back" href="./index.html">← Pagina principală</a>
           <button class="btn btn-next" type="button" id="continueBtn">Continuă →</button>
         </div>
       </div>
