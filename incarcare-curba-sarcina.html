@@ -1470,118 +1470,7 @@
     }
 
   </style>
-<!-- SVT_UPLOAD_WIDTH_EQUALIZER_START -->
-<style id="svt-upload-width-equalizer-css">
-  :root { --svt-upload-window-width: 372px; }
 
-  @media (min-width: 900px) {
-    .svt-upload-window-equalized {
-      width: var(--svt-upload-window-width) !important;
-      min-width: var(--svt-upload-window-width) !important;
-      max-width: var(--svt-upload-window-width) !important;
-      justify-self: end !important;
-      align-self: center !important;
-      box-sizing: border-box !important;
-      flex: 0 0 var(--svt-upload-window-width) !important;
-    }
-  }
-
-  @media (max-width: 899px) {
-    .svt-upload-window-equalized {
-      width: 100% !important;
-      min-width: 0 !important;
-      max-width: 100% !important;
-      flex: 1 1 auto !important;
-    }
-  }
-</style>
-<script id="svt-upload-width-equalizer-js">
-(function () {
-  function textOf(el) {
-    return (el && el.textContent ? el.textContent : '').replace(/\s+/g, ' ').trim();
-  }
-
-  function visibleRect(el) {
-    if (!el || !el.getBoundingClientRect) return null;
-    var r = el.getBoundingClientRect();
-    if (!r || r.width < 20 || r.height < 10) return null;
-    return r;
-  }
-
-  function findReferenceWidth() {
-    var pairs = [
-      [/Electric/i, /Termic/i],
-      [/Încarc fișierul/i, /Am doar factura/i]
-    ];
-    var refs = [];
-    var all = Array.prototype.slice.call(document.querySelectorAll('div, section, fieldset, form'));
-
-    pairs.forEach(function (pair) {
-      var best = null;
-      all.forEach(function (el) {
-        var t = textOf(el);
-        if (!pair[0].test(t) || !pair[1].test(t)) return;
-        if (t.length > 260) return;
-        var r = visibleRect(el);
-        if (!r) return;
-        if (r.width < 280 || r.width > 520 || r.height > 110) return;
-        if (r.left < window.innerWidth * 0.48) return;
-        var area = r.width * r.height;
-        if (!best || area < best.area) best = { el: el, width: r.width, area: area };
-      });
-      if (best) refs.push(best.width);
-    });
-
-    if (!refs.length) return 372;
-    return Math.round(Math.max.apply(Math, refs));
-  }
-
-  function pickUploadBox(seed) {
-    var node = seed;
-    var best = null;
-    for (var i = 0; node && i < 8; i++, node = node.parentElement) {
-      var t = textOf(node);
-      var r = visibleRect(node);
-      if (!r) continue;
-      var style = window.getComputedStyle(node);
-      var hasUploadText = /Alege fișier/i.test(t);
-      var hasFileHint = /\.xlsx|\.xls|\.csv|\.html|Max\.\s*10\s*MB|Producție\s*PV|inverter|PVGIS/i.test(t);
-      var borderLooksLikeUpload = /dashed|dotted/i.test(style.borderTopStyle + style.borderRightStyle + style.borderBottomStyle + style.borderLeftStyle);
-      var isRightSide = r.left > window.innerWidth * 0.48;
-      var isReasonableBox = r.width >= 260 && r.width <= 620 && r.height >= 42 && r.height <= 120;
-      if (hasUploadText && hasFileHint && isRightSide && isReasonableBox) {
-        var score = (borderLooksLikeUpload ? 1000 : 0) + r.width - Math.abs(r.height - 62);
-        if (!best || score > best.score) best = { el: node, score: score };
-      }
-    }
-    return best && best.el;
-  }
-
-  function applyUploadWidthFix() {
-    var targetWidth = findReferenceWidth();
-    document.documentElement.style.setProperty('--svt-upload-window-width', targetWidth + 'px');
-
-    var seeds = Array.prototype.slice.call(document.querySelectorAll('button, a, label, div, span'))
-      .filter(function (el) { return /Alege fișier/i.test(textOf(el)); });
-
-    var applied = new Set();
-    seeds.forEach(function (seed) {
-      var box = pickUploadBox(seed);
-      if (!box || applied.has(box)) return;
-      applied.add(box);
-      box.classList.add('svt-upload-window-equalized');
-    });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', applyUploadWidthFix);
-  } else {
-    applyUploadWidthFix();
-  }
-  window.addEventListener('resize', applyUploadWidthFix, { passive: true });
-})();
-</script>
-<!-- SVT_UPLOAD_WIDTH_EQUALIZER_END -->
 </head>
 <body data-energy-mode="electric">
   <div class="page">
@@ -2212,93 +2101,76 @@
     </div>
   </div>
 
-<!-- SVT_UPLOAD_UI_EQUALIZER_V2_START -->
-<style id="svt-upload-ui-equalizer-v2">
+
+
+<!-- SVT_SURGICAL_EQUALIZER_V3_START -->
+<style id="svt-surgical-equalizer-v3-css">
   :root {
-    --svt-target-input-pair-width: 328px;
-    --svt-target-upload-row-padding-y: 14px;
+    --svt-v3-target-pair-width: 308px;
+    --svt-v3-target-single-width: 148px;
+    --svt-v3-upload-padding-y: 12px;
   }
 
-  .svt-v2-equal-control-group {
-    width: var(--svt-target-input-pair-width) !important;
-    max-width: var(--svt-target-input-pair-width) !important;
-    min-width: var(--svt-target-input-pair-width) !important;
-    flex: 0 0 var(--svt-target-input-pair-width) !important;
-    display: flex !important;
-    justify-content: stretch !important;
-    align-items: stretch !important;
-    gap: 12px !important;
-    margin-left: auto !important;
-  }
-
-  .svt-v2-equal-control-child {
-    flex: 1 1 0 !important;
-    width: auto !important;
-    min-width: 0 !important;
-    max-width: none !important;
-    white-space: normal !important;
-    text-align: center !important;
+  .svt-v3-choice-control {
+    width: var(--svt-v3-target-single-width) !important;
+    min-width: var(--svt-v3-target-single-width) !important;
+    max-width: var(--svt-v3-target-single-width) !important;
+    flex: 0 0 var(--svt-v3-target-single-width) !important;
+    box-sizing: border-box !important;
     justify-content: center !important;
+    text-align: center !important;
   }
 
-  .svt-v2-equal-upload-box {
-    width: var(--svt-target-input-pair-width) !important;
-    max-width: var(--svt-target-input-pair-width) !important;
-    min-width: var(--svt-target-input-pair-width) !important;
-    flex: 0 0 var(--svt-target-input-pair-width) !important;
-    margin-left: auto !important;
+  .svt-v3-upload-box {
+    width: var(--svt-v3-target-pair-width) !important;
+    min-width: var(--svt-v3-target-pair-width) !important;
+    max-width: var(--svt-v3-target-pair-width) !important;
+    flex: 0 0 var(--svt-v3-target-pair-width) !important;
     box-sizing: border-box !important;
-    display: flex !important;
-    align-items: center !important;
     justify-content: flex-start !important;
-    gap: 10px !important;
-  }
-
-  .svt-v2-compact-upload-row {
-    padding-top: var(--svt-target-upload-row-padding-y) !important;
-    padding-bottom: var(--svt-target-upload-row-padding-y) !important;
-    min-height: 0 !important;
     align-items: center !important;
   }
 
-  .svt-v2-progress-item,
-  .svt-v2-progress-item * {
-    box-sizing: border-box !important;
+  .svt-v3-upload-row-compact {
+    padding-top: var(--svt-v3-upload-padding-y) !important;
+    padding-bottom: var(--svt-v3-upload-padding-y) !important;
+    min-height: unset !important;
+    align-items: center !important;
   }
 
-  .svt-v2-progress-item {
+  .svt-v3-progress-item {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     gap: 8px !important;
-    text-align: center !important;
     line-height: 1 !important;
     vertical-align: middle !important;
+    text-align: center !important;
   }
 
-  .svt-v2-progress-circle {
+  .svt-v3-progress-item .svt-v3-progress-circle,
+  .svt-v3-progress-circle {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     text-align: center !important;
     line-height: 1 !important;
-    flex: 0 0 auto !important;
   }
 
   @media (max-width: 820px) {
-    .svt-v2-equal-control-group,
-    .svt-v2-equal-upload-box {
+    .svt-v3-choice-control,
+    .svt-v3-upload-box {
       width: 100% !important;
-      max-width: 100% !important;
       min-width: 0 !important;
+      max-width: 100% !important;
       flex: 1 1 100% !important;
-      margin-left: 0 !important;
     }
   }
 </style>
-<script id="svt-upload-ui-equalizer-v2-script">
+<script id="svt-surgical-equalizer-v3-js">
 (function () {
-  var PATCH = 'svt-upload-ui-equalizer-v2';
+  var DEBUG = false;
+  function log() { if (DEBUG && window.console) console.log.apply(console, arguments); }
 
   function norm(value) {
     return String(value || '')
@@ -2309,178 +2181,195 @@
       .trim();
   }
 
-  function isVisible(el) {
-    if (!el || !el.getBoundingClientRect) return false;
+  function rect(el) {
+    if (!el || !el.getBoundingClientRect) return null;
     var r = el.getBoundingClientRect();
-    return r.width > 0 && r.height > 0;
+    if (!r || r.width < 8 || r.height < 8) return null;
+    return r;
   }
 
-  function allElements() {
-    return Array.prototype.slice.call(document.querySelectorAll('body *'));
+  function visible(el) {
+    var r = rect(el);
+    return !!(r && r.width > 0 && r.height > 0);
   }
 
-  function findText(pattern) {
-    var els = allElements();
+  function all(sel) {
+    return Array.prototype.slice.call(document.querySelectorAll(sel || 'body *'));
+  }
+
+  function txt(el) { return norm(el && el.textContent); }
+
+  function findByText(re, selector) {
+    var els = all(selector || 'body *');
     for (var i = 0; i < els.length; i += 1) {
       var el = els[i];
-      if (!isVisible(el)) continue;
-      var text = norm(el.textContent);
-      if (text && pattern.test(text)) return el;
+      if (!visible(el)) continue;
+      var t = txt(el);
+      if (t && re.test(t)) return el;
     }
     return null;
   }
 
-  function getControlBlock(labelEl) {
+  function nearestControlLabelOrField(labelEl) {
     if (!labelEl) return null;
     var p = labelEl;
-    for (var i = 0; p && p !== document.body && i < 8; i += 1, p = p.parentElement) {
-      var r = p.getBoundingClientRect();
-      var hasControl = !!p.querySelector('input, select, textarea');
-      if (hasControl && r.width >= 80 && r.width <= 320 && r.height >= 28 && r.height <= 120) {
+    for (var i = 0; p && p !== document.body && i < 7; i += 1, p = p.parentElement) {
+      var r = rect(p);
+      if (!r) continue;
+      var hasNative = !!p.querySelector('input, select, textarea');
+      var t = txt(p);
+      if (hasNative && r.width >= 80 && r.width <= 260 && r.height >= 26 && r.height <= 90 && t.length <= 120) {
         return p;
       }
     }
-    return labelEl.parentElement || labelEl;
-  }
-
-  function commonParent(a, b) {
-    if (!a || !b) return null;
-    var seen = new Set();
-    var p = a;
-    while (p && p !== document.body) {
-      seen.add(p);
-      p = p.parentElement;
-    }
-    p = b;
-    while (p && p !== document.body) {
-      if (seen.has(p)) return p;
-      p = p.parentElement;
-    }
     return null;
   }
 
-  function computeTariffPairWidth() {
-    var labelA = findText(/tarif fix actual/);
-    var labelB = findText(/tip tarif actual/);
-    var blockA = getControlBlock(labelA);
-    var blockB = getControlBlock(labelB);
-    if (blockA && blockB && isVisible(blockA) && isVisible(blockB)) {
-      var a = blockA.getBoundingClientRect();
-      var b = blockB.getBoundingClientRect();
-      var left = Math.min(a.left, b.left);
-      var right = Math.max(a.right, b.right);
-      var width = Math.round(right - left);
+  function tariffPairWidth() {
+    var labelA = findByText(/tarif fix actual/);
+    var labelB = findByText(/tip tarif actual/);
+    var a = nearestControlLabelOrField(labelA);
+    var b = nearestControlLabelOrField(labelB);
+    var ar = rect(a), br = rect(b);
+    if (ar && br) {
+      var width = Math.round(Math.max(ar.right, br.right) - Math.min(ar.left, br.left));
       if (width >= 240 && width <= 520) return width;
     }
-    return 328;
+
+    // fallback dupa screenshot: doua inputuri de ~150px + gap.
+    return 308;
   }
 
-  function findChoiceControl(textPattern) {
-    var el = findText(textPattern);
-    if (!el) return null;
-    var p = el;
-    for (var i = 0; p && p !== document.body && i < 8; i += 1, p = p.parentElement) {
-      var r = p.getBoundingClientRect();
-      if (r.width >= 70 && r.width <= 260 && r.height >= 32 && r.height <= 90) {
-        var t = norm(p.textContent);
-        if (textPattern.test(t)) return p;
-      }
-    }
-    return el;
+  function setTargetWidth() {
+    var pair = tariffPairWidth();
+    var single = Math.max(110, Math.floor((pair - 12) / 2));
+    document.documentElement.style.setProperty('--svt-v3-target-pair-width', pair + 'px');
+    document.documentElement.style.setProperty('--svt-v3-target-single-width', single + 'px');
+    return { pair: pair, single: single };
   }
 
-  function equalizeChoicePair(patternA, patternB) {
-    var a = findChoiceControl(patternA);
-    var b = findChoiceControl(patternB);
-    var group = commonParent(a, b);
-    if (!group) return;
-    group.classList.add('svt-v2-equal-control-group');
-    [a, b].forEach(function (item) {
-      if (item) item.classList.add('svt-v2-equal-control-child');
+  function findChoiceByLabel(re) {
+    // Preferam elementele clickabile, ca sa nu atingem randul/cardul.
+    var candidates = all('button, a, label, [role="button"], div, span');
+    var best = null;
+    candidates.forEach(function (el) {
+      if (!visible(el)) return;
+      var t = txt(el);
+      if (!re.test(t)) return;
+      if (t.length > 80) return;
+      var r = rect(el);
+      if (!r) return;
+      if (r.width < 50 || r.width > 240 || r.height < 26 || r.height > 82) return;
+      var tagScore = /^(BUTTON|A|LABEL)$/i.test(el.tagName) ? 1000 : 0;
+      var area = r.width * r.height;
+      var score = tagScore - area;
+      if (!best || score > best.score) best = { el: el, score: score };
+    });
+    return best && best.el;
+  }
+
+  function equalizeChoices() {
+    [
+      /\belectric\b/,
+      /\btermic\b/,
+      /incarc fisierul orar|incarca fisierul orar|incarci fisierul orar/,
+      /am doar factura/
+    ].forEach(function (re) {
+      var el = findChoiceByLabel(re);
+      if (el) el.classList.add('svt-v3-choice-control');
     });
   }
 
-  function findUploadBoxFromText(el) {
-    if (!el) return null;
+  function findUploadBoxFromTrigger(trigger) {
+    var p = trigger;
     var best = null;
-    var p = el;
-    for (var i = 0; p && p !== document.body && i < 10; i += 1, p = p.parentElement) {
-      var r = p.getBoundingClientRect();
+    for (var i = 0; p && p !== document.body && i < 9; i += 1, p = p.parentElement) {
+      var r = rect(p);
+      if (!r) continue;
+      var t = txt(p);
+      if (!/alege fisier/.test(t)) continue;
+      var hasHint = /xlsx|xls|csv|html|max\.?\s*10\s*mb|productie pv|inverter|pvgis/.test(t);
       var cs = window.getComputedStyle(p);
-      var text = norm(p.textContent);
-      var looksLikeUpload = /alege fisier/.test(text) && r.width >= 160 && r.width <= 720 && r.height >= 34 && r.height <= 150;
-      var hasDashedBorder = /dashed/i.test(cs.borderTopStyle + ' ' + cs.borderRightStyle + ' ' + cs.borderBottomStyle + ' ' + cs.borderLeftStyle);
-      if (looksLikeUpload && (hasDashedBorder || i >= 1)) best = p;
-      if (hasDashedBorder && looksLikeUpload) return p;
+      var dashed = /dashed|dotted/i.test(cs.borderTopStyle + ' ' + cs.borderRightStyle + ' ' + cs.borderBottomStyle + ' ' + cs.borderLeftStyle);
+      var goodSize = r.width >= 180 && r.width <= 650 && r.height >= 34 && r.height <= 125;
+      var rightSide = r.left > window.innerWidth * 0.45;
+      if (goodSize && rightSide && (hasHint || dashed)) {
+        var score = (dashed ? 1000 : 0) + (hasHint ? 500 : 0) - (r.width * r.height / 1000);
+        if (!best || score > best.score) best = { el: p, score: score };
+      }
     }
-    return best || el;
+    return best && best.el;
   }
 
   function equalizeUploadBoxes() {
-    var uploadTriggers = allElements().filter(function (el) {
-      return isVisible(el) && /alege fisier/.test(norm(el.textContent));
+    var triggers = all('button, a, label, div, span').filter(function (el) {
+      return visible(el) && /alege fisier/.test(txt(el));
     });
     var seen = new Set();
-    uploadTriggers.forEach(function (trigger) {
-      var box = findUploadBoxFromText(trigger);
-      if (!box || seen.has(box)) return;
-      seen.add(box);
-      box.classList.add('svt-v2-equal-upload-box');
+    triggers.forEach(function (trigger) {
+      var box = findUploadBoxFromTrigger(trigger);
+      if (box && !seen.has(box)) {
+        seen.add(box);
+        box.classList.add('svt-v3-upload-box');
+      }
     });
   }
 
-  function compactStepThreeUploadRow() {
-    var candidates = allElements().filter(function (el) {
-      if (!isVisible(el)) return false;
-      var text = norm(el.textContent);
-      if (!/fisier cu consum orar/.test(text)) return false;
-      var r = el.getBoundingClientRect();
-      return r.width >= 520 && r.height >= 42 && r.height <= 160;
+  function compactStepThree() {
+    var candidates = all('div, section, article, li').filter(function (el) {
+      if (!visible(el)) return false;
+      var t = txt(el);
+      if (!/incarca fisierul/.test(t)) return false;
+      if (!/fisier cu consum orar/.test(t)) return false;
+      if (!/alege fisier/.test(t)) return false;
+      var r = rect(el);
+      return r && r.width >= 520 && r.height >= 50 && r.height <= 140;
     });
     candidates.sort(function (a, b) {
-      var ar = a.getBoundingClientRect();
-      var br = b.getBoundingClientRect();
+      var ar = rect(a), br = rect(b);
       return (ar.width * ar.height) - (br.width * br.height);
     });
-    if (candidates[0]) candidates[0].classList.add('svt-v2-compact-upload-row');
+    if (candidates[0]) candidates[0].classList.add('svt-v3-upload-row-compact');
   }
 
-  function fixProgressItems() {
+  function fixProgress() {
     ['consum', 'procesare', 'rezultate', 'recomandari'].forEach(function (label, idx) {
-      var labelEl = findText(new RegExp('\\b' + label + '\\b'));
-      if (!labelEl) return;
-      var item = labelEl;
-      for (var i = 0; item && item !== document.body && i < 7; i += 1, item = item.parentElement) {
-        var r = item.getBoundingClientRect();
-        var text = norm(item.textContent);
-        if (r.width >= 60 && r.width <= 260 && r.height >= 22 && r.height <= 90 && text.indexOf(label) !== -1 && text.indexOf(String(idx + 1)) !== -1) {
-          item.classList.add('svt-v2-progress-item');
-          var children = Array.prototype.slice.call(item.querySelectorAll('*'));
-          children.forEach(function (child) {
-            var cr = child.getBoundingClientRect();
-            var ct = norm(child.textContent);
-            if (ct === String(idx + 1) && cr.width >= 16 && cr.width <= 54 && cr.height >= 16 && cr.height <= 54) {
-              child.classList.add('svt-v2-progress-circle');
-            }
-          });
-          break;
+      var num = String(idx + 1);
+      var items = all('a, button, li, div, span').filter(function (el) {
+        if (!visible(el)) return false;
+        var t = txt(el);
+        if (t.length > 80) return false;
+        if (t.indexOf(label) === -1 || t.indexOf(num) === -1) return false;
+        var r = rect(el);
+        return r && r.width >= 50 && r.width <= 240 && r.height >= 18 && r.height <= 70;
+      });
+      items.sort(function (a, b) {
+        var ar = rect(a), br = rect(b);
+        return (ar.width * ar.height) - (br.width * br.height);
+      });
+      var item = items[0];
+      if (!item) return;
+      item.classList.add('svt-v3-progress-item');
+      var allChildren = Array.prototype.slice.call(item.querySelectorAll('*'));
+      allChildren.forEach(function (child) {
+        var cr = rect(child);
+        if (!cr) return;
+        if (txt(child) === num && cr.width >= 16 && cr.width <= 54 && cr.height >= 16 && cr.height <= 54) {
+          child.classList.add('svt-v3-progress-circle');
         }
-      }
+      });
     });
   }
 
   function apply() {
     try {
-      var width = computeTariffPairWidth();
-      document.documentElement.style.setProperty('--svt-target-input-pair-width', width + 'px');
-
-      equalizeChoicePair(/\belectric\b/, /\btermic\b/);
-      equalizeChoicePair(/incarc fisierul orar|incarca fisierul orar/, /am doar factura/);
+      setTargetWidth();
+      equalizeChoices();
       equalizeUploadBoxes();
-      compactStepThreeUploadRow();
-      fixProgressItems();
+      compactStepThree();
+      fixProgress();
     } catch (err) {
-      console.warn(PATCH + ':', err);
+      if (window.console) console.warn('svt-v3 surgical equalizer failed:', err);
     }
   }
 
@@ -2489,12 +2378,13 @@
   } else {
     apply();
   }
-  window.addEventListener('resize', function () { window.requestAnimationFrame(apply); });
+  window.addEventListener('resize', function () { window.requestAnimationFrame(apply); }, { passive: true });
 })();
 </script>
-<!-- SVT_UPLOAD_UI_EQUALIZER_V2_END -->
+<!-- SVT_SURGICAL_EQUALIZER_V3_END -->
 </body>
 </html>
+
 
 
 
