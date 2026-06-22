@@ -13,6 +13,7 @@
   <!-- SVT V82 SOURCE HELP SPACING PV CHECKBOX BELOW -->
   <!-- SVT V83 SMALL SOURCE BUTTONS EQUAL UPLOADS -->
   <!-- SVT V84 SOURCE ALIGN UPLOAD TARIFF COMPACT -->
+  <!-- SVT V85 RIGHT ALIGN COMPACT UPLOAD TARIFF FIX -->
   <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
   <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -1059,6 +1060,196 @@
         flex:1 1 100%!important;
       }
       .tariff-flow-row .control{
+        max-width:100%!important;
+      }
+    }
+
+  
+    /* v85: restore right alignment + actually compact upload/tariff controls */
+    .energy-switch-row .row-right{
+      justify-content:flex-end!important;
+      align-items:center!important;
+      width:100%!important;
+      margin-left:auto!important;
+    }
+    .energy-switch-row #tabElectric,
+    .energy-switch-row #tabTermic{
+      width:154px!important;
+      min-width:154px!important;
+      max-width:154px!important;
+      height:40px!important;
+      justify-content:flex-start!important;
+      flex:0 0 154px!important;
+    }
+
+    /* Sursa datelor stays aligned under the right-side energy buttons */
+    .flow-row:nth-of-type(2) .row-right{
+      justify-content:flex-end!important;
+      align-items:center!important;
+      width:100%!important;
+      margin-left:auto!important;
+    }
+    .flow-row:nth-of-type(2) #methodFileCard.source-choice,
+    .flow-row:nth-of-type(2) #methodInvoiceCard.source-choice{
+      width:154px!important;
+      min-width:154px!important;
+      max-width:154px!important;
+      height:40px!important;
+      flex:0 0 154px!important;
+      font-size:10.8px!important;
+      line-height:1!important;
+      padding:0 9px!important;
+      justify-content:flex-start!important;
+      white-space:normal!important;
+    }
+    .flow-row:nth-of-type(2) #methodFileCard.source-choice span,
+    .flow-row:nth-of-type(2) #methodInvoiceCard.source-choice span{
+      line-height:1!important;
+      white-space:nowrap!important;
+    }
+
+    /* 3 Încarcă fișierul: narrower, shorter, right aligned */
+    .upload-flow-row .row-right{
+      justify-content:flex-end!important;
+      align-items:center!important;
+      width:100%!important;
+      margin-left:auto!important;
+    }
+    .upload-flow-row #dropZone.file-inline{
+      width:320px!important;
+      min-width:320px!important;
+      max-width:320px!important;
+      height:34px!important;
+      min-height:34px!important;
+      padding:3px 8px!important;
+      gap:7px!important;
+      margin-left:auto!important;
+      justify-self:end!important;
+      align-self:center!important;
+      border-radius:10px!important;
+    }
+    .upload-flow-row #dropZone .file-button{
+      height:26px!important;
+      padding:0 9px!important;
+      font-size:11.2px!important;
+      border-radius:7px!important;
+      gap:5px!important;
+      flex:0 0 auto!important;
+    }
+    .upload-flow-row #dropZone .file-button svg{
+      width:12px!important;
+      height:12px!important;
+    }
+    .upload-flow-row #dropZone .file-meta{
+      font-size:9.2px!important;
+      line-height:1!important;
+      min-width:0!important;
+      overflow:hidden!important;
+      white-space:nowrap!important;
+    }
+    .upload-flow-row #dropZone .file-meta strong,
+    .upload-flow-row #dropZone .file-meta span{
+      line-height:1!important;
+      white-space:nowrap!important;
+      overflow:hidden!important;
+      text-overflow:ellipsis!important;
+    }
+
+    /* 4 Detalii tarif: much shorter and fully right aligned */
+    .tariff-flow-row .row-right{
+      justify-content:flex-end!important;
+      align-items:center!important;
+      width:100%!important;
+      margin-left:auto!important;
+    }
+    .tariff-flow-row .inline-grid-2{
+      width:280px!important;
+      min-width:280px!important;
+      max-width:280px!important;
+      margin-left:auto!important;
+      justify-self:end!important;
+      grid-template-columns:135px 135px!important;
+      gap:10px!important;
+    }
+    .tariff-flow-row .control{
+      width:135px!important;
+      min-width:135px!important;
+      max-width:135px!important;
+      height:34px!important;
+      padding:0 8px!important;
+      font-size:11.8px!important;
+      border-radius:9px!important;
+    }
+    .tariff-flow-row .small-label{
+      font-size:9.6px!important;
+      line-height:1.1!important;
+      white-space:nowrap!important;
+      margin-bottom:4px!important;
+    }
+
+    /* keep PV upload same compact size as main upload */
+    .production-box-inline.visible{
+      max-width:320px!important;
+      flex:0 0 320px!important;
+    }
+    .production-box-inline .production-inline{
+      width:320px!important;
+      min-width:320px!important;
+      max-width:320px!important;
+      height:34px!important;
+      min-height:34px!important;
+      padding:3px 8px!important;
+      gap:7px!important;
+      border-radius:10px!important;
+    }
+    .production-box-inline .production-inline .file-button{
+      height:26px!important;
+      padding:0 9px!important;
+      font-size:11.2px!important;
+      border-radius:7px!important;
+      gap:5px!important;
+    }
+    .production-box-inline .production-inline .file-button svg{
+      width:12px!important;
+      height:12px!important;
+    }
+    .production-box-inline .production-inline .file-meta{
+      font-size:9.2px!important;
+      line-height:1!important;
+      min-width:0!important;
+      overflow:hidden!important;
+      white-space:nowrap!important;
+    }
+    .production-box-inline .production-inline .file-meta strong,
+    .production-box-inline .production-inline .file-meta span{
+      line-height:1!important;
+      white-space:nowrap!important;
+      overflow:hidden!important;
+      text-overflow:ellipsis!important;
+    }
+
+    @media(max-width:1100px){
+      .energy-switch-row .row-right,
+      .flow-row:nth-of-type(2) .row-right,
+      .upload-flow-row .row-right,
+      .tariff-flow-row .row-right{
+        justify-content:flex-start!important;
+      }
+      .upload-flow-row #dropZone.file-inline,
+      .production-box-inline .production-inline,
+      .production-box-inline.visible,
+      .tariff-flow-row .inline-grid-2{
+        width:100%!important;
+        min-width:0!important;
+        max-width:100%!important;
+        flex:1 1 100%!important;
+      }
+      .tariff-flow-row .inline-grid-2{
+        grid-template-columns:1fr 1fr!important;
+      }
+      .tariff-flow-row .control{
+        width:100%!important;
+        min-width:0!important;
         max-width:100%!important;
       }
     }
