@@ -6,6 +6,7 @@
   <!-- SVT V75 REFERENCE EXACT UPLOAD LAYOUT -->
   <!-- SVT V76 SINGLE WINDOW SWITCH FIX -->
   <!-- SVT V77 EXTERNAL STEPPER RESULTS ACTIVE -->
+  <!-- SVT V78 NARROW ROWS INLINE HELP TERMIC CLEAN -->
   <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
   <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -245,6 +246,94 @@
       .svt-progress-outside{margin-bottom:8px}
     }
 
+  
+    /* v78: narrower flow rows + full-width one-line source helper + clean termic */
+    .flow-list{
+      max-width:900px!important;
+      width:100%!important;
+      margin:0 auto!important;
+    }
+    .flow-row{
+      width:100%!important;
+      max-width:900px!important;
+      margin-left:auto!important;
+      margin-right:auto!important;
+      grid-template-columns:minmax(0,360px) minmax(0,1fr) 30px!important;
+      padding:18px 20px!important;
+      column-gap:18px!important;
+    }
+    .choice-btn{
+      min-width:148px!important;
+      height:44px!important;
+      font-size:15px!important;
+    }
+    .choice-btn.method{
+      min-width:176px!important;
+    }
+    .row-right{
+      gap:10px!important;
+    }
+    .file-inline{
+      max-width:390px!important;
+      min-height:52px!important;
+    }
+    .source-help{
+      grid-column:1 / -1!important;
+      margin:0!important;
+      width:100%!important;
+      max-width:100%!important;
+      display:flex!important;
+      align-items:center!important;
+      justify-content:flex-start!important;
+      gap:10px!important;
+      padding:12px 16px!important;
+      min-height:48px!important;
+      white-space:nowrap!important;
+      overflow:hidden!important;
+    }
+    .source-help-title,
+    .source-help-text,
+    .source-help-link{
+      margin:0!important;
+      line-height:1.2!important;
+      white-space:nowrap!important;
+      flex:0 0 auto!important;
+    }
+    .source-help-title{
+      font-size:13px!important;
+      font-weight:900!important;
+      color:#071b34!important;
+    }
+    .source-help-text{
+      font-size:13px!important;
+      font-weight:650!important;
+      color:#6e8099!important;
+    }
+    .source-help-link{
+      font-size:13px!important;
+      font-weight:900!important;
+      color:#07943f!important;
+    }
+    .thermal-status{
+      display:none!important;
+    }
+    body[data-energy-mode="termic"] #message{
+      display:none!important;
+    }
+    @media(max-width:1100px){
+      .flow-list,.flow-row{max-width:900px!important}
+      .source-help{
+        white-space:normal!important;
+        align-items:flex-start!important;
+        flex-wrap:wrap!important;
+      }
+      .source-help-title,
+      .source-help-text,
+      .source-help-link{
+        white-space:normal!important;
+      }
+    }
+
   </style>
 </head>
 <body data-energy-mode="electric">
@@ -455,7 +544,6 @@
                 </select>
               </div>
             </div>
-            <div class="thermal-status">Datele termice sunt salvate pentru analiza integrată, dar întrebarea 1 se calculează pe consum electric.</div>
           </div>
         </section>
 
@@ -522,7 +610,12 @@
       electricSection.style.display = electric ? 'block' : 'none';
       termicSection.style.display = electric ? 'none' : 'block';
       document.body.setAttribute('data-energy-mode', electric ? 'electric' : 'termic');
-      showMessage(electric ? 'warn' : 'ok', electric ? 'Completează minim tariful și alege modul de încărcare. Pentru varianta recomandată, încarcă fișierul orar de consum.' : 'Datele termice sunt salvate pentru analiza integrată, dar întrebarea 1 se calculează pe consum electric.');
+      if(electric){
+        showMessage('warn', 'Completează minim tariful și alege modul de încărcare. Pentru varianta recomandată, încarcă fișierul orar de consum.');
+      } else {
+        message.className = 'message';
+        message.textContent = '';
+      }
       validateForm();
     }
 
