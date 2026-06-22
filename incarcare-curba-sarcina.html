@@ -1471,6 +1471,74 @@
 
   </style>
 
+
+<!-- SVT_UPLOAD_PROGRESS_FIX_V4_START -->
+<style id="svt-upload-progress-fix-v4">
+  :root {
+    --svt-upload-input-pair-width: auto;
+  }
+
+  .svt-equal-pair-width,
+  .svt-equal-upload-width {
+    width: var(--svt-upload-input-pair-width) !important;
+    max-width: var(--svt-upload-input-pair-width) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
+  }
+
+  .svt-equal-pair-width {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  }
+
+  .svt-equal-pair-width > * {
+    min-width: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .svt-equal-upload-width {
+    display: block !important;
+  }
+
+  .svt-upload-compact-v4 {
+    box-sizing: border-box !important;
+  }
+
+  .svt-progress-root-v4,
+  .svt-progress-root-v4 * {
+    box-sizing: border-box;
+  }
+
+  .svt-progress-item-v4 {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    text-align: center !important;
+  }
+
+  .svt-progress-circle-v4 {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    line-height: 1 !important;
+    flex: 0 0 auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .svt-progress-label-v4 {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+</style>
+<!-- SVT_UPLOAD_PROGRESS_FIX_V4_END -->
 </head>
 <body data-energy-mode="electric">
   <div class="page">
@@ -2103,285 +2171,277 @@
 
 
 
-<!-- SVT_SURGICAL_EQUALIZER_V3_START -->
-<style id="svt-surgical-equalizer-v3-css">
-  :root {
-    --svt-v3-target-pair-width: 308px;
-    --svt-v3-target-single-width: 148px;
-    --svt-v3-upload-padding-y: 12px;
-  }
 
-  .svt-v3-choice-control {
-    width: var(--svt-v3-target-single-width) !important;
-    min-width: var(--svt-v3-target-single-width) !important;
-    max-width: var(--svt-v3-target-single-width) !important;
-    flex: 0 0 var(--svt-v3-target-single-width) !important;
-    box-sizing: border-box !important;
-    justify-content: center !important;
-    text-align: center !important;
-  }
-
-  .svt-v3-upload-box {
-    width: var(--svt-v3-target-pair-width) !important;
-    min-width: var(--svt-v3-target-pair-width) !important;
-    max-width: var(--svt-v3-target-pair-width) !important;
-    flex: 0 0 var(--svt-v3-target-pair-width) !important;
-    box-sizing: border-box !important;
-    justify-content: flex-start !important;
-    align-items: center !important;
-  }
-
-  .svt-v3-upload-row-compact {
-    padding-top: var(--svt-v3-upload-padding-y) !important;
-    padding-bottom: var(--svt-v3-upload-padding-y) !important;
-    min-height: unset !important;
-    align-items: center !important;
-  }
-
-  .svt-v3-progress-item {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 8px !important;
-    line-height: 1 !important;
-    vertical-align: middle !important;
-    text-align: center !important;
-  }
-
-  .svt-v3-progress-item .svt-v3-progress-circle,
-  .svt-v3-progress-circle {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
-    line-height: 1 !important;
-  }
-
-  @media (max-width: 820px) {
-    .svt-v3-choice-control,
-    .svt-v3-upload-box {
-      width: 100% !important;
-      min-width: 0 !important;
-      max-width: 100% !important;
-      flex: 1 1 100% !important;
-    }
-  }
-</style>
-<script id="svt-surgical-equalizer-v3-js">
+<!-- SVT_UPLOAD_PROGRESS_FIX_V4_SCRIPT_START -->
+<script id="svt-upload-progress-fix-v4-script">
 (function () {
+  'use strict';
   var DEBUG = false;
-  function log() { if (DEBUG && window.console) console.log.apply(console, arguments); }
+  var PAIR_WIDTH_VAR = '--svt-upload-input-pair-width';
 
   function norm(value) {
     return String(value || '')
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
       .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
       .replace(/\s+/g, ' ')
       .trim();
   }
 
-  function rect(el) {
-    if (!el || !el.getBoundingClientRect) return null;
-    var r = el.getBoundingClientRect();
-    if (!r || r.width < 8 || r.height < 8) return null;
-    return r;
-  }
-
   function visible(el) {
-    var r = rect(el);
-    return !!(r && r.width > 0 && r.height > 0);
+    if (!el || !(el instanceof Element)) return false;
+    var r = el.getBoundingClientRect();
+    var s = window.getComputedStyle(el);
+    return r.width > 0 && r.height > 0 && s.display !== 'none' && s.visibility !== 'hidden';
   }
 
-  function all(sel) {
-    return Array.prototype.slice.call(document.querySelectorAll(sel || 'body *'));
+  function textOf(el) {
+    return norm(el ? el.textContent : '');
   }
 
-  function txt(el) { return norm(el && el.textContent); }
-
-  function findByText(re, selector) {
-    var els = all(selector || 'body *');
-    for (var i = 0; i < els.length; i += 1) {
-      var el = els[i];
-      if (!visible(el)) continue;
-      var t = txt(el);
-      if (t && re.test(t)) return el;
-    }
-    return null;
+  function containsAll(el, terms) {
+    var t = textOf(el);
+    return terms.every(function (term) { return t.indexOf(norm(term)) !== -1; });
   }
 
-  function nearestControlLabelOrField(labelEl) {
-    if (!labelEl) return null;
-    var p = labelEl;
-    for (var i = 0; p && p !== document.body && i < 7; i += 1, p = p.parentElement) {
-      var r = rect(p);
-      if (!r) continue;
-      var hasNative = !!p.querySelector('input, select, textarea');
-      var t = txt(p);
-      if (hasNative && r.width >= 80 && r.width <= 260 && r.height >= 26 && r.height <= 90 && t.length <= 120) {
-        return p;
-      }
-    }
-    return null;
-  }
-
-  function tariffPairWidth() {
-    var labelA = findByText(/tarif fix actual/);
-    var labelB = findByText(/tip tarif actual/);
-    var a = nearestControlLabelOrField(labelA);
-    var b = nearestControlLabelOrField(labelB);
-    var ar = rect(a), br = rect(b);
-    if (ar && br) {
-      var width = Math.round(Math.max(ar.right, br.right) - Math.min(ar.left, br.left));
-      if (width >= 240 && width <= 520) return width;
-    }
-
-    // fallback dupa screenshot: doua inputuri de ~150px + gap.
-    return 308;
-  }
-
-  function setTargetWidth() {
-    var pair = tariffPairWidth();
-    var single = Math.max(110, Math.floor((pair - 12) / 2));
-    document.documentElement.style.setProperty('--svt-v3-target-pair-width', pair + 'px');
-    document.documentElement.style.setProperty('--svt-v3-target-single-width', single + 'px');
-    return { pair: pair, single: single };
-  }
-
-  function findChoiceByLabel(re) {
-    // Preferam elementele clickabile, ca sa nu atingem randul/cardul.
-    var candidates = all('button, a, label, [role="button"], div, span');
-    var best = null;
-    candidates.forEach(function (el) {
-      if (!visible(el)) return;
-      var t = txt(el);
-      if (!re.test(t)) return;
-      if (t.length > 80) return;
-      var r = rect(el);
-      if (!r) return;
-      if (r.width < 50 || r.width > 240 || r.height < 26 || r.height > 82) return;
-      var tagScore = /^(BUTTON|A|LABEL)$/i.test(el.tagName) ? 1000 : 0;
-      var area = r.width * r.height;
-      var score = tagScore - area;
-      if (!best || score > best.score) best = { el: el, score: score };
-    });
-    return best && best.el;
-  }
-
-  function equalizeChoices() {
-    [
-      /\belectric\b/,
-      /\btermic\b/,
-      /incarc fisierul orar|incarca fisierul orar|incarci fisierul orar/,
-      /am doar factura/
-    ].forEach(function (re) {
-      var el = findChoiceByLabel(re);
-      if (el) el.classList.add('svt-v3-choice-control');
-    });
-  }
-
-  function findUploadBoxFromTrigger(trigger) {
-    var p = trigger;
-    var best = null;
-    for (var i = 0; p && p !== document.body && i < 9; i += 1, p = p.parentElement) {
-      var r = rect(p);
-      if (!r) continue;
-      var t = txt(p);
-      if (!/alege fisier/.test(t)) continue;
-      var hasHint = /xlsx|xls|csv|html|max\.?\s*10\s*mb|productie pv|inverter|pvgis/.test(t);
-      var cs = window.getComputedStyle(p);
-      var dashed = /dashed|dotted/i.test(cs.borderTopStyle + ' ' + cs.borderRightStyle + ' ' + cs.borderBottomStyle + ' ' + cs.borderLeftStyle);
-      var goodSize = r.width >= 180 && r.width <= 650 && r.height >= 34 && r.height <= 125;
-      var rightSide = r.left > window.innerWidth * 0.45;
-      if (goodSize && rightSide && (hasHint || dashed)) {
-        var score = (dashed ? 1000 : 0) + (hasHint ? 500 : 0) - (r.width * r.height / 1000);
-        if (!best || score > best.score) best = { el: p, score: score };
-      }
-    }
-    return best && best.el;
-  }
-
-  function equalizeUploadBoxes() {
-    var triggers = all('button, a, label, div, span').filter(function (el) {
-      return visible(el) && /alege fisier/.test(txt(el));
-    });
-    var seen = new Set();
-    triggers.forEach(function (trigger) {
-      var box = findUploadBoxFromTrigger(trigger);
-      if (box && !seen.has(box)) {
-        seen.add(box);
-        box.classList.add('svt-v3-upload-box');
-      }
-    });
-  }
-
-  function compactStepThree() {
-    var candidates = all('div, section, article, li').filter(function (el) {
-      if (!visible(el)) return false;
-      var t = txt(el);
-      if (!/incarca fisierul/.test(t)) return false;
-      if (!/fisier cu consum orar/.test(t)) return false;
-      if (!/alege fisier/.test(t)) return false;
-      var r = rect(el);
-      return r && r.width >= 520 && r.height >= 50 && r.height <= 140;
-    });
-    candidates.sort(function (a, b) {
-      var ar = rect(a), br = rect(b);
+  function findLeafByTerms(terms) {
+    var nodes = Array.prototype.slice.call(document.querySelectorAll('label, span, p, div, button, h1, h2, h3, h4, strong, small'));
+    var matches = nodes.filter(function (el) { return visible(el) && containsAll(el, terms); });
+    if (!matches.length) return null;
+    matches.sort(function (a, b) {
+      var ar = a.getBoundingClientRect();
+      var br = b.getBoundingClientRect();
       return (ar.width * ar.height) - (br.width * br.height);
     });
-    if (candidates[0]) candidates[0].classList.add('svt-v3-upload-row-compact');
+    return matches[0];
   }
 
-  function fixProgress() {
-    ['consum', 'procesare', 'rezultate', 'recomandari'].forEach(function (label, idx) {
-      var num = String(idx + 1);
-      var items = all('a, button, li, div, span').filter(function (el) {
-        if (!visible(el)) return false;
-        var t = txt(el);
-        if (t.length > 80) return false;
-        if (t.indexOf(label) === -1 || t.indexOf(num) === -1) return false;
-        var r = rect(el);
-        return r && r.width >= 50 && r.width <= 240 && r.height >= 18 && r.height <= 70;
-      });
-      items.sort(function (a, b) {
-        var ar = rect(a), br = rect(b);
+  function hasFormControl(el) {
+    return !!(el && el.querySelector && el.querySelector('input, select, textarea, button'));
+  }
+
+  function usefulFieldBox(labelEl) {
+    if (!labelEl) return null;
+    var cur = labelEl;
+    for (var i = 0; i < 8 && cur; i++, cur = cur.parentElement) {
+      if (visible(cur) && hasFormControl(cur)) {
+        var r = cur.getBoundingClientRect();
+        if (r.width >= 90 && r.width <= Math.max(520, window.innerWidth * 0.6)) return cur;
+      }
+    }
+    return labelEl.closest('div, label, section') || labelEl;
+  }
+
+  function unionWidth(elements) {
+    var left = Infinity;
+    var right = -Infinity;
+    elements.forEach(function (el) {
+      if (!visible(el)) return;
+      var r = el.getBoundingClientRect();
+      left = Math.min(left, r.left);
+      right = Math.max(right, r.right);
+    });
+    if (!isFinite(left) || !isFinite(right)) return 0;
+    return Math.round(right - left);
+  }
+
+  function targetPairWidth() {
+    var tarifLabel = findLeafByTerms(['tarif fix']);
+    var tipTarifLabel = findLeafByTerms(['tip tarif']);
+    var tarifBox = usefulFieldBox(tarifLabel);
+    var tipTarifBox = usefulFieldBox(tipTarifLabel);
+    var width = unionWidth([tarifBox, tipTarifBox]);
+
+    if (!width || width < 240) {
+      var groups = Array.prototype.slice.call(document.querySelectorAll('div, section, form'))
+        .filter(function (el) { return visible(el) && containsAll(el, ['tarif fix']) && containsAll(el, ['tip tarif']); });
+      groups.sort(function (a, b) {
+        var ar = a.getBoundingClientRect();
+        var br = b.getBoundingClientRect();
         return (ar.width * ar.height) - (br.width * br.height);
       });
-      var item = items[0];
-      if (!item) return;
-      item.classList.add('svt-v3-progress-item');
-      var allChildren = Array.prototype.slice.call(item.querySelectorAll('*'));
-      allChildren.forEach(function (child) {
-        var cr = rect(child);
-        if (!cr) return;
-        if (txt(child) === num && cr.width >= 16 && cr.width <= 54 && cr.height >= 16 && cr.height <= 54) {
-          child.classList.add('svt-v3-progress-circle');
+      if (groups[0]) width = Math.round(groups[0].getBoundingClientRect().width);
+    }
+
+    var maxAllowed = Math.min(820, Math.max(320, Math.round(window.innerWidth - 48)));
+    if (!width || width < 240) width = maxAllowed;
+    return Math.max(260, Math.min(width, maxAllowed));
+  }
+
+  function smallestCommonAncestor(a, b) {
+    if (!a || !b) return null;
+    var ancestors = [];
+    for (var x = a; x; x = x.parentElement) ancestors.push(x);
+    for (var y = b; y; y = y.parentElement) {
+      if (ancestors.indexOf(y) !== -1) return y;
+    }
+    return null;
+  }
+
+  function pickPairContainer(termA, termB) {
+    var a = findLeafByTerms([termA]);
+    var b = findLeafByTerms([termB]);
+    var common = smallestCommonAncestor(a, b);
+    if (!common) return null;
+
+    var cur = common;
+    var best = common;
+    for (var i = 0; i < 6 && cur; i++, cur = cur.parentElement) {
+      if (!visible(cur) || !containsAll(cur, [termA]) || !containsAll(cur, [termB])) continue;
+      var r = cur.getBoundingClientRect();
+      if (r.width >= 240 && r.width <= Math.max(900, window.innerWidth * 0.95)) best = cur;
+      if (r.width > window.innerWidth * 0.92) break;
+    }
+    return best;
+  }
+
+  function applyPair(termA, termB) {
+    var box = pickPairContainer(termA, termB);
+    if (box) box.classList.add('svt-equal-pair-width');
+    return box;
+  }
+
+  function looksLikeUpload(el) {
+    if (!visible(el)) return false;
+    var t = textOf(el);
+    var hasFile = !!(el.querySelector && el.querySelector('input[type="file"]'));
+    var uploadText = /(upload|fisier|fișier|csv|xlsx|pvgis|factura|factura lunara|orar)/.test(t);
+    var classText = norm((el.className || '') + ' ' + (el.id || ''));
+    return hasFile || uploadText || classText.indexOf('upload') !== -1 || classText.indexOf('drop') !== -1;
+  }
+
+  function uploadCandidates() {
+    var nodes = Array.prototype.slice.call(document.querySelectorAll('input[type="file"], [class*="upload"], [class*="drop"], div, section, label'));
+    var candidates = [];
+
+    nodes.forEach(function (node) {
+      var start = node.matches && node.matches('input[type="file"]') ? node.parentElement : node;
+      for (var cur = start, i = 0; cur && i < 7; cur = cur.parentElement, i++) {
+        if (!looksLikeUpload(cur)) continue;
+        var r = cur.getBoundingClientRect();
+        if (r.width >= 220 && r.height >= 45 && r.width <= Math.max(920, window.innerWidth * 0.98)) {
+          candidates.push(cur);
+          break;
         }
+      }
+    });
+
+    // Adauga explicit zonele pe baza textelor cerute.
+    ['incarc fisierul orar', 'incarca fisierul orar', 'trage aici', 'producție pv', 'productie pv', 'pvgis'].forEach(function (phrase) {
+      var leaf = findLeafByTerms([phrase]);
+      if (!leaf) return;
+      for (var cur = leaf; cur && cur !== document.body; cur = cur.parentElement) {
+        if (!visible(cur)) continue;
+        var r = cur.getBoundingClientRect();
+        if (r.width >= 220 && r.height >= 55 && r.width <= Math.max(920, window.innerWidth * 0.98)) {
+          candidates.push(cur);
+          break;
+        }
+      }
+    });
+
+    var seen = new Set();
+    return candidates.filter(function (el) {
+      if (seen.has(el)) return false;
+      seen.add(el);
+      return true;
+    });
+  }
+
+  function applyUploadBoxes() {
+    uploadCandidates().forEach(function (box) {
+      var r = box.getBoundingClientRect();
+      // Evita containere globale foarte mari.
+      if (r.height > window.innerHeight * 0.75) return;
+      box.classList.add('svt-equal-upload-width');
+      var cs = window.getComputedStyle(box);
+      var top = parseFloat(cs.paddingTop) || 0;
+      if (top > 0) {
+        box.style.paddingBottom = top + 'px';
+        box.classList.add('svt-upload-compact-v4');
+      }
+    });
+  }
+
+  function progressRootCandidates() {
+    return Array.prototype.slice.call(document.querySelectorAll('nav, header, section, div, ol, ul'))
+      .filter(function (el) {
+        if (!visible(el)) return false;
+        var t = textOf(el);
+        return t.indexOf('consum') !== -1 && t.indexOf('procesare') !== -1 && t.indexOf('rezultate') !== -1 && t.indexOf('recomand') !== -1;
+      })
+      .sort(function (a, b) {
+        var ar = a.getBoundingClientRect();
+        var br = b.getBoundingClientRect();
+        return (ar.width * ar.height) - (br.width * br.height);
+      });
+  }
+
+  function applyProgressAlignment() {
+    var roots = progressRootCandidates();
+    roots.forEach(function (root) {
+      var rr = root.getBoundingClientRect();
+      if (rr.height > 220 || rr.width < 280) return;
+      root.classList.add('svt-progress-root-v4');
+      ['consum', 'procesare', 'rezultate', 'recomand'].forEach(function (label) {
+        var leaves = Array.prototype.slice.call(root.querySelectorAll('span, p, div, li, a, button, strong, small'))
+          .filter(function (el) { return visible(el) && textOf(el).indexOf(label) !== -1; });
+        leaves.forEach(function (leaf) {
+          leaf.classList.add('svt-progress-label-v4');
+          var item = leaf.closest('li, a, button') || leaf.parentElement;
+          for (var i = 0; item && i < 4; i++, item = item.parentElement) {
+            if (item === root) break;
+            var t = textOf(item);
+            if (t.indexOf(label) !== -1 && /\b[1-4]\b/.test(t)) {
+              item.classList.add('svt-progress-item-v4');
+              Array.prototype.slice.call(item.querySelectorAll('span, div, em, b, strong')).forEach(function (n) {
+                var nt = textOf(n);
+                var nr = n.getBoundingClientRect();
+                if (/^[1-4]$/.test(nt) || (nr.width >= 18 && nr.width <= 64 && nr.height >= 18 && nr.height <= 64 && /\b[1-4]\b/.test(nt))) {
+                  n.classList.add('svt-progress-circle-v4');
+                }
+              });
+              break;
+            }
+          }
+        });
       });
     });
   }
 
-  function apply() {
-    try {
-      setTargetWidth();
-      equalizeChoices();
-      equalizeUploadBoxes();
-      compactStepThree();
-      fixProgress();
-    } catch (err) {
-      if (window.console) console.warn('svt-v3 surgical equalizer failed:', err);
-    }
+  function run() {
+    var width = targetPairWidth();
+    document.documentElement.style.setProperty(PAIR_WIDTH_VAR, width + 'px');
+
+    applyPair('electric', 'termic');
+    applyPair('incarc fisierul orar', 'am doar factura');
+    applyPair('incarca fisierul orar', 'am doar factura');
+    applyPair('încarc fișierul orar', 'am doar factura');
+
+    applyUploadBoxes();
+    applyProgressAlignment();
+
+    if (DEBUG) console.log('[SVT v4] target pair width:', width);
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', apply);
-  } else {
-    apply();
+  var queued = false;
+  function schedule() {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(function () {
+      queued = false;
+      run();
+    });
   }
-  window.addEventListener('resize', function () { window.requestAnimationFrame(apply); }, { passive: true });
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule);
+  else schedule();
+  window.addEventListener('resize', schedule);
+  window.addEventListener('load', schedule);
+  setTimeout(schedule, 250);
+  setTimeout(schedule, 1000);
 })();
 </script>
-<!-- SVT_SURGICAL_EQUALIZER_V3_END -->
+<!-- SVT_UPLOAD_PROGRESS_FIX_V4_SCRIPT_END -->
 </body>
 </html>
 
