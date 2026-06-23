@@ -5835,8 +5835,121 @@
 })();
 /* svt-v127-invoice-upload-center-only END */
 </script>
+<script id="svt-v128-invoice-upload-only-extra-down">
+/* svt-v128-invoice-upload-only-extra-down START */
+(function(){
+  var SHIFT_PX = 34;
+  var MARK = 'svt-v128-invoice-upload-only-extra-down';
+
+  function norm(value){
+    return String(value || '')
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function setImp(el, prop, value){
+    if (!el || !el.style) return;
+    el.style.setProperty(prop, value, 'important');
+  }
+
+  function directChildOf(child, parent){
+    var node = child;
+    while (node && node.parentElement && node.parentElement !== parent) {
+      node = node.parentElement;
+    }
+    return (node && node.parentElement === parent) ? node : null;
+  }
+
+  function getInvoiceGrid(){
+    var panel = document.getElementById('invoicePanel') || document;
+    var grids = Array.prototype.slice.call(panel.querySelectorAll('.invoice-grid'));
+    for (var i = 0; i < grids.length; i += 1) {
+      var text = norm(grids[i].textContent);
+      if (text.indexOf('consum total') >= 0 &&
+          text.indexOf('numar zile') >= 0 &&
+          text.indexOf('valoare factura') >= 0 &&
+          text.indexOf('program de') >= 0 &&
+          text.indexOf('alege factura') >= 0) {
+        return grids[i];
+      }
+    }
+    return null;
+  }
+
+  function getUploadItem(grid){
+    if (!grid) return null;
+
+    var oldMarked = grid.querySelector('[data-svt-v127-invoice-upload="center-only"], [data-svt-invoice-upload="v123"], [data-svt-v128-invoice-upload]');
+    if (oldMarked) return oldMarked;
+
+    var preferred = grid.querySelector(':scope > .invoice-attach, :scope > .file-inline');
+    if (preferred && norm(preferred.textContent).indexOf('alege factura') >= 0) return preferred;
+
+    var nodes = Array.prototype.slice.call(grid.querySelectorAll('*'));
+    for (var i = 0; i < nodes.length; i += 1) {
+      var text = norm(nodes[i].textContent);
+      if (text.indexOf('alege factura') >= 0 && text.indexOf('format acceptat') >= 0) {
+        return directChildOf(nodes[i], grid) || nodes[i].closest('.invoice-attach, .file-inline') || nodes[i];
+      }
+    }
+
+    for (var j = 0; j < nodes.length; j += 1) {
+      if (norm(nodes[j].textContent).indexOf('alege factura') >= 0) {
+        return directChildOf(nodes[j], grid) || nodes[j].closest('.invoice-attach, .file-inline') || nodes[j];
+      }
+    }
+    return null;
+  }
+
+  function apply(){
+    var grid = getInvoiceGrid();
+    var upload = getUploadItem(grid);
+    if (!grid || !upload) return;
+
+    upload.setAttribute('data-svt-v128-invoice-upload', 'extra-down-only');
+
+    // Strict doar fereastra uploadului. Nu selectăm input/select/field.
+    setImp(upload, 'position', 'relative');
+    setImp(upload, 'top', 'auto');
+    setImp(upload, 'bottom', 'auto');
+    setImp(upload, 'margin-top', '0px');
+    setImp(upload, 'margin-bottom', '0px');
+    setImp(upload, 'transform', 'translateY(' + SHIFT_PX + 'px)');
+    setImp(upload, 'justify-self', 'end');
+    setImp(upload, 'align-self', 'center');
+    setImp(upload, 'display', 'flex');
+    setImp(upload, 'align-items', 'center');
+    setImp(upload, 'justify-content', 'center');
+    setImp(upload, 'box-sizing', 'border-box');
+  }
+
+  function schedule(){
+    apply();
+    requestAnimationFrame(apply);
+    setTimeout(apply, 80);
+    setTimeout(apply, 250);
+    setTimeout(apply, 700);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', schedule);
+  } else {
+    schedule();
+  }
+  window.addEventListener('load', schedule);
+  window.addEventListener('resize', schedule);
+  document.addEventListener('click', function(ev){
+    var panel = document.getElementById('invoicePanel');
+    if (panel && panel.contains(ev.target)) schedule();
+  }, true);
+})();
+/* svt-v128-invoice-upload-only-extra-down END */
+</script>
 </body>
 </html>
+
 
 
 
