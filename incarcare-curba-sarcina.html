@@ -4640,13 +4640,14 @@
 
 
 
-<style id="svt-v113-invoice-width-clickfix-css">
-/* svt-v113-invoice-width-clickfix START
-   Fix strict pentru "Am doar factura lunara": restaureaza inaltime normala si forteaza LATIMEA reala.
-   Nu afecteaza modalul si nu afecteaza alte sectiuni. */
+
+<style id="svt-v114-invoice-label-width-css">
+/* svt-v114-invoice-label-width START
+   Lățimea inputului este adusă la lățimea vizuală a textului de deasupra.
+   Height-ul este readus la normal. */
 #invoicePanel .invoice-grid {
   display: grid !important;
-  grid-template-columns: 88px 88px 112px 104px minmax(300px, 1fr) !important;
+  grid-template-columns: 76px 74px 98px 82px minmax(320px, 1fr) !important;
   column-gap: 16px !important;
   row-gap: 8px !important;
   align-items: end !important;
@@ -4655,30 +4656,31 @@
 #invoicePanel .invoice-grid > .field:nth-child(1),
 #invoicePanel .invoice-grid > .field:nth-child(1) .control,
 #invoicePanel .invoice-grid > .field:nth-child(1) input,
-#invoicePanel .invoice-grid > .field:nth-child(1) select { width: 88px !important; min-width: 88px !important; max-width: 88px !important; }
+#invoicePanel .invoice-grid > .field:nth-child(1) select { width: 76px !important; min-width: 76px !important; max-width: 76px !important; }
 
 #invoicePanel .invoice-grid > .field:nth-child(2),
 #invoicePanel .invoice-grid > .field:nth-child(2) .control,
 #invoicePanel .invoice-grid > .field:nth-child(2) input,
-#invoicePanel .invoice-grid > .field:nth-child(2) select { width: 88px !important; min-width: 88px !important; max-width: 88px !important; }
+#invoicePanel .invoice-grid > .field:nth-child(2) select { width: 74px !important; min-width: 74px !important; max-width: 74px !important; }
 
 #invoicePanel .invoice-grid > .field:nth-child(3),
 #invoicePanel .invoice-grid > .field:nth-child(3) .control,
 #invoicePanel .invoice-grid > .field:nth-child(3) input,
-#invoicePanel .invoice-grid > .field:nth-child(3) select { width: 112px !important; min-width: 112px !important; max-width: 112px !important; }
+#invoicePanel .invoice-grid > .field:nth-child(3) select { width: 98px !important; min-width: 98px !important; max-width: 98px !important; }
 
 #invoicePanel .invoice-grid > .field:nth-child(4),
 #invoicePanel .invoice-grid > .field:nth-child(4) .control,
 #invoicePanel .invoice-grid > .field:nth-child(4) input,
-#invoicePanel .invoice-grid > .field:nth-child(4) select { width: 104px !important; min-width: 104px !important; max-width: 104px !important; }
+#invoicePanel .invoice-grid > .field:nth-child(4) select { width: 82px !important; min-width: 82px !important; max-width: 82px !important; }
 
 #invoicePanel .invoice-grid > .field:nth-child(-n+4) {
   height: auto !important;
   min-height: 0 !important;
   max-height: none !important;
   align-self: end !important;
-  transform: none !important;
   box-sizing: border-box !important;
+  transform: none !important;
+  overflow: visible !important;
 }
 
 #invoicePanel .invoice-grid > .field:nth-child(-n+4) .control,
@@ -4689,13 +4691,23 @@
   max-height: 38px !important;
   box-sizing: border-box !important;
   transform: none !important;
-  transition-property: border-color, box-shadow, background-color !important;
 }
 
 #invoicePanel .invoice-grid > .field:nth-child(-n+4) input,
 #invoicePanel .invoice-grid > .field:nth-child(-n+4) select {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
+  text-overflow: ellipsis !important;
+}
+
+#invoicePanel .invoice-grid > .field:nth-child(-n+4) label,
+#invoicePanel .invoice-grid > .field:nth-child(-n+4) .field-label,
+#invoicePanel .invoice-grid > .field:nth-child(-n+4) .label {
+  display: block !important;
+  width: auto !important;
+  max-width: 100% !important;
+  white-space: normal !important;
+  transform: none !important;
 }
 
 #invoicePanel .invoice-grid > .field:nth-child(5),
@@ -4707,20 +4719,13 @@
   transform: none !important;
 }
 
-#invoicePanel .invoice-grid > .field:nth-child(-n+4) .control:focus-within,
-#invoicePanel .invoice-grid > .field:nth-child(-n+4) input:focus,
-#invoicePanel .invoice-grid > .field:nth-child(-n+4) select:focus,
+#invoicePanel .invoice-grid > .field:nth-child(-n+4),
+#invoicePanel .invoice-grid > .field:nth-child(-n+4) *,
 #invoicePanel .invoice-grid > .field:nth-child(-n+4):hover,
 #invoicePanel .invoice-grid > .field:nth-child(-n+4):focus-within {
   transform: none !important;
 }
-
-/* opreste miscarea pe click/focus in sectiunea facturii */
-#invoicePanel,
-#invoicePanel * {
-  scroll-margin-top: 0 !important;
-}
-/* svt-v113-invoice-width-clickfix END */
+/* svt-v114-invoice-label-width END */
 </style>
 </head>
 <body data-energy-mode="electric">
@@ -5429,64 +5434,115 @@
 
 
 
-<script id="svt-v113-invoice-width-clickfix-js">
-/* svt-v113-invoice-width-clickfix START */
+
+<script id="svt-v114-invoice-label-width-js">
+/* svt-v114-invoice-label-width START */
 (function () {
-  var widths = [88, 88, 112, 104];
-  var gridColumns = '88px 88px 112px 104px minmax(300px, 1fr)';
+  var fallback = [76, 74, 98, 82];
+  var maxAllowed = [78, 76, 100, 84];
+  var minAllowed = [66, 64, 86, 70];
 
   function setImportant(el, prop, value) {
     if (!el || !el.style) return;
     el.style.setProperty(prop, value, 'important');
   }
 
-  function resetField(field, width) {
-    if (!field) return;
-    var w = width + 'px';
-    var control = field.querySelector('.control');
-    var input = field.querySelector('input, select, textarea');
+  function firstLabel(field) {
+    if (!field) return null;
+    var selectors = [
+      ':scope > label',
+      ':scope > .field-label',
+      ':scope > .label',
+      ':scope > .field-title',
+      ':scope > strong',
+      ':scope > span'
+    ];
+    for (var i = 0; i < selectors.length; i += 1) {
+      try {
+        var el = field.querySelector(selectors[i]);
+        if (el && !el.closest('.control') && el.textContent && el.textContent.trim().length > 0) return el;
+      } catch (e) {}
+    }
+    return null;
+  }
 
-    [field, control, input].forEach(function (el) {
-      if (!el) return;
-      setImportant(el, 'width', w);
-      setImportant(el, 'min-width', w);
-      setImportant(el, 'max-width', w);
-      setImportant(el, 'box-sizing', 'border-box');
-      setImportant(el, 'transform', 'none');
-    });
+  function maxTextLineWidth(el) {
+    if (!el || !el.ownerDocument || el.getClientRects().length === 0) return 0;
+    var doc = el.ownerDocument;
+    var range = doc.createRange();
+    try {
+      range.selectNodeContents(el);
+      var rects = Array.prototype.slice.call(range.getClientRects()).filter(function (r) {
+        return r && r.width > 2 && r.height > 2;
+      });
+      var max = 0;
+      rects.forEach(function (r) { if (r.width > max) max = r.width; });
+      return max;
+    } catch (e) {
+      return el.getBoundingClientRect ? el.getBoundingClientRect().width : 0;
+    } finally {
+      try { range.detach(); } catch (e) {}
+    }
+  }
 
-    setImportant(field, 'height', 'auto');
-    setImportant(field, 'min-height', '0');
-    setImportant(field, 'max-height', 'none');
-    setImportant(field, 'align-self', 'end');
-
-    [control, input].forEach(function (el) {
-      if (!el) return;
-      setImportant(el, 'height', '38px');
-      setImportant(el, 'min-height', '38px');
-      setImportant(el, 'max-height', '38px');
-      setImportant(el, 'padding-top', '0');
-      setImportant(el, 'padding-bottom', '0');
-      setImportant(el, 'line-height', 'normal');
-    });
+  function applyWidth(el, px) {
+    if (!el) return;
+    var w = px + 'px';
+    setImportant(el, 'width', w);
+    setImportant(el, 'min-width', w);
+    setImportant(el, 'max-width', w);
+    setImportant(el, 'box-sizing', 'border-box');
+    setImportant(el, 'transform', 'none');
   }
 
   function applyInvoiceFix() {
     var grid = document.querySelector('#invoicePanel .invoice-grid');
     if (!grid) return;
 
+    var fields = Array.prototype.slice.call(grid.children).filter(function (el) {
+      return el && el.classList && el.classList.contains('field');
+    });
+    if (fields.length < 4) return;
+
+    var widths = fallback.slice();
+    for (var i = 0; i < 4; i += 1) {
+      var label = firstLabel(fields[i]);
+      var measured = Math.ceil(maxTextLineWidth(label));
+      if (measured > 0) {
+        widths[i] = Math.max(minAllowed[i], Math.min(maxAllowed[i], measured));
+      }
+    }
+
+    var columns = widths.map(function (v) { return v + 'px'; }).join(' ') + ' minmax(320px, 1fr)';
     setImportant(grid, 'display', 'grid');
-    setImportant(grid, 'grid-template-columns', gridColumns);
+    setImportant(grid, 'grid-template-columns', columns);
     setImportant(grid, 'column-gap', '16px');
     setImportant(grid, 'row-gap', '8px');
     setImportant(grid, 'align-items', 'end');
 
-    var fields = Array.prototype.slice.call(grid.children).filter(function (el) {
-      return el && el.classList && el.classList.contains('field');
-    });
+    for (var j = 0; j < 4; j += 1) {
+      var field = fields[j];
+      var control = field.querySelector('.control');
+      var input = field.querySelector('input, select, textarea');
+      applyWidth(field, widths[j]);
+      applyWidth(control, widths[j]);
+      applyWidth(input, widths[j]);
 
-    for (var i = 0; i < 4 && i < fields.length; i += 1) {
-      resetField(fields[i], widths[i]);
+      setImportant(field, 'height', 'auto');
+      setImportant(field, 'min-height', '0');
+      setImportant(field, 'max-height', 'none');
+      setImportant(field, 'align-self', 'end');
+      setImportant(field, 'overflow', 'visible');
+
+      [control, input].forEach(function (el) {
+        if (!el) return;
+        setImportant(el, 'height', '38px');
+        setImportant(el, 'min-height', '38px');
+        setImportant(el, 'max-height', '38px');
+        setImportant(el, 'padding-top', '0');
+        setImportant(el, 'padding-bottom', '0');
+        setImportant(el, 'line-height', 'normal');
+      });
     }
 
     var upload = grid.querySelector('.invoice-attach, .invoice-attach-wrap') || fields[4];
@@ -5501,37 +5557,26 @@
   function scheduleApply() {
     window.requestAnimationFrame(function () {
       applyInvoiceFix();
-      window.setTimeout(applyInvoiceFix, 0);
+      window.setTimeout(applyInvoiceFix, 60);
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', scheduleApply);
-  } else {
-    scheduleApply();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scheduleApply);
+  else scheduleApply();
 
   window.addEventListener('load', scheduleApply);
   document.addEventListener('click', function (event) {
-    if (event.target && event.target.closest && event.target.closest('#invoicePanel')) {
-      scheduleApply();
-    }
+    if (event.target && event.target.closest && event.target.closest('#invoicePanel, [data-source], .source-option, .upload-toggle')) scheduleApply();
   }, true);
   document.addEventListener('focusin', function (event) {
-    if (event.target && event.target.closest && event.target.closest('#invoicePanel')) {
-      scheduleApply();
-    }
-  }, true);
-  document.addEventListener('change', function (event) {
-    if (event.target && event.target.closest && event.target.closest('#invoicePanel')) {
-      scheduleApply();
-    }
+    if (event.target && event.target.closest && event.target.closest('#invoicePanel')) scheduleApply();
   }, true);
 })();
-/* svt-v113-invoice-width-clickfix END */
+/* svt-v114-invoice-label-width END */
 </script>
 </body>
 </html>
+
 
 
 
