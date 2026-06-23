@@ -4644,23 +4644,24 @@
 
 
 
-<style id="svt-v117-invoice-upload-vertical-center-css">
-/* svt-v117-invoice-upload-vertical-center START */
+
+<style id="svt-v118-invoice-upload-move-down-css">
+/* svt-v118-invoice-upload-move-down START */
 #invoicePanel .invoice-grid,
-.invoice-grid.svt117-invoice-grid {
+.invoice-grid.svt118-invoice-grid {
   display: grid !important;
-  grid-template-columns: var(--svt117-col1, 84px) var(--svt117-col2, 78px) var(--svt117-col3, 112px) var(--svt117-col4, 150px) minmax(330px, 1fr) !important;
+  grid-template-columns: var(--svt118-col1, 84px) var(--svt118-col2, 78px) var(--svt118-col3, 112px) var(--svt118-col4, 150px) minmax(330px, 1fr) !important;
   column-gap: 14px !important;
   row-gap: 6px !important;
   align-items: end !important;
 }
 
-#invoicePanel .invoice-grid .svt117-invoice-field,
-.invoice-grid.svt117-invoice-grid .svt117-invoice-field {
-  width: var(--svt117-w, auto) !important;
-  min-width: var(--svt117-w, auto) !important;
-  max-width: var(--svt117-w, auto) !important;
-  flex: 0 0 var(--svt117-w, auto) !important;
+#invoicePanel .invoice-grid .svt118-invoice-field,
+.invoice-grid.svt118-invoice-grid .svt118-invoice-field {
+  width: var(--svt118-w, auto) !important;
+  min-width: var(--svt118-w, auto) !important;
+  max-width: var(--svt118-w, auto) !important;
+  flex: 0 0 var(--svt118-w, auto) !important;
   height: auto !important;
   min-height: 0 !important;
   max-height: none !important;
@@ -4670,32 +4671,32 @@
   overflow: visible !important;
 }
 
-#invoicePanel .invoice-grid .svt117-invoice-field > label,
-#invoicePanel .invoice-grid .svt117-invoice-field .field-label,
-#invoicePanel .invoice-grid .svt117-invoice-field .small-label,
-.invoice-grid.svt117-invoice-grid .svt117-invoice-field > label,
-.invoice-grid.svt117-invoice-grid .svt117-invoice-field .field-label,
-.invoice-grid.svt117-invoice-grid .svt117-invoice-field .small-label {
-  width: var(--svt117-label-w, var(--svt117-w, auto)) !important;
-  max-width: var(--svt117-label-w, var(--svt117-w, auto)) !important;
+#invoicePanel .invoice-grid .svt118-invoice-field > label,
+#invoicePanel .invoice-grid .svt118-invoice-field .field-label,
+#invoicePanel .invoice-grid .svt118-invoice-field .small-label,
+.invoice-grid.svt118-invoice-grid .svt118-invoice-field > label,
+.invoice-grid.svt118-invoice-grid .svt118-invoice-field .field-label,
+.invoice-grid.svt118-invoice-grid .svt118-invoice-field .small-label {
+  width: var(--svt118-label-w, var(--svt118-w, auto)) !important;
+  max-width: var(--svt118-label-w, var(--svt118-w, auto)) !important;
   white-space: normal !important;
   line-height: 1.05 !important;
 }
 
-#invoicePanel .invoice-grid .svt117-invoice-field .field-hint,
-.invoice-grid.svt117-invoice-grid .svt117-invoice-field .field-hint {
+#invoicePanel .invoice-grid .svt118-invoice-field .field-hint,
+.invoice-grid.svt118-invoice-grid .svt118-invoice-field .field-hint {
   display: none !important;
 }
 
-#invoicePanel .invoice-grid .svt117-invoice-field .control,
-#invoicePanel .invoice-grid .svt117-invoice-field input:not([type="file"]):not([type="checkbox"]):not([type="radio"]),
-#invoicePanel .invoice-grid .svt117-invoice-field select,
-.invoice-grid.svt117-invoice-grid .svt117-invoice-field .control,
-.invoice-grid.svt117-invoice-grid .svt117-invoice-field input:not([type="file"]):not([type="checkbox"]):not([type="radio"]),
-.invoice-grid.svt117-invoice-grid .svt117-invoice-field select {
-  width: var(--svt117-w, auto) !important;
-  min-width: var(--svt117-w, auto) !important;
-  max-width: var(--svt117-w, auto) !important;
+#invoicePanel .invoice-grid .svt118-invoice-field .control,
+#invoicePanel .invoice-grid .svt118-invoice-field input:not([type="file"]):not([type="checkbox"]):not([type="radio"]),
+#invoicePanel .invoice-grid .svt118-invoice-field select,
+.invoice-grid.svt118-invoice-grid .svt118-invoice-field .control,
+.invoice-grid.svt118-invoice-grid .svt118-invoice-field input:not([type="file"]):not([type="checkbox"]):not([type="radio"]),
+.invoice-grid.svt118-invoice-grid .svt118-invoice-field select {
+  width: var(--svt118-w, auto) !important;
+  min-width: var(--svt118-w, auto) !important;
+  max-width: var(--svt118-w, auto) !important;
   height: 38px !important;
   min-height: 38px !important;
   max-height: 38px !important;
@@ -4705,55 +4706,54 @@
   box-sizing: border-box !important;
 }
 
-#invoicePanel .invoice-grid .svt117-invoice-upload-cell,
-.invoice-grid.svt117-invoice-grid .svt117-invoice-upload-cell {
+#invoicePanel .invoice-grid .svt118-invoice-upload-cell,
+.invoice-grid.svt118-invoice-grid .svt118-invoice-upload-cell {
   grid-column: 5 !important;
-  align-self: stretch !important;
+  align-self: start !important;
   justify-self: stretch !important;
-  min-height: var(--svt117-left-stack-h, 74px) !important;
-  height: var(--svt117-left-stack-h, auto) !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  justify-content: center !important;
+  justify-content: flex-start !important;
   margin: 0 auto !important;
   padding: 0 !important;
+  padding-top: var(--svt118-upload-down, 22px) !important;
   text-align: center !important;
   box-sizing: border-box !important;
   transform: none !important;
 }
 
-#invoicePanel .invoice-grid .svt117-invoice-upload-box,
-.invoice-grid.svt117-invoice-grid .svt117-invoice-upload-box {
+#invoicePanel .invoice-grid .svt118-invoice-upload-box,
+.invoice-grid.svt118-invoice-grid .svt118-invoice-upload-box {
   width: min(390px, 100%) !important;
   max-width: 390px !important;
   min-width: 280px !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  margin-top: auto !important;
-  margin-bottom: auto !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
   text-align: center !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
   box-sizing: border-box !important;
-  will-change: transform !important;
+  transform: none !important;
 }
 
-#invoicePanel .invoice-grid .svt117-invoice-upload-box *,
-.invoice-grid.svt117-invoice-grid .svt117-invoice-upload-box * {
+#invoicePanel .invoice-grid .svt118-invoice-upload-box *,
+.invoice-grid.svt118-invoice-grid .svt118-invoice-upload-box * {
   text-align: center !important;
 }
 
-#invoicePanel .invoice-grid .svt117-invoice-upload-box button,
-#invoicePanel .invoice-grid .svt117-invoice-upload-box .btn,
-#invoicePanel .invoice-grid .svt117-invoice-upload-box .file-btn,
-#invoicePanel .invoice-grid .svt117-invoice-upload-box label,
-.invoice-grid.svt117-invoice-grid .svt117-invoice-upload-box button,
-.invoice-grid.svt117-invoice-grid .svt117-invoice-upload-box .btn,
-.invoice-grid.svt117-invoice-grid .svt117-invoice-upload-box .file-btn,
-.invoice-grid.svt117-invoice-grid .svt117-invoice-upload-box label {
+#invoicePanel .invoice-grid .svt118-invoice-upload-box button,
+#invoicePanel .invoice-grid .svt118-invoice-upload-box .btn,
+#invoicePanel .invoice-grid .svt118-invoice-upload-box .file-btn,
+#invoicePanel .invoice-grid .svt118-invoice-upload-box label,
+.invoice-grid.svt118-invoice-grid .svt118-invoice-upload-box button,
+.invoice-grid.svt118-invoice-grid .svt118-invoice-upload-box .btn,
+.invoice-grid.svt118-invoice-grid .svt118-invoice-upload-box .file-btn,
+.invoice-grid.svt118-invoice-grid .svt118-invoice-upload-box label {
   margin-left: auto !important;
   margin-right: auto !important;
   justify-content: center !important;
@@ -4761,29 +4761,28 @@
 
 @media (max-width: 900px) {
   #invoicePanel .invoice-grid,
-  .invoice-grid.svt117-invoice-grid {
+  .invoice-grid.svt118-invoice-grid {
     grid-template-columns: 1fr !important;
   }
-  #invoicePanel .invoice-grid .svt117-invoice-upload-cell,
-  .invoice-grid.svt117-invoice-grid .svt117-invoice-upload-cell {
+  #invoicePanel .invoice-grid .svt118-invoice-upload-cell,
+  .invoice-grid.svt118-invoice-grid .svt118-invoice-upload-cell {
     grid-column: 1 !important;
-    align-self: end !important;
+    align-self: start !important;
     justify-self: start !important;
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
-    height: auto !important;
-    min-height: 0 !important;
+    padding-top: 0 !important;
   }
-  #invoicePanel .invoice-grid .svt117-invoice-upload-box,
-  .invoice-grid.svt117-invoice-grid .svt117-invoice-upload-box {
+  #invoicePanel .invoice-grid .svt118-invoice-upload-box,
+  .invoice-grid.svt118-invoice-grid .svt118-invoice-upload-box {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
     transform: none !important;
   }
 }
-/* svt-v117-invoice-upload-vertical-center END */
+/* svt-v118-invoice-upload-move-down END */
 </style>
 </head>
 <body data-energy-mode="electric">
@@ -5496,10 +5495,12 @@
 
 
 
-<script id="svt-v117-invoice-upload-vertical-center-js">
-/* svt-v117-invoice-upload-vertical-center START */
+
+<script id="svt-v118-invoice-upload-move-down-js">
+/* svt-v118-invoice-upload-move-down START */
 (function () {
   var fallback = { consum: 84, zile: 78, valoare: 112, program: 150 };
+  var uploadDownPx = 22;
 
   function norm(s) {
     return String(s || '')
@@ -5591,9 +5592,9 @@
     var field = item.field;
     var px = width + 'px';
     var labelPx = labelWidth + 'px';
-    field.classList.add('svt117-invoice-field');
-    field.style.setProperty('--svt117-w', px);
-    field.style.setProperty('--svt117-label-w', labelPx);
+    field.classList.add('svt118-invoice-field');
+    field.style.setProperty('--svt118-w', px);
+    field.style.setProperty('--svt118-label-w', labelPx);
     ['width','min-width','max-width','flex-basis'].forEach(function (p) { setImp(field, p, px); });
     setImp(field, 'height', 'auto');
     setImp(field, 'min-height', '0');
@@ -5625,27 +5626,7 @@
     });
   }
 
-  function unionRect(nodes) {
-    var rect = null;
-    nodes.forEach(function (n) {
-      if (!n || !n.getBoundingClientRect) return;
-      var r = n.getBoundingClientRect();
-      if (!r || !r.width || !r.height) return;
-      if (!rect) rect = { top: r.top, left: r.left, right: r.right, bottom: r.bottom };
-      else {
-        rect.top = Math.min(rect.top, r.top);
-        rect.left = Math.min(rect.left, r.left);
-        rect.right = Math.max(rect.right, r.right);
-        rect.bottom = Math.max(rect.bottom, r.bottom);
-      }
-    });
-    if (!rect) return null;
-    rect.width = rect.right - rect.left;
-    rect.height = rect.bottom - rect.top;
-    return rect;
-  }
-
-  function centerUpload(grid, items) {
+  function centerUploadLower(grid) {
     if (!grid) return;
     var fileInput = grid.querySelector('input[type="file"]');
     var box = null;
@@ -5656,26 +5637,21 @@
     if (!box) return;
 
     var cell = box.closest('.field, .invoice-upload-field, .invoice-upload-wrap, .invoice-attach-wrap') || box.parentElement || box;
-    cell.classList.add('svt117-invoice-upload-cell');
-    box.classList.add('svt117-invoice-upload-box');
+    cell.classList.add('svt118-invoice-upload-cell');
+    box.classList.add('svt118-invoice-upload-box');
 
-    var leftRect = unionRect(items.slice(0, 4).map(function (x) { return x.field; }));
-    if (leftRect) {
-      var leftHeight = Math.max(58, Math.ceil(leftRect.height));
-      grid.style.setProperty('--svt117-left-stack-h', leftHeight + 'px');
-      setImp(cell, 'min-height', leftHeight + 'px');
-      setImp(cell, 'height', leftHeight + 'px');
-    }
+    grid.style.setProperty('--svt118-upload-down', uploadDownPx + 'px');
 
-    ['grid-column'].forEach(function (p) { setImp(cell, p, '5'); });
-    setImp(cell, 'align-self', 'stretch');
+    setImp(cell, 'grid-column', '5');
+    setImp(cell, 'align-self', 'start');
     setImp(cell, 'justify-self', 'stretch');
     setImp(cell, 'display', 'flex');
     setImp(cell, 'flex-direction', 'column');
     setImp(cell, 'align-items', 'center');
-    setImp(cell, 'justify-content', 'center');
+    setImp(cell, 'justify-content', 'flex-start');
     setImp(cell, 'margin', '0 auto');
     setImp(cell, 'padding', '0');
+    setImp(cell, 'padding-top', uploadDownPx + 'px');
     setImp(cell, 'text-align', 'center');
     setImp(cell, 'box-sizing', 'border-box');
     setImp(cell, 'transform', 'none');
@@ -5685,14 +5661,15 @@
     setImp(box, 'min-width', '280px');
     setImp(box, 'margin-left', 'auto');
     setImp(box, 'margin-right', 'auto');
-    setImp(box, 'margin-top', 'auto');
-    setImp(box, 'margin-bottom', 'auto');
+    setImp(box, 'margin-top', '0');
+    setImp(box, 'margin-bottom', '0');
     setImp(box, 'text-align', 'center');
     setImp(box, 'display', 'flex');
     setImp(box, 'flex-direction', 'column');
     setImp(box, 'align-items', 'center');
     setImp(box, 'justify-content', 'center');
     setImp(box, 'box-sizing', 'border-box');
+    setImp(box, 'transform', 'none');
 
     Array.prototype.slice.call(box.querySelectorAll('.file-inline, .upload-zone, .upload-box, .dropzone, button, .btn, label, span, small, p, div')).forEach(function (el) {
       setImp(el, 'text-align', 'center');
@@ -5704,25 +5681,12 @@
         setImp(el, 'justify-content', 'center');
       }
     });
-
-    // Corectia care rezolva concret centrul vertical: daca dupa CSS box-ul ramane mai sus/jos,
-    // il mutam doar pe verticala pana cand centrul lui coincide cu centrul stackului de campuri.
-    if (leftRect && box.getBoundingClientRect && window.innerWidth > 900) {
-      setImp(box, 'transform', 'none');
-      var br = box.getBoundingClientRect();
-      if (br && br.height) {
-        var delta = Math.round((leftRect.top + leftRect.height / 2) - (br.top + br.height / 2));
-        if (Math.abs(delta) <= 80) setImp(box, 'transform', 'translateY(' + delta + 'px)');
-      }
-    } else {
-      setImp(box, 'transform', 'none');
-    }
   }
 
   function applyInvoiceFix() {
     var grid = getInvoiceGrid();
     if (!grid) return;
-    grid.classList.add('svt117-invoice-grid');
+    grid.classList.add('svt118-invoice-grid');
     var items = fieldsFromGrid(grid);
     if (items.length < 4) return;
 
@@ -5737,10 +5701,10 @@
       labelWidths.push(labelW);
     });
 
-    grid.style.setProperty('--svt117-col1', widths[0] + 'px');
-    grid.style.setProperty('--svt117-col2', widths[1] + 'px');
-    grid.style.setProperty('--svt117-col3', widths[2] + 'px');
-    grid.style.setProperty('--svt117-col4', widths[3] + 'px');
+    grid.style.setProperty('--svt118-col1', widths[0] + 'px');
+    grid.style.setProperty('--svt118-col2', widths[1] + 'px');
+    grid.style.setProperty('--svt118-col3', widths[2] + 'px');
+    grid.style.setProperty('--svt118-col4', widths[3] + 'px');
     setImp(grid, 'display', 'grid');
     setImp(grid, 'grid-template-columns', widths.map(function (w) { return w + 'px'; }).join(' ') + ' minmax(330px, 1fr)');
     setImp(grid, 'column-gap', '14px');
@@ -5748,7 +5712,7 @@
     setImp(grid, 'align-items', 'end');
 
     items.slice(0, 4).forEach(function (item, idx) { applyOne(item, widths[idx], labelWidths[idx]); });
-    centerUpload(grid, items);
+    centerUploadLower(grid);
   }
 
   function schedule() {
@@ -5769,10 +5733,11 @@
     if (ev.target && ev.target.closest && ev.target.closest('.invoice-grid, #invoicePanel')) schedule();
   }, true);
 })();
-/* svt-v117-invoice-upload-vertical-center END */
+/* svt-v118-invoice-upload-move-down END */
 </script>
 </body>
 </html>
+
 
 
 
