@@ -4633,7 +4633,7 @@
   .invoice-grid{grid-template-columns:1fr!important;}
 }
 /* /SVT v104 - invoice monthly compact fields hotfix */
-</style>
+</style data-svt-invoice-upload="v123" style="position:relative !important; top:28px !important; display:flex !important; align-items:center !important; justify-content:center !important; gap:12px !important; min-height:54px !important; height:54px !important; padding-top:0 !important; padding-bottom:0 !important; box-sizing:border-box !important; transform:none !important;">
 
 
 
@@ -4782,46 +4782,37 @@
 /* svt-v120-invoice-grid-upload-final END */
 </style>
 
-<style id="svt-v122-invoice-upload-align-to-inputs-css">
-/* svt-v122-invoice-upload-align-to-inputs START
-   Fix strict: centreaza pe verticala fereastra uploadului fata de grupul label + input.
-   Nu schimba latimea inputurilor si nu rescrie pagina. */
-.invoice-grid .svt122-invoice-upload-cell {
-  display: flex !important;
-  justify-content: flex-end !important;
-  align-items: center !important;
-  align-self: start !important;
-  margin: 0 !important;
-  padding: 0 !important;
+<style id="svt-v123-invoice-upload-direct-inline-css">
+/* svt-v123-invoice-upload-direct-inline START
+   Fix direct pe tagul real file-inline pentru upload factura.
+   Nu schimba inputurile, nu schimba modalul. */
+#invoicePanel [data-svt-invoice-upload="v123"],
+.invoice-grid [data-svt-invoice-upload="v123"],
+[data-svt-invoice-upload="v123"] {
   position: relative !important;
-  transform: none !important;
-  box-sizing: border-box !important;
-}
-.invoice-grid .svt122-invoice-upload-box {
+  top: 28px !important;
   display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
   align-items: center !important;
   justify-content: center !important;
   gap: 12px !important;
-  height: 54px !important;
   min-height: 54px !important;
-  max-height: 54px !important;
+  height: 54px !important;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
-  position: relative !important;
-  transform: none !important;
   box-sizing: border-box !important;
+  transform: none !important;
 }
-.invoice-grid .svt122-invoice-upload-box > *,
-.invoice-grid .svt122-invoice-upload-box .file-button,
-.invoice-grid .svt122-invoice-upload-box .file-meta {
+[data-svt-invoice-upload="v123"] > *,
+[data-svt-invoice-upload="v123"] .file-button,
+[data-svt-invoice-upload="v123"] .file-meta,
+[data-svt-invoice-upload="v123"] strong,
+[data-svt-invoice-upload="v123"] span {
   align-self: center !important;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
   transform: none !important;
 }
-/* svt-v122-invoice-upload-align-to-inputs END */
+/* svt-v123-invoice-upload-direct-inline END */
 </style>
 </head>
 <body data-energy-mode="electric">
@@ -5754,182 +5745,9 @@
 /* svt-v120-invoice-grid-upload-final END */
 </script>
 
-<script id="svt-v122-invoice-upload-align-to-inputs-js">
-/* svt-v122-invoice-upload-align-to-inputs START */
-(function () {
-  function norm(value) {
-    return String(value || '')
-      .toLowerCase()
-      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      .replace(/\s+/g, ' ')
-      .trim();
-  }
-
-  function setImp(el, prop, value) {
-    if (el && el.style) el.style.setProperty(prop, value, 'important');
-  }
-
-  function visibleRect(el) {
-    if (!el || !el.getBoundingClientRect) return null;
-    var r = el.getBoundingClientRect();
-    if (!r || r.width <= 0 || r.height <= 0) return null;
-    return r;
-  }
-
-  function getInvoiceGrid() {
-    var grids = Array.prototype.slice.call(document.querySelectorAll('.invoice-grid, #invoicePanel .invoice-grid'));
-    for (var i = 0; i < grids.length; i += 1) {
-      var text = norm(grids[i].textContent);
-      if (text.indexOf('consum total') >= 0 &&
-          text.indexOf('numar zile') >= 0 &&
-          text.indexOf('valoare factura') >= 0 &&
-          text.indexOf('program de') >= 0 &&
-          text.indexOf('alege factura') >= 0) {
-        return grids[i];
-      }
-    }
-    return null;
-  }
-
-  function findUploadBox(grid) {
-    var all = Array.prototype.slice.call(grid.querySelectorAll('.file-inline, .invoice-attach, .upload-zone, label, button, a, div, span'));
-    var candidates = [];
-    all.forEach(function (el) {
-      var text = norm(el.textContent);
-      if (text.indexOf('alege factura') < 0) return;
-      var score = 0;
-      if (el.classList && el.classList.contains('file-inline')) score += 1000;
-      if (el.classList && el.classList.contains('upload-zone')) score += 500;
-      if (text.indexOf('format acceptat') >= 0) score += 200;
-      if (text.indexOf('.pdf') >= 0 || text.indexOf('csv') >= 0) score += 100;
-      try {
-        var cs = window.getComputedStyle(el);
-        if (cs && String(cs.borderTopStyle || '').indexOf('dashed') >= 0) score += 800;
-      } catch (e) {}
-      var rect = visibleRect(el);
-      if (rect) score += Math.max(0, 500 - Math.abs(rect.width - 390));
-      candidates.push({ el: el, score: score, textLength: text.length });
-    });
-    candidates.sort(function (a, b) {
-      if (b.score !== a.score) return b.score - a.score;
-      return a.textLength - b.textLength;
-    });
-    return candidates.length ? candidates[0].el : null;
-  }
-
-  function uploadCell(grid, box) {
-    var n = box;
-    while (n && n.parentElement && n.parentElement !== grid) n = n.parentElement;
-    if (n && n.parentElement === grid) return n;
-    return box;
-  }
-
-  function applyUploadVerticalAlignment() {
-    var grid = getInvoiceGrid();
-    if (!grid) return;
-
-    var box = findUploadBox(grid);
-    if (!box) return;
-    var cell = uploadCell(grid, box);
-
-    var controls = Array.prototype.slice.call(grid.querySelectorAll('.field .control, .field input, .field select'))
-      .filter(function (el) {
-        var pText = norm((el.closest('.field') || el.parentElement || grid).textContent);
-        return pText.indexOf('consum total') >= 0 || pText.indexOf('numar zile') >= 0 || pText.indexOf('valoare factura') >= 0 || pText.indexOf('program de') >= 0;
-      })
-      .slice(0, 4);
-
-    var labels = Array.prototype.slice.call(grid.querySelectorAll('.field label, label, .small-label'))
-      .filter(function (el) {
-        var t = norm(el.textContent);
-        return t.indexOf('consum total') >= 0 || t.indexOf('numar zile') >= 0 || t.indexOf('valoare factura') >= 0 || t.indexOf('program de') >= 0;
-      })
-      .slice(0, 4);
-
-    var fieldRects = [];
-    labels.concat(controls).forEach(function (el) {
-      var r = visibleRect(el);
-      if (r) fieldRects.push(r);
-    });
-    if (!fieldRects.length) return;
-
-    var top = Math.min.apply(null, fieldRects.map(function (r) { return r.top; }));
-    var bottom = Math.max.apply(null, fieldRects.map(function (r) { return r.bottom; }));
-    var targetCenter = (top + bottom) / 2;
-
-    // Reset only upload vertical offset before measuring, so repeated clicks do not accumulate movement.
-    setImp(cell, 'position', 'relative');
-    setImp(cell, 'top', '0px');
-    setImp(cell, 'transform', 'none');
-    setImp(box, 'position', 'relative');
-    setImp(box, 'top', '0px');
-    setImp(box, 'transform', 'none');
-
-    setImp(cell, 'display', 'flex');
-    setImp(cell, 'align-items', 'center');
-    setImp(cell, 'justify-content', 'flex-end');
-    setImp(cell, 'align-self', 'start');
-    setImp(cell, 'margin', '0');
-    setImp(cell, 'padding', '0');
-
-    setImp(box, 'display', 'flex');
-    setImp(box, 'flex-direction', 'row');
-    setImp(box, 'flex-wrap', 'nowrap');
-    setImp(box, 'align-items', 'center');
-    setImp(box, 'justify-content', 'center');
-    setImp(box, 'gap', '12px');
-    setImp(box, 'min-height', '54px');
-    setImp(box, 'height', '54px');
-    setImp(box, 'padding-top', '0');
-    setImp(box, 'padding-bottom', '0');
-    setImp(box, 'box-sizing', 'border-box');
-
-    var children = Array.prototype.slice.call(box.children);
-    children.forEach(function (child) {
-      setImp(child, 'align-self', 'center');
-      setImp(child, 'margin-top', '0');
-      setImp(child, 'margin-bottom', '0');
-      setImp(child, 'transform', 'none');
-    });
-    Array.prototype.slice.call(box.querySelectorAll('.file-button, button, .file-meta, strong, span')).forEach(function (el) {
-      setImp(el, 'align-self', 'center');
-      setImp(el, 'margin-top', '0');
-      setImp(el, 'margin-bottom', '0');
-    });
-
-    window.requestAnimationFrame(function () {
-      var br = visibleRect(box);
-      if (!br) return;
-      var boxCenter = (br.top + br.bottom) / 2;
-      var offset = Math.round(targetCenter - boxCenter);
-      if (!isFinite(offset)) offset = 0;
-      if (offset < -28) offset = -28;
-      if (offset > 48) offset = 48;
-
-      // In screenshot v121 upload is too high; this moves only the upload box down/up to match the field group center.
-      setImp(box, 'top', offset + 'px');
-    });
-  }
-
-  function schedule() {
-    applyUploadVerticalAlignment();
-    window.requestAnimationFrame(applyUploadVerticalAlignment);
-    setTimeout(applyUploadVerticalAlignment, 80);
-    setTimeout(applyUploadVerticalAlignment, 250);
-    setTimeout(applyUploadVerticalAlignment, 650);
-  }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule);
-  else schedule();
-  window.addEventListener('load', schedule);
-  window.addEventListener('resize', function () { setTimeout(schedule, 80); });
-  document.addEventListener('click', function () { setTimeout(applyUploadVerticalAlignment, 0); }, true);
-  document.addEventListener('focusin', function () { setTimeout(applyUploadVerticalAlignment, 0); }, true);
-})();
-/* svt-v122-invoice-upload-align-to-inputs END */
-</script>
 </body>
 </html>
+
 
 
 
