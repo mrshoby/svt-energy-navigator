@@ -4830,6 +4830,18 @@
 }
 /* svt-v131-invoice-labels-down END */
 </style>
+<!-- svt-v132-invoice-labels-down-only START -->
+<style id="svt-v132-invoice-labels-down-only">
+  #invoicePanel [data-svt-v132-label-down="true"] {
+    position: relative !important;
+    top: 16px !important;
+    transform: none !important;
+    margin-bottom: 0 !important;
+    line-height: 1.05 !important;
+    z-index: 5 !important;
+  }
+</style>
+<!-- svt-v132-invoice-labels-down-only END -->
 </head>
 <body data-energy-mode="electric">
   <div class="page">
@@ -5978,8 +5990,107 @@
 })();
 /* svt-v131-invoice-labels-down END */
 </script>
+<!-- svt-v132-invoice-labels-down-only-js START -->
+<script id="svt-v132-invoice-labels-down-only-js">
+(function () {
+  var TARGETS = {
+    "consum total facturat": true,
+    "numar zile facturate": true,
+    "număr zile facturate": true,
+    "valoare factura energie": true,
+    "valoare factură energie": true,
+    "program de lucru": true
+  };
+
+  function norm(value) {
+    return String(value || "")
+      .replace(/\u00a0/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+      .toLowerCase();
+  }
+
+  function plain(value) {
+    return norm(value)
+      .replace(/ă/g, "a")
+      .replace(/â/g, "a")
+      .replace(/î/g, "i")
+      .replace(/ș/g, "s")
+      .replace(/ş/g, "s")
+      .replace(/ț/g, "t")
+      .replace(/ţ/g, "t");
+  }
+
+  function isTarget(text) {
+    var n = norm(text);
+    var p = plain(text);
+    return TARGETS[n] || TARGETS[p];
+  }
+
+  function hasControl(el) {
+    return !!(el && el.querySelector && el.querySelector("input, select, textarea, button"));
+  }
+
+  function pickLabelElement(textNode) {
+    var el = textNode && textNode.parentElement;
+    for (var i = 0; el && i < 4; i += 1) {
+      var ownText = norm(el.textContent);
+      if (isTarget(ownText) && !hasControl(el)) return el;
+      el = el.parentElement;
+    }
+    return null;
+  }
+
+  function applyInvoiceLabelPosition() {
+    var root = document.getElementById("invoicePanel") || document;
+    var labels = [];
+    var selector = "label,.field-label,.form-label,.control-label,.label,.field-title,.invoice-label,.field > span,.field > div,.field strong,.field b";
+
+    root.querySelectorAll(selector).forEach(function (el) {
+      if (isTarget(el.textContent) && !hasControl(el)) labels.push(el);
+    });
+
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    var node;
+    while ((node = walker.nextNode())) {
+      if (!isTarget(node.nodeValue)) continue;
+      var chosen = pickLabelElement(node);
+      if (chosen) labels.push(chosen);
+    }
+
+    var seen = new Set();
+    labels.forEach(function (label) {
+      if (!label || seen.has(label)) return;
+      seen.add(label);
+      label.setAttribute("data-svt-v132-label-down", "true");
+      label.style.setProperty("position", "relative", "important");
+      label.style.setProperty("top", "16px", "important");
+      label.style.setProperty("transform", "none", "important");
+      label.style.setProperty("margin-bottom", "0", "important");
+      label.style.setProperty("line-height", "1.05", "important");
+      label.style.setProperty("z-index", "5", "important");
+    });
+  }
+
+  function schedule() {
+    applyInvoiceLabelPosition();
+    window.requestAnimationFrame(applyInvoiceLabelPosition);
+    setTimeout(applyInvoiceLabelPosition, 100);
+    setTimeout(applyInvoiceLabelPosition, 500);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", schedule);
+  } else {
+    schedule();
+  }
+  window.addEventListener("load", schedule);
+})();
+</script>
+<!-- svt-v132-invoice-labels-down-only-js END -->
 </body>
 </html>
+
 
 
 
