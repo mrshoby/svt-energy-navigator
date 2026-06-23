@@ -4645,23 +4645,28 @@
 
 
 
-<style id="svt-v118-invoice-upload-move-down-css">
-/* svt-v118-invoice-upload-move-down START */
+
+<style id="svt-v119-invoice-upload-down-final-css">
+/* svt-v119-invoice-upload-down-final START
+   Fix final pentru sectiunea factura lunara:
+   - campurile raman inguste, masurate dupa label;
+   - height-ul ramane normal;
+   - uploadul factura este mutat vizual mai jos cu 36px. */
 #invoicePanel .invoice-grid,
-.invoice-grid.svt118-invoice-grid {
+.invoice-grid.svt119-invoice-grid {
   display: grid !important;
-  grid-template-columns: var(--svt118-col1, 84px) var(--svt118-col2, 78px) var(--svt118-col3, 112px) var(--svt118-col4, 150px) minmax(330px, 1fr) !important;
+  grid-template-columns: var(--svt119-col1, 84px) var(--svt119-col2, 78px) var(--svt119-col3, 112px) var(--svt119-col4, 150px) minmax(330px, 1fr) !important;
   column-gap: 14px !important;
   row-gap: 6px !important;
   align-items: end !important;
 }
 
-#invoicePanel .invoice-grid .svt118-invoice-field,
-.invoice-grid.svt118-invoice-grid .svt118-invoice-field {
-  width: var(--svt118-w, auto) !important;
-  min-width: var(--svt118-w, auto) !important;
-  max-width: var(--svt118-w, auto) !important;
-  flex: 0 0 var(--svt118-w, auto) !important;
+#invoicePanel .invoice-grid .svt119-invoice-field,
+.invoice-grid.svt119-invoice-grid .svt119-invoice-field {
+  width: var(--svt119-w, auto) !important;
+  min-width: var(--svt119-w, auto) !important;
+  max-width: var(--svt119-w, auto) !important;
+  flex: 0 0 var(--svt119-w, auto) !important;
   height: auto !important;
   min-height: 0 !important;
   max-height: none !important;
@@ -4669,62 +4674,61 @@
   justify-self: start !important;
   box-sizing: border-box !important;
   overflow: visible !important;
+  transform: none !important;
 }
 
-#invoicePanel .invoice-grid .svt118-invoice-field > label,
-#invoicePanel .invoice-grid .svt118-invoice-field .field-label,
-#invoicePanel .invoice-grid .svt118-invoice-field .small-label,
-.invoice-grid.svt118-invoice-grid .svt118-invoice-field > label,
-.invoice-grid.svt118-invoice-grid .svt118-invoice-field .field-label,
-.invoice-grid.svt118-invoice-grid .svt118-invoice-field .small-label {
-  width: var(--svt118-label-w, var(--svt118-w, auto)) !important;
-  max-width: var(--svt118-label-w, var(--svt118-w, auto)) !important;
+#invoicePanel .invoice-grid .svt119-invoice-field > label,
+#invoicePanel .invoice-grid .svt119-invoice-field .field-label,
+#invoicePanel .invoice-grid .svt119-invoice-field .small-label,
+.invoice-grid.svt119-invoice-grid .svt119-invoice-field > label,
+.invoice-grid.svt119-invoice-grid .svt119-invoice-field .field-label,
+.invoice-grid.svt119-invoice-grid .svt119-invoice-field .small-label {
+  width: var(--svt119-w, auto) !important;
+  max-width: var(--svt119-w, auto) !important;
   white-space: normal !important;
   line-height: 1.05 !important;
+  transform: none !important;
 }
 
-#invoicePanel .invoice-grid .svt118-invoice-field .field-hint,
-.invoice-grid.svt118-invoice-grid .svt118-invoice-field .field-hint {
+#invoicePanel .invoice-grid .svt119-invoice-field .field-hint,
+.invoice-grid.svt119-invoice-grid .svt119-invoice-field .field-hint {
   display: none !important;
 }
 
-#invoicePanel .invoice-grid .svt118-invoice-field .control,
-#invoicePanel .invoice-grid .svt118-invoice-field input:not([type="file"]):not([type="checkbox"]):not([type="radio"]),
-#invoicePanel .invoice-grid .svt118-invoice-field select,
-.invoice-grid.svt118-invoice-grid .svt118-invoice-field .control,
-.invoice-grid.svt118-invoice-grid .svt118-invoice-field input:not([type="file"]):not([type="checkbox"]):not([type="radio"]),
-.invoice-grid.svt118-invoice-grid .svt118-invoice-field select {
-  width: var(--svt118-w, auto) !important;
-  min-width: var(--svt118-w, auto) !important;
-  max-width: var(--svt118-w, auto) !important;
+#invoicePanel .invoice-grid .svt119-invoice-field .control,
+#invoicePanel .invoice-grid .svt119-invoice-field input:not([type="file"]):not([type="checkbox"]):not([type="radio"]),
+#invoicePanel .invoice-grid .svt119-invoice-field select,
+.invoice-grid.svt119-invoice-grid .svt119-invoice-field .control,
+.invoice-grid.svt119-invoice-grid .svt119-invoice-field input:not([type="file"]):not([type="checkbox"]):not([type="radio"]),
+.invoice-grid.svt119-invoice-grid .svt119-invoice-field select {
+  width: var(--svt119-w, auto) !important;
+  min-width: var(--svt119-w, auto) !important;
+  max-width: var(--svt119-w, auto) !important;
   height: 38px !important;
   min-height: 38px !important;
   max-height: 38px !important;
   line-height: normal !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  box-sizing: border-box !important;
-}
-
-#invoicePanel .invoice-grid .svt118-invoice-upload-cell,
-.invoice-grid.svt118-invoice-grid .svt118-invoice-upload-cell {
-  grid-column: 5 !important;
-  align-self: start !important;
-  justify-self: stretch !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  margin: 0 auto !important;
-  padding: 0 !important;
-  padding-top: var(--svt118-upload-down, 22px) !important;
-  text-align: center !important;
   box-sizing: border-box !important;
   transform: none !important;
 }
 
-#invoicePanel .invoice-grid .svt118-invoice-upload-box,
-.invoice-grid.svt118-invoice-grid .svt118-invoice-upload-box {
+#invoicePanel .invoice-grid .svt119-invoice-upload-cell,
+.invoice-grid.svt119-invoice-grid .svt119-invoice-upload-cell {
+  grid-column: 5 !important;
+  align-self: start !important;
+  justify-self: stretch !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+}
+
+#invoicePanel .invoice-grid .svt119-invoice-upload-box,
+.invoice-grid.svt119-invoice-grid .svt119-invoice-upload-box {
   width: min(390px, 100%) !important;
   max-width: 390px !important;
   min-width: 280px !important;
@@ -4732,57 +4736,42 @@
   margin-right: auto !important;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
+  position: relative !important;
+  top: 0 !important;
+  transform: translateY(var(--svt119-upload-down, 36px)) !important;
   text-align: center !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
   box-sizing: border-box !important;
-  transform: none !important;
 }
 
-#invoicePanel .invoice-grid .svt118-invoice-upload-box *,
-.invoice-grid.svt118-invoice-grid .svt118-invoice-upload-box * {
+#invoicePanel .invoice-grid .svt119-invoice-upload-box *,
+.invoice-grid.svt119-invoice-grid .svt119-invoice-upload-box * {
   text-align: center !important;
-}
-
-#invoicePanel .invoice-grid .svt118-invoice-upload-box button,
-#invoicePanel .invoice-grid .svt118-invoice-upload-box .btn,
-#invoicePanel .invoice-grid .svt118-invoice-upload-box .file-btn,
-#invoicePanel .invoice-grid .svt118-invoice-upload-box label,
-.invoice-grid.svt118-invoice-grid .svt118-invoice-upload-box button,
-.invoice-grid.svt118-invoice-grid .svt118-invoice-upload-box .btn,
-.invoice-grid.svt118-invoice-grid .svt118-invoice-upload-box .file-btn,
-.invoice-grid.svt118-invoice-grid .svt118-invoice-upload-box label {
-  margin-left: auto !important;
-  margin-right: auto !important;
-  justify-content: center !important;
 }
 
 @media (max-width: 900px) {
   #invoicePanel .invoice-grid,
-  .invoice-grid.svt118-invoice-grid {
+  .invoice-grid.svt119-invoice-grid {
     grid-template-columns: 1fr !important;
   }
-  #invoicePanel .invoice-grid .svt118-invoice-upload-cell,
-  .invoice-grid.svt118-invoice-grid .svt118-invoice-upload-cell {
+  #invoicePanel .invoice-grid .svt119-invoice-upload-cell,
+  .invoice-grid.svt119-invoice-grid .svt119-invoice-upload-cell {
     grid-column: 1 !important;
-    align-self: start !important;
     justify-self: start !important;
     width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    padding-top: 0 !important;
   }
-  #invoicePanel .invoice-grid .svt118-invoice-upload-box,
-  .invoice-grid.svt118-invoice-grid .svt118-invoice-upload-box {
+  #invoicePanel .invoice-grid .svt119-invoice-upload-box,
+  .invoice-grid.svt119-invoice-grid .svt119-invoice-upload-box {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
     transform: none !important;
   }
 }
-/* svt-v118-invoice-upload-move-down END */
+/* svt-v119-invoice-upload-down-final END */
 </style>
 </head>
 <body data-energy-mode="electric">
@@ -4847,7 +4836,7 @@
                 <div class="invoice-grid">
                   <div class="field invoice-field invoice-consumption-field">
                     <label for="invoiceConsumption">Consum total<br>facturat</label>
-                    <input class="control invoice-control" id="invoiceConsumption" type="number" min="0" step="0.01" placeholder="ex. 12450">
+                    <input class="control invoice-control" id="invoiceConsumption" type="number" min="0" step="0.01" >
                     <div class="field-hint">kWh consumați în perioada facturată.</div>
                   </div>
                   <div class="field invoice-field invoice-days-field">
@@ -4857,7 +4846,7 @@
                   </div>
                   <div class="field invoice-field invoice-value-field">
                     <label for="invoiceValue">Valoare factură<br>energie</label>
-                    <input class="control invoice-control" id="invoiceValue" type="number" min="0" step="0.01" placeholder="ex. 18670">
+                    <input class="control invoice-control" id="invoiceValue" type="number" min="0" step="0.01" >
                     <div class="field-hint">Ajută la verificarea tarifului total mediu.</div>
                   </div>
                   <div class="field invoice-field invoice-program-field">
@@ -5496,11 +5485,12 @@
 
 
 
-<script id="svt-v118-invoice-upload-move-down-js">
-/* svt-v118-invoice-upload-move-down START */
+
+<script id="svt-v119-invoice-upload-down-final-js">
+/* svt-v119-invoice-upload-down-final START */
 (function () {
+  var uploadDownPx = 36;
   var fallback = { consum: 84, zile: 78, valoare: 112, program: 150 };
-  var uploadDownPx = 22;
 
   function norm(s) {
     return String(s || '')
@@ -5511,47 +5501,16 @@
   }
 
   function setImp(el, prop, value) {
-    if (!el || !el.style) return;
-    el.style.setProperty(prop, value, 'important');
+    if (el && el.style) el.style.setProperty(prop, value, 'important');
   }
 
   function getInvoiceGrid() {
-    var grids = Array.prototype.slice.call(document.querySelectorAll('.invoice-grid'));
+    var grids = Array.prototype.slice.call(document.querySelectorAll('#invoicePanel .invoice-grid, .invoice-grid'));
     for (var i = 0; i < grids.length; i += 1) {
       var t = norm(grids[i].textContent);
       if (t.indexOf('consum total') >= 0 && t.indexOf('numar zile') >= 0 && t.indexOf('valoare factura') >= 0 && t.indexOf('program de') >= 0) return grids[i];
     }
-    return document.querySelector('#invoicePanel .invoice-grid') || null;
-  }
-
-  function fieldsFromGrid(grid) {
-    if (!grid) return [];
-    var all = Array.prototype.slice.call(grid.querySelectorAll('.field'));
-    var tests = [
-      ['consum', ['consum total', 'facturat']],
-      ['zile', ['numar zile', 'facturate']],
-      ['valoare', ['valoare factura', 'energie']],
-      ['program', ['program de', 'lucru']]
-    ];
-    var result = [];
-    tests.forEach(function (item) {
-      var found = all.find(function (f) {
-        var t = norm(f.textContent);
-        return item[1].every(function (needle) { return t.indexOf(needle) >= 0; });
-      });
-      if (found) result.push({ key: item[0], field: found });
-    });
-    if (result.length === 4) return result;
-
-    var controls = Array.prototype.slice.call(grid.querySelectorAll('input:not([type="file"]):not([type="checkbox"]):not([type="radio"]), select'));
-    var out = [];
-    ['consum','zile','valoare','program'].forEach(function (key, idx) {
-      var c = controls[idx];
-      if (!c) return;
-      var f = c.closest('.field') || c.parentElement;
-      if (f) out.push({ key: key, field: f });
-    });
-    return out;
+    return null;
   }
 
   function firstVisibleLabel(field) {
@@ -5559,7 +5518,7 @@
     for (var i = 0; i < candidates.length; i += 1) {
       var el = candidates[i];
       if (!el || !el.textContent || !el.textContent.trim()) continue;
-      if (el.closest('.control') || el.closest('button') || el.closest('.file-inline')) continue;
+      if (el.closest('.control') || el.closest('button') || el.closest('.file-inline') || el.closest('.invoice-attach')) continue;
       var text = norm(el.textContent);
       if (text.indexOf('consum') >= 0 || text.indexOf('numar') >= 0 || text.indexOf('valoare') >= 0 || text.indexOf('program') >= 0) return el;
     }
@@ -5579,161 +5538,160 @@
     } catch (e) {}
     if (!max && el.getBoundingClientRect) max = Math.ceil(el.getBoundingClientRect().width || 0);
     if (!max) max = fallbackWidth;
-    return Math.max(58, Math.min(126, max));
+    return Math.max(58, Math.min(122, max));
   }
 
-  function clearPlaceholders(item, el) {
-    if (!el || (item.key !== 'consum' && item.key !== 'valoare')) return;
-    try { el.removeAttribute('placeholder'); } catch (e) {}
-    try { el.placeholder = ''; } catch (e) {}
+  function fieldsFromGrid(grid) {
+    var fields = Array.prototype.slice.call(grid.querySelectorAll('.field'));
+    var specs = [
+      ['consum', ['consum total', 'facturat']],
+      ['zile', ['numar zile', 'facturate']],
+      ['valoare', ['valoare factura', 'energie']],
+      ['program', ['program de', 'lucru']]
+    ];
+    var result = [];
+    specs.forEach(function (spec) {
+      var found = fields.find(function (f) {
+        var t = norm(f.textContent);
+        return spec[1].every(function (needle) { return t.indexOf(needle) >= 0; });
+      });
+      if (found) result.push({ key: spec[0], field: found });
+    });
+    if (result.length === 4) return result;
+
+    var controls = Array.prototype.slice.call(grid.querySelectorAll('input:not([type="file"]):not([type="checkbox"]):not([type="radio"]), select'));
+    return ['consum', 'zile', 'valoare', 'program'].map(function (key, idx) {
+      var c = controls[idx];
+      return c ? { key: key, field: c.closest('.field') || c.parentElement } : null;
+    }).filter(Boolean);
   }
 
-  function applyOne(item, width, labelWidth) {
+  function applyField(item) {
+    if (!item || !item.field) return;
     var field = item.field;
+    var label = firstVisibleLabel(field);
+    var width = measureLabelLine(label, fallback[item.key] || 84);
+    if (item.key === 'program') width = Math.max(width, 150);
     var px = width + 'px';
-    var labelPx = labelWidth + 'px';
-    field.classList.add('svt118-invoice-field');
-    field.style.setProperty('--svt118-w', px);
-    field.style.setProperty('--svt118-label-w', labelPx);
-    ['width','min-width','max-width','flex-basis'].forEach(function (p) { setImp(field, p, px); });
+
+    field.classList.add('svt119-invoice-field');
+    field.style.setProperty('--svt119-w', px);
+    setImp(field, 'width', px);
+    setImp(field, 'min-width', px);
+    setImp(field, 'max-width', px);
     setImp(field, 'height', 'auto');
     setImp(field, 'min-height', '0');
     setImp(field, 'max-height', 'none');
     setImp(field, 'align-self', 'end');
     setImp(field, 'justify-self', 'start');
-    setImp(field, 'box-sizing', 'border-box');
 
-    var label = firstVisibleLabel(field);
     if (label) {
-      ['width','max-width'].forEach(function (p) { setImp(label, p, labelPx); });
-      setImp(label, 'white-space', 'normal');
+      setImp(label, 'width', px);
+      setImp(label, 'max-width', px);
       setImp(label, 'line-height', '1.05');
     }
 
-    Array.prototype.slice.call(field.querySelectorAll('.field-hint')).forEach(function (hint) { setImp(hint, 'display', 'none'); });
-
-    var targets = Array.prototype.slice.call(field.querySelectorAll('.control, input:not([type="file"]):not([type="checkbox"]):not([type="radio"]), select'));
-    targets.forEach(function (el) {
-      clearPlaceholders(item, el);
-      ['width','min-width','max-width'].forEach(function (p) { setImp(el, p, px); });
-      setImp(el, 'height', '38px');
-      setImp(el, 'min-height', '38px');
-      setImp(el, 'max-height', '38px');
-      setImp(el, 'padding-top', '0');
-      setImp(el, 'padding-bottom', '0');
-      setImp(el, 'box-sizing', 'border-box');
-      setImp(el, 'line-height', 'normal');
+    var controls = field.querySelectorAll('.control, input:not([type="file"]):not([type="checkbox"]):not([type="radio"]), select');
+    Array.prototype.forEach.call(controls, function (c) {
+      setImp(c, 'width', px);
+      setImp(c, 'min-width', px);
+      setImp(c, 'max-width', px);
+      setImp(c, 'height', '38px');
+      setImp(c, 'min-height', '38px');
+      setImp(c, 'max-height', '38px');
+      setImp(c, 'line-height', 'normal');
+      setImp(c, 'box-sizing', 'border-box');
+      setImp(c, 'transform', 'none');
+      if ((item.key === 'consum' || item.key === 'valoare') && c.placeholder) c.placeholder = '';
     });
+
+    var hints = field.querySelectorAll('.field-hint');
+    Array.prototype.forEach.call(hints, function (h) { setImp(h, 'display', 'none'); });
   }
 
-  function centerUploadLower(grid) {
-    if (!grid) return;
-    var fileInput = grid.querySelector('input[type="file"]');
-    var box = null;
-    if (fileInput) {
-      box = fileInput.closest('.invoice-attach, .invoice-attach-wrap, .upload-zone, .upload-box, .dropzone, .file-inline') || fileInput.parentElement;
+  function findUploadBox(grid) {
+    if (!grid) return null;
+    var all = Array.prototype.slice.call(grid.querySelectorAll('button, label, a, .btn, .file-btn, .invoice-attach, .file-inline, div, span'));
+    var candidates = all.filter(function (el) {
+      var t = norm(el.textContent);
+      return t.indexOf('alege factura') >= 0;
+    });
+    candidates.sort(function (a, b) { return norm(a.textContent).length - norm(b.textContent).length; });
+    var seed = candidates[0] || null;
+    if (!seed) return null;
+
+    var box = seed.closest('.invoice-attach') || seed.closest('.file-inline') || seed.closest('.upload-card') || seed.closest('.file-card') || seed.closest('.file-upload') || seed.closest('label') || seed.parentElement;
+    var n = box;
+    for (var i = 0; n && i < 5; i += 1, n = n.parentElement) {
+      var txt = norm(n.textContent);
+      if (txt.indexOf('alege factura') >= 0 && txt.indexOf('format acceptat') >= 0) {
+        box = n;
+        break;
+      }
     }
-    if (!box) box = grid.querySelector('.invoice-attach, .invoice-attach-wrap, .upload-zone, .upload-box, .dropzone, .file-inline');
+    return box;
+  }
+
+  function applyUpload(grid) {
+    var box = findUploadBox(grid);
     if (!box) return;
+    var cell = box;
+    if (box.parentElement && box.parentElement !== grid && box.parentElement.textContent && norm(box.parentElement.textContent).indexOf('alege factura') >= 0) {
+      cell = box.parentElement;
+    }
+    if (box.closest('.field')) cell = box.closest('.field');
 
-    var cell = box.closest('.field, .invoice-upload-field, .invoice-upload-wrap, .invoice-attach-wrap') || box.parentElement || box;
-    cell.classList.add('svt118-invoice-upload-cell');
-    box.classList.add('svt118-invoice-upload-box');
-
-    grid.style.setProperty('--svt118-upload-down', uploadDownPx + 'px');
+    cell.classList.add('svt119-invoice-upload-cell');
+    box.classList.add('svt119-invoice-upload-box');
+    grid.classList.add('svt119-invoice-grid');
+    grid.style.setProperty('--svt119-upload-down', uploadDownPx + 'px');
 
     setImp(cell, 'grid-column', '5');
     setImp(cell, 'align-self', 'start');
     setImp(cell, 'justify-self', 'stretch');
     setImp(cell, 'display', 'flex');
-    setImp(cell, 'flex-direction', 'column');
-    setImp(cell, 'align-items', 'center');
-    setImp(cell, 'justify-content', 'flex-start');
-    setImp(cell, 'margin', '0 auto');
-    setImp(cell, 'padding', '0');
-    setImp(cell, 'padding-top', uploadDownPx + 'px');
-    setImp(cell, 'text-align', 'center');
-    setImp(cell, 'box-sizing', 'border-box');
-    setImp(cell, 'transform', 'none');
+    setImp(cell, 'align-items', 'flex-start');
+    setImp(cell, 'justify-content', 'center');
+    setImp(cell, 'overflow', 'visible');
 
-    setImp(box, 'width', 'min(390px, 100%)');
-    setImp(box, 'max-width', '390px');
-    setImp(box, 'min-width', '280px');
+    setImp(box, 'position', 'relative');
+    setImp(box, 'top', '0');
+    setImp(box, 'transform', 'translateY(' + uploadDownPx + 'px)');
     setImp(box, 'margin-left', 'auto');
     setImp(box, 'margin-right', 'auto');
-    setImp(box, 'margin-top', '0');
-    setImp(box, 'margin-bottom', '0');
     setImp(box, 'text-align', 'center');
     setImp(box, 'display', 'flex');
-    setImp(box, 'flex-direction', 'column');
     setImp(box, 'align-items', 'center');
     setImp(box, 'justify-content', 'center');
-    setImp(box, 'box-sizing', 'border-box');
-    setImp(box, 'transform', 'none');
-
-    Array.prototype.slice.call(box.querySelectorAll('.file-inline, .upload-zone, .upload-box, .dropzone, button, .btn, label, span, small, p, div')).forEach(function (el) {
-      setImp(el, 'text-align', 'center');
-      if (el.matches && el.matches('.file-inline, .upload-zone, .upload-box, .dropzone')) {
-        setImp(el, 'width', '100%');
-        setImp(el, 'display', 'flex');
-        setImp(el, 'flex-direction', 'column');
-        setImp(el, 'align-items', 'center');
-        setImp(el, 'justify-content', 'center');
-      }
-    });
   }
 
   function applyInvoiceFix() {
     var grid = getInvoiceGrid();
     if (!grid) return;
-    grid.classList.add('svt118-invoice-grid');
-    var items = fieldsFromGrid(grid);
-    if (items.length < 4) return;
-
-    var widths = [];
-    var labelWidths = [];
-    items.slice(0, 4).forEach(function (item) {
-      var label = firstVisibleLabel(item.field);
-      var labelW = measureLabelLine(label, fallback[item.key]);
-      var controlW = labelW;
-      if (item.key === 'program') controlW = Math.max(150, labelW + 56);
-      widths.push(controlW);
-      labelWidths.push(labelW);
-    });
-
-    grid.style.setProperty('--svt118-col1', widths[0] + 'px');
-    grid.style.setProperty('--svt118-col2', widths[1] + 'px');
-    grid.style.setProperty('--svt118-col3', widths[2] + 'px');
-    grid.style.setProperty('--svt118-col4', widths[3] + 'px');
+    grid.classList.add('svt119-invoice-grid');
     setImp(grid, 'display', 'grid');
-    setImp(grid, 'grid-template-columns', widths.map(function (w) { return w + 'px'; }).join(' ') + ' minmax(330px, 1fr)');
-    setImp(grid, 'column-gap', '14px');
-    setImp(grid, 'row-gap', '6px');
     setImp(grid, 'align-items', 'end');
-
-    items.slice(0, 4).forEach(function (item, idx) { applyOne(item, widths[idx], labelWidths[idx]); });
-    centerUploadLower(grid);
+    setImp(grid, 'grid-template-columns', '84px 78px 112px 150px minmax(330px, 1fr)');
+    fieldsFromGrid(grid).forEach(applyField);
+    applyUpload(grid);
   }
 
   function schedule() {
     applyInvoiceFix();
-    if (window.requestAnimationFrame) window.requestAnimationFrame(applyInvoiceFix);
-    window.setTimeout(applyInvoiceFix, 80);
-    window.setTimeout(applyInvoiceFix, 250);
+    window.requestAnimationFrame(applyInvoiceFix);
+    setTimeout(applyInvoiceFix, 60);
+    setTimeout(applyInvoiceFix, 250);
+    setTimeout(applyInvoiceFix, 700);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule);
   else schedule();
   window.addEventListener('load', schedule);
-  window.addEventListener('resize', schedule);
-  document.addEventListener('click', function (ev) {
-    if (ev.target && ev.target.closest && ev.target.closest('.invoice-grid, #invoicePanel, #methodInvoiceCard, [data-source]')) schedule();
-  }, true);
-  document.addEventListener('focusin', function (ev) {
-    if (ev.target && ev.target.closest && ev.target.closest('.invoice-grid, #invoicePanel')) schedule();
-  }, true);
+  document.addEventListener('click', function () { setTimeout(applyInvoiceFix, 0); }, true);
+  document.addEventListener('focusin', function () { setTimeout(applyInvoiceFix, 0); }, true);
+  window.addEventListener('resize', function () { setTimeout(applyInvoiceFix, 60); });
 })();
-/* svt-v118-invoice-upload-move-down END */
+/* svt-v119-invoice-upload-down-final END */
 </script>
 </body>
 </html>
