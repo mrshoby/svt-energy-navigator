@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <!-- SVT V75 REFERENCE EXACT UPLOAD LAYOUT -->
   <!-- SVT V76 SINGLE WINDOW SWITCH FIX -->
   <!-- SVT V77 EXTERNAL STEPPER RESULTS ACTIVE -->
   <!-- SVT V78 NARROW ROWS INLINE HELP TERMIC CLEAN -->
@@ -27,6 +26,7 @@
   <!-- SVT V97 MODAL MATCH IMAGES + LABEL WRAP FIX -->
   <!-- SVT V98 MODAL REBUILD UPLOAD ALIGN HARD FIX -->
   <!-- SVT V99 MODAL 1TO1 TIGHT INVOICE FIELDS -->
+  <!-- SVT V100 MODAL CLEAN 1TO1 AND INVOICE SHRINK -->
   <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
   <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -3813,6 +3813,395 @@
       }
     }
 
+  
+    /* v100: clean 1:1 modal layer, no dependency on previous modal CSS */
+    #distributorHelpModal .svt-v100-modal{
+      position:relative!important;
+      width:min(1118px,calc(100vw - 44px))!important;
+      max-height:min(88vh,858px)!important;
+      overflow:hidden!important;
+      border-radius:28px!important;
+      border:1px solid #dfe8ef!important;
+      background:#fff!important;
+      box-shadow:0 42px 94px rgba(12,22,42,.34)!important;
+      color:#071b38!important;
+    }
+    #distributorHelpModal .svt-v100-close{
+      position:absolute!important;
+      right:27px!important;
+      top:24px!important;
+      width:48px!important;
+      height:48px!important;
+      border-radius:50%!important;
+      border:1px solid #dce5ec!important;
+      background:#fff!important;
+      box-shadow:0 10px 24px rgba(15,23,42,.08)!important;
+      color:#071b38!important;
+      font-size:30px!important;
+      z-index:4!important;
+      display:grid!important;
+      place-items:center!important;
+      line-height:1!important;
+    }
+    #distributorHelpModal .svt-v100-head{
+      text-align:center!important;
+      padding:31px 86px 16px!important;
+      background:#fff!important;
+    }
+    #distributorHelpModal .svt-v100-head h2{
+      margin:0!important;
+      font-size:34px!important;
+      line-height:1.05!important;
+      letter-spacing:-.048em!important;
+      font-weight:1000!important;
+      color:#071b38!important;
+    }
+    #distributorHelpModal .svt-v100-head p{
+      margin:12px auto 0!important;
+      max-width:790px!important;
+      font-size:15px!important;
+      line-height:1.4!important;
+      color:#40536c!important;
+      font-weight:720!important;
+    }
+    #distributorHelpModal .svt-v100-tabs{
+      display:grid!important;
+      grid-template-columns:148px 210px 180px 226px 220px!important;
+      justify-content:center!important;
+      gap:12px!important;
+      padding:8px 32px 20px!important;
+      background:#fff!important;
+    }
+    #distributorHelpModal .svt-v100-tab{
+      height:52px!important;
+      border-radius:15px!important;
+      border:1px solid #dce5ec!important;
+      background:#fff!important;
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      gap:12px!important;
+      padding:0 14px!important;
+      color:#142442!important;
+      font-size:13.6px!important;
+      font-weight:920!important;
+      box-shadow:0 2px 10px rgba(15,23,42,.025)!important;
+      cursor:pointer!important;
+    }
+    #distributorHelpModal .svt-v100-tab svg{
+      width:21px!important;
+      height:21px!important;
+      flex:0 0 21px!important;
+    }
+    #distributorHelpModal .svt-v100-tab.active{
+      border-color:#07943f!important;
+      color:#fff!important;
+      background:linear-gradient(135deg,#07a844,#078f3d)!important;
+      box-shadow:0 18px 30px rgba(7,148,63,.25)!important;
+    }
+    #distributorHelpModal .svt-v100-body{
+      padding:0 32px 24px!important;
+      overflow:auto!important;
+      max-height:calc(min(88vh,858px) - 160px)!important;
+    }
+    #distributorHelpModal .svt-v100-panel{
+      gap:16px!important;
+      display:none;
+    }
+    #distributorHelpModal .svt-v100-panel.active{
+      display:grid!important;
+    }
+    #distributorHelpModal .svt-v100-hero{
+      display:grid!important;
+      grid-template-columns:220px 1fr!important;
+      gap:22px!important;
+      align-items:center!important;
+      min-height:168px!important;
+      padding:18px 28px!important;
+      border:1px solid #dcece2!important;
+      border-radius:18px!important;
+      background:linear-gradient(180deg,#fbfefd 0%,#f8fdf9 100%)!important;
+    }
+    #distributorHelpModal .svt-v100-art{
+      width:180px!important;
+      height:132px!important;
+      display:grid!important;
+      place-items:center!important;
+      justify-self:center!important;
+      color:#07943f!important;
+    }
+    #distributorHelpModal .svt-v100-illustration{
+      width:180px!important;
+      height:132px!important;
+      display:block!important;
+    }
+    #distributorHelpModal .svt-v100-hero-copy h3{
+      margin:0 0 10px!important;
+      color:#0a2142!important;
+      font-size:23px!important;
+      line-height:1.18!important;
+      letter-spacing:-.03em!important;
+      font-weight:1000!important;
+    }
+    #distributorHelpModal .svt-v100-hero-copy p{
+      margin:0!important;
+      max-width:760px!important;
+      color:#30425d!important;
+      font-size:15px!important;
+      line-height:1.55!important;
+      font-weight:650!important;
+    }
+    #distributorHelpModal .svt-v100-content{
+      display:grid!important;
+      grid-template-columns:minmax(0,1.04fr) minmax(360px,.96fr)!important;
+      gap:16px!important;
+    }
+    #distributorHelpModal .svt-v100-steps,
+    #distributorHelpModal .svt-v100-info{
+      border:1px solid #dfe8ef!important;
+      border-radius:18px!important;
+      background:#fff!important;
+      box-shadow:none!important;
+    }
+    #distributorHelpModal .svt-v100-steps{
+      padding:18px 18px 14px!important;
+    }
+    #distributorHelpModal .svt-v100-side{
+      display:grid!important;
+      gap:16px!important;
+    }
+    #distributorHelpModal .svt-v100-info{
+      min-height:126px!important;
+      padding:18px!important;
+      display:grid!important;
+      align-content:center!important;
+    }
+    #distributorHelpModal .svt-v100-steps h4,
+    #distributorHelpModal .svt-v100-info h4{
+      margin:0 0 12px!important;
+      display:flex!important;
+      align-items:center!important;
+      gap:12px!important;
+      color:#0a2142!important;
+      font-size:18px!important;
+      font-weight:1000!important;
+    }
+    #distributorHelpModal .svt-v100-steps h4 svg,
+    #distributorHelpModal .svt-v100-info h4 svg{
+      width:22px!important;
+      height:22px!important;
+      padding:10px!important;
+      border-radius:12px!important;
+      background:#eef8f1!important;
+      color:#07943f!important;
+      box-sizing:content-box!important;
+    }
+    #distributorHelpModal .svt-v100-steps ol{
+      list-style:none!important;
+      margin:0!important;
+      padding:14px 0 0!important;
+      border-top:1px solid #e6eef4!important;
+      display:grid!important;
+      gap:9px!important;
+    }
+    #distributorHelpModal .svt-v100-steps li{
+      display:grid!important;
+      grid-template-columns:24px 1fr!important;
+      gap:12px!important;
+      align-items:start!important;
+    }
+    #distributorHelpModal .svt-v100-steps li b{
+      width:24px!important;
+      height:24px!important;
+      border-radius:50%!important;
+      background:#07943f!important;
+      color:#fff!important;
+      display:grid!important;
+      place-items:center!important;
+      font-size:12px!important;
+      font-weight:1000!important;
+      line-height:1!important;
+    }
+    #distributorHelpModal .svt-v100-steps li span,
+    #distributorHelpModal .svt-v100-info p{
+      margin:0!important;
+      color:#253754!important;
+      font-size:14px!important;
+      line-height:1.55!important;
+      font-weight:700!important;
+    }
+    #distributorHelpModal .svt-v100-footer{
+      display:grid!important;
+      grid-template-columns:370px 1fr!important;
+      gap:18px!important;
+      align-items:center!important;
+      margin-top:4px!important;
+      padding:18px 0 0!important;
+      border-top:1px solid #e3ebf1!important;
+    }
+    #distributorHelpModal .svt-v100-cta{
+      min-height:54px!important;
+      border-radius:14px!important;
+      background:linear-gradient(135deg,#07a844,#078f3d)!important;
+      color:#fff!important;
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      text-decoration:none!important;
+      font-size:14px!important;
+      font-weight:1000!important;
+      box-shadow:0 18px 28px rgba(7,148,63,.20)!important;
+      padding:0 18px!important;
+    }
+    #distributorHelpModal .svt-v100-sources{
+      padding-left:22px!important;
+      border-left:1px solid #dfe7ee!important;
+      display:grid!important;
+      gap:6px!important;
+      color:#62748a!important;
+      font-size:13px!important;
+      font-weight:800!important;
+    }
+    #distributorHelpModal .svt-v100-sources strong{
+      color:#58697f!important;
+      font-weight:900!important;
+    }
+    #distributorHelpModal .svt-v100-sources div{
+      display:flex!important;
+      flex-wrap:wrap!important;
+      gap:8px 18px!important;
+    }
+    #distributorHelpModal .svt-v100-sources a{
+      color:#07943f!important;
+      text-decoration:none!important;
+      font-weight:900!important;
+    }
+
+    /* v100: invoice fields shrink by markup classes, no :has dependency */
+    #invoiceBox{
+      position:relative!important;
+      width:100%!important;
+      min-height:72px!important;
+      padding-top:10px!important;
+      padding-right:338px!important;
+      box-sizing:border-box!important;
+    }
+    #invoiceBox[style*="grid"]{
+      display:block!important;
+    }
+    #invoiceBox .invoice-grid{
+      display:flex!important;
+      align-items:flex-start!important;
+      justify-content:flex-start!important;
+      gap:10px!important;
+      width:auto!important;
+      max-width:390px!important;
+      min-width:0!important;
+    }
+    #invoiceBox .invoice-field{
+      flex:0 0 auto!important;
+      gap:4px!important;
+      min-width:0!important;
+    }
+    #invoiceBox .invoice-consumption-field{width:82px!important;max-width:82px!important;}
+    #invoiceBox .invoice-days-field{width:70px!important;max-width:70px!important;}
+    #invoiceBox .invoice-value-field{width:104px!important;max-width:104px!important;}
+    #invoiceBox .invoice-program-field{width:78px!important;max-width:78px!important;}
+    #invoiceBox .invoice-field label{
+      display:block!important;
+      white-space:normal!important;
+      overflow:visible!important;
+      text-overflow:clip!important;
+      min-height:25px!important;
+      font-size:9px!important;
+      line-height:1.05!important;
+      font-weight:1000!important;
+      color:#071b38!important;
+      margin:0!important;
+    }
+    #invoiceBox .invoice-consumption-field label{width:82px!important;max-width:82px!important;}
+    #invoiceBox .invoice-days-field label{width:70px!important;max-width:70px!important;}
+    #invoiceBox .invoice-value-field label{width:104px!important;max-width:104px!important;}
+    #invoiceBox .invoice-program-field label{width:78px!important;max-width:78px!important;}
+    #invoiceBox .invoice-field label br{display:block!important;}
+    #invoiceBox .invoice-control{
+      height:30px!important;
+      padding:0 6px!important;
+      font-size:10.2px!important;
+      border-radius:8px!important;
+      box-sizing:border-box!important;
+    }
+    #invoiceConsumption{width:82px!important;min-width:82px!important;max-width:82px!important;}
+    #invoiceDays{width:70px!important;min-width:70px!important;max-width:70px!important;}
+    #invoiceValue{width:104px!important;min-width:104px!important;max-width:104px!important;}
+    #workSchedule{width:78px!important;min-width:78px!important;max-width:78px!important;}
+    #invoiceBox .field-hint{display:none!important;}
+    #invoiceBox .invoice-attach{
+      position:absolute!important;
+      right:0!important;
+      top:50%!important;
+      transform:translateY(-50%)!important;
+      width:var(--svt-combo-w,318px)!important;
+      min-width:var(--svt-combo-w,318px)!important;
+      max-width:var(--svt-combo-w,318px)!important;
+      margin:0!important;
+      padding:0!important;
+    }
+    #invoiceBox #invoiceDrop.file-inline{
+      width:var(--svt-combo-w,318px)!important;
+      min-width:var(--svt-combo-w,318px)!important;
+      max-width:var(--svt-combo-w,318px)!important;
+      margin:0!important;
+      justify-self:end!important;
+    }
+
+    @media(max-width:1100px){
+      #distributorHelpModal .svt-v100-tabs{
+        grid-template-columns:repeat(2,minmax(0,1fr))!important;
+      }
+      #distributorHelpModal .svt-v100-hero,
+      #distributorHelpModal .svt-v100-content,
+      #distributorHelpModal .svt-v100-footer{
+        grid-template-columns:1fr!important;
+      }
+      #invoiceBox{
+        padding-right:0!important;
+      }
+      #invoiceBox .invoice-grid{
+        display:grid!important;
+        width:100%!important;
+        max-width:100%!important;
+        grid-template-columns:repeat(2,minmax(0,1fr))!important;
+      }
+      #invoiceBox .invoice-field,
+      #invoiceBox .invoice-field label,
+      #invoiceBox .invoice-control,
+      #invoiceConsumption,#invoiceDays,#invoiceValue,#workSchedule{
+        width:100%!important;
+        min-width:0!important;
+        max-width:100%!important;
+      }
+      #invoiceBox .invoice-attach{
+        position:static!important;
+        transform:none!important;
+        margin-top:12px!important;
+        width:100%!important;
+        min-width:0!important;
+        max-width:100%!important;
+      }
+      #invoiceBox #invoiceDrop.file-inline{
+        width:100%!important;
+        min-width:0!important;
+        max-width:100%!important;
+      }
+    }
+    @media(max-width:720px){
+      #distributorHelpModal .svt-v100-head{padding:22px 56px 14px!important;}
+      #distributorHelpModal .svt-v100-head h2{font-size:25px!important;}
+      #distributorHelpModal .svt-v100-tabs{grid-template-columns:1fr!important;padding:8px 18px 14px!important;}
+      #distributorHelpModal .svt-v100-body{padding:0 18px 18px!important;}
+    }
+
   </style>
 </head>
 <body data-energy-mode="electric">
@@ -3875,28 +4264,29 @@
               </div>
               <div class="subpanel" id="invoiceBox" style="display:none">
                 <div class="invoice-grid">
-                  <div class="field">
+                  <div class="field invoice-field invoice-consumption-field">
                     <label for="invoiceConsumption">Consum total<br>facturat</label>
-                    <input class="control" id="invoiceConsumption" type="number" min="0" step="0.01" placeholder="ex. 12450">
+                    <input class="control invoice-control" id="invoiceConsumption" type="number" min="0" step="0.01" placeholder="ex. 12450">
                     <div class="field-hint">kWh consumați în perioada facturată.</div>
                   </div>
-                  <div class="field">
+                  <div class="field invoice-field invoice-days-field">
                     <label for="invoiceDays">Număr zile<br>facturate</label>
-                    <input class="control" id="invoiceDays" type="number" min="1" step="1" value="30">
+                    <input class="control invoice-control" id="invoiceDays" type="number" min="1" step="1" value="30">
                     <div class="field-hint">Necesar pentru estimare zilnică/orară.</div>
                   </div>
-                  <div class="field">
-                    <label for="invoiceValue">Valoare factură<br>energie (opțional)</label>
-                    <input class="control" id="invoiceValue" type="number" min="0" step="0.01" placeholder="ex. 18670">
+                  <div class="field invoice-field invoice-value-field">
+                    <label for="invoiceValue">Valoare factură<br>energie</label>
+                    <input class="control invoice-control" id="invoiceValue" type="number" min="0" step="0.01" placeholder="ex. 18670">
                     <div class="field-hint">Ajută la verificarea tarifului total mediu.</div>
                   </div>
-                  <div class="field">
+                  <div class="field invoice-field invoice-program-field">
                     <label for="workSchedule">Program de<br>lucru</label>
-                    <select class="control" id="workSchedule">
+                    <select class="control invoice-control" id="workSchedule">
                       <option>L-V, 8-18</option>
                       <option>L-V, 6-22</option>
                       <option>24/7</option>
                       <option>L-S, 8-18</option>
+                      <option>S-D inclus</option>
                       <option>Alt program</option>
                     </select>
                     <div class="field-hint">Ne ajută să repartizăm mai realist consumul pe ore.</div>
@@ -4318,220 +4708,166 @@
     document.addEventListener('DOMContentLoaded', initDistributorHelpModal);
   </script>
 <div class="svt-modal-backdrop" id="distributorHelpModal" aria-hidden="true">
-    <div class="svt-v98-modal" role="dialog" aria-modal="true" aria-labelledby="distHelpTitle">
-      <button class="svt-modal-close svt-v98-close" type="button" id="closeDistributorHelp" aria-label="Închide">×</button>
-      <header class="svt-v98-head">
+    <div class="svt-v100-modal" role="dialog" aria-modal="true" aria-labelledby="distHelpTitle">
+      <button class="svt-modal-close svt-v100-close" type="button" id="closeDistributorHelp" aria-label="Închide">×</button>
+      <header class="svt-v100-head">
         <h2 id="distHelpTitle">Cum obții fișierul orar / curba de sarcină?</h2>
         <p>Alege sursa corectă de date. Pentru analiza exactă ai nevoie de dată, oră/interval și consum kWh.</p>
       </header>
-      <nav class="svt-v98-tabs" id="distHelpTabs" role="tablist" aria-label="Surse date consum">
-        <button type="button" class="svt-v98-tab active" data-dist-tab="deer" aria-selected="true"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M8 21h8M7 8l5-5 5 5M6 13h12M8 13l-2 8M16 13l2 8M8 8h8"/></svg><span>DEER</span></button><button type="button" class="svt-v98-tab" data-dist-tab="retele" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 5 14h6l-1 8 9-13h-6l0-7Z"/></svg><span>Rețele Electrice</span></button><button type="button" class="svt-v98-tab" data-dist-tab="delgaz" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4 0 7-3 7-7 0-3-2-5-4-7-.8-.8-1.6-1.7-2-3-2 1.5-3 3.5-3 6-1.5-.7-2.5-1.7-3-3-1.2 2-2 4.1-2 7 0 4 3 7 7 7Z"/></svg><span>Delgaz Grid</span></button><button type="button" class="svt-v98-tab" data-dist-tab="oltenia" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><circle cx="12" cy="16" r="3"/><path d="M10.5 10.2 12 13M13.5 13 15 10.2M11 8h2"/></svg><span>Distribuție Oltenia</span></button><button type="button" class="svt-v98-tab" data-dist-tab="furnizor" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Furnizor / aplicație</span></button>
+      <nav class="svt-v100-tabs" id="distHelpTabs" role="tablist" aria-label="Surse date consum">
+        <button type="button" class="svt-v100-tab active" data-dist-tab="deer" aria-selected="true"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M8 21h8M7 8l5-5 5 5M6 13h12M8 13l-2 8M16 13l2 8M8 8h8"/></svg><span>DEER</span></button><button type="button" class="svt-v100-tab" data-dist-tab="retele" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 5 14h6l-1 8 9-13h-6l0-7Z"/></svg><span>Rețele Electrice</span></button><button type="button" class="svt-v100-tab" data-dist-tab="delgaz" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4 0 7-3 7-7 0-3-2-5-4-7-.8-.8-1.6-1.7-2-3-2 1.5-3 3.5-3 6-1.5-.7-2.5-1.7-3-3-1.2 2-2 4.1-2 7 0 4 3 7 7 7Z"/></svg><span>Delgaz Grid</span></button><button type="button" class="svt-v100-tab" data-dist-tab="oltenia" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><circle cx="12" cy="16" r="3"/><path d="M10.5 10.2 12 13M13.5 13 15 10.2M11 8h2"/></svg><span>Distribuție Oltenia</span></button><button type="button" class="svt-v100-tab" data-dist-tab="furnizor" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Furnizor / aplicație</span></button>
       </nav>
-      <div class="svt-v98-body">
-        <section class="svt-v98-panel active" data-dist-panel="deer" style="display:grid">
-          <article class="svt-v98-hero">
-            <div class="svt-v98-hero-art svt-v98-art-deer"><svg viewBox="0 0 240 168" class="svt-v98-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="120" cy="86" r="72" fill="currentColor" opacity=".08" stroke="none"/><path d="M82 138h84M124 30v108M94 138l30-108 30 108M100 70h48M106 96h36M92 70l32-40 32 40M102 118h44"/>
-        <path d="M72 138V102h25v36M161 138v-22h22v22M68 102h31M157 116h29" opacity=".8"/>
-        <path d="M154 62c18-9 34-9 48 0M158 82c13-6 26-6 39 0" opacity=".75"/></svg></div>
-            <div class="svt-v98-hero-copy">
+      <div class="svt-v100-body">
+        <section class="svt-v100-panel active" data-dist-panel="deer" style="display:grid">
+          <article class="svt-v100-hero">
+            <div class="svt-v100-art"><svg viewBox="0 0 240 168" class="svt-v100-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="120" cy="86" r="72" fill="currentColor" opacity=".08" stroke="none"/><path d="M82 138h84M124 30v108M94 138l30-108 30 108M100 70h48M106 96h36M92 70l32-40 32 40M102 118h44"/><path d="M72 138V102h25v36M161 138v-22h22v22M68 102h31M157 116h29" opacity=".8"/><path d="M154 62c18-9 34-9 48 0M158 82c13-6 26-6 39 0" opacity=".75"/></svg></div>
+            <div class="svt-v100-hero-copy">
               <h3>DEER — Transilvania Nord, Transilvania Sud, Muntenia Nord</h3>
               <p>Portalul DEER permite accesul la date proprii de măsurare pentru locurile de consum din zonele de concesiune DEER. În funcție de tipul contorului și contul disponibil, poți consulta istoricul de consum și curbele de sarcină.</p>
             </div>
           </article>
-          <div class="svt-v98-grid">
-            <article class="svt-v98-steps">
+          <div class="svt-v100-content">
+            <article class="svt-v100-steps">
               <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg><span>Pașii de urmat</span></h4>
-              <ol><li><b>1</b><span>Intră în portalul DEER / Portal date.</span></li>
-<li><b>2</b><span>Creează cont sau autentifică-te.</span></li>
-<li><b>3</b><span>Selectează locul de consum / POD.</span></li>
-<li><b>4</b><span>Caută zona de date de măsurare / curbe de sarcină.</span></li>
-<li><b>5</b><span>Alege perioada dorită.</span></li>
-<li><b>6</b><span>Descarcă fișierul, preferabil Excel/CSV.</span></li></ol>
+              <ol><li><b>1</b><span>Intră în portalul DEER / Portal date.</span></li><li><b>2</b><span>Creează cont sau autentifică-te.</span></li><li><b>3</b><span>Selectează locul de consum / POD.</span></li><li><b>4</b><span>Caută zona de date de măsurare / curbe de sarcină.</span></li><li><b>5</b><span>Alege perioada dorită.</span></li><li><b>6</b><span>Descarcă fișierul, preferabil Excel/CSV.</span></li></ol>
             </article>
-            <aside class="svt-v98-info">
-              <div class="svt-v98-info-card">
+            <aside class="svt-v100-side">
+              <div class="svt-v100-info">
                 <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 13h6M9 17h5"/></svg><span>Ce fișier cauți?</span></h4>
                 <p>Excel/CSV cu dată, oră/interval și consum kWh.</p>
               </div>
-              <div class="svt-v98-info-card">
+              <div class="svt-v100-info">
                 <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 18h.01"/></svg><span>Atenție</span></h4>
                 <p>Datele disponibile depind de tipul contorului, istoricul disponibil și drepturile contului.</p>
               </div>
             </aside>
           </div>
-          <footer class="svt-v98-footer">
-            <a class="svt-v98-cta" href="https://www.distributie-energie.ro/date-de-masurare/" target="_blank" rel="noopener">↗ Deschide portalul oficial</a>
-            <div class="svt-v98-sources">
-              <strong>Surse și documentație</strong>
-              <div><a href="https://www.distributie-energie.ro/date-de-masurare/" target="_blank" rel="noopener">DEER — Date de măsurare ↗</a>
-<a href="https://www.distributie-energie.ro/acces-la-portal/" target="_blank" rel="noopener">DEER — Acces la portal ↗</a></div>
-            </div>
+          <footer class="svt-v100-footer">
+            <a class="svt-v100-cta" href="https://www.distributie-energie.ro/date-de-masurare/" target="_blank" rel="noopener">↗ Deschide portalul oficial</a>
+            <div class="svt-v100-sources"><strong>Surse și documentație</strong><div><a href="https://www.distributie-energie.ro/date-de-masurare/" target="_blank" rel="noopener">DEER — Date de măsurare ↗</a><a href="https://www.distributie-energie.ro/acces-la-portal/" target="_blank" rel="noopener">DEER — Acces la portal ↗</a></div></div>
           </footer>
-        </section><section class="svt-v98-panel" data-dist-panel="retele" style="display:none">
-          <article class="svt-v98-hero">
-            <div class="svt-v98-hero-art svt-v98-art-retele"><svg viewBox="0 0 240 168" class="svt-v98-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="120" cy="86" r="72" fill="currentColor" opacity=".08" stroke="none"/><path d="M82 138h84M124 30v108M94 138l30-108 30 108M100 70h48M106 96h36M92 70l32-40 32 40M102 118h44"/>
-        <path d="M72 138V102h25v36M161 138v-22h22v22M68 102h31M157 116h29" opacity=".8"/>
-        <path d="M154 62c18-9 34-9 48 0M158 82c13-6 26-6 39 0" opacity=".75"/></svg></div>
-            <div class="svt-v98-hero-copy">
+        </section><section class="svt-v100-panel" data-dist-panel="retele" style="display:none">
+          <article class="svt-v100-hero">
+            <div class="svt-v100-art"><svg viewBox="0 0 240 168" class="svt-v100-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="120" cy="86" r="72" fill="currentColor" opacity=".08" stroke="none"/><path d="M82 138h84M124 30v108M94 138l30-108 30 108M100 70h48M106 96h36M92 70l32-40 32 40M102 118h44"/><path d="M72 138V102h25v36M161 138v-22h22v22M68 102h31M157 116h29" opacity=".8"/><path d="M154 62c18-9 34-9 48 0M158 82c13-6 26-6 39 0" opacity=".75"/></svg></div>
+            <div class="svt-v100-hero-copy">
               <h3>Rețele Electrice România — Muntenia, Banat, Dobrogea</h3>
               <p>În contul Rețele Electrice, serviciul Date de consum include istoricul citirilor și, pentru contoare inteligente integrate în telecitire, curba de sarcină cu variația consumului în timp.</p>
             </div>
           </article>
-          <div class="svt-v98-grid">
-            <article class="svt-v98-steps">
+          <div class="svt-v100-content">
+            <article class="svt-v100-steps">
               <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg><span>Pașii de urmat</span></h4>
-              <ol><li><b>1</b><span>Intră în contul tău Rețele Electrice.</span></li>
-<li><b>2</b><span>Accesează Date de consum / Informații consum.</span></li>
-<li><b>3</b><span>Selectează locul de consum / POD.</span></li>
-<li><b>4</b><span>Deschide Curbe de sarcină.</span></li>
-<li><b>5</b><span>Alege perioada analizată.</span></li>
-<li><b>6</b><span>Exportă datele, dacă opțiunea este disponibilă.</span></li></ol>
+              <ol><li><b>1</b><span>Intră în contul tău Rețele Electrice.</span></li><li><b>2</b><span>Accesează Date de consum / Informații consum.</span></li><li><b>3</b><span>Selectează locul de consum / POD.</span></li><li><b>4</b><span>Deschide Curbe de sarcină.</span></li><li><b>5</b><span>Alege perioada analizată.</span></li><li><b>6</b><span>Exportă datele, dacă opțiunea este disponibilă.</span></li></ol>
             </article>
-            <aside class="svt-v98-info">
-              <div class="svt-v98-info-card">
+            <aside class="svt-v100-side">
+              <div class="svt-v100-info">
                 <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 13h6M9 17h5"/></svg><span>Ce fișier cauți?</span></h4>
                 <p>Date orare sau la 15 minute, ideal în Excel/CSV.</p>
               </div>
-              <div class="svt-v98-info-card">
+              <div class="svt-v100-info">
                 <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 18h.01"/></svg><span>Atenție</span></h4>
                 <p>Dacă ai contor clasic sau contor inteligent fără istoric disponibil, curba de sarcină poate să nu apară.</p>
               </div>
             </aside>
           </div>
-          <footer class="svt-v98-footer">
-            <a class="svt-v98-cta" href="https://www.reteleelectrice.ro/masurare/cum-masuram/" target="_blank" rel="noopener">↗ Deschide pagina Rețele Electrice</a>
-            <div class="svt-v98-sources">
-              <strong>Surse și documentație</strong>
-              <div><a href="https://www.reteleelectrice.ro/masurare/cum-masuram/" target="_blank" rel="noopener">Rețele Electrice — Date de consum / curba de sarcină ↗</a></div>
-            </div>
+          <footer class="svt-v100-footer">
+            <a class="svt-v100-cta" href="https://www.reteleelectrice.ro/masurare/cum-masuram/" target="_blank" rel="noopener">↗ Deschide pagina Rețele Electrice</a>
+            <div class="svt-v100-sources"><strong>Surse și documentație</strong><div><a href="https://www.reteleelectrice.ro/masurare/cum-masuram/" target="_blank" rel="noopener">Rețele Electrice — Date de consum / curba de sarcină ↗</a></div></div>
           </footer>
-        </section><section class="svt-v98-panel" data-dist-panel="delgaz" style="display:none">
-          <article class="svt-v98-hero">
-            <div class="svt-v98-hero-art svt-v98-art-delgaz"><svg viewBox="0 0 240 168" class="svt-v98-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="120" cy="86" r="72" fill="currentColor" opacity=".08" stroke="none"/><rect x="76" y="50" width="86" height="92" rx="16"/>
-        <path d="M76 78h86M98 102h38M98 120h28"/>
-        <path d="M119 134c17 0 29-13 29-30 0-13-8-21-17-29-4 10-12 15-18 23-4 5-7 11-7 19 0 10 5 17 13 17Z"/>
-        <path d="M84 142h70M162 92h24M162 112h16M60 92h16M66 112h10"/></svg></div>
-            <div class="svt-v98-hero-copy">
+        </section><section class="svt-v100-panel" data-dist-panel="delgaz" style="display:none">
+          <article class="svt-v100-hero">
+            <div class="svt-v100-art"><svg viewBox="0 0 240 168" class="svt-v100-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="120" cy="86" r="72" fill="currentColor" opacity=".08" stroke="none"/><rect x="76" y="50" width="86" height="92" rx="16"/><path d="M76 78h86M98 102h38M98 120h28"/><path d="M119 134c17 0 29-13 29-30 0-13-8-21-17-29-4 10-12 15-18 23-4 5-7 11-7 19 0 10 5 17 13 17Z"/><path d="M84 142h70M162 92h24M162 112h16M60 92h16M66 112h10"/></svg></div>
+            <div class="svt-v100-hero-copy">
               <h3>Delgaz Grid — Moldova / Nord-Est</h3>
               <p>Pentru contoarele SMART, Delgaz Grid permite consultarea datelor de măsură în contul de client, în zona de grafice și rapoarte date măsură. Raportul se solicită din portal și se descarcă după procesare.</p>
             </div>
           </article>
-          <div class="svt-v98-grid">
-            <article class="svt-v98-steps">
+          <div class="svt-v100-content">
+            <article class="svt-v100-steps">
               <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg><span>Pașii de urmat</span></h4>
-              <ol><li><b>1</b><span>Intră în contul Delgaz.</span></li>
-<li><b>2</b><span>Accesează Grafice și rapoarte date măsură.</span></li>
-<li><b>3</b><span>Creează o solicitare nouă de raport.</span></li>
-<li><b>4</b><span>Selectează locul de consum / POD.</span></li>
-<li><b>5</b><span>Alege perioada și tipul raportului.</span></li>
-<li><b>6</b><span>Descarcă raportul după ce statusul este finalizat.</span></li></ol>
+              <ol><li><b>1</b><span>Intră în contul Delgaz.</span></li><li><b>2</b><span>Accesează Grafice și rapoarte date măsură.</span></li><li><b>3</b><span>Creează o solicitare nouă de raport.</span></li><li><b>4</b><span>Selectează locul de consum / POD.</span></li><li><b>5</b><span>Alege perioada și tipul raportului.</span></li><li><b>6</b><span>Descarcă raportul după ce statusul este finalizat.</span></li></ol>
             </article>
-            <aside class="svt-v98-info">
-              <div class="svt-v98-info-card">
+            <aside class="svt-v100-side">
+              <div class="svt-v100-info">
                 <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 13h6M9 17h5"/></svg><span>Ce fișier cauți?</span></h4>
                 <p>Raport de consumuri / date măsură, preferabil tabelar.</p>
               </div>
-              <div class="svt-v98-info-card">
+              <div class="svt-v100-info">
                 <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 18h.01"/></svg><span>Atenție</span></h4>
                 <p>Datele sunt legate de contoarele SMART și perioada disponibilă în portal.</p>
               </div>
             </aside>
           </div>
-          <footer class="svt-v98-footer">
-            <a class="svt-v98-cta" href="https://delgaz.ro/platforma-smart-gestionare-consum" target="_blank" rel="noopener">↗ Deschide pagina oficială Delgaz</a>
-            <div class="svt-v98-sources">
-              <strong>Surse și documentație</strong>
-              <div><a href="https://delgaz.ro/platforma-smart-gestionare-consum" target="_blank" rel="noopener">Delgaz Grid — Rapoarte date măsură ↗</a></div>
-            </div>
+          <footer class="svt-v100-footer">
+            <a class="svt-v100-cta" href="https://delgaz.ro/platforma-smart-gestionare-consum" target="_blank" rel="noopener">↗ Deschide pagina oficială Delgaz</a>
+            <div class="svt-v100-sources"><strong>Surse și documentație</strong><div><a href="https://delgaz.ro/platforma-smart-gestionare-consum" target="_blank" rel="noopener">Delgaz Grid — Rapoarte date măsură ↗</a></div></div>
           </footer>
-        </section><section class="svt-v98-panel" data-dist-panel="oltenia" style="display:none">
-          <article class="svt-v98-hero">
-            <div class="svt-v98-hero-art svt-v98-art-oltenia"><svg viewBox="0 0 240 168" class="svt-v98-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="120" cy="86" r="72" fill="currentColor" opacity=".08" stroke="none"/><path d="M70 138V58h24v80M94 86h36v52M130 72h34v66M62 138h112"/>
-        <path d="M96 62c30-18 56-17 82 3M96 86c31-14 55-13 78 4M96 110c30-8 54-6 78 8" opacity=".75"/>
-        <circle cx="184" cy="126" r="18"/><path d="M176 126h16M184 118v16"/></svg></div>
-            <div class="svt-v98-hero-copy">
+        </section><section class="svt-v100-panel" data-dist-panel="oltenia" style="display:none">
+          <article class="svt-v100-hero">
+            <div class="svt-v100-art"><svg viewBox="0 0 240 168" class="svt-v100-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="120" cy="86" r="72" fill="currentColor" opacity=".08" stroke="none"/><path d="M70 138V58h24v80M94 86h36v52M130 72h34v66M62 138h112"/><path d="M96 62c30-18 56-17 82 3M96 86c31-14 55-13 78 4M96 110c30-8 54-6 78 8" opacity=".75"/><circle cx="184" cy="126" r="18"/><path d="M176 126h16M184 118v16"/></svg></div>
+            <div class="svt-v100-hero-copy">
               <h3>Distribuție Energie Oltenia — Portal date măsurate / DEO Connect</h3>
               <p>În portalul de date măsurate, tabul Reads permite vizualizarea istoricului citirilor și a curbei de sarcină. Datele pot fi afișate tabelar/grafic la interval de 15 minute și exportate sub formă de tabel.</p>
             </div>
           </article>
-          <div class="svt-v98-grid">
-            <article class="svt-v98-steps">
+          <div class="svt-v100-content">
+            <article class="svt-v100-steps">
               <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg><span>Pașii de urmat</span></h4>
-              <ol><li><b>1</b><span>Intră în portalul de date măsurate / DEO Connect.</span></li>
-<li><b>2</b><span>Autentifică-te și selectează locul de consum.</span></li>
-<li><b>3</b><span>Deschide tabul Reads.</span></li>
-<li><b>4</b><span>În subtabul de selecție, alege perioada și tipul datelor.</span></li>
-<li><b>5</b><span>Verifică afișarea tabelară/grafică.</span></li>
-<li><b>6</b><span>Intră în tabul de export și descarcă tabelul.</span></li></ol>
+              <ol><li><b>1</b><span>Intră în portalul de date măsurate / DEO Connect.</span></li><li><b>2</b><span>Autentifică-te și selectează locul de consum.</span></li><li><b>3</b><span>Deschide tabul Reads.</span></li><li><b>4</b><span>În subtabul de selecție, alege perioada și tipul datelor.</span></li><li><b>5</b><span>Verifică afișarea tabelară/grafică.</span></li><li><b>6</b><span>Intră în tabul de export și descarcă tabelul.</span></li></ol>
             </article>
-            <aside class="svt-v98-info">
-              <div class="svt-v98-info-card">
+            <aside class="svt-v100-side">
+              <div class="svt-v100-info">
                 <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 13h6M9 17h5"/></svg><span>Ce fișier cauți?</span></h4>
                 <p>Tabel exportat cu valori la 15 minute sau orare.</p>
               </div>
-              <div class="svt-v98-info-card">
+              <div class="svt-v100-info">
                 <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 18h.01"/></svg><span>Atenție</span></h4>
                 <p>Pentru vizualizare, perioada poate fi limitată în portal; verifică exportul pentru intervalul necesar.</p>
               </div>
             </aside>
           </div>
-          <footer class="svt-v98-footer">
-            <a class="svt-v98-cta" href="https://portal.distributieoltenia.ro/" target="_blank" rel="noopener">↗ Deschide portalul DEO Connect</a>
-            <div class="svt-v98-sources">
-              <strong>Surse și documentație</strong>
-              <div><a href="https://portal.distributieoltenia.ro/term-condition" target="_blank" rel="noopener">DEO Connect — termeni platformă ↗</a>
-<a href="https://www.distributieoltenia.ro/ro/suport/accesare-istoric-de-consum.html" target="_blank" rel="noopener">Distribuție Oltenia — istoric de consum ↗</a></div>
-            </div>
+          <footer class="svt-v100-footer">
+            <a class="svt-v100-cta" href="https://portal.distributieoltenia.ro/" target="_blank" rel="noopener">↗ Deschide portalul DEO Connect</a>
+            <div class="svt-v100-sources"><strong>Surse și documentație</strong><div><a href="https://portal.distributieoltenia.ro/term-condition" target="_blank" rel="noopener">DEO Connect — termeni platformă ↗</a><a href="https://www.distributieoltenia.ro/ro/suport/accesare-istoric-de-consum.html" target="_blank" rel="noopener">Distribuție Oltenia — istoric de consum ↗</a></div></div>
           </footer>
-        </section><section class="svt-v98-panel" data-dist-panel="furnizor" style="display:none">
-          <article class="svt-v98-hero">
-            <div class="svt-v98-hero-art svt-v98-art-furnizor"><svg viewBox="0 0 240 168" class="svt-v98-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="120" cy="86" r="72" fill="currentColor" opacity=".08" stroke="none"/><rect x="78" y="34" width="58" height="100" rx="14"/>
-        <circle cx="107" cy="62" r="13"/>
-        <path d="M88 102h38M88 116h30M144 70h34v62h-34zM152 86h18M152 102h18"/>
-        <circle cx="166" cy="128" r="19"/><path d="m158 128 6 6 13-15"/></svg></div>
-            <div class="svt-v98-hero-copy">
+        </section><section class="svt-v100-panel" data-dist-panel="furnizor" style="display:none">
+          <article class="svt-v100-hero">
+            <div class="svt-v100-art"><svg viewBox="0 0 240 168" class="svt-v100-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="120" cy="86" r="72" fill="currentColor" opacity=".08" stroke="none"/><rect x="78" y="34" width="58" height="100" rx="14"/><circle cx="107" cy="62" r="13"/><path d="M88 102h38M88 116h30M144 70h34v62h-34zM152 86h18M152 102h18"/><circle cx="166" cy="128" r="19"/><path d="m158 128 6 6 13-15"/></svg></div>
+            <div class="svt-v100-hero-copy">
               <h3>Furnizor / aplicație client — variantă de verificare</h3>
               <p>Aplicația furnizorului poate afișa facturi, indexuri și istoric de consum, dar nu garantează export orar sau la 15 minute. Pentru curba de sarcină completă, verifică mai întâi portalul distribuitorului.</p>
             </div>
           </article>
-          <div class="svt-v98-grid">
-            <article class="svt-v98-steps">
+          <div class="svt-v100-content">
+            <article class="svt-v100-steps">
               <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg><span>Pașii de urmat</span></h4>
-              <ol><li><b>1</b><span>Verifică factura pentru codul POD și distribuitor.</span></li>
-<li><b>2</b><span>Intră în aplicația furnizorului.</span></li>
-<li><b>3</b><span>Caută zone precum Consum, Istoric consum, Date consum, Rapoarte.</span></li>
-<li><b>4</b><span>Verifică dacă există export orar / 15 minute.</span></li>
-<li><b>5</b><span>Dacă ai doar consum lunar, folosește varianta Am doar factura lunară.</span></li>
-<li><b>6</b><span>Pentru analiză exactă, solicită datele măsurate de la distribuitor.</span></li></ol>
+              <ol><li><b>1</b><span>Verifică factura pentru codul POD și distribuitor.</span></li><li><b>2</b><span>Intră în aplicația furnizorului.</span></li><li><b>3</b><span>Caută zone precum Consum, Istoric consum, Date consum, Rapoarte.</span></li><li><b>4</b><span>Verifică dacă există export orar / 15 minute.</span></li><li><b>5</b><span>Dacă ai doar consum lunar, folosește varianta Am doar factura lunară.</span></li><li><b>6</b><span>Pentru analiză exactă, solicită datele măsurate de la distribuitor.</span></li></ol>
             </article>
-            <aside class="svt-v98-info">
-              <div class="svt-v98-info-card">
+            <aside class="svt-v100-side">
+              <div class="svt-v100-info">
                 <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 13h6M9 17h5"/></svg><span>Ce fișier cauți?</span></h4>
                 <p>Export orar/15 minute, nu doar factura lunară.</p>
               </div>
-              <div class="svt-v98-info-card">
+              <div class="svt-v100-info">
                 <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 18h.01"/></svg><span>Atenție</span></h4>
                 <p>Factura lunară nu este curba de sarcină. Este utilă pentru estimare, nu pentru analiză orară exactă.</p>
               </div>
             </aside>
           </div>
-          <footer class="svt-v98-footer">
-            <a class="svt-v98-cta" href="https://www.anre.ro/ro/energie-electrica" target="_blank" rel="noopener">↗ Verifică în aplicația furnizorului</a>
-            <div class="svt-v98-sources">
-              <strong>Surse și documentație</strong>
-              <div><a href="https://www.ppcenergy.ro/servicii-digitale/aplicatie-myppc/" target="_blank" rel="noopener">myPPC — facturi, index, consum, servicii ↗</a>
-<a href="https://www.eon.ro/transmitere-index" target="_blank" rel="noopener">E.ON — cont Myline / index ↗</a></div>
-            </div>
+          <footer class="svt-v100-footer">
+            <a class="svt-v100-cta" href="https://www.anre.ro/ro/energie-electrica" target="_blank" rel="noopener">↗ Verifică în aplicația furnizorului</a>
+            <div class="svt-v100-sources"><strong>Surse și documentație</strong><div><a href="https://www.ppcenergy.ro/servicii-digitale/aplicatie-myppc/" target="_blank" rel="noopener">myPPC — facturi, index, consum, servicii ↗</a><a href="https://www.eon.ro/transmitere-index" target="_blank" rel="noopener">E.ON — cont Myline / index ↗</a></div></div>
           </footer>
         </section>
       </div>
     </div>
   </div>
 
-  <script>/* v98 tabs robust listener */
+  <script>
     (function(){
       const modal = document.getElementById('distributorHelpModal');
-      if(!modal) return;
+      if(!modal || modal.dataset.v100TabsReady === 'true') return;
+      modal.dataset.v100TabsReady = 'true';
       const tabs = modal.querySelectorAll('[data-dist-tab]');
       const panels = modal.querySelectorAll('[data-dist-panel]');
       tabs.forEach(tab => {
