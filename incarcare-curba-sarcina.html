@@ -4557,7 +4557,83 @@
       #distributorHelpModal.svt-help101-backdrop .svt-help101-body{padding:0 18px 18px!important;}
     }
 
-  </style>
+  
+/* SVT v104 - invoice monthly compact fields hotfix
+   Scope: strict pentru blocul factura lunara: .invoice-grid / .invoice-attach.
+   Nu schimba hero, modal, row-uri globale sau uploadul principal de la pasul 3. */
+.invoice-grid{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+  gap:10px 12px!important;
+  width:auto!important;
+  max-width:760px!important;
+}
+.invoice-grid .field{
+  flex:0 0 auto!important;
+  width:auto!important;
+  max-width:none!important;
+  min-width:0!important;
+}
+.invoice-grid .field:nth-child(1){width:154px!important;max-width:154px!important;}
+.invoice-grid .field:nth-child(2){width:150px!important;max-width:150px!important;}
+.invoice-grid .field:nth-child(3){width:158px!important;max-width:158px!important;}
+.invoice-grid .field:nth-child(4){width:166px!important;max-width:166px!important;}
+.invoice-grid .field label{
+  display:block!important;
+  max-width:100%!important;
+  margin:0 0 5px!important;
+  font-size:11.5px!important;
+  line-height:1.05!important;
+  letter-spacing:-.01em!important;
+  white-space:normal!important;
+}
+.invoice-grid .field-hint{
+  max-width:100%!important;
+  font-size:10.2px!important;
+  line-height:1.18!important;
+  margin-top:0!important;
+}
+.invoice-grid .control,
+.invoice-grid input.control,
+.invoice-grid select.control{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  height:36px!important;
+  padding:0 10px!important;
+  font-size:12.5px!important;
+  border-radius:10px!important;
+}
+.invoice-grid select.control{
+  padding-right:24px!important;
+  text-overflow:ellipsis!important;
+}
+.invoice-attach{
+  width:100%!important;
+  justify-content:flex-end!important;
+  margin-top:10px!important;
+}
+.invoice-attach .file-inline{
+  margin-left:auto!important;
+  max-width:430px!important;
+}
+@media (max-width:720px){
+  .invoice-grid{display:grid!important;grid-template-columns:1fr 1fr!important;max-width:100%!important;}
+  .invoice-grid .field,
+  .invoice-grid .field:nth-child(1),
+  .invoice-grid .field:nth-child(2),
+  .invoice-grid .field:nth-child(3),
+  .invoice-grid .field:nth-child(4){width:auto!important;max-width:none!important;}
+  .invoice-attach{justify-content:flex-start!important;}
+  .invoice-attach .file-inline{margin-left:0!important;max-width:100%!important;}
+}
+@media (max-width:460px){
+  .invoice-grid{grid-template-columns:1fr!important;}
+}
+/* /SVT v104 - invoice monthly compact fields hotfix */
+</style>
 </head>
 <body data-energy-mode="electric">
   <div class="page">
@@ -5259,3 +5335,4 @@
 
 </body>
 </html>
+
