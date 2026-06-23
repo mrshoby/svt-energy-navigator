@@ -26,6 +26,7 @@
   <!-- SVT V95 PROFESSIONAL HELP MODAL REBUILD -->
   <!-- SVT V97 MODAL MATCH IMAGES + LABEL WRAP FIX -->
   <!-- SVT V98 MODAL REBUILD UPLOAD ALIGN HARD FIX -->
+  <!-- SVT V99 MODAL 1TO1 TIGHT INVOICE FIELDS -->
   <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
   <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -3529,6 +3530,289 @@
       }
     }
 
+  
+    /* v99: closer 1:1 modal proportions from reference images */
+    #distributorHelpModal .svt-v98-modal{
+      width:min(1128px,calc(100vw - 42px))!important;
+      max-height:min(88vh,856px)!important;
+      border-radius:27px!important;
+      background:#fff!important;
+      border:1px solid #dfe8ef!important;
+      box-shadow:0 40px 92px rgba(12,22,42,.34)!important;
+    }
+    #distributorHelpModal .svt-v98-head{
+      padding:32px 88px 18px!important;
+      text-align:center!important;
+    }
+    #distributorHelpModal .svt-v98-head h2{
+      font-size:34px!important;
+      line-height:1.04!important;
+      letter-spacing:-.048em!important;
+      font-weight:1000!important;
+    }
+    #distributorHelpModal .svt-v98-head p{
+      margin-top:12px!important;
+      font-size:15px!important;
+      color:#40536c!important;
+      font-weight:720!important;
+    }
+    #distributorHelpModal .svt-v98-close{
+      right:28px!important;
+      top:24px!important;
+      width:48px!important;
+      height:48px!important;
+      border-radius:999px!important;
+    }
+    #distributorHelpModal .svt-v98-tabs{
+      padding:8px 32px 20px!important;
+      gap:12px!important;
+      grid-template-columns:148px 210px 180px 226px 220px!important;
+      justify-content:center!important;
+    }
+    #distributorHelpModal .svt-v98-tab{
+      height:52px!important;
+      border-radius:15px!important;
+      border:1px solid #dce5ec!important;
+      font-size:13.6px!important;
+      font-weight:920!important;
+      gap:12px!important;
+      box-shadow:0 2px 10px rgba(15,23,42,.025)!important;
+    }
+    #distributorHelpModal .svt-v98-tab.active{
+      background:linear-gradient(135deg,#07a844,#078f3d)!important;
+      box-shadow:0 18px 30px rgba(7,148,63,.25)!important;
+    }
+    #distributorHelpModal .svt-v98-body{
+      padding:0 32px 24px!important;
+      max-height:calc(min(88vh,856px) - 160px)!important;
+    }
+    #distributorHelpModal .svt-v98-panel{
+      gap:16px!important;
+    }
+    #distributorHelpModal .svt-v98-hero{
+      min-height:168px!important;
+      grid-template-columns:220px 1fr!important;
+      padding:18px 28px!important;
+      border-radius:18px!important;
+      border:1px solid #dcece2!important;
+      background:linear-gradient(180deg,#fbfefd 0%,#f8fdf9 100%)!important;
+    }
+    #distributorHelpModal .svt-v98-hero-art{
+      width:180px!important;
+      height:132px!important;
+    }
+    #distributorHelpModal .svt-v98-illustration{
+      width:180px!important;
+      height:132px!important;
+    }
+    #distributorHelpModal .svt-v98-hero-copy h3{
+      font-size:23px!important;
+      line-height:1.18!important;
+      margin-bottom:10px!important;
+    }
+    #distributorHelpModal .svt-v98-hero-copy p{
+      max-width:760px!important;
+      font-size:15px!important;
+      line-height:1.55!important;
+      font-weight:650!important;
+    }
+    #distributorHelpModal .svt-v98-grid{
+      grid-template-columns:minmax(0,1.04fr) minmax(360px,.96fr)!important;
+      gap:16px!important;
+    }
+    #distributorHelpModal .svt-v98-steps,
+    #distributorHelpModal .svt-v98-info-card{
+      border-radius:18px!important;
+      border:1px solid #dfe8ef!important;
+    }
+    #distributorHelpModal .svt-v98-steps{
+      padding:18px 18px 14px!important;
+    }
+    #distributorHelpModal .svt-v98-info-card{
+      min-height:126px!important;
+      padding:18px!important;
+    }
+    #distributorHelpModal .svt-v98-steps h4,
+    #distributorHelpModal .svt-v98-info-card h4{
+      font-size:18px!important;
+      gap:12px!important;
+      margin-bottom:12px!important;
+    }
+    #distributorHelpModal .svt-v98-steps h4 svg,
+    #distributorHelpModal .svt-v98-info-card h4 svg{
+      width:22px!important;
+      height:22px!important;
+      padding:10px!important;
+      border-radius:12px!important;
+      background:#eef8f1!important;
+    }
+    #distributorHelpModal .svt-v98-steps ol{
+      padding-top:14px!important;
+      gap:9px!important;
+    }
+    #distributorHelpModal .svt-v98-steps li{
+      grid-template-columns:24px 1fr!important;
+      gap:12px!important;
+    }
+    #distributorHelpModal .svt-v98-steps li b{
+      width:24px!important;
+      height:24px!important;
+      font-size:12px!important;
+      background:#07943f!important;
+    }
+    #distributorHelpModal .svt-v98-steps li span,
+    #distributorHelpModal .svt-v98-info-card p{
+      font-size:14px!important;
+      line-height:1.55!important;
+      font-weight:700!important;
+      color:#253754!important;
+    }
+    #distributorHelpModal .svt-v98-footer{
+      grid-template-columns:370px 1fr!important;
+      gap:18px!important;
+      margin-top:4px!important;
+      padding-top:18px!important;
+    }
+    #distributorHelpModal .svt-v98-cta{
+      min-height:54px!important;
+      border-radius:14px!important;
+      font-size:14px!important;
+      font-weight:1000!important;
+    }
+
+    /* v99: invoice monthly fields visually shrink to label width and upload aligns to row 3 right edge */
+    #invoiceBox{
+      position:relative!important;
+      width:100%!important;
+      min-height:72px!important;
+      padding-top:10px!important;
+      padding-right:338px!important;
+      box-sizing:border-box!important;
+    }
+    #invoiceBox[style*="grid"]{
+      display:block!important;
+    }
+    #invoiceBox .invoice-grid{
+      display:grid!important;
+      grid-template-columns:86px 76px 112px 82px!important;
+      width:386px!important;
+      min-width:386px!important;
+      max-width:386px!important;
+      gap:0 10px!important;
+      align-items:start!important;
+      justify-content:start!important;
+    }
+    #invoiceBox .field{
+      min-width:0!important;
+      max-width:112px!important;
+      gap:4px!important;
+    }
+    #invoiceBox .field:has(#invoiceConsumption){
+      width:86px!important; min-width:86px!important; max-width:86px!important;
+    }
+    #invoiceBox .field:has(#invoiceDays){
+      width:76px!important; min-width:76px!important; max-width:76px!important;
+    }
+    #invoiceBox .field:has(#invoiceValue){
+      width:112px!important; min-width:112px!important; max-width:112px!important;
+    }
+    #invoiceBox .field:has(#workSchedule){
+      width:82px!important; min-width:82px!important; max-width:82px!important;
+    }
+    #invoiceBox .field label{
+      display:block!important;
+      white-space:normal!important;
+      overflow:visible!important;
+      text-overflow:clip!important;
+      min-height:25px!important;
+      font-size:9px!important;
+      line-height:1.05!important;
+      font-weight:1000!important;
+      color:#071b38!important;
+      margin:0!important;
+    }
+    #invoiceBox .field:has(#invoiceConsumption) label{width:86px!important; max-width:86px!important;}
+    #invoiceBox .field:has(#invoiceDays) label{width:76px!important; max-width:76px!important;}
+    #invoiceBox .field:has(#invoiceValue) label{width:112px!important; max-width:112px!important;}
+    #invoiceBox .field:has(#workSchedule) label{width:82px!important; max-width:82px!important;}
+    #invoiceBox .field label br{
+      display:block!important;
+    }
+    #invoiceBox .field .control{
+      height:30px!important;
+      padding:0 6px!important;
+      font-size:10.2px!important;
+      border-radius:8px!important;
+      box-sizing:border-box!important;
+    }
+    #invoiceConsumption{width:86px!important; min-width:86px!important; max-width:86px!important;}
+    #invoiceDays{width:76px!important; min-width:76px!important; max-width:76px!important;}
+    #invoiceValue{width:112px!important; min-width:112px!important; max-width:112px!important;}
+    #workSchedule{width:82px!important; min-width:82px!important; max-width:82px!important;}
+    #invoiceBox .field-hint{
+      display:none!important;
+    }
+    #invoiceBox .invoice-attach{
+      position:absolute!important;
+      right:0!important;
+      top:50%!important;
+      transform:translateY(-50%)!important;
+      width:var(--svt-combo-w,318px)!important;
+      min-width:var(--svt-combo-w,318px)!important;
+      max-width:var(--svt-combo-w,318px)!important;
+      margin:0!important;
+      padding:0!important;
+    }
+    #invoiceBox #invoiceDrop.file-inline{
+      width:var(--svt-combo-w,318px)!important;
+      min-width:var(--svt-combo-w,318px)!important;
+      max-width:var(--svt-combo-w,318px)!important;
+      margin:0!important;
+      justify-self:end!important;
+    }
+
+    @media(max-width:1100px){
+      #distributorHelpModal .svt-v98-tabs{
+        grid-template-columns:repeat(2,minmax(0,1fr))!important;
+      }
+      #distributorHelpModal .svt-v98-hero,
+      #distributorHelpModal .svt-v98-grid,
+      #distributorHelpModal .svt-v98-footer{
+        grid-template-columns:1fr!important;
+      }
+      #invoiceBox{
+        padding-right:0!important;
+      }
+      #invoiceBox .invoice-grid{
+        width:100%!important;
+        min-width:0!important;
+        max-width:100%!important;
+        grid-template-columns:repeat(2,minmax(0,1fr))!important;
+        gap:8px 10px!important;
+      }
+      #invoiceBox .field,
+      #invoiceBox .field label,
+      #invoiceBox .field .control,
+      #invoiceConsumption,#invoiceDays,#invoiceValue,#workSchedule{
+        width:100%!important;
+        min-width:0!important;
+        max-width:100%!important;
+      }
+      #invoiceBox .invoice-attach{
+        position:static!important;
+        transform:none!important;
+        margin-top:12px!important;
+        width:100%!important;
+        min-width:0!important;
+        max-width:100%!important;
+      }
+      #invoiceBox #invoiceDrop.file-inline{
+        width:100%!important;
+        min-width:0!important;
+        max-width:100%!important;
+      }
+    }
+
   </style>
 </head>
 <body data-energy-mode="electric">
@@ -3609,10 +3893,10 @@
                   <div class="field">
                     <label for="workSchedule">Program de<br>lucru</label>
                     <select class="control" id="workSchedule">
-                      <option>Luni–Vineri, 8–18</option>
-                      <option>Luni–Vineri, 6–22</option>
-                      <option>3 schimburi (24/7)</option>
-                      <option>Luni–Sâmbătă</option>
+                      <option>L-V, 8-18</option>
+                      <option>L-V, 6-22</option>
+                      <option>24/7</option>
+                      <option>L-S, 8-18</option>
                       <option>Alt program</option>
                     </select>
                     <div class="field-hint">Ne ajută să repartizăm mai realist consumul pe ore.</div>
