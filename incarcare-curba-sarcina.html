@@ -4634,6 +4634,122 @@
 }
 /* /SVT v104 - invoice monthly compact fields hotfix */
 </style>
+<!-- svt-v107-invoice-fields-final-compact START -->
+<style id="svt-v107-invoice-fields-final-compact">
+  /*
+    SVT v107 — hotfix chirurgical pentru zona:
+    2 Sursa datelor -> Am doar factura lunara.
+    Nu schimba layoutul general al paginii si nu atinge modalul.
+  */
+
+  #invoicePanel .invoice-grid {
+    display: grid !important;
+    grid-template-columns: max-content max-content max-content max-content minmax(320px, 1fr) !important;
+    align-items: end !important;
+    column-gap: 14px !important;
+    row-gap: 10px !important;
+  }
+
+  #invoicePanel .invoice-grid > .field {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    justify-self: start !important;
+  }
+
+  #invoicePanel .invoice-grid > .field:nth-of-type(1),
+  #invoicePanel .invoice-grid > .field:nth-of-type(1) .control,
+  #invoicePanel .invoice-grid > .field:nth-of-type(1) input,
+  #invoicePanel .invoice-grid > .field:nth-of-type(1) select {
+    width: 96px !important;
+    min-width: 96px !important;
+    max-width: 96px !important;
+  }
+
+  #invoicePanel .invoice-grid > .field:nth-of-type(2),
+  #invoicePanel .invoice-grid > .field:nth-of-type(2) .control,
+  #invoicePanel .invoice-grid > .field:nth-of-type(2) input,
+  #invoicePanel .invoice-grid > .field:nth-of-type(2) select {
+    width: 78px !important;
+    min-width: 78px !important;
+    max-width: 78px !important;
+  }
+
+  #invoicePanel .invoice-grid > .field:nth-of-type(3),
+  #invoicePanel .invoice-grid > .field:nth-of-type(3) .control,
+  #invoicePanel .invoice-grid > .field:nth-of-type(3) input,
+  #invoicePanel .invoice-grid > .field:nth-of-type(3) select {
+    width: 118px !important;
+    min-width: 118px !important;
+    max-width: 118px !important;
+  }
+
+  #invoicePanel .invoice-grid > .field:nth-of-type(4),
+  #invoicePanel .invoice-grid > .field:nth-of-type(4) .control,
+  #invoicePanel .invoice-grid > .field:nth-of-type(4) input,
+  #invoicePanel .invoice-grid > .field:nth-of-type(4) select {
+    width: 124px !important;
+    min-width: 124px !important;
+    max-width: 124px !important;
+  }
+
+  #invoicePanel .invoice-grid > .field .control,
+  #invoicePanel .invoice-grid > .field input,
+  #invoicePanel .invoice-grid > .field select {
+    box-sizing: border-box !important;
+    height: 38px !important;
+  }
+
+  #invoicePanel .invoice-grid > .field label,
+  #invoicePanel .invoice-grid > .field .label,
+  #invoicePanel .invoice-grid > .field .field-label {
+    display: block !important;
+    line-height: 1.12 !important;
+    margin-bottom: 8px !important;
+    white-space: normal !important;
+  }
+
+  #invoicePanel .invoice-grid > .invoice-attach,
+  #invoicePanel .invoice-grid > .upload-box,
+  #invoicePanel .invoice-grid > .uploadCard {
+    justify-self: end !important;
+    align-self: end !important;
+    margin-left: auto !important;
+    width: min(396px, 100%) !important;
+    min-width: 320px !important;
+  }
+
+  @media (max-width: 920px) {
+    #invoicePanel .invoice-grid {
+      grid-template-columns: max-content max-content max-content !important;
+    }
+
+    #invoicePanel .invoice-grid > .invoice-attach,
+    #invoicePanel .invoice-grid > .upload-box,
+    #invoicePanel .invoice-grid > .uploadCard {
+      grid-column: 1 / -1 !important;
+      justify-self: stretch !important;
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+  }
+
+  @media (max-width: 640px) {
+    #invoicePanel .invoice-grid {
+      grid-template-columns: 1fr 1fr !important;
+    }
+
+    #invoicePanel .invoice-grid > .field,
+    #invoicePanel .invoice-grid > .field .control,
+    #invoicePanel .invoice-grid > .field input,
+    #invoicePanel .invoice-grid > .field select {
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: none !important;
+    }
+  }
+</style>
+<!-- svt-v107-invoice-fields-final-compact END -->
 </head>
 <body data-energy-mode="electric">
   <div class="page">
