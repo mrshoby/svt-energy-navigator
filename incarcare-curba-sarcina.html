@@ -27,6 +27,7 @@
   <!-- SVT V99 MODAL 1TO1 TIGHT INVOICE FIELDS -->
   <!-- SVT V100 MODAL CLEAN 1TO1 AND INVOICE SHRINK -->
   <!-- SVT V101 HELP MODAL FROM ZERO -->
+  <!-- SVT V137 INVOICE UPLOAD MATCH ROW3 + COMPACT LABEL WIDTHS -->
   <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
   <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -4557,291 +4558,772 @@
       #distributorHelpModal.svt-help101-backdrop .svt-help101-body{padding:0 18px 18px!important;}
     }
 
-  
-/* SVT v104 - invoice monthly compact fields hotfix
-   Scope: strict pentru blocul factura lunara: .invoice-grid / .invoice-attach.
-   Nu schimba hero, modal, row-uri globale sau uploadul principal de la pasul 3. */
-.invoice-grid{
+<!-- svt-v136-true-v132-invoice-baseline START -->
+<style id="svt-v136-true-v132-invoice-baseline">
+  /* v136: restore the real v132-style invoice state only for row 2 / factura lunară.
+     Scope: #invoiceBox only. It must remain hidden until the user clicks „Am doar factura lunară”. */
+  #invoiceBox[style*="display: none"],
+  #invoiceBox[style*="display:none"]{
+    display:none!important;
+  }
+
+  #invoiceBox[style*="display: grid"],
+  #invoiceBox[style*="display:grid"]{
+    grid-column:1 / -1!important;
+    width:100%!important;
+    margin-top:14px!important;
+    padding:12px 0 0!important;
+    border-top:1px solid #e6eef6!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    display:grid!important;
+    grid-template-columns:max-content minmax(360px, 1fr)!important;
+    column-gap:36px!important;
+    row-gap:0!important;
+    align-items:end!important;
+  }
+
+  #invoiceBox[style*="display: grid"] .invoice-grid,
+  #invoiceBox[style*="display:grid"] .invoice-grid{
+    grid-column:1!important;
+    display:flex!important;
+    flex-direction:row!important;
+    flex-wrap:nowrap!important;
+    align-items:flex-end!important;
+    justify-content:flex-start!important;
+    gap:14px!important;
+    width:auto!important;
+    max-width:none!important;
+    min-width:0!important;
+    margin:0!important;
+    padding:0!important;
+  }
+
+  #invoiceBox[style*="display: grid"] .invoice-field,
+  #invoiceBox[style*="display:grid"] .invoice-field{
+    flex:0 0 auto!important;
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:flex-end!important;
+    align-items:flex-start!important;
+    gap:8px!important;
+    margin:0!important;
+    padding:0!important;
+    min-width:0!important;
+    height:auto!important;
+    min-height:0!important;
+    transform:none!important;
+  }
+
+  #invoiceBox .invoice-consumption-field{width:78px!important;max-width:78px!important;}
+  #invoiceBox .invoice-days-field{width:76px!important;max-width:76px!important;}
+  #invoiceBox .invoice-value-field{width:104px!important;max-width:104px!important;}
+  #invoiceBox .invoice-program-field{width:184px!important;max-width:184px!important;}
+
+  #invoiceBox[style*="display: grid"] .invoice-field label,
+  #invoiceBox[style*="display:grid"] .invoice-field label{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    margin:0!important;
+    padding:0!important;
+    position:static!important;
+    top:auto!important;
+    transform:none!important;
+    color:#071826!important;
+    font-size:11.2px!important;
+    line-height:1.04!important;
+    font-weight:900!important;
+    letter-spacing:-.035em!important;
+    white-space:normal!important;
+    text-align:left!important;
+  }
+
+  #invoiceBox[style*="display: grid"] .invoice-control,
+  #invoiceBox[style*="display:grid"] .invoice-control,
+  #invoiceBox[style*="display: grid"] #invoiceConsumption,
+  #invoiceBox[style*="display: grid"] #invoiceDays,
+  #invoiceBox[style*="display: grid"] #invoiceValue,
+  #invoiceBox[style*="display: grid"] #workSchedule,
+  #invoiceBox[style*="display:grid"] #invoiceConsumption,
+  #invoiceBox[style*="display:grid"] #invoiceDays,
+  #invoiceBox[style*="display:grid"] #invoiceValue,
+  #invoiceBox[style*="display:grid"] #workSchedule{
+    height:38px!important;
+    min-height:38px!important;
+    max-height:38px!important;
+    margin:0!important;
+    box-sizing:border-box!important;
+    border-radius:9px!important;
+    padding:0 10px!important;
+    font-size:13px!important;
+    font-weight:800!important;
+    line-height:normal!important;
+    transform:none!important;
+  }
+
+  #invoiceBox #invoiceConsumption{width:78px!important;min-width:78px!important;max-width:78px!important;}
+  #invoiceBox #invoiceDays{width:76px!important;min-width:76px!important;max-width:76px!important;}
+  #invoiceBox #invoiceValue{width:104px!important;min-width:104px!important;max-width:104px!important;}
+  #invoiceBox #workSchedule{width:184px!important;min-width:184px!important;max-width:184px!important;padding-right:28px!important;}
+
+  #invoiceBox .field-hint{display:none!important;}
+
+  #invoiceBox[style*="display: grid"] .invoice-attach,
+  #invoiceBox[style*="display:grid"] .invoice-attach{
+    grid-column:2!important;
+    align-self:end!important;
+    justify-self:end!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    width:100%!important;
+    margin:0!important;
+    padding:0!important;
+    transform:none!important;
+    position:static!important;
+    top:auto!important;
+  }
+
+  #invoiceBox[style*="display: grid"] #invoiceDrop.file-inline,
+  #invoiceBox[style*="display:grid"] #invoiceDrop.file-inline{
+    width:390px!important;
+    min-width:390px!important;
+    max-width:390px!important;
+    min-height:42px!important;
+    height:42px!important;
+    margin:0!important;
+    padding:6px 14px!important;
+    display:flex!important;
+    flex-direction:row!important;
+    flex-wrap:nowrap!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:12px!important;
+    box-sizing:border-box!important;
+    transform:none!important;
+    position:static!important;
+    top:auto!important;
+    text-align:left!important;
+  }
+
+  #invoiceBox #invoiceDrop .file-button{height:28px!important;min-height:28px!important;padding:0 12px!important;white-space:nowrap!important;}
+  #invoiceBox #invoiceDrop .file-meta{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;gap:1px!important;min-width:0!important;text-align:left!important;line-height:1.12!important;}
+  #invoiceBox #invoiceDrop .file-meta strong,
+  #invoiceBox #invoiceDrop .file-meta span{text-align:left!important;line-height:1.12!important;}
+  #invoiceBox #invoiceFileName{grid-column:1 / -1!important;}
+
+  @media (max-width:900px){
+    #invoiceBox[style*="display: grid"],
+    #invoiceBox[style*="display:grid"]{grid-template-columns:1fr!important;row-gap:12px!important;}
+    #invoiceBox[style*="display: grid"] .invoice-grid,
+    #invoiceBox[style*="display:grid"] .invoice-grid{flex-wrap:wrap!important;}
+    #invoiceBox[style*="display: grid"] .invoice-attach,
+    #invoiceBox[style*="display:grid"] .invoice-attach{grid-column:1!important;justify-self:start!important;justify-content:flex-start!important;}
+    #invoiceBox[style*="display: grid"] #invoiceDrop.file-inline,
+    #invoiceBox[style*="display:grid"] #invoiceDrop.file-inline{width:100%!important;min-width:0!important;max-width:100%!important;}
+  }
+</style>
+<script id="svt-v136-true-v132-invoice-guard">
+(function(){
+  function syncInvoiceVisibility(){
+    var invoiceBox = document.getElementById('invoiceBox');
+    var invoiceBtn = document.getElementById('methodInvoiceCard');
+    var fileBox = document.getElementById('fileModeBox');
+    if(!invoiceBox || !invoiceBtn) return;
+    var invoiceActive = invoiceBtn.classList.contains('active');
+    invoiceBox.style.display = invoiceActive ? 'grid' : 'none';
+    if(fileBox) fileBox.style.display = invoiceActive ? 'none' : 'grid';
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    syncInvoiceVisibility();
+    var invoiceBtn = document.getElementById('methodInvoiceCard');
+    var fileBtn = document.getElementById('methodFileCard');
+    if(invoiceBtn) invoiceBtn.addEventListener('click', function(){ setTimeout(syncInvoiceVisibility, 0); });
+    if(fileBtn) fileBtn.addEventListener('click', function(){ setTimeout(syncInvoiceVisibility, 0); });
+  });
+})();
+</script>
+<!-- svt-v136-true-v132-invoice-baseline END -->
+
+<!-- svt-v137-invoice-row3-match START -->
+<style id="svt-v137-invoice-row3-match">
+  /* v137: Row 2 invoice upload must visually match Row 3 upload.
+     Scope: invoice mode only (#invoiceBox). Do not touch the help modal or other upload rows. */
+  @media (min-width:901px){
+    #invoiceBox[style*="display: grid"],
+    #invoiceBox[style*="display:grid"]{
+      grid-column:1 / span 2!important;
+      display:grid!important;
+      grid-template-columns:max-content minmax(0,1fr)!important;
+      column-gap:24px!important;
+      row-gap:0!important;
+      align-items:end!important;
+      width:100%!important;
+      max-width:100%!important;
+      min-width:0!important;
+      margin-top:14px!important;
+      padding:14px 0 0!important;
+      border-top:1px solid #e6eef6!important;
+      background:transparent!important;
+      box-shadow:none!important;
+      overflow:visible!important;
+    }
+
+    #invoiceBox .invoice-grid{
+      grid-column:1!important;
+      display:flex!important;
+      flex-direction:row!important;
+      flex-wrap:nowrap!important;
+      align-items:flex-end!important;
+      justify-content:flex-start!important;
+      gap:14px!important;
+      width:max-content!important;
+      max-width:max-content!important;
+      min-width:0!important;
+      margin:0!important;
+      padding:0!important;
+    }
+
+    #invoiceBox .invoice-field{
+      flex:0 0 auto!important;
+      display:flex!important;
+      flex-direction:column!important;
+      align-items:flex-start!important;
+      justify-content:flex-end!important;
+      gap:7px!important;
+      margin:0!important;
+      padding:0!important;
+      min-width:0!important;
+      transform:none!important;
+      position:static!important;
+    }
+
+    #invoiceBox .invoice-consumption-field{width:78px!important;min-width:78px!important;max-width:78px!important;}
+    #invoiceBox .invoice-days-field{width:76px!important;min-width:76px!important;max-width:76px!important;}
+    #invoiceBox .invoice-value-field{width:104px!important;min-width:104px!important;max-width:104px!important;}
+    #invoiceBox .invoice-program-field{width:118px!important;min-width:118px!important;max-width:118px!important;}
+
+    #invoiceBox .invoice-field label{
+      width:100%!important;
+      max-width:100%!important;
+      margin:0!important;
+      padding:0!important;
+      display:block!important;
+      position:static!important;
+      top:auto!important;
+      transform:none!important;
+      font-size:11.2px!important;
+      line-height:1.04!important;
+      font-weight:900!important;
+      letter-spacing:-.035em!important;
+      color:#071826!important;
+      white-space:normal!important;
+      text-align:left!important;
+    }
+    #invoiceBox .invoice-field label br{display:block!important;}
+
+    #invoiceBox .invoice-control,
+    #invoiceBox #invoiceConsumption,
+    #invoiceBox #invoiceDays,
+    #invoiceBox #invoiceValue,
+    #invoiceBox #workSchedule{
+      height:38px!important;
+      min-height:38px!important;
+      max-height:38px!important;
+      margin:0!important;
+      box-sizing:border-box!important;
+      border-radius:9px!important;
+      padding:0 10px!important;
+      font-size:13px!important;
+      font-weight:800!important;
+      line-height:normal!important;
+      transform:none!important;
+    }
+    #invoiceBox #invoiceConsumption{width:78px!important;min-width:78px!important;max-width:78px!important;}
+    #invoiceBox #invoiceDays{width:76px!important;min-width:76px!important;max-width:76px!important;}
+    #invoiceBox #invoiceValue{width:104px!important;min-width:104px!important;max-width:104px!important;}
+    #invoiceBox #workSchedule{width:118px!important;min-width:118px!important;max-width:118px!important;padding-right:26px!important;}
+    #invoiceBox .field-hint{display:none!important;}
+
+    #invoiceBox .invoice-attach{
+      grid-column:2!important;
+      grid-row:1!important;
+      align-self:end!important;
+      justify-self:end!important;
+      display:flex!important;
+      align-items:center!important;
+      justify-content:flex-end!important;
+      width:var(--svt-combo-w,318px)!important;
+      min-width:var(--svt-combo-w,318px)!important;
+      max-width:var(--svt-combo-w,318px)!important;
+      margin:0!important;
+      padding:0!important;
+      position:static!important;
+      top:auto!important;
+      transform:none!important;
+    }
+
+    #invoiceBox #invoiceDrop.file-inline{
+      width:var(--svt-combo-w,318px)!important;
+      min-width:var(--svt-combo-w,318px)!important;
+      max-width:var(--svt-combo-w,318px)!important;
+      min-height:46px!important;
+      height:auto!important;
+      padding:6px 10px!important;
+      gap:8px!important;
+      border-radius:14px!important;
+      box-sizing:border-box!important;
+      display:flex!important;
+      align-items:center!important;
+      justify-content:flex-start!important;
+      flex-direction:row!important;
+      flex-wrap:nowrap!important;
+      margin:0!important;
+      overflow:hidden!important;
+      position:static!important;
+      top:auto!important;
+      transform:none!important;
+    }
+    #invoiceBox #invoiceDrop .file-button{
+      height:34px!important;
+      min-height:34px!important;
+      padding:0 12px!important;
+      border-radius:10px!important;
+      font-size:12.5px!important;
+      gap:6px!important;
+      flex:0 0 auto!important;
+      white-space:nowrap!important;
+    }
+    #invoiceBox #invoiceDrop .file-button svg{width:14px!important;height:14px!important;}
+    #invoiceBox #invoiceDrop .file-meta{
+      max-width:170px!important;
+      min-width:0!important;
+      flex:0 1 170px!important;
+      overflow:hidden!important;
+      white-space:nowrap!important;
+      font-size:10.2px!important;
+      line-height:1.12!important;
+      display:flex!important;
+      flex-direction:column!important;
+      justify-content:center!important;
+      align-items:flex-start!important;
+      text-align:left!important;
+    }
+    #invoiceBox #invoiceDrop .file-meta strong,
+    #invoiceBox #invoiceDrop .file-meta span{
+      display:block!important;
+      white-space:nowrap!important;
+      overflow:hidden!important;
+      text-overflow:ellipsis!important;
+      line-height:1.12!important;
+      text-align:left!important;
+    }
+    #invoiceBox #invoiceFileName{grid-column:1 / -1!important;}
+  }
+
+  @media (max-width:900px){
+    #invoiceBox[style*="display: grid"],
+    #invoiceBox[style*="display:grid"]{grid-column:1 / -1!important;grid-template-columns:1fr!important;row-gap:12px!important;}
+    #invoiceBox .invoice-grid{flex-wrap:wrap!important;width:100%!important;max-width:100%!important;}
+    #invoiceBox .invoice-field,
+    #invoiceBox .invoice-field label,
+    #invoiceBox .invoice-control,
+    #invoiceBox #invoiceConsumption,
+    #invoiceBox #invoiceDays,
+    #invoiceBox #invoiceValue,
+    #invoiceBox #workSchedule{width:100%!important;min-width:0!important;max-width:100%!important;}
+    #invoiceBox .invoice-attach,
+    #invoiceBox #invoiceDrop.file-inline{grid-column:1!important;width:100%!important;min-width:0!important;max-width:100%!important;justify-self:start!important;}
+  }
+</style>
+<script id="svt-v137-invoice-row3-match-script">
+(function(){
+  function applyV137InvoiceAlignment(){
+    var invoiceBox = document.getElementById('invoiceBox');
+    var invoiceDrop = document.getElementById('invoiceDrop');
+    var invoiceAttach = invoiceDrop ? invoiceDrop.closest('.invoice-attach') : null;
+    var row3Drop = document.getElementById('dropZone');
+    var work = document.getElementById('workSchedule');
+    if(work){
+      work.style.setProperty('width','118px','important');
+      work.style.setProperty('min-width','118px','important');
+      work.style.setProperty('max-width','118px','important');
+      work.style.setProperty('height','38px','important');
+      work.style.setProperty('min-height','38px','important');
+      work.style.setProperty('max-height','38px','important');
+      work.style.setProperty('padding-right','26px','important');
+    }
+    if(!invoiceBox || !invoiceDrop || !invoiceAttach || !row3Drop) return;
+    var invoiceVisible = getComputedStyle(invoiceBox).display !== 'none';
+    if(!invoiceVisible) return;
+    var r = row3Drop.getBoundingClientRect();
+    if(r && r.width > 40){
+      var width = Math.round(r.width) + 'px';
+      invoiceAttach.style.setProperty('width', width, 'important');
+      invoiceAttach.style.setProperty('min-width', width, 'important');
+      invoiceAttach.style.setProperty('max-width', width, 'important');
+      invoiceDrop.style.setProperty('width', width, 'important');
+      invoiceDrop.style.setProperty('min-width', width, 'important');
+      invoiceDrop.style.setProperty('max-width', width, 'important');
+      invoiceDrop.style.setProperty('min-height', Math.round(r.height || 46) + 'px', 'important');
+      invoiceDrop.dataset.svtV137MatchedToRow3 = 'true';
+    }
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    applyV137InvoiceAlignment();
+    ['methodInvoiceCard','methodFileCard'].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.addEventListener('click', function(){ setTimeout(applyV137InvoiceAlignment, 40); setTimeout(applyV137InvoiceAlignment, 180); });
+    });
+    window.addEventListener('resize', applyV137InvoiceAlignment);
+  });
+})();
+</script>
+<!-- svt-v137-invoice-row3-match END -->
+
+  <style id="svt-v138-help-modal-reference-clean">
+/* v138: reference-aligned distributor help modal, scoped to #distributorHelpModal only */
+#distributorHelpModal.svt-help101-backdrop,
+#distributorHelpModal.svt-modal-backdrop{
+  position:fixed!important;
+  inset:0!important;
+  z-index:9999!important;
+  display:none!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:34px!important;
+  background:rgba(15,23,42,.54)!important;
+  backdrop-filter:blur(8px)!important;
+  -webkit-backdrop-filter:blur(8px)!important;
+}
+#distributorHelpModal.svt-help101-backdrop.open,
+#distributorHelpModal.svt-modal-backdrop.open,
+#distributorHelpModal[aria-hidden="false"]{
   display:flex!important;
-  flex-wrap:wrap!important;
-  align-items:flex-start!important;
-  justify-content:flex-start!important;
-  gap:10px 12px!important;
-  width:auto!important;
-  max-width:760px!important;
 }
-.invoice-grid .field{
+#distributorHelpModal.svt-help101-backdrop .svt-help101-modal{
+  position:relative!important;
+  width:min(1296px,calc(100vw - 72px))!important;
+  max-height:min(90vh,930px)!important;
+  overflow:hidden!important;
+  border-radius:24px!important;
+  border:1px solid rgba(218,228,236,.95)!important;
+  background:linear-gradient(180deg,#ffffff 0%,#ffffff 74%,#fbfdff 100%)!important;
+  box-shadow:0 38px 86px rgba(15,23,42,.38)!important;
+  color:#071b38!important;
+  box-sizing:border-box!important;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-close{
+  position:absolute!important;
+  right:24px!important;
+  top:22px!important;
+  width:48px!important;
+  height:48px!important;
+  border-radius:50%!important;
+  border:1px solid #dce5ee!important;
+  background:#fff!important;
+  box-shadow:0 11px 24px rgba(15,23,42,.08)!important;
+  color:#071b38!important;
+  font-size:32px!important;
+  font-weight:300!important;
+  z-index:8!important;
+  display:grid!important;
+  place-items:center!important;
+  line-height:1!important;
+  padding:0!important;
+  cursor:pointer!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-head{
+  text-align:center!important;
+  padding:36px 92px 20px!important;
+  background:transparent!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-head h2{
+  margin:0!important;
+  font-size:40px!important;
+  line-height:1.08!important;
+  letter-spacing:-.048em!important;
+  font-weight:950!important;
+  color:#071b38!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-head p{
+  margin:12px auto 0!important;
+  max-width:850px!important;
+  font-size:16px!important;
+  line-height:1.45!important;
+  color:#263753!important;
+  font-weight:520!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-tabs{
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:14px!important;
+  padding:8px 34px 26px!important;
+  background:transparent!important;
+  align-items:center!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-tab{
+  height:52px!important;
+  min-width:0!important;
+  border-radius:15px!important;
+  border:1px solid #dfe6ee!important;
+  background:#fff!important;
+  box-shadow:0 4px 12px rgba(15,23,42,.025)!important;
+  color:#071b38!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:12px!important;
+  padding:0 16px!important;
+  box-sizing:border-box!important;
+  font-size:14px!important;
+  font-weight:850!important;
+  letter-spacing:-.012em!important;
+  cursor:pointer!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-tab svg{
+  width:22px!important;
+  height:22px!important;
+  flex:0 0 22px!important;
+  stroke-width:2.05!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-tab.is-active,
+#distributorHelpModal.svt-help101-backdrop .svt-help101-tab.active{
+  color:#fff!important;
+  border-color:#079f42!important;
+  background:linear-gradient(180deg,#10ad4e 0%,#078f3c 100%)!important;
+  box-shadow:0 13px 24px rgba(6,151,65,.28), inset 0 1px 0 rgba(255,255,255,.18)!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-body{
+  padding:0 34px 24px!important;
+  overflow:auto!important;
+  max-height:calc(min(90vh,930px) - 180px)!important;
+  box-sizing:border-box!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-panel{
+  display:none!important;
+  gap:16px!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-panel.is-active,
+#distributorHelpModal.svt-help101-backdrop .svt-help101-panel.active{
+  display:grid!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-hero{
+  display:grid!important;
+  grid-template-columns:245px minmax(0,1fr)!important;
+  align-items:center!important;
+  min-height:190px!important;
+  padding:0 38px!important;
+  border-radius:16px!important;
+  border:1px solid #cfe7d8!important;
+  background:linear-gradient(90deg,#f4fff8 0%,#fbfffd 60%,#f7fff9 100%)!important;
+  box-shadow:0 3px 12px rgba(15,23,42,.018)!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-art{
+  width:225px!important;
+  height:160px!important;
+  display:grid!important;
+  place-items:center!important;
+  color:#07943f!important;
   flex:0 0 auto!important;
-  width:auto!important;
-  max-width:none!important;
-  min-width:0!important;
 }
-.invoice-grid .field:nth-child(1){width:154px!important;max-width:154px!important;}
-.invoice-grid .field:nth-child(2){width:150px!important;max-width:150px!important;}
-.invoice-grid .field:nth-child(3){width:158px!important;max-width:158px!important;}
-.invoice-grid .field:nth-child(4){width:166px!important;max-width:166px!important;}
-.invoice-grid .field label{
+#distributorHelpModal.svt-help101-backdrop .svt-help101-illustration{
+  width:196px!important;
+  height:140px!important;
+  color:#07943f!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-copy{
+  min-width:0!important;
+  padding:0!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-copy h3{
+  margin:0 0 10px!important;
+  font-size:27px!important;
+  line-height:1.2!important;
+  letter-spacing:-.035em!important;
+  font-weight:950!important;
+  color:#071b38!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-copy p{
+  margin:0!important;
+  max-width:760px!important;
+  font-size:18px!important;
+  line-height:1.58!important;
+  color:#263753!important;
+  font-weight:500!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-main{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.02fr) minmax(0,1fr)!important;
+  gap:16px!important;
+  align-items:stretch!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-steps,
+#distributorHelpModal.svt-help101-backdrop .svt-help101-card{
+  border:1px solid #dfe6ee!important;
+  background:#fff!important;
+  border-radius:14px!important;
+  box-shadow:0 8px 23px rgba(15,23,42,.035)!important;
+  box-sizing:border-box!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-steps{
+  padding:28px 28px 22px!important;
+  min-height:300px!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-steps h4,
+#distributorHelpModal.svt-help101-backdrop .svt-help101-card h4{
+  display:flex!important;
+  align-items:center!important;
+  gap:16px!important;
+  margin:0!important;
+  color:#071b38!important;
+  font-size:24px!important;
+  line-height:1.1!important;
+  font-weight:950!important;
+  letter-spacing:-.035em!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-steps h4{
+  padding-bottom:18px!important;
+  border-bottom:1px solid #e2e8f0!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-steps h4 svg,
+#distributorHelpModal.svt-help101-backdrop .svt-help101-card h4 svg{
+  width:50px!important;
+  height:50px!important;
+  flex:0 0 50px!important;
+  padding:12px!important;
+  border-radius:12px!important;
+  color:#07943f!important;
+  background:#eaf8ef!important;
+  box-sizing:border-box!important;
+  stroke-width:2.05!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-steps ol{
+  margin:16px 0 0!important;
+  padding:0!important;
+  list-style:none!important;
+  display:grid!important;
+  gap:10px!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-steps li{
+  display:grid!important;
+  grid-template-columns:27px minmax(0,1fr)!important;
+  align-items:start!important;
+  gap:13px!important;
+  color:#071b38!important;
+  font-size:15px!important;
+  line-height:1.35!important;
+  font-weight:620!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-steps li b{
+  width:23px!important;
+  height:23px!important;
+  border-radius:50%!important;
+  display:grid!important;
+  place-items:center!important;
+  background:#07943f!important;
+  color:#fff!important;
+  font-size:12px!important;
+  font-weight:900!important;
+  line-height:1!important;
+  box-shadow:0 3px 8px rgba(7,148,63,.22)!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-side{
+  display:grid!important;
+  gap:16px!important;
+  grid-template-rows:1fr 1fr!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-card{
+  min-height:142px!important;
+  padding:24px 28px!important;
+  display:grid!important;
+  align-content:center!important;
+  gap:14px!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-card p{
+  margin:0 0 0 70px!important;
+  font-size:15.5px!important;
+  line-height:1.45!important;
+  color:#263753!important;
+  font-weight:560!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-footer{
+  display:grid!important;
+  grid-template-columns:390px 1fr!important;
+  align-items:center!important;
+  gap:30px!important;
+  margin-top:14px!important;
+  padding:18px 0 0!important;
+  border-top:1px solid #dfe6ee!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-cta{
+  height:62px!important;
+  width:100%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:14px!important;
+  border-radius:12px!important;
+  background:linear-gradient(180deg,#0aa64a 0%,#078f3d 100%)!important;
+  color:#fff!important;
+  text-decoration:none!important;
+  font-size:18px!important;
+  line-height:1!important;
+  font-weight:950!important;
+  box-shadow:0 15px 28px rgba(7,148,63,.25)!important;
+  box-sizing:border-box!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-sources{
+  min-height:62px!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:28px!important;
+  padding-left:30px!important;
+  border-left:1px solid #dfe6ee!important;
+  color:#62718a!important;
+  font-size:14px!important;
+  line-height:1.3!important;
+  box-sizing:border-box!important;
+}
+#distributorHelpModal.svt-help101-backdrop .svt-help101-sources strong{
   display:block!important;
-  max-width:100%!important;
-  margin:0 0 5px!important;
-  font-size:11.5px!important;
-  line-height:1.05!important;
-  letter-spacing:-.01em!important;
-  white-space:normal!important;
+  min-width:155px!important;
+  color:#62718a!important;
+  font-weight:600!important;
 }
-.invoice-grid .field-hint{
-  max-width:100%!important;
-  font-size:10.2px!important;
-  line-height:1.18!important;
-  margin-top:0!important;
+#distributorHelpModal.svt-help101-backdrop .svt-help101-sources div{
+  display:flex!important;
+  align-items:center!important;
+  gap:20px!important;
+  flex-wrap:wrap!important;
 }
-.invoice-grid .control,
-.invoice-grid input.control,
-.invoice-grid select.control{
-  width:100%!important;
-  min-width:0!important;
-  max-width:100%!important;
-  height:36px!important;
-  padding:0 10px!important;
-  font-size:12.5px!important;
-  border-radius:10px!important;
+#distributorHelpModal.svt-help101-backdrop .svt-help101-sources a{
+  color:#07943f!important;
+  text-decoration:none!important;
+  font-weight:850!important;
+  white-space:nowrap!important;
 }
-.invoice-grid select.control{
-  padding-right:24px!important;
-  text-overflow:ellipsis!important;
+@media(max-width:980px){
+  #distributorHelpModal.svt-help101-backdrop{padding:18px!important;}
+  #distributorHelpModal.svt-help101-backdrop .svt-help101-tabs{grid-template-columns:1fr 1fr!important;}
+  #distributorHelpModal.svt-help101-backdrop .svt-help101-hero{grid-template-columns:1fr!important;text-align:center!important;padding:22px!important;}
+  #distributorHelpModal.svt-help101-backdrop .svt-help101-art{margin:auto!important;}
+  #distributorHelpModal.svt-help101-backdrop .svt-help101-main{grid-template-columns:1fr!important;}
+  #distributorHelpModal.svt-help101-backdrop .svt-help101-footer{grid-template-columns:1fr!important;}
+  #distributorHelpModal.svt-help101-backdrop .svt-help101-sources{border-left:0!important;padding-left:0!important;}
 }
-.invoice-attach{
-  width:100%!important;
-  justify-content:flex-end!important;
-  margin-top:10px!important;
-}
-.invoice-attach .file-inline{
-  margin-left:auto!important;
-  max-width:430px!important;
-}
-@media (max-width:720px){
-  .invoice-grid{display:grid!important;grid-template-columns:1fr 1fr!important;max-width:100%!important;}
-  .invoice-grid .field,
-  .invoice-grid .field:nth-child(1),
-  .invoice-grid .field:nth-child(2),
-  .invoice-grid .field:nth-child(3),
-  .invoice-grid .field:nth-child(4){width:auto!important;max-width:none!important;}
-  .invoice-attach{justify-content:flex-start!important;}
-  .invoice-attach .file-inline{margin-left:0!important;max-width:100%!important;}
-}
-@media (max-width:460px){
-  .invoice-grid{grid-template-columns:1fr!important;}
-}
-/* /SVT v104 - invoice monthly compact fields hotfix */
-</style data-svt-invoice-upload="v123" style="position:relative !important; top:46px !important; display:flex !important; align-items:center !important; justify-content:center !important; gap:12px !important; min-height:54px !important; height:54px !important; padding-top:0 !important; padding-bottom:0 !important; box-sizing:border-box !important; transform:none !important;">
-
-
-
-
-
-
-
-
-
-
-
-
-
-<style id="svt-v120-invoice-grid-upload-final-css">
-/* svt-v120-invoice-grid-upload-final START
-   Fix final factura lunara:
-   - cele 4 campuri raman lipite in grup compact, nu despartite;
-   - inputurile/selectul au width dupa label, cu Program de lucru mai lung;
-   - uploadul Alege factura este pe mijloc vertical si orizontal in fereastra lui;
-   - fara translateY si fara height umflat. */
-#invoicePanel .invoice-grid.svt120-invoice-grid,
-.invoice-grid.svt120-invoice-grid {
-  display: grid !important;
-  grid-template-columns: max-content max-content max-content max-content minmax(330px, 1fr) !important;
-  column-gap: 12px !important;
-  row-gap: 6px !important;
-  align-items: end !important;
+@media(max-width:640px){
+  #distributorHelpModal.svt-help101-backdrop .svt-help101-head{padding:28px 60px 14px!important;}
+  #distributorHelpModal.svt-help101-backdrop .svt-help101-head h2{font-size:26px!important;}
+  #distributorHelpModal.svt-help101-backdrop .svt-help101-tabs{grid-template-columns:1fr!important;padding-left:20px!important;padding-right:20px!important;}
+  #distributorHelpModal.svt-help101-backdrop .svt-help101-body{padding-left:20px!important;padding-right:20px!important;}
 }
 
-#invoicePanel .svt120-invoice-field,
-.invoice-grid.svt120-invoice-grid .svt120-invoice-field {
-  justify-self: start !important;
-  align-self: end !important;
-  width: var(--svt120-w, auto) !important;
-  min-width: var(--svt120-w, auto) !important;
-  max-width: var(--svt120-w, auto) !important;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  box-sizing: border-box !important;
-  transform: none !important;
-}
-
-#invoicePanel .svt120-invoice-field > label,
-#invoicePanel .svt120-invoice-field .field-label,
-#invoicePanel .svt120-invoice-field .small-label,
-.invoice-grid.svt120-invoice-grid .svt120-invoice-field > label,
-.invoice-grid.svt120-invoice-grid .svt120-invoice-field .field-label,
-.invoice-grid.svt120-invoice-grid .svt120-invoice-field .small-label {
-  width: var(--svt120-w, auto) !important;
-  max-width: var(--svt120-w, auto) !important;
-  white-space: normal !important;
-  line-height: 1.05 !important;
-  margin-bottom: 8px !important;
-}
-
-#invoicePanel .svt120-invoice-field .field-hint,
-.invoice-grid.svt120-invoice-grid .svt120-invoice-field .field-hint {
-  display: none !important;
-}
-
-#invoicePanel .svt120-invoice-field .control,
-#invoicePanel .svt120-invoice-field input:not([type="file"]):not([type="checkbox"]):not([type="radio"]),
-#invoicePanel .svt120-invoice-field select,
-.invoice-grid.svt120-invoice-grid .svt120-invoice-field .control,
-.invoice-grid.svt120-invoice-grid .svt120-invoice-field input:not([type="file"]):not([type="checkbox"]):not([type="radio"]),
-.invoice-grid.svt120-invoice-grid .svt120-invoice-field select {
-  width: var(--svt120-w, auto) !important;
-  min-width: var(--svt120-w, auto) !important;
-  max-width: var(--svt120-w, auto) !important;
-  height: 38px !important;
-  min-height: 38px !important;
-  max-height: 38px !important;
-  line-height: normal !important;
-  box-sizing: border-box !important;
-  transform: none !important;
-}
-
-#invoicePanel .svt120-invoice-upload-cell,
-.invoice-grid.svt120-invoice-grid .svt120-invoice-upload-cell {
-  grid-column: 5 !important;
-  justify-self: end !important;
-  align-self: end !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  position: static !important;
-  top: auto !important;
-  transform: none !important;
-  box-sizing: border-box !important;
-}
-
-#invoicePanel .svt120-invoice-upload-box,
-.invoice-grid.svt120-invoice-grid .svt120-invoice-upload-box {
-  width: min(400px, 100%) !important;
-  min-width: 300px !important;
-  max-width: 400px !important;
-  min-height: 46px !important;
-  margin: 0 !important;
-  padding-top: 8px !important;
-  padding-bottom: 8px !important;
-  position: static !important;
-  top: auto !important;
-  transform: none !important;
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 12px !important;
-  text-align: center !important;
-  box-sizing: border-box !important;
-}
-
-#invoicePanel .svt120-invoice-upload-box *,
-.invoice-grid.svt120-invoice-grid .svt120-invoice-upload-box * {
-  text-align: center !important;
-}
-
-@media (max-width: 900px) {
-  #invoicePanel .invoice-grid.svt120-invoice-grid,
-  .invoice-grid.svt120-invoice-grid {
-    grid-template-columns: 1fr !important;
-  }
-  #invoicePanel .svt120-invoice-field,
-  .invoice-grid.svt120-invoice-grid .svt120-invoice-field,
-  #invoicePanel .svt120-invoice-upload-cell,
-  .invoice-grid.svt120-invoice-grid .svt120-invoice-upload-cell {
-    grid-column: 1 !important;
-    justify-self: stretch !important;
-  }
-  #invoicePanel .svt120-invoice-upload-box,
-  .invoice-grid.svt120-invoice-grid .svt120-invoice-upload-box {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-  }
-}
-/* svt-v120-invoice-grid-upload-final END */
-</style>
-
-
-<style id="svt-v130-invoice-upload-force-window-down-css">
-/* svt-v130-invoice-upload-force-window-down START
-   Mută strict fereastra verde punctată „Alege factură / Format acceptat” mai jos.
-   Nu atinge inputurile, nu atinge lățimile și nu atinge height-ul câmpurilor. */
-#invoicePanel .svt130-upload-window,
-.svt130-upload-window {
-  position: relative !important;
-  top: 34px !important;
-  transform: none !important;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-  align-self: center !important;
-  justify-self: end !important;
-  z-index: 2 !important;
-}
-#invoicePanel .svt130-upload-window .file-inline,
-#invoicePanel .svt130-upload-window .upload-zone,
-#invoicePanel .svt130-upload-window .invoice-attach,
-.svt130-upload-window .file-inline,
-.svt130-upload-window .upload-zone,
-.svt130-upload-window .invoice-attach {
-  align-items: center !important;
-  justify-content: center !important;
-}
-/* svt-v130-invoice-upload-force-window-down END */
-</style>
-
-<style id="svt-v131-invoice-labels-down-css">
-/* svt-v131-invoice-labels-down START
-   Mută doar textele labelurilor facturii mai jos, aproape de inputuri.
-   Nu atinge inputurile, lățimile, height-ul, uploadul sau modalul. */
-#invoicePanel .invoice-grid .svt131-label-target,
-#invoicePanel .invoice-grid .svt131-invoice-field-label-down > label,
-#invoicePanel .invoice-grid .svt131-invoice-field-label-down .field-label,
-#invoicePanel .invoice-grid .svt131-invoice-field-label-down .label,
-#invoicePanel .invoice-grid .field.svt131-invoice-field-label-down > :first-child {
-  position: relative !important;
-  top: 14px !important;
-  transform: none !important;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  z-index: 5 !important;
-}
-/* svt-v131-invoice-labels-down END */
-</style>
-<!-- svt-v132-invoice-labels-down-only START -->
-<style id="svt-v132-invoice-labels-down-only">
-  #invoicePanel [data-svt-v132-label-down="true"] {
-    position: relative !important;
-    top: 16px !important;
-    transform: none !important;
-    margin-bottom: 0 !important;
-    line-height: 1.05 !important;
-    z-index: 5 !important;
-  }
-</style>
-<!-- svt-v132-invoice-labels-down-only END -->
+  </style>
 
 <!-- svt-v139-help-modal-compact-reference START -->
 <style id="svt-v139-help-modal-compact-reference">
@@ -5152,7 +5634,6 @@
   }
 </style>
 <!-- svt-v139-help-modal-compact-reference END -->
-
 </head>
 <body data-energy-mode="electric">
   <div class="page">
@@ -5243,7 +5724,7 @@
                   </div>
                 </div>
                 <div class="invoice-attach">
-                  <div class="file-inline upload-zone" id="invoiceDrop" style="max-width:480px">
+                  <div class="file-inline upload-zone" id="invoiceDrop">
                     <input id="invoiceInput" type="file" hidden accept=".pdf,.jpg,.jpeg,.png,.xlsx,.xls,.csv">
                     <button type="button" class="file-button" id="invoiceChoose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M20 16.7A4 4 0 0 1 16.3 21H7.7A4 4 0 0 1 4 16.7"/></svg>Alege factură</button>
                     <div class="file-meta"><strong>Format acceptat</strong><span>.pdf, .jpg, .png, .xlsx, .xls, .csv</span></div>
@@ -5783,555 +6264,35 @@
     </div>
   </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script id="svt-v120-invoice-grid-upload-final-js">
-/* svt-v120-invoice-grid-upload-final START */
-(function () {
-  var fallback = { consum: 82, zile: 76, valoare: 104, program: 150 };
-
-  function norm(s) {
-    return String(s || '')
-      .toLowerCase()
-      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      .replace(/\s+/g, ' ')
-      .trim();
-  }
-
-  function setImp(el, prop, value) {
-    if (el && el.style) el.style.setProperty(prop, value, 'important');
-  }
-
-  function getInvoiceGrid() {
-    var grids = Array.prototype.slice.call(document.querySelectorAll('#invoicePanel .invoice-grid, .invoice-grid'));
-    for (var i = 0; i < grids.length; i += 1) {
-      var t = norm(grids[i].textContent);
-      if (t.indexOf('consum total') >= 0 && t.indexOf('numar zile') >= 0 && t.indexOf('valoare factura') >= 0 && t.indexOf('program de') >= 0) return grids[i];
-    }
-    return null;
-  }
-
-  function directChildOf(parent, el) {
-    var n = el;
-    while (n && n.parentElement && n.parentElement !== parent) n = n.parentElement;
-    return n && n.parentElement === parent ? n : null;
-  }
-
-  function firstVisibleLabel(field) {
-    var candidates = Array.prototype.slice.call(field.querySelectorAll('label, .field-label, .small-label, strong, span'));
-    for (var i = 0; i < candidates.length; i += 1) {
-      var el = candidates[i];
-      if (!el || !el.textContent || !el.textContent.trim()) continue;
-      if (el.closest('.control') || el.closest('button') || el.closest('.file-inline') || el.closest('.invoice-attach')) continue;
-      var text = norm(el.textContent);
-      if (text.indexOf('consum') >= 0 || text.indexOf('numar') >= 0 || text.indexOf('valoare') >= 0 || text.indexOf('program') >= 0) return el;
-    }
-    return null;
-  }
-
-  function measureLabel(el, fallbackWidth) {
-    if (!el) return fallbackWidth;
-    var max = 0;
-    try {
-      var range = document.createRange();
-      range.selectNodeContents(el);
-      Array.prototype.slice.call(range.getClientRects()).forEach(function (r) {
-        if (r.width > 4 && r.height > 4) max = Math.max(max, Math.ceil(r.width));
+  <script>
+    (function(){
+      const modal = document.getElementById('distributorHelpModal');
+      if(!modal || modal.dataset.help101Ready === 'true') return;
+      modal.dataset.help101Ready = 'true';
+      const tabs = modal.querySelectorAll('[data-dist-tab]');
+      const panels = modal.querySelectorAll('[data-dist-panel]');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const key = tab.getAttribute('data-dist-tab');
+          tabs.forEach(t => {
+            const active = t.getAttribute('data-dist-tab') === key;
+            t.classList.toggle('is-active', active);
+            t.classList.toggle('active', active);
+            t.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+          panels.forEach(panel => {
+            const active = panel.getAttribute('data-dist-panel') === key;
+            panel.classList.toggle('is-active', active);
+            panel.classList.toggle('active', active);
+            panel.style.display = active ? 'grid' : 'none';
+          });
+        });
       });
-      try { range.detach(); } catch (e) {}
-    } catch (e) {}
-    if (!max && el.getBoundingClientRect) max = Math.ceil(el.getBoundingClientRect().width || 0);
-    if (!max) max = fallbackWidth;
-    return Math.max(62, Math.min(126, max));
-  }
-
-  function fieldsFromGrid(grid) {
-    var fields = Array.prototype.slice.call(grid.querySelectorAll('.field'));
-    var specs = [
-      { key: 'consum', needles: ['consum total', 'facturat'], col: 1 },
-      { key: 'zile', needles: ['numar zile', 'facturate'], col: 2 },
-      { key: 'valoare', needles: ['valoare factura', 'energie'], col: 3 },
-      { key: 'program', needles: ['program de', 'lucru'], col: 4 }
-    ];
-    return specs.map(function (spec, idx) {
-      var found = fields.find(function (f) {
-        var t = norm(f.textContent);
-        return spec.needles.every(function (needle) { return t.indexOf(needle) >= 0; });
-      });
-      if (!found) {
-        var controls = Array.prototype.slice.call(grid.querySelectorAll('input:not([type="file"]):not([type="checkbox"]):not([type="radio"]), select'));
-        var c = controls[idx];
-        found = c ? (c.closest('.field') || directChildOf(grid, c) || c.parentElement) : null;
-      }
-      return found ? { key: spec.key, col: spec.col, field: found } : null;
-    }).filter(Boolean);
-  }
-
-  function applyField(item) {
-    var field = item.field;
-    var label = firstVisibleLabel(field);
-    var width = measureLabel(label, fallback[item.key] || 82);
-    if (item.key === 'program') width = Math.max(150, width + 16);
-    var px = width + 'px';
-
-    field.classList.add('svt120-invoice-field');
-    field.style.setProperty('--svt120-w', px);
-    setImp(field, 'grid-column', String(item.col));
-    setImp(field, 'justify-self', 'start');
-    setImp(field, 'align-self', 'end');
-    setImp(field, 'width', px);
-    setImp(field, 'min-width', px);
-    setImp(field, 'max-width', px);
-    setImp(field, 'height', 'auto');
-    setImp(field, 'min-height', '0');
-    setImp(field, 'max-height', 'none');
-    setImp(field, 'margin', '0');
-    setImp(field, 'padding', '0');
-    setImp(field, 'transform', 'none');
-
-    if (label) {
-      setImp(label, 'width', px);
-      setImp(label, 'max-width', px);
-      setImp(label, 'line-height', '1.05');
-      setImp(label, 'margin-bottom', '8px');
-    }
-
-    Array.prototype.forEach.call(field.querySelectorAll('.field-hint'), function (h) { setImp(h, 'display', 'none'); });
-
-    var controls = field.querySelectorAll('.control, input:not([type="file"]):not([type="checkbox"]):not([type="radio"]), select');
-    Array.prototype.forEach.call(controls, function (c) {
-      setImp(c, 'width', px);
-      setImp(c, 'min-width', px);
-      setImp(c, 'max-width', px);
-      setImp(c, 'height', '38px');
-      setImp(c, 'min-height', '38px');
-      setImp(c, 'max-height', '38px');
-      setImp(c, 'line-height', 'normal');
-      setImp(c, 'box-sizing', 'border-box');
-      setImp(c, 'transform', 'none');
-      if ((item.key === 'consum' || item.key === 'valoare') && 'placeholder' in c) c.placeholder = '';
-    });
-  }
-
-  function findUploadSeed(grid) {
-    var candidates = Array.prototype.slice.call(grid.querySelectorAll('button, label, a, .btn, .file-btn, .invoice-attach, .file-inline, div, span'))
-      .filter(function (el) { return norm(el.textContent).indexOf('alege factura') >= 0; });
-    candidates.sort(function (a, b) { return norm(a.textContent).length - norm(b.textContent).length; });
-    return candidates[0] || null;
-  }
-
-  function uploadBoxFromSeed(grid, seed) {
-    if (!seed) return null;
-    var box = seed.closest('.invoice-attach') || seed.closest('.file-inline') || seed.closest('.upload-card') || seed.closest('.file-card') || seed.closest('.file-upload') || seed.closest('label') || seed.parentElement;
-    var n = box;
-    for (var i = 0; n && n !== grid && i < 6; i += 1, n = n.parentElement) {
-      var t = norm(n.textContent);
-      if (t.indexOf('alege factura') >= 0 && t.indexOf('format acceptat') >= 0) box = n;
-    }
-    return box;
-  }
-
-  function applyUpload(grid) {
-    var seed = findUploadSeed(grid);
-    if (!seed) return;
-    var gridItem = directChildOf(grid, seed) || seed.closest('.field') || seed.parentElement;
-    var box = uploadBoxFromSeed(grid, seed) || gridItem;
-
-    gridItem.classList.add('svt120-invoice-upload-cell');
-    box.classList.add('svt120-invoice-upload-box');
-
-    setImp(gridItem, 'grid-column', '5');
-    setImp(gridItem, 'justify-self', 'end');
-    setImp(gridItem, 'align-self', 'end');
-    setImp(gridItem, 'display', 'flex');
-    setImp(gridItem, 'align-items', 'center');
-    setImp(gridItem, 'justify-content', 'center');
-    setImp(gridItem, 'margin', '0');
-    setImp(gridItem, 'padding', '0');
-    setImp(gridItem, 'position', 'static');
-    setImp(gridItem, 'top', 'auto');
-    setImp(gridItem, 'transform', 'none');
-
-    setImp(box, 'width', 'min(400px, 100%)');
-    setImp(box, 'min-width', '300px');
-    setImp(box, 'max-width', '400px');
-    setImp(box, 'min-height', '46px');
-    setImp(box, 'position', 'static');
-    setImp(box, 'top', 'auto');
-    setImp(box, 'transform', 'none');
-    setImp(box, 'display', 'flex');
-    setImp(box, 'flex-direction', 'row');
-    setImp(box, 'flex-wrap', 'nowrap');
-    setImp(box, 'align-items', 'center');
-    setImp(box, 'justify-content', 'center');
-    setImp(box, 'gap', '12px');
-    setImp(box, 'margin', '0');
-    setImp(box, 'padding-top', '8px');
-    setImp(box, 'padding-bottom', '8px');
-    setImp(box, 'text-align', 'center');
-  }
-
-  function applyInvoiceFix() {
-    var grid = getInvoiceGrid();
-    if (!grid) return;
-    grid.classList.add('svt120-invoice-grid');
-    setImp(grid, 'display', 'grid');
-    setImp(grid, 'grid-template-columns', 'max-content max-content max-content max-content minmax(330px, 1fr)');
-    setImp(grid, 'column-gap', '12px');
-    setImp(grid, 'row-gap', '6px');
-    setImp(grid, 'align-items', 'end');
-
-    fieldsFromGrid(grid).forEach(applyField);
-    applyUpload(grid);
-  }
-
-  function schedule() {
-    applyInvoiceFix();
-    window.requestAnimationFrame(applyInvoiceFix);
-    setTimeout(applyInvoiceFix, 80);
-    setTimeout(applyInvoiceFix, 300);
-  }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule);
-  else schedule();
-  window.addEventListener('load', schedule);
-  document.addEventListener('click', function () { setTimeout(applyInvoiceFix, 0); }, true);
-  document.addEventListener('focusin', function () { setTimeout(applyInvoiceFix, 0); }, true);
-  window.addEventListener('resize', function () { setTimeout(applyInvoiceFix, 80); });
-})();
-/* svt-v120-invoice-grid-upload-final END */
-</script>
-
-
-<script id="svt-v130-invoice-upload-force-window-down-js">
-/* svt-v130-invoice-upload-force-window-down START */
-(function(){
-  var SHIFT = 34;
-
-  function norm(value){
-    return String(value || '')
-      .toLowerCase()
-      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      .replace(/\s+/g, ' ')
-      .trim();
-  }
-
-  function setImp(el, prop, value){
-    if (!el || !el.style) return;
-    el.style.setProperty(prop, value, 'important');
-  }
-
-  function visible(el){
-    if (!el || !el.getBoundingClientRect) return false;
-    var r = el.getBoundingClientRect();
-    return r.width > 20 && r.height > 10;
-  }
-
-  function getPanel(){
-    return document.getElementById('invoicePanel') || document;
-  }
-
-  function scoreCandidate(el){
-    if (!visible(el)) return -9999;
-    var txt = norm(el.textContent);
-    if (txt.indexOf('alege factura') < 0) return -9999;
-    var r = el.getBoundingClientRect();
-    var cs = window.getComputedStyle ? window.getComputedStyle(el) : null;
-    var score = 0;
-
-    // Vrem fereastra verde punctata, nu butonul si nu gridul mare.
-    if (txt.indexOf('format acceptat') >= 0) score += 80;
-    if (cs && String(cs.borderStyle || '').indexOf('dashed') >= 0) score += 120;
-    if (el.matches && el.matches('.file-inline, .invoice-attach, .invoice-attach-wrap, .upload-zone, .upload-box, .dropzone')) score += 90;
-    if (r.width >= 240 && r.width <= 520) score += 80;
-    if (r.height >= 38 && r.height <= 90) score += 70;
-    if (r.width > 650) score -= 160; // exclude grid/panel
-    if (el.matches && el.matches('button, label, input, select')) score -= 120; // exclude button itself
-    return score;
-  }
-
-  function findUploadWindow(){
-    var panel = getPanel();
-    var all = Array.prototype.slice.call(panel.querySelectorAll('*'));
-    var best = null;
-    var bestScore = -9999;
-
-    all.forEach(function(el){
-      var sc = scoreCandidate(el);
-      if (sc > bestScore) { bestScore = sc; best = el; }
-    });
-
-    if (best && bestScore > 0) return best;
-
-    // fallback: gaseste textul, apoi urca la primul container rezonabil, dar nu la grid/panel.
-    for (var i = 0; i < all.length; i += 1) {
-      if (norm(all[i].textContent).indexOf('alege factura') < 0) continue;
-      var node = all[i];
-      for (var guard = 0; guard < 6 && node && node.parentElement && node !== panel; guard += 1) {
-        var r = node.getBoundingClientRect ? node.getBoundingClientRect() : {width:0,height:0};
-        var t = norm(node.textContent);
-        if (t.indexOf('alege factura') >= 0 && r.width >= 240 && r.width <= 560 && r.height >= 30 && r.height <= 110) return node;
-        node = node.parentElement;
-      }
-    }
-    return null;
-  }
-
-  function apply(){
-    var win = findUploadWindow();
-    if (!win) return;
-
-    win.classList.add('svt130-upload-window');
-    win.setAttribute('data-svt-v130-upload-force-down', String(SHIFT));
-
-    // Resetăm încercările vechi pe acest container și apoi mutăm doar containerul.
-    setImp(win, 'position', 'relative');
-    setImp(win, 'top', SHIFT + 'px');
-    setImp(win, 'bottom', 'auto');
-    setImp(win, 'transform', 'none');
-    setImp(win, 'margin-top', '0px');
-    setImp(win, 'margin-bottom', '0px');
-    setImp(win, 'align-self', 'center');
-    setImp(win, 'justify-self', 'end');
-    setImp(win, 'z-index', '2');
-  }
-
-  function schedule(){
-    apply();
-    if (window.requestAnimationFrame) window.requestAnimationFrame(apply);
-    setTimeout(apply, 50);
-    setTimeout(apply, 150);
-    setTimeout(apply, 400);
-    setTimeout(apply, 900);
-    setTimeout(apply, 1600);
-  }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule);
-  else schedule();
-  window.addEventListener('load', schedule);
-  window.addEventListener('resize', schedule);
-  document.addEventListener('click', function(ev){
-    var panel = getPanel();
-    if (panel && panel.contains && panel.contains(ev.target)) schedule();
-  }, true);
-  document.addEventListener('focusin', function(ev){
-    var panel = getPanel();
-    if (panel && panel.contains && panel.contains(ev.target)) schedule();
-  }, true);
-})();
-/* svt-v130-invoice-upload-force-window-down END */
-</script>
-
-<script id="svt-v131-invoice-labels-down-js">
-/* svt-v131-invoice-labels-down START */
-(function(){
-  var LABEL_TOP = 14;
-  var targets = [
-    'consum total',
-    'numar zile',
-    'valoare factura',
-    'program de lucru'
-  ];
-
-  function norm(value){
-    return String(value || '')
-      .toLowerCase()
-      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      .replace(/\s+/g, ' ')
-      .trim();
-  }
-
-  function setImp(el, prop, value){
-    if (!el || !el.style) return;
-    el.style.setProperty(prop, value, 'important');
-  }
-
-  function fieldMatches(field){
-    var text = norm(field.textContent);
-    return targets.some(function(t){ return text.indexOf(t) >= 0; });
-  }
-
-  function findLabel(field){
-    var label = field.querySelector('label');
-    if (label) return label;
-
-    var possible = field.querySelector('.field-label, .label, .input-label, .control-label, .form-label');
-    if (possible) return possible;
-
-    var children = Array.prototype.slice.call(field.children || []);
-    for (var i = 0; i < children.length; i += 1) {
-      var child = children[i];
-      if (!child || !child.textContent) continue;
-      if (norm(child.textContent).length > 0 && !child.matches('input, select, textarea, button')) return child;
-    }
-    return null;
-  }
-
-  function apply(){
-    var panel = document.getElementById('invoicePanel');
-    if (!panel) return;
-
-    var fields = Array.prototype.slice.call(panel.querySelectorAll('.invoice-grid .field'))
-      .filter(function(field){
-        return fieldMatches(field) && !!field.querySelector('input, select, textarea');
-      })
-      .slice(0, 4);
-
-    fields.forEach(function(field){
-      field.classList.add('svt131-invoice-field-label-down');
-      field.setAttribute('data-svt-v131-label-down', '14');
-
-      var label = findLabel(field);
-      if (!label) return;
-      label.classList.add('svt131-label-target');
-      label.setAttribute('data-svt-v131-label-target', 'true');
-      setImp(label, 'position', 'relative');
-      setImp(label, 'top', LABEL_TOP + 'px');
-      setImp(label, 'transform', 'none');
-      setImp(label, 'margin-top', '0px');
-      setImp(label, 'margin-bottom', '0px');
-      setImp(label, 'padding-top', '0px');
-      setImp(label, 'padding-bottom', '0px');
-      setImp(label, 'z-index', '5');
-    });
-  }
-
-  function schedule(){
-    apply();
-    if (window.requestAnimationFrame) window.requestAnimationFrame(apply);
-    setTimeout(apply, 80);
-    setTimeout(apply, 250);
-    setTimeout(apply, 700);
-  }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule);
-  else schedule();
-  window.addEventListener('load', schedule);
-  window.addEventListener('resize', schedule);
-  document.addEventListener('click', function(ev){
-    var panel = document.getElementById('invoicePanel');
-    if (panel && panel.contains && panel.contains(ev.target)) schedule();
-  }, true);
-  document.addEventListener('focusin', function(ev){
-    var panel = document.getElementById('invoicePanel');
-    if (panel && panel.contains && panel.contains(ev.target)) schedule();
-  }, true);
-})();
-/* svt-v131-invoice-labels-down END */
-</script>
-<!-- svt-v132-invoice-labels-down-only-js START -->
-<script id="svt-v132-invoice-labels-down-only-js">
-(function () {
-  var TARGETS = {
-    "consum total facturat": true,
-    "numar zile facturate": true,
-    "număr zile facturate": true,
-    "valoare factura energie": true,
-    "valoare factură energie": true,
-    "program de lucru": true
-  };
-
-  function norm(value) {
-    return String(value || "")
-      .replace(/\u00a0/g, " ")
-      .replace(/\s+/g, " ")
-      .trim()
-      .toLowerCase();
-  }
-
-  function plain(value) {
-    return norm(value)
-      .replace(/ă/g, "a")
-      .replace(/â/g, "a")
-      .replace(/î/g, "i")
-      .replace(/ș/g, "s")
-      .replace(/ş/g, "s")
-      .replace(/ț/g, "t")
-      .replace(/ţ/g, "t");
-  }
-
-  function isTarget(text) {
-    var n = norm(text);
-    var p = plain(text);
-    return TARGETS[n] || TARGETS[p];
-  }
-
-  function hasControl(el) {
-    return !!(el && el.querySelector && el.querySelector("input, select, textarea, button"));
-  }
-
-  function pickLabelElement(textNode) {
-    var el = textNode && textNode.parentElement;
-    for (var i = 0; el && i < 4; i += 1) {
-      var ownText = norm(el.textContent);
-      if (isTarget(ownText) && !hasControl(el)) return el;
-      el = el.parentElement;
-    }
-    return null;
-  }
-
-  function applyInvoiceLabelPosition() {
-    var root = document.getElementById("invoicePanel") || document;
-    var labels = [];
-    var selector = "label,.field-label,.form-label,.control-label,.label,.field-title,.invoice-label,.field > span,.field > div,.field strong,.field b";
-
-    root.querySelectorAll(selector).forEach(function (el) {
-      if (isTarget(el.textContent) && !hasControl(el)) labels.push(el);
-    });
-
-    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-    var node;
-    while ((node = walker.nextNode())) {
-      if (!isTarget(node.nodeValue)) continue;
-      var chosen = pickLabelElement(node);
-      if (chosen) labels.push(chosen);
-    }
-
-    var seen = new Set();
-    labels.forEach(function (label) {
-      if (!label || seen.has(label)) return;
-      seen.add(label);
-      label.setAttribute("data-svt-v132-label-down", "true");
-      label.style.setProperty("position", "relative", "important");
-      label.style.setProperty("top", "16px", "important");
-      label.style.setProperty("transform", "none", "important");
-      label.style.setProperty("margin-bottom", "0", "important");
-      label.style.setProperty("line-height", "1.05", "important");
-      label.style.setProperty("z-index", "5", "important");
-    });
-  }
-
-  function schedule() {
-    applyInvoiceLabelPosition();
-    window.requestAnimationFrame(applyInvoiceLabelPosition);
-    setTimeout(applyInvoiceLabelPosition, 100);
-    setTimeout(applyInvoiceLabelPosition, 500);
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", schedule);
-  } else {
-    schedule();
-  }
-  window.addEventListener("load", schedule);
-})();
-</script>
-<!-- svt-v132-invoice-labels-down-only-js END -->
+    })();
+  </script>
 </body>
 </html>
+
 
 
 
