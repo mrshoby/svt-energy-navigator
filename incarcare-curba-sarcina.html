@@ -6933,159 +6933,98 @@
 }
 </style>
 <!-- SVT v150 tabs equal cards invoice jitter fix END -->
-<!-- SVT v153 invoice upload stable normal-flow START -->
-<style id="svt-v153-invoice-upload-stable-normal-flow">
+<!-- SVT v154 restore source logic invoice safe START -->
+<style id="svt-v154-restore-source-logic-invoice-safe">
 /*
-  SVT v153
-  Fix real pentru saritura uploadului "Alege factură":
-  - elimină abordarea absolute/right/top din v152;
-  - folosește layout normal, stabil, în grid;
-  - dezactivează tranziții/transform doar în #invoiceBox;
-  - nu mută modalul și nu atinge secțiunile svt139.
+  SVT v154
+  Fix de siguranță pentru "2 Sursa datelor".
+  Regula principală: NU forțăm display pe #invoiceBox.
+  Dacă #invoiceBox are inline style display:none, trebuie să rămână ascuns.
+  Layout-ul se aplică doar când aplicația îl afișează deja.
 */
 
-/* Zona facturii trebuie să aibă layout final direct, fără mutare ulterioară */
-#invoiceBox {
-  position: static !important;
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) 390px !important;
-  align-items: end !important;
-  column-gap: 18px !important;
-  row-gap: 8px !important;
-  width: 100% !important;
-  min-height: 0 !important;
-  padding-right: 0 !important;
-  box-sizing: border-box !important;
-  transform: none !important;
-  translate: none !important;
-  will-change: auto !important;
-  transition: none !important;
-  animation: none !important;
-}
-
-/* Grupul cu inputuri rămâne în coloana stângă */
-#invoiceBox .invoice-grid,
-#invoiceBox .svt-invoice-fields,
-#invoiceBox .invoice-fields,
-#invoiceBox > :not(.invoice-attach):not(.file-inline) {
-  grid-column: 1 !important;
-  min-width: 0 !important;
-  max-width: 100% !important;
-  transform: none !important;
-  translate: none !important;
-  transition: none !important;
-  animation: none !important;
-}
-
-/* Uploadul facturii stă direct în coloana dreaptă, nu absolut */
-#invoiceBox .invoice-attach,
-#invoiceBox .file-inline,
-#invoiceBox [class*="invoice-upload"],
-#invoiceBox [class*="invoiceAttach"] {
-  position: static !important;
-  grid-column: 2 !important;
-  grid-row: 1 / span 2 !important;
-  justify-self: end !important;
-  align-self: end !important;
-  width: 390px !important;
-  max-width: 390px !important;
-  min-width: 390px !important;
-  height: 58px !important;
-  min-height: 58px !important;
-  max-height: 58px !important;
-  margin: 0 !important;
-  inset: auto !important;
-  right: auto !important;
-  left: auto !important;
-  top: auto !important;
-  bottom: auto !important;
-  box-sizing: border-box !important;
-
-  transform: none !important;
-  translate: none !important;
-  scale: 1 !important;
-  will-change: auto !important;
-  transition: none !important;
-  animation: none !important;
-  backface-visibility: hidden !important;
-}
-
-/* Orice stare rămâne identică, fără hover/focus movement */
-#invoiceBox .invoice-attach:hover,
-#invoiceBox .invoice-attach:focus,
-#invoiceBox .invoice-attach:focus-within,
-#invoiceBox .file-inline:hover,
-#invoiceBox .file-inline:focus,
-#invoiceBox .file-inline:focus-within,
-#invoiceBox [class*="invoice-upload"]:hover,
-#invoiceBox [class*="invoice-upload"]:focus,
-#invoiceBox [class*="invoice-upload"]:focus-within {
-  position: static !important;
-  justify-self: end !important;
-  align-self: end !important;
-  width: 390px !important;
-  min-width: 390px !important;
-  max-width: 390px !important;
-  height: 58px !important;
-  min-height: 58px !important;
-  max-height: 58px !important;
-  margin: 0 !important;
-  inset: auto !important;
-  right: auto !important;
-  left: auto !important;
-  top: auto !important;
-  bottom: auto !important;
-  transform: none !important;
-  translate: none !important;
-  scale: 1 !important;
-  transition: none !important;
-  animation: none !important;
-}
-
-/* Dezactivează tranzițiile doar în zona facturii */
+/* Nu anima nimic în zona facturii, dar fără să schimbăm logica de afișare */
 #invoiceBox,
 #invoiceBox *,
 #invoiceBox::before,
 #invoiceBox::after {
-  transition-property: none !important;
-  transition-duration: 0s !important;
-  transition-delay: 0s !important;
-  animation-name: none !important;
-  animation-duration: 0s !important;
-  animation-delay: 0s !important;
-  animation-iteration-count: 1 !important;
-  transform-origin: center !important;
+  transition: none !important;
+  animation: none !important;
+  transform: none !important;
+  translate: none !important;
+  will-change: auto !important;
 }
 
-/* Textul din upload nu trebuie să creeze reflow vizibil */
-#invoiceBox .invoice-attach *,
-#invoiceBox .file-inline *,
-#invoiceBox [class*="invoice-upload"] * {
+/*
+  IMPORTANT:
+  Aplicăm grid doar când inline style-ul NU este display:none.
+  Nu punem display:grid pe #invoiceBox global.
+*/
+#invoiceBox:not([style*="display:none"]):not([style*="display: none"]) {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  padding-right: 0 !important;
+  min-height: 0 !important;
+}
+
+/* Când scriptul principal îl afișează ca grid, păstrăm layout stabil */
+#invoiceBox[style*="display:grid"],
+#invoiceBox[style*="display: grid"] {
+  grid-template-columns: minmax(0, 520px) minmax(300px, 318px) !important;
+  column-gap: 20px !important;
+  row-gap: 8px !important;
+  align-items: center !important;
+  padding-top: 10px !important;
+  margin-top: 0 !important;
+}
+
+/* Inputurile facturii rămân în stânga */
+#invoiceBox[style*="display:grid"] .invoice-grid,
+#invoiceBox[style*="display: grid"] .invoice-grid {
+  display: grid !important;
+  grid-template-columns: 250px 250px !important;
+  gap: 8px 10px !important;
+  width: 510px !important;
+  max-width: 510px !important;
+  align-items: start !important;
+  justify-content: start !important;
+  transform: none !important;
+}
+
+/* Upload factura în dreapta, fără absolute și fără mutare după randare */
+#invoiceBox[style*="display:grid"] .invoice-attach,
+#invoiceBox[style*="display: grid"] .invoice-attach,
+#invoiceBox[style*="display:grid"] .file-inline,
+#invoiceBox[style*="display: grid"] .file-inline {
+  position: static !important;
+  grid-column: 2 !important;
+  justify-self: end !important;
+  align-self: center !important;
+  width: 318px !important;
+  min-width: 318px !important;
+  max-width: 318px !important;
+  height: auto !important;
+  min-height: 58px !important;
+  margin: 0 !important;
+  inset: auto !important;
+  right: auto !important;
+  left: auto !important;
+  top: auto !important;
+  bottom: auto !important;
   transform: none !important;
   translate: none !important;
   transition: none !important;
   animation: none !important;
 }
 
-/* Responsive: pe ecrane înguste revine într-o singură coloană, fără să sară */
-@media (max-width: 820px) {
-  #invoiceBox {
-    grid-template-columns: 1fr !important;
-  }
-  #invoiceBox .invoice-attach,
-  #invoiceBox .file-inline,
-  #invoiceBox [class*="invoice-upload"],
-  #invoiceBox [class*="invoiceAttach"] {
-    grid-column: 1 !important;
-    grid-row: auto !important;
-    justify-self: stretch !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-  }
+/* Când este ascuns, nu îl reafișăm prin CSS */
+#invoiceBox[style*="display:none"],
+#invoiceBox[style*="display: none"] {
+  display: none !important;
 }
 </style>
-<!-- SVT v153 invoice upload stable normal-flow END -->
+<!-- SVT v154 restore source logic invoice safe END -->
 </head>
 <body data-energy-mode="electric">
   <div class="page">
@@ -7744,6 +7683,7 @@
   </script>
 </body>
 </html>
+
 
 
 
