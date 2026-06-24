@@ -27,6 +27,7 @@
   <!-- SVT V99 MODAL 1TO1 TIGHT INVOICE FIELDS -->
   <!-- SVT V100 MODAL CLEAN 1TO1 AND INVOICE SHRINK -->
   <!-- SVT V101 HELP MODAL FROM ZERO -->
+  <!-- SVT V135 INVOICE TRUE CLEAN BASELINE -->
   <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
   <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -4558,219 +4559,282 @@
     }
 
   
+/* SVT v104 - invoice monthly compact fields hotfix
+   Scope: strict pentru blocul factura lunara: .invoice-grid / .invoice-attach.
+   Nu schimba hero, modal, row-uri globale sau uploadul principal de la pasul 3. */
+.invoice-grid{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+  gap:10px 12px!important;
+  width:auto!important;
+  max-width:760px!important;
+}
+.invoice-grid .field{
+  flex:0 0 auto!important;
+  width:auto!important;
+  max-width:none!important;
+  min-width:0!important;
+}
+.invoice-grid .field:nth-child(1){width:154px!important;max-width:154px!important;}
+.invoice-grid .field:nth-child(2){width:150px!important;max-width:150px!important;}
+.invoice-grid .field:nth-child(3){width:158px!important;max-width:158px!important;}
+.invoice-grid .field:nth-child(4){width:166px!important;max-width:166px!important;}
+.invoice-grid .field label{
+  display:block!important;
+  max-width:100%!important;
+  margin:0 0 5px!important;
+  font-size:11.5px!important;
+  line-height:1.05!important;
+  letter-spacing:-.01em!important;
+  white-space:normal!important;
+}
+.invoice-grid .field-hint{
+  max-width:100%!important;
+  font-size:10.2px!important;
+  line-height:1.18!important;
+  margin-top:0!important;
+}
+.invoice-grid .control,
+.invoice-grid input.control,
+.invoice-grid select.control{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  height:36px!important;
+  padding:0 10px!important;
+  font-size:12.5px!important;
+  border-radius:10px!important;
+}
+.invoice-grid select.control{
+  padding-right:24px!important;
+  text-overflow:ellipsis!important;
+}
+.invoice-attach{
+  width:100%!important;
+  justify-content:flex-end!important;
+  margin-top:10px!important;
+}
+.invoice-attach .file-inline{
+  margin-left:auto!important;
+  max-width:430px!important;
+}
+@media (max-width:720px){
+  .invoice-grid{display:grid!important;grid-template-columns:1fr 1fr!important;max-width:100%!important;}
+  .invoice-grid .field,
+  .invoice-grid .field:nth-child(1),
+  .invoice-grid .field:nth-child(2),
+  .invoice-grid .field:nth-child(3),
+  .invoice-grid .field:nth-child(4){width:auto!important;max-width:none!important;}
+  .invoice-attach{justify-content:flex-start!important;}
+  .invoice-attach .file-inline{margin-left:0!important;max-width:100%!important;}
+}
+@media (max-width:460px){
+  .invoice-grid{grid-template-columns:1fr!important;}
+}
+/* /SVT v104 - invoice monthly compact fields hotfix */
 </style>
 
-<!-- SVT v133 invoice alignment clean rebuild START -->
-<style id="svt-v133-invoice-align-clean">
-  /* v133: Clean invoice-only layout from actual uploaded file.
-     Target: aaa2 reference. No JavaScript, no transform, no input mutation. */
-  #invoiceBox,
+<!-- svt-v135-invoice-true-clean START -->
+<style id="svt-v135-invoice-true-clean">
+  /* v135: fix strict pentru zona REALĂ #invoiceBox din pasul 2.
+     Se afișează doar când JS setează invoiceBox.style.display = 'grid'.
+     Nu atinge modalul și nu atinge uploadul principal #dropZone din pasul 3. */
+
+  #invoiceBox {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: -2px 0 0 0 !important;
+    padding-top: 14px !important;
+    border-top: 1px solid #edf2f6 !important;
+    align-items: end !important;
+    column-gap: 28px !important;
+    row-gap: 0 !important;
+    grid-template-columns: max-content minmax(430px, 1fr) !important;
+  }
+
   #invoiceBox[style*="grid"] {
     display: grid !important;
-    grid-template-columns: max-content minmax(320px, 1fr) !important;
-    column-gap: 34px !important;
-    row-gap: 0 !important;
-    align-items: center !important;
-    padding: 15px 20px 14px 20px !important;
-    margin-top: 0 !important;
-    width: 100% !important;
-    max-width: none !important;
-    box-sizing: border-box !important;
+  }
+
+  #invoiceBox[style*="none"] {
+    display: none !important;
   }
 
   #invoiceBox .invoice-grid {
-    grid-column: 1 !important;
-    grid-row: 1 !important;
-    display: flex !important;
-    flex-wrap: nowrap !important;
-    align-items: flex-start !important;
-    justify-content: flex-start !important;
-    gap: 0 13px !important;
+    display: grid !important;
+    grid-template-columns: 78px 78px 112px 168px !important;
+    column-gap: 16px !important;
+    row-gap: 0 !important;
     width: max-content !important;
     max-width: none !important;
-    min-width: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
+    align-items: end !important;
+    justify-content: start !important;
   }
 
   #invoiceBox .invoice-field {
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-    align-items: flex-start !important;
-    gap: 6px !important;
+    display: grid !important;
+    grid-template-rows: 32px 38px !important;
+    align-items: end !important;
+    gap: 0 !important;
     margin: 0 !important;
     padding: 0 !important;
     min-width: 0 !important;
-    flex: 0 0 auto !important;
-    box-sizing: border-box !important;
+    max-width: none !important;
   }
 
-  #invoiceBox .invoice-consumption-field { width: 78px !important; max-width: 78px !important; }
-  #invoiceBox .invoice-days-field { width: 76px !important; max-width: 76px !important; }
-  #invoiceBox .invoice-value-field { width: 86px !important; max-width: 86px !important; }
-  #invoiceBox .invoice-program-field { width: 190px !important; max-width: 190px !important; }
+  #invoiceBox .invoice-consumption-field { width: 78px !important; }
+  #invoiceBox .invoice-days-field { width: 78px !important; }
+  #invoiceBox .invoice-value-field { width: 112px !important; }
+  #invoiceBox .invoice-program-field { width: 168px !important; }
 
   #invoiceBox .invoice-field label {
     display: block !important;
     width: 100% !important;
     max-width: 100% !important;
-    min-height: 24px !important;
-    margin: 0 !important;
+    margin: 0 0 4px 0 !important;
     padding: 0 !important;
-    transform: none !important;
-    position: static !important;
-    top: auto !important;
+    color: #071b34 !important;
     font-size: 11px !important;
     line-height: 1.05 !important;
-    font-weight: 850 !important;
+    font-weight: 900 !important;
     letter-spacing: -0.02em !important;
-    color: #001739 !important;
     white-space: normal !important;
+    transform: none !important;
+    position: static !important;
   }
 
-  #invoiceBox .invoice-control,
-  #invoiceBox input.invoice-control,
-  #invoiceBox select.invoice-control {
+  #invoiceBox .invoice-field label br {
     display: block !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    height: 38px !important;
-    min-height: 38px !important;
-    max-height: 38px !important;
-    margin: 0 !important;
-    padding: 0 10px !important;
-    box-sizing: border-box !important;
-    border-radius: 9px !important;
-    font-size: 12.5px !important;
-    line-height: 38px !important;
-  }
-
-  #invoiceBox select.invoice-control {
-    padding-right: 26px !important;
-    text-overflow: ellipsis !important;
   }
 
   #invoiceBox .field-hint {
     display: none !important;
   }
 
+  #invoiceBox .invoice-control,
+  #invoiceBox #invoiceConsumption,
+  #invoiceBox #invoiceDays,
+  #invoiceBox #invoiceValue,
+  #invoiceBox #workSchedule {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    padding: 0 10px !important;
+    border-radius: 10px !important;
+    font-size: 13px !important;
+    line-height: normal !important;
+    box-sizing: border-box !important;
+    transform: none !important;
+  }
+
+  #invoiceBox #workSchedule {
+    padding-right: 28px !important;
+  }
+
   #invoiceBox .invoice-attach {
     grid-column: 2 !important;
-    grid-row: 1 !important;
-    align-self: center !important;
     justify-self: end !important;
+    align-self: end !important;
     display: flex !important;
-    align-items: center !important;
-    justify-content: flex-end !important;
-    width: auto !important;
-    max-width: none !important;
-    min-width: 0 !important;
-    height: auto !important;
-    min-height: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
-    transform: none !important;
+    align-items: flex-end !important;
+    justify-content: flex-end !important;
+    gap: 0 !important;
     position: static !important;
+    transform: none !important;
     top: auto !important;
   }
 
-  #invoiceBox #invoiceDrop.file-inline {
+  #invoiceBox #invoiceDrop.file-inline,
+  #invoiceBox .invoice-attach .file-inline {
+    width: 430px !important;
+    min-width: 430px !important;
+    max-width: 430px !important;
+    min-height: 54px !important;
+    height: 54px !important;
+    padding: 8px 18px !important;
+    margin: 0 !important;
     display: flex !important;
     align-items: center !important;
-    justify-content: center !important;
-    gap: 12px !important;
-    width: 398px !important;
-    max-width: 398px !important;
-    min-width: 398px !important;
-    height: 54px !important;
-    min-height: 54px !important;
-    max-height: 54px !important;
-    margin: 0 !important;
-    padding: 0 13px !important;
+    justify-content: flex-start !important;
+    gap: 14px !important;
+    border-radius: 14px !important;
     box-sizing: border-box !important;
-    transform: none !important;
     position: static !important;
+    transform: none !important;
     top: auto !important;
   }
 
   #invoiceBox #invoiceDrop .file-button {
-    flex: 0 0 auto !important;
-    height: 34px !important;
-    min-height: 34px !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    flex: none !important;
     margin: 0 !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
   }
 
   #invoiceBox #invoiceDrop .file-meta {
-    margin: 0 !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
     align-items: flex-start !important;
-    line-height: 1.12 !important;
     min-width: 0 !important;
+    text-align: left !important;
+    gap: 2px !important;
   }
 
   #invoiceBox #invoiceDrop .file-meta strong,
   #invoiceBox #invoiceDrop .file-meta span {
-    line-height: 1.12 !important;
+    text-align: left !important;
   }
 
   #invoiceBox #invoiceFileName {
     display: none !important;
   }
 
-  @media (max-width: 860px) {
-    #invoiceBox,
-    #invoiceBox[style*="grid"] {
+  @media (max-width: 900px) {
+    #invoiceBox {
       grid-template-columns: 1fr !important;
       row-gap: 12px !important;
-      padding: 14px 16px !important;
     }
     #invoiceBox .invoice-grid {
-      width: 100% !important;
+      grid-template-columns: repeat(2, max-content) !important;
+    }
+    #invoiceBox .invoice-attach {
+      grid-column: 1 !important;
+      justify-self: start !important;
+      justify-content: flex-start !important;
+    }
+    #invoiceBox #invoiceDrop.file-inline,
+    #invoiceBox .invoice-attach .file-inline {
+      width: min(430px, 100%) !important;
+      min-width: 0 !important;
       max-width: 100% !important;
-      flex-wrap: wrap !important;
-      gap: 10px 12px !important;
+    }
+  }
+
+  @media (max-width: 520px) {
+    #invoiceBox .invoice-grid {
+      grid-template-columns: 1fr !important;
+      width: 100% !important;
     }
     #invoiceBox .invoice-consumption-field,
     #invoiceBox .invoice-days-field,
     #invoiceBox .invoice-value-field,
     #invoiceBox .invoice-program-field {
-      width: calc(50% - 6px) !important;
-      max-width: calc(50% - 6px) !important;
-    }
-    #invoiceBox .invoice-attach {
-      grid-column: 1 !important;
-      grid-row: 2 !important;
-      justify-self: stretch !important;
       width: 100% !important;
-    }
-    #invoiceBox #invoiceDrop.file-inline {
-      width: 100% !important;
-      min-width: 0 !important;
-      max-width: 100% !important;
     }
   }
 </style>
-<!-- SVT v133 invoice alignment clean rebuild END -->
-
-<!-- svt-v132-invoice-labels-down-only START -->
-<style id="svt-v132-invoice-labels-down-only">
-  #invoicePanel [data-svt-v132-label-down="true"] {
-    position: relative !important;
-    top: 16px !important;
-    transform: none !important;
-    margin-bottom: 0 !important;
-    line-height: 1.05 !important;
-    z-index: 5 !important;
-  }
-</style>
-<!-- svt-v132-invoice-labels-down-only END -->
+<!-- svt-v135-invoice-true-clean END -->
 </head>
 <body data-energy-mode="electric">
   <div class="page">
@@ -5469,107 +5533,8 @@
       });
     })();
   </script>
-<!-- svt-v132-invoice-labels-down-only-js START -->
-<script id="svt-v132-invoice-labels-down-only-js">
-(function () {
-  var TARGETS = {
-    "consum total facturat": true,
-    "numar zile facturate": true,
-    "număr zile facturate": true,
-    "valoare factura energie": true,
-    "valoare factură energie": true,
-    "program de lucru": true
-  };
-
-  function norm(value) {
-    return String(value || "")
-      .replace(/\u00a0/g, " ")
-      .replace(/\s+/g, " ")
-      .trim()
-      .toLowerCase();
-  }
-
-  function plain(value) {
-    return norm(value)
-      .replace(/ă/g, "a")
-      .replace(/â/g, "a")
-      .replace(/î/g, "i")
-      .replace(/ș/g, "s")
-      .replace(/ş/g, "s")
-      .replace(/ț/g, "t")
-      .replace(/ţ/g, "t");
-  }
-
-  function isTarget(text) {
-    var n = norm(text);
-    var p = plain(text);
-    return TARGETS[n] || TARGETS[p];
-  }
-
-  function hasControl(el) {
-    return !!(el && el.querySelector && el.querySelector("input, select, textarea, button"));
-  }
-
-  function pickLabelElement(textNode) {
-    var el = textNode && textNode.parentElement;
-    for (var i = 0; el && i < 4; i += 1) {
-      var ownText = norm(el.textContent);
-      if (isTarget(ownText) && !hasControl(el)) return el;
-      el = el.parentElement;
-    }
-    return null;
-  }
-
-  function applyInvoiceLabelPosition() {
-    var root = document.getElementById("invoicePanel") || document;
-    var labels = [];
-    var selector = "label,.field-label,.form-label,.control-label,.label,.field-title,.invoice-label,.field > span,.field > div,.field strong,.field b";
-
-    root.querySelectorAll(selector).forEach(function (el) {
-      if (isTarget(el.textContent) && !hasControl(el)) labels.push(el);
-    });
-
-    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-    var node;
-    while ((node = walker.nextNode())) {
-      if (!isTarget(node.nodeValue)) continue;
-      var chosen = pickLabelElement(node);
-      if (chosen) labels.push(chosen);
-    }
-
-    var seen = new Set();
-    labels.forEach(function (label) {
-      if (!label || seen.has(label)) return;
-      seen.add(label);
-      label.setAttribute("data-svt-v132-label-down", "true");
-      label.style.setProperty("position", "relative", "important");
-      label.style.setProperty("top", "16px", "important");
-      label.style.setProperty("transform", "none", "important");
-      label.style.setProperty("margin-bottom", "0", "important");
-      label.style.setProperty("line-height", "1.05", "important");
-      label.style.setProperty("z-index", "5", "important");
-    });
-  }
-
-  function schedule() {
-    applyInvoiceLabelPosition();
-    window.requestAnimationFrame(applyInvoiceLabelPosition);
-    setTimeout(applyInvoiceLabelPosition, 100);
-    setTimeout(applyInvoiceLabelPosition, 500);
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", schedule);
-  } else {
-    schedule();
-  }
-  window.addEventListener("load", schedule);
-})();
-</script>
-<!-- svt-v132-invoice-labels-down-only-js END -->
 </body>
 </html>
-
 
 
 
