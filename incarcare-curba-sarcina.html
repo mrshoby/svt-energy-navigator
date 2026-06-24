@@ -7226,6 +7226,124 @@
 }
 </style>
 <!-- SVT v151 modal tabs cards invoice jitter END -->
+<!-- SVT v152 invoice upload stable no-jump START -->
+<style id="svt-v152-invoice-upload-stable-no-jump">
+/*
+  SVT v152
+  Fix: uploadul "Alege factură" nu mai are poziție intermediară la refresh/selectare.
+  Principiu: poziția finală este definită în CSS înainte ca #invoiceBox să devină vizibil.
+  Nu folosește runtime JS pentru mutare.
+*/
+
+/* Oprește orice animație/tranziție în zona facturii */
+#invoiceBox,
+#invoiceBox *,
+#invoiceBox::before,
+#invoiceBox::after {
+  transition: none !important;
+  animation: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* Containerul facturii are layout stabil indiferent de momentul afișării */
+#invoiceBox {
+  position: relative !important;
+  width: 100% !important;
+  min-height: 82px !important;
+  box-sizing: border-box !important;
+  padding-right: 430px !important;
+  transform: none !important;
+  translate: none !important;
+  will-change: auto !important;
+}
+
+/* Dacă JS-ul îi pune display grid/flex/block, layoutul intern rămâne stabil */
+#invoiceBox[style*="grid"],
+#invoiceBox[style*="block"],
+#invoiceBox[style*="flex"] {
+  position: relative !important;
+}
+
+/* Grupul de inputuri rămâne în stânga și nu împinge uploadul */
+#invoiceBox .invoice-grid {
+  width: auto !important;
+  max-width: 420px !important;
+  min-width: 0 !important;
+  transform: none !important;
+  translate: none !important;
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Uploadul facturii: poziție finală fixă din primul frame */
+#invoiceBox .invoice-attach,
+#invoiceBox .file-inline,
+#invoiceBox [class*="invoice-upload"],
+#invoiceBox [class*="invoiceAttach"] {
+  position: absolute !important;
+  right: 0 !important;
+  top: 10px !important;
+  width: 390px !important;
+  max-width: 390px !important;
+  min-width: 390px !important;
+  height: 58px !important;
+  min-height: 58px !important;
+  max-height: 58px !important;
+  box-sizing: border-box !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  transform: none !important;
+  translate: none !important;
+  scale: 1 !important;
+  will-change: auto !important;
+  transition: none !important;
+  animation: none !important;
+  backface-visibility: hidden !important;
+}
+
+/* Orice stare hover/focus rămâne exact pe aceeași poziție */
+#invoiceBox .invoice-attach:hover,
+#invoiceBox .invoice-attach:focus,
+#invoiceBox .invoice-attach:focus-within,
+#invoiceBox .file-inline:hover,
+#invoiceBox .file-inline:focus,
+#invoiceBox .file-inline:focus-within,
+#invoiceBox [class*="invoice-upload"]:hover,
+#invoiceBox [class*="invoice-upload"]:focus,
+#invoiceBox [class*="invoice-upload"]:focus-within {
+  right: 0 !important;
+  top: 10px !important;
+  transform: none !important;
+  translate: none !important;
+  scale: 1 !important;
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Butonul/textul din upload nu trebuie să sară */
+#invoiceBox .invoice-attach *,
+#invoiceBox .file-inline *,
+#invoiceBox [class*="invoice-upload"] * {
+  transform: none !important;
+  translate: none !important;
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Dezactivează explicit orice keyframe/transform vechi pe label/button */
+#invoiceBox label,
+#invoiceBox button,
+#invoiceBox input[type="file"] + label {
+  transform: none !important;
+  translate: none !important;
+  transition: none !important;
+  animation: none !important;
+}
+</style>
+<!-- SVT v152 invoice upload stable no-jump END -->
 </head>
 <body data-energy-mode="electric">
   <div class="page">
@@ -7882,56 +8000,9 @@
       });
     })();
   </script>
-<!-- SVT v151 invoice no jitter runtime START -->
-<script id="svt-v151-invoice-no-jitter-runtime">
-(function(){
-  function freezeInvoiceUpload(){
-    const box = document.getElementById("invoiceBox");
-    if(!box) return;
-
-    const candidates = Array.from(box.querySelectorAll("*")).filter(function(el){
-      const text = (el.textContent || "").toLowerCase();
-      const cls = (el.className || "").toString().toLowerCase();
-      return text.includes("alege factură") || text.includes("alege factura") ||
-             cls.includes("upload") || cls.includes("attach") || cls.includes("file-inline");
-    });
-
-    candidates.forEach(function(el){
-      el.style.setProperty("transition", "none", "important");
-      el.style.setProperty("animation", "none", "important");
-      el.style.setProperty("transform", "none", "important");
-      el.style.setProperty("translate", "none", "important");
-      el.style.setProperty("scale", "1", "important");
-      el.style.setProperty("will-change", "auto", "important");
-    });
-
-    box.setAttribute("data-svt-v151-no-jitter", "true");
-  }
-
-  window.svtV151FreezeInvoiceUpload = freezeInvoiceUpload;
-  document.addEventListener("DOMContentLoaded", freezeInvoiceUpload);
-  document.addEventListener("click", function(event){
-    const target = event.target;
-    if(target && (target.closest("#invoiceBox") || target.closest("[data-source]") || target.closest("[data-option]"))){
-      requestAnimationFrame(freezeInvoiceUpload);
-      setTimeout(freezeInvoiceUpload, 60);
-      setTimeout(freezeInvoiceUpload, 240);
-    }
-  }, true);
-
-  const observer = new MutationObserver(function(){ requestAnimationFrame(freezeInvoiceUpload); });
-  document.addEventListener("DOMContentLoaded", function(){
-    const box = document.getElementById("invoiceBox");
-    if(box) observer.observe(box, {subtree:true, childList:true, attributes:true});
-  });
-
-  setTimeout(freezeInvoiceUpload, 200);
-  setTimeout(freezeInvoiceUpload, 900);
-})();
-</script>
-<!-- SVT v151 invoice no jitter runtime END -->
 </body>
 </html>
+
 
 
 
