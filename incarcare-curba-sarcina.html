@@ -5636,234 +5636,83 @@
 <!-- svt-v139-help-modal-compact-reference END -->
 
 
-<!-- SVT v147 svt139 clean modal assets + compact heights START -->
-<style id="svt-v147-svt139-clean-modal">
-/*
-  SVT v147 — clean CSS for the REAL help modal classes.
-  Real DOM uses svt139-* classes.
-  Scope: #distributorHelpModal only.
-  Protected: #invoiceBox, invoice inputs, invoice upload, step 3 upload.
-*/
+<!-- SVT v148 svt139 modal layout + assets START -->
+<style id="svt-v148-svt139-modal-layout">
+#distributorHelpModal .svt139-modal { max-width: 1040px !important; }
+#distributorHelpModal .svt139-head { padding-bottom: 8px !important; }
+#distributorHelpModal .svt139-head h2 { margin-bottom: 6px !important; }
+#distributorHelpModal .svt139-head p { max-width: 760px !important; }
 
-/* remove excess visual size, target svt139 only */
-#distributorHelpModal .svt139-modal {
-  max-width: 1040px !important;
-}
-
-/* tabs smaller */
-#distributorHelpModal .svt139-tabs {
-  gap: 8px !important;
-  padding: 6px 24px 10px !important;
-}
+#distributorHelpModal .svt139-tabs { gap: 8px !important; padding: 6px 22px 10px !important; }
 #distributorHelpModal .svt139-tab,
 #distributorHelpModal [data-dist-tab].svt139-tab {
-  height: 34px !important;
-  min-height: 34px !important;
-  max-height: 34px !important;
-  min-width: 108px !important;
-  max-width: 150px !important;
-  padding: 0 10px !important;
-  border-radius: 12px !important;
-  gap: 6px !important;
-  font-size: 11px !important;
-  line-height: 1 !important;
-  font-weight: 900 !important;
+  height: 34px !important; min-height: 34px !important; max-height: 34px !important;
+  min-width: 112px !important; max-width: 154px !important; padding: 0 10px !important;
+  border-radius: 12px !important; gap: 6px !important; font-size: 11px !important; line-height: 1 !important; font-weight: 900 !important;
 }
-#distributorHelpModal .svt139-tab svg {
-  width: 14px !important;
-  height: 14px !important;
-  flex: 0 0 14px !important;
-}
+#distributorHelpModal .svt139-tab svg { width: 14px !important; height: 14px !important; flex: 0 0 14px !important; }
 
-/* panel spacing */
-#distributorHelpModal .svt139-body {
-  padding: 0 26px 16px !important;
-}
-#distributorHelpModal .svt139-panel {
-  gap: 9px !important;
-}
+#distributorHelpModal .svt139-body { padding: 0 24px 16px !important; }
+#distributorHelpModal .svt139-panel { gap: 10px !important; }
 
-/* hero / supplier description window: explicit compact height */
 #distributorHelpModal .svt139-hero {
-  height: 100px !important;
-  min-height: 100px !important;
-  max-height: 100px !important;
-  overflow: hidden !important;
-  box-sizing: border-box !important;
-  display: grid !important;
-  grid-template-columns: 118px minmax(0, 1fr) !important;
-  gap: 14px !important;
-  align-items: center !important;
-  padding: 8px 16px !important;
-  border-radius: 15px !important;
+  height: 104px !important; min-height: 104px !important; max-height: 104px !important; overflow: hidden !important; box-sizing: border-box !important;
+  display: grid !important; grid-template-columns: 128px minmax(0,1fr) !important; gap: 14px !important; align-items: center !important;
+  padding: 10px 16px !important; border-radius: 15px !important;
 }
-
 #distributorHelpModal .svt139-art {
-  width: 104px !important;
-  height: 68px !important;
-  max-width: 104px !important;
-  max-height: 68px !important;
-  display: grid !important;
-  place-items: center !important;
-  justify-self: center !important;
-  overflow: hidden !important;
+  width: 110px !important; height: 72px !important; max-width: 110px !important; max-height: 72px !important;
+  display: grid !important; place-items: center !important; justify-self: center !important; overflow: hidden !important;
 }
+#distributorHelpModal .svt139-art svg { display: none !important; }
+#distributorHelpModal .svt139-art .svt148-illustration {
+  display: block !important; width: 110px !important; height: 72px !important; max-width: 110px !important; max-height: 72px !important; object-fit: contain !important;
+}
+#distributorHelpModal .svt139-copy { min-width: 0 !important; }
+#distributorHelpModal .svt139-copy h3 { margin: 0 0 5px !important; font-size: 16px !important; line-height: 1.08 !important; font-weight: 900 !important; letter-spacing: -.02em !important; }
+#distributorHelpModal .svt139-copy p { margin: 0 !important; font-size: 11px !important; line-height: 1.24 !important; }
 
-#distributorHelpModal .svt139-art svg {
-  display: none !important;
-}
-
-#distributorHelpModal .svt139-art img,
-#distributorHelpModal .svt147-illustration {
-  display: block !important;
-  width: 104px !important;
-  height: 68px !important;
-  max-width: 104px !important;
-  max-height: 68px !important;
-  object-fit: contain !important;
-}
-
-#distributorHelpModal .svt139-copy {
-  min-width: 0 !important;
-  overflow: hidden !important;
-}
-#distributorHelpModal .svt139-copy h3 {
-  margin: 0 0 4px !important;
-  font-size: 16px !important;
-  line-height: 1.08 !important;
-  font-weight: 900 !important;
-  letter-spacing: -0.02em !important;
-}
-#distributorHelpModal .svt139-copy p {
-  margin: 0 !important;
-  max-width: 720px !important;
-  font-size: 11px !important;
-  line-height: 1.23 !important;
-  font-weight: 650 !important;
-}
-
-/* bottom grid */
 #distributorHelpModal .svt139-grid {
-  display: grid !important;
-  grid-template-columns: minmax(0,1.05fr) minmax(300px,.95fr) !important;
-  gap: 9px !important;
-  align-items: stretch !important;
+  display: grid !important; grid-template-columns: minmax(0,1.08fr) minmax(300px,.92fr) !important; gap: 8px !important; align-items: start !important;
 }
-
 #distributorHelpModal .svt139-side {
-  display: grid !important;
-  gap: 9px !important;
+  display: grid !important; grid-template-rows: 76px 76px !important; gap: 6px !important; align-content: start !important;
 }
 
-/* Pasii window explicit compact height */
 #distributorHelpModal .svt139-steps {
-  height: 164px !important;
-  min-height: 164px !important;
-  max-height: 164px !important;
-  overflow: hidden !important;
-  box-sizing: border-box !important;
-  padding: 9px 12px !important;
-  border-radius: 15px !important;
+  height: 170px !important; min-height: 170px !important; max-height: 170px !important; overflow: hidden !important; box-sizing: border-box !important;
+  padding: 10px 12px !important; border-radius: 15px !important;
 }
-
-#distributorHelpModal .svt139-card {
-  height: 78px !important;
-  min-height: 78px !important;
-  max-height: 78px !important;
-  overflow: hidden !important;
-  box-sizing: border-box !important;
-  padding: 9px 12px !important;
-  border-radius: 15px !important;
-  align-content: start !important;
-}
-
-#distributorHelpModal .svt139-steps-head,
-#distributorHelpModal .svt139-card {
-  gap: 9px !important;
-}
-
-#distributorHelpModal .svt139-steps-head {
-  display: flex !important;
-  align-items: center !important;
-  margin: 0 0 5px !important;
-}
-
-#distributorHelpModal .svt139-iconbox {
-  width: 30px !important;
-  height: 30px !important;
-  min-width: 30px !important;
-  min-height: 30px !important;
-  border-radius: 9px !important;
-}
-#distributorHelpModal .svt139-iconbox svg {
-  width: 15px !important;
-  height: 15px !important;
-}
-
-#distributorHelpModal .svt139-steps h4,
-#distributorHelpModal .svt139-card h4 {
-  margin: 0 0 3px !important;
-  font-size: 13px !important;
-  line-height: 1.08 !important;
-  font-weight: 900 !important;
-}
-
+#distributorHelpModal .svt139-steps-head { display: flex !important; align-items: center !important; gap: 9px !important; margin: 0 0 6px !important; }
+#distributorHelpModal .svt139-iconbox { width: 30px !important; height: 30px !important; min-width: 30px !important; min-height: 30px !important; border-radius: 9px !important; }
+#distributorHelpModal .svt139-iconbox svg { width: 15px !important; height: 15px !important; }
+#distributorHelpModal .svt139-steps h4 { margin: 0 !important; font-size: 13px !important; line-height: 1.08 !important; font-weight: 900 !important; }
 #distributorHelpModal .svt139-steps ol {
-  margin: 0 !important;
-  padding: 5px 0 0 !important;
-  gap: 1px !important;
+  list-style: none !important; margin: 0 !important; padding: 7px 0 0 !important; display: grid !important; grid-template-columns: 1fr 1fr !important; column-gap: 14px !important; row-gap: 4px !important;
 }
-
-#distributorHelpModal .svt139-steps li {
-  display: grid !important;
-  grid-template-columns: 17px 1fr !important;
-  gap: 7px !important;
-  align-items: start !important;
-}
-
+#distributorHelpModal .svt139-steps li { display: grid !important; grid-template-columns: 17px 1fr !important; gap: 6px !important; align-items: start !important; margin: 0 !important; }
 #distributorHelpModal .svt139-steps li b {
-  width: 17px !important;
-  height: 17px !important;
-  min-width: 17px !important;
-  min-height: 17px !important;
-  font-size: 9px !important;
-  line-height: 1 !important;
+  width: 17px !important; height: 17px !important; min-width: 17px !important; min-height: 17px !important; font-size: 9px !important; line-height: 1 !important;
+  display: inline-grid !important; place-items: center !important;
 }
+#distributorHelpModal .svt139-steps li span { margin: 0 !important; font-size: 10px !important; line-height: 1.14 !important; }
 
-#distributorHelpModal .svt139-steps li span,
-#distributorHelpModal .svt139-card p {
-  margin: 0 !important;
-  font-size: 10px !important;
-  line-height: 1.15 !important;
-  font-weight: 650 !important;
+#distributorHelpModal .svt139-card {
+  height: 76px !important; min-height: 76px !important; max-height: 76px !important; overflow: hidden !important; box-sizing: border-box !important;
+  padding: 9px 12px !important; border-radius: 15px !important; display: grid !important; grid-template-columns: 34px 1fr !important; gap: 10px !important; align-items: center !important;
 }
+#distributorHelpModal .svt139-side .svt139-card:last-child { margin-top: -2px !important; }
+#distributorHelpModal .svt139-card-copy { display: flex !important; flex-direction: column !important; justify-content: center !important; height: 100% !important; min-width: 0 !important; }
+#distributorHelpModal .svt139-card h4 { margin: 0 0 3px !important; font-size: 13px !important; line-height: 1.08 !important; font-weight: 900 !important; }
+#distributorHelpModal .svt139-card p { margin: 0 !important; font-size: 10px !important; line-height: 1.16 !important; }
 
-#distributorHelpModal .svt139-card-copy {
-  min-width: 0 !important;
-  overflow: hidden !important;
-}
-
-/* footer remains compact */
 #distributorHelpModal .svt139-footer {
-  display: grid !important;
-  grid-template-columns: 290px 1fr !important;
-  gap: 12px !important;
-  margin-top: 4px !important;
-  padding-top: 10px !important;
+  display: grid !important; grid-template-columns: 320px 1fr !important; gap: 12px !important; align-items: center !important; margin-top: 2px !important; padding-top: 10px !important;
 }
-#distributorHelpModal .svt139-cta {
-  height: 40px !important;
-  min-height: 40px !important;
-  max-height: 40px !important;
-  border-radius: 12px !important;
-  font-size: 12px !important;
-}
-#distributorHelpModal .svt139-sources {
-  font-size: 11px !important;
-  gap: 3px !important;
-}
+#distributorHelpModal .svt139-cta { height: 40px !important; min-height: 40px !important; max-height: 40px !important; border-radius: 12px !important; font-size: 12px !important; }
+#distributorHelpModal .svt139-sources { font-size: 11px !important; gap: 3px !important; }
 </style>
-<!-- SVT v147 svt139 clean modal assets + compact heights END -->
+<!-- SVT v148 svt139 modal layout + assets END -->
 </head>
 <body data-energy-mode="electric">
   <div class="page">
@@ -6381,7 +6230,7 @@
       <div class="svt139-body">
         <section class="svt139-panel active is-active" data-dist-panel="deer" style="display:grid">
           <article class="svt139-hero">
-            <div class="svt139-art"><svg viewBox="0 0 240 150" class="svt139-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="112" cy="75" r="58" fill="currentColor" opacity=".09" stroke="none"/><path d="M48 128h144"/><path d="M113 26v102M76 128 113 26l37 102M91 66h44M84 86h58M78 67l35-41 35 41"/><path d="M54 128V96h28v32M62 105h12M62 117h12"/><path d="M158 128V107h24v21M164 115h6"/><path d="M144 52c22-10 42-10 60 0M150 72c16-7 31-7 47 0"/><path d="M197 128v-22M187 113c4-10 16-10 20 0M188 122h18"/></svg></div>
+            <div class="svt139-art"><img class="svt148-illustration" src="assets/img/svt-help-modal/deer.png" alt="" aria-hidden="true"></div>
             <div class="svt139-copy">
               <h3>DEER — Transilvania Nord, Transilvania Sud, Muntenia Nord</h3>
               <p>Portalul DEER permite accesul la date proprii de măsurare pentru locurile de consum din zonele de concesiune DEER. În funcție de tipul contorului și contul disponibil, poți consulta istoricul de consum și curbele de sarcină.</p>
@@ -6403,7 +6252,7 @@
           </footer>
         </section><section class="svt139-panel" data-dist-panel="retele" style="display:none">
           <article class="svt139-hero">
-            <div class="svt139-art"><svg viewBox="0 0 240 150" class="svt139-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="112" cy="76" r="58" fill="currentColor" opacity=".09" stroke="none"/><path d="M42 128h154"/><path d="M109 24v104M72 128l37-104 37 104M86 62h46M80 83h58M76 64l33-40 33 40"/><path d="M138 43c28-12 52-11 72 2M142 64c24-9 46-8 64 3M145 85c20-5 37-3 55 6"/><path d="M55 128V104h24v24M164 128v-18h26v18"/><path d="M54 104h26M163 110h28"/></svg></div>
+            <div class="svt139-art"><img class="svt148-illustration" src="assets/img/svt-help-modal/retele.png" alt="" aria-hidden="true"></div>
             <div class="svt139-copy">
               <h3>Rețele Electrice România — Muntenia, Banat, Dobrogea</h3>
               <p>În contul Rețele Electrice, serviciul Date de consum include istoricul citirilor și, pentru contoare inteligente integrate în telecitire, curba de sarcină cu variația consumului în timp.</p>
@@ -6425,7 +6274,7 @@
           </footer>
         </section><section class="svt139-panel" data-dist-panel="delgaz" style="display:none">
           <article class="svt139-hero">
-            <div class="svt139-art"><svg viewBox="0 0 240 150" class="svt139-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="118" cy="76" r="58" fill="currentColor" opacity=".09" stroke="none"/><path d="M50 126h144"/><rect x="78" y="46" width="80" height="74" rx="14"/><path d="M78 76H62M158 76h20M63 65v22M178 65v22"/><path d="M104 32h28M113 32v14M123 32v14"/><path d="M98 86h40M98 101h32"/><path d="M120 74c12 0 20-8 20-19M120 74c-12 0-20-8-20-19"/><path d="M120 55c4 6 7 10 7 15a7 7 0 0 1-14 0c0-5 3-9 7-15Z"/></svg></div>
+            <div class="svt139-art"><img class="svt148-illustration" src="assets/img/svt-help-modal/delgaz.png" alt="" aria-hidden="true"></div>
             <div class="svt139-copy">
               <h3>Delgaz Grid — Moldova / Nord-Est</h3>
               <p>Pentru contoarele SMART, Delgaz Grid permite consultarea datelor de măsură în contul de client, în zona de grafice și rapoarte date măsură. Raportul se solicită din portal și se descarcă după procesare.</p>
@@ -6447,7 +6296,7 @@
           </footer>
         </section><section class="svt139-panel" data-dist-panel="oltenia" style="display:none">
           <article class="svt139-hero">
-            <div class="svt139-art"><svg viewBox="0 0 240 150" class="svt139-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="116" cy="78" r="58" fill="currentColor" opacity=".09" stroke="none"/><path d="M42 128h154"/><path d="M76 128V50h23v78M99 82h40v46M139 68h34v60"/><path d="M82 70h11M82 92h11M108 98h20M147 84h15"/><path d="M100 48c32-16 58-14 85 4M100 70c34-12 61-10 84 5M100 92c30-7 56-4 79 7"/><circle cx="188" cy="118" r="16"/><path d="M180 118h16M188 110v16"/></svg></div>
+            <div class="svt139-art"><img class="svt148-illustration" src="assets/img/svt-help-modal/oltenia.png" alt="" aria-hidden="true"></div>
             <div class="svt139-copy">
               <h3>Distribuție Energie Oltenia — Portal date măsurate / DEO Connect</h3>
               <p>În portalul de date măsurate, tabul Reads permite vizualizarea istoricului citirilor și a curbei de sarcină. Datele pot fi afișate tabelar/grafic la interval de 15 minute și exportate sub formă de tabel.</p>
@@ -6469,7 +6318,7 @@
           </footer>
         </section><section class="svt139-panel" data-dist-panel="furnizor" style="display:none">
           <article class="svt139-hero">
-            <div class="svt139-art"><svg viewBox="0 0 240 150" class="svt139-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="114" cy="76" r="58" fill="currentColor" opacity=".09" stroke="none"/><rect x="74" y="31" width="58" height="100" rx="14"/><path d="M95 42h16M96 118h14"/><circle cx="103" cy="65" r="13"/><path d="M84 101h38M84 113h30"/><path d="M142 60h36l16 16v54h-52z"/><path d="M178 60v18h16M151 86h28M151 100h28"/><circle cx="178" cy="124" r="18"/><path d="m169 124 6 6 13-15"/></svg></div>
+            <div class="svt139-art"><img class="svt148-illustration" src="assets/img/svt-help-modal/furnizor.png" alt="" aria-hidden="true"></div>
             <div class="svt139-copy">
               <h3>Furnizor / aplicație client — variantă de verificare</h3>
               <p>Aplicația furnizorului poate afișa facturi, indexuri și istoric de consum, dar nu garantează export orar sau la 15 minute. Pentru curba de sarcină completă, verifică mai întâi portalul distribuitorului.</p>
@@ -6520,56 +6369,9 @@
       });
     })();
   </script>
-<!-- SVT v147 svt139 raster illustration injector START -->
-<script id="svt-v147-svt139-raster-illustration-injector">
-(function(){
-  const map = {
-    deer: "assets/img/svt-help-modal/deer.png",
-    retele: "assets/img/svt-help-modal/retele.png",
-    delgaz: "assets/img/svt-help-modal/delgaz.png",
-    oltenia: "assets/img/svt-help-modal/oltenia.png",
-    furnizor: "assets/img/svt-help-modal/furnizor.png"
-  };
-
-  function applySvt147(){
-    const modal = document.getElementById("distributorHelpModal");
-    if(!modal) return;
-
-    Object.keys(map).forEach(function(key){
-      const panel = modal.querySelector(''[data-dist-panel="'' + key + ''"]'');
-      if(!panel) return;
-      const art = panel.querySelector(".svt139-art");
-      if(!art) return;
-
-      let img = art.querySelector("img.svt147-illustration");
-      if(!img){
-        img = document.createElement("img");
-        img.className = "svt147-illustration";
-        img.alt = "";
-        img.setAttribute("aria-hidden", "true");
-        art.appendChild(img);
-      }
-      img.src = map[key];
-    });
-
-    modal.setAttribute("data-svt-v147-modal-clean", "true");
-  }
-
-  window.svtV147ApplyModalAssets = applySvt147;
-  document.addEventListener("DOMContentLoaded", applySvt147);
-  document.addEventListener("click", function(event){
-    if(event.target && event.target.closest("#distributorHelpModal")){
-      requestAnimationFrame(applySvt147);
-      setTimeout(applySvt147, 80);
-    }
-  }, true);
-  setTimeout(applySvt147, 250);
-  setTimeout(applySvt147, 1000);
-})();
-</script>
-<!-- SVT v147 svt139 raster illustration injector END -->
 </body>
 </html>
+
 
 
 
