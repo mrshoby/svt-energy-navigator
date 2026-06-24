@@ -27,7 +27,6 @@
   <!-- SVT V99 MODAL 1TO1 TIGHT INVOICE FIELDS -->
   <!-- SVT V100 MODAL CLEAN 1TO1 AND INVOICE SHRINK -->
   <!-- SVT V101 HELP MODAL FROM ZERO -->
-  <!-- SVT V137 INVOICE UPLOAD MATCH ROW3 + COMPACT LABEL WIDTHS -->
   <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
   <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -4558,772 +4557,602 @@
       #distributorHelpModal.svt-help101-backdrop .svt-help101-body{padding:0 18px 18px!important;}
     }
 
-<!-- svt-v136-true-v132-invoice-baseline START -->
-<style id="svt-v136-true-v132-invoice-baseline">
-  /* v136: restore the real v132-style invoice state only for row 2 / factura lunară.
-     Scope: #invoiceBox only. It must remain hidden until the user clicks „Am doar factura lunară”. */
-  #invoiceBox[style*="display: none"],
-  #invoiceBox[style*="display:none"]{
-    display:none!important;
+  
+/* SVT v104 - invoice monthly compact fields hotfix
+   Scope: strict pentru blocul factura lunara: .invoice-grid / .invoice-attach.
+   Nu schimba hero, modal, row-uri globale sau uploadul principal de la pasul 3. */
+.invoice-grid{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+  gap:10px 12px!important;
+  width:auto!important;
+  max-width:760px!important;
+}
+.invoice-grid .field{
+  flex:0 0 auto!important;
+  width:auto!important;
+  max-width:none!important;
+  min-width:0!important;
+}
+.invoice-grid .field:nth-child(1){width:154px!important;max-width:154px!important;}
+.invoice-grid .field:nth-child(2){width:150px!important;max-width:150px!important;}
+.invoice-grid .field:nth-child(3){width:158px!important;max-width:158px!important;}
+.invoice-grid .field:nth-child(4){width:166px!important;max-width:166px!important;}
+.invoice-grid .field label{
+  display:block!important;
+  max-width:100%!important;
+  margin:0 0 5px!important;
+  font-size:11.5px!important;
+  line-height:1.05!important;
+  letter-spacing:-.01em!important;
+  white-space:normal!important;
+}
+.invoice-grid .field-hint{
+  max-width:100%!important;
+  font-size:10.2px!important;
+  line-height:1.18!important;
+  margin-top:0!important;
+}
+.invoice-grid .control,
+.invoice-grid input.control,
+.invoice-grid select.control{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  height:36px!important;
+  padding:0 10px!important;
+  font-size:12.5px!important;
+  border-radius:10px!important;
+}
+.invoice-grid select.control{
+  padding-right:24px!important;
+  text-overflow:ellipsis!important;
+}
+.invoice-attach{
+  width:100%!important;
+  justify-content:flex-end!important;
+  margin-top:10px!important;
+}
+.invoice-attach .file-inline{
+  margin-left:auto!important;
+  max-width:430px!important;
+}
+@media (max-width:720px){
+  .invoice-grid{display:grid!important;grid-template-columns:1fr 1fr!important;max-width:100%!important;}
+  .invoice-grid .field,
+  .invoice-grid .field:nth-child(1),
+  .invoice-grid .field:nth-child(2),
+  .invoice-grid .field:nth-child(3),
+  .invoice-grid .field:nth-child(4){width:auto!important;max-width:none!important;}
+  .invoice-attach{justify-content:flex-start!important;}
+  .invoice-attach .file-inline{margin-left:0!important;max-width:100%!important;}
+}
+@media (max-width:460px){
+  .invoice-grid{grid-template-columns:1fr!important;}
+}
+/* /SVT v104 - invoice monthly compact fields hotfix */
+</style data-svt-invoice-upload="v123" style="position:relative !important; top:46px !important; display:flex !important; align-items:center !important; justify-content:center !important; gap:12px !important; min-height:54px !important; height:54px !important; padding-top:0 !important; padding-bottom:0 !important; box-sizing:border-box !important; transform:none !important;">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style id="svt-v120-invoice-grid-upload-final-css">
+/* svt-v120-invoice-grid-upload-final START
+   Fix final factura lunara:
+   - cele 4 campuri raman lipite in grup compact, nu despartite;
+   - inputurile/selectul au width dupa label, cu Program de lucru mai lung;
+   - uploadul Alege factura este pe mijloc vertical si orizontal in fereastra lui;
+   - fara translateY si fara height umflat. */
+#invoicePanel .invoice-grid.svt120-invoice-grid,
+.invoice-grid.svt120-invoice-grid {
+  display: grid !important;
+  grid-template-columns: max-content max-content max-content max-content minmax(330px, 1fr) !important;
+  column-gap: 12px !important;
+  row-gap: 6px !important;
+  align-items: end !important;
+}
+
+#invoicePanel .svt120-invoice-field,
+.invoice-grid.svt120-invoice-grid .svt120-invoice-field {
+  justify-self: start !important;
+  align-self: end !important;
+  width: var(--svt120-w, auto) !important;
+  min-width: var(--svt120-w, auto) !important;
+  max-width: var(--svt120-w, auto) !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  transform: none !important;
+}
+
+#invoicePanel .svt120-invoice-field > label,
+#invoicePanel .svt120-invoice-field .field-label,
+#invoicePanel .svt120-invoice-field .small-label,
+.invoice-grid.svt120-invoice-grid .svt120-invoice-field > label,
+.invoice-grid.svt120-invoice-grid .svt120-invoice-field .field-label,
+.invoice-grid.svt120-invoice-grid .svt120-invoice-field .small-label {
+  width: var(--svt120-w, auto) !important;
+  max-width: var(--svt120-w, auto) !important;
+  white-space: normal !important;
+  line-height: 1.05 !important;
+  margin-bottom: 8px !important;
+}
+
+#invoicePanel .svt120-invoice-field .field-hint,
+.invoice-grid.svt120-invoice-grid .svt120-invoice-field .field-hint {
+  display: none !important;
+}
+
+#invoicePanel .svt120-invoice-field .control,
+#invoicePanel .svt120-invoice-field input:not([type="file"]):not([type="checkbox"]):not([type="radio"]),
+#invoicePanel .svt120-invoice-field select,
+.invoice-grid.svt120-invoice-grid .svt120-invoice-field .control,
+.invoice-grid.svt120-invoice-grid .svt120-invoice-field input:not([type="file"]):not([type="checkbox"]):not([type="radio"]),
+.invoice-grid.svt120-invoice-grid .svt120-invoice-field select {
+  width: var(--svt120-w, auto) !important;
+  min-width: var(--svt120-w, auto) !important;
+  max-width: var(--svt120-w, auto) !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
+  line-height: normal !important;
+  box-sizing: border-box !important;
+  transform: none !important;
+}
+
+#invoicePanel .svt120-invoice-upload-cell,
+.invoice-grid.svt120-invoice-grid .svt120-invoice-upload-cell {
+  grid-column: 5 !important;
+  justify-self: end !important;
+  align-self: end !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  position: static !important;
+  top: auto !important;
+  transform: none !important;
+  box-sizing: border-box !important;
+}
+
+#invoicePanel .svt120-invoice-upload-box,
+.invoice-grid.svt120-invoice-grid .svt120-invoice-upload-box {
+  width: min(400px, 100%) !important;
+  min-width: 300px !important;
+  max-width: 400px !important;
+  min-height: 46px !important;
+  margin: 0 !important;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  position: static !important;
+  top: auto !important;
+  transform: none !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+}
+
+#invoicePanel .svt120-invoice-upload-box *,
+.invoice-grid.svt120-invoice-grid .svt120-invoice-upload-box * {
+  text-align: center !important;
+}
+
+@media (max-width: 900px) {
+  #invoicePanel .invoice-grid.svt120-invoice-grid,
+  .invoice-grid.svt120-invoice-grid {
+    grid-template-columns: 1fr !important;
   }
-
-  #invoiceBox[style*="display: grid"],
-  #invoiceBox[style*="display:grid"]{
-    grid-column:1 / -1!important;
-    width:100%!important;
-    margin-top:14px!important;
-    padding:12px 0 0!important;
-    border-top:1px solid #e6eef6!important;
-    background:transparent!important;
-    box-shadow:none!important;
-    display:grid!important;
-    grid-template-columns:max-content minmax(360px, 1fr)!important;
-    column-gap:36px!important;
-    row-gap:0!important;
-    align-items:end!important;
+  #invoicePanel .svt120-invoice-field,
+  .invoice-grid.svt120-invoice-grid .svt120-invoice-field,
+  #invoicePanel .svt120-invoice-upload-cell,
+  .invoice-grid.svt120-invoice-grid .svt120-invoice-upload-cell {
+    grid-column: 1 !important;
+    justify-self: stretch !important;
   }
-
-  #invoiceBox[style*="display: grid"] .invoice-grid,
-  #invoiceBox[style*="display:grid"] .invoice-grid{
-    grid-column:1!important;
-    display:flex!important;
-    flex-direction:row!important;
-    flex-wrap:nowrap!important;
-    align-items:flex-end!important;
-    justify-content:flex-start!important;
-    gap:14px!important;
-    width:auto!important;
-    max-width:none!important;
-    min-width:0!important;
-    margin:0!important;
-    padding:0!important;
+  #invoicePanel .svt120-invoice-upload-box,
+  .invoice-grid.svt120-invoice-grid .svt120-invoice-upload-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
   }
+}
+/* svt-v120-invoice-grid-upload-final END */
+</style>
 
-  #invoiceBox[style*="display: grid"] .invoice-field,
-  #invoiceBox[style*="display:grid"] .invoice-field{
-    flex:0 0 auto!important;
-    display:flex!important;
-    flex-direction:column!important;
-    justify-content:flex-end!important;
-    align-items:flex-start!important;
-    gap:8px!important;
-    margin:0!important;
-    padding:0!important;
-    min-width:0!important;
-    height:auto!important;
-    min-height:0!important;
-    transform:none!important;
+
+<style id="svt-v130-invoice-upload-force-window-down-css">
+/* svt-v130-invoice-upload-force-window-down START
+   Mută strict fereastra verde punctată „Alege factură / Format acceptat” mai jos.
+   Nu atinge inputurile, nu atinge lățimile și nu atinge height-ul câmpurilor. */
+#invoicePanel .svt130-upload-window,
+.svt130-upload-window {
+  position: relative !important;
+  top: 34px !important;
+  transform: none !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  align-self: center !important;
+  justify-self: end !important;
+  z-index: 2 !important;
+}
+#invoicePanel .svt130-upload-window .file-inline,
+#invoicePanel .svt130-upload-window .upload-zone,
+#invoicePanel .svt130-upload-window .invoice-attach,
+.svt130-upload-window .file-inline,
+.svt130-upload-window .upload-zone,
+.svt130-upload-window .invoice-attach {
+  align-items: center !important;
+  justify-content: center !important;
+}
+/* svt-v130-invoice-upload-force-window-down END */
+</style>
+
+<style id="svt-v131-invoice-labels-down-css">
+/* svt-v131-invoice-labels-down START
+   Mută doar textele labelurilor facturii mai jos, aproape de inputuri.
+   Nu atinge inputurile, lățimile, height-ul, uploadul sau modalul. */
+#invoicePanel .invoice-grid .svt131-label-target,
+#invoicePanel .invoice-grid .svt131-invoice-field-label-down > label,
+#invoicePanel .invoice-grid .svt131-invoice-field-label-down .field-label,
+#invoicePanel .invoice-grid .svt131-invoice-field-label-down .label,
+#invoicePanel .invoice-grid .field.svt131-invoice-field-label-down > :first-child {
+  position: relative !important;
+  top: 14px !important;
+  transform: none !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  z-index: 5 !important;
+}
+/* svt-v131-invoice-labels-down END */
+</style>
+<!-- svt-v132-invoice-labels-down-only START -->
+<style id="svt-v132-invoice-labels-down-only">
+  #invoicePanel [data-svt-v132-label-down="true"] {
+    position: relative !important;
+    top: 16px !important;
+    transform: none !important;
+    margin-bottom: 0 !important;
+    line-height: 1.05 !important;
+    z-index: 5 !important;
   }
+</style>
+<!-- svt-v132-invoice-labels-down-only END -->
 
-  #invoiceBox .invoice-consumption-field{width:78px!important;max-width:78px!important;}
-  #invoiceBox .invoice-days-field{width:76px!important;max-width:76px!important;}
-  #invoiceBox .invoice-value-field{width:104px!important;max-width:104px!important;}
-  #invoiceBox .invoice-program-field{width:184px!important;max-width:184px!important;}
-
-  #invoiceBox[style*="display: grid"] .invoice-field label,
-  #invoiceBox[style*="display:grid"] .invoice-field label{
-    display:block!important;
-    width:100%!important;
-    max-width:100%!important;
-    margin:0!important;
-    padding:0!important;
-    position:static!important;
-    top:auto!important;
-    transform:none!important;
-    color:#071826!important;
-    font-size:11.2px!important;
-    line-height:1.04!important;
-    font-weight:900!important;
-    letter-spacing:-.035em!important;
-    white-space:normal!important;
-    text-align:left!important;
+<!-- svt-v139-help-modal-compact-reference START -->
+<style id="svt-v139-help-modal-compact-reference">
+  #distributorHelpModal.svt139-backdrop{
+    padding:20px!important;
+    background:rgba(15,23,42,.50)!important;
+    backdrop-filter:blur(9px)!important;
+    -webkit-backdrop-filter:blur(9px)!important;
   }
-
-  #invoiceBox[style*="display: grid"] .invoice-control,
-  #invoiceBox[style*="display:grid"] .invoice-control,
-  #invoiceBox[style*="display: grid"] #invoiceConsumption,
-  #invoiceBox[style*="display: grid"] #invoiceDays,
-  #invoiceBox[style*="display: grid"] #invoiceValue,
-  #invoiceBox[style*="display: grid"] #workSchedule,
-  #invoiceBox[style*="display:grid"] #invoiceConsumption,
-  #invoiceBox[style*="display:grid"] #invoiceDays,
-  #invoiceBox[style*="display:grid"] #invoiceValue,
-  #invoiceBox[style*="display:grid"] #workSchedule{
-    height:38px!important;
-    min-height:38px!important;
-    max-height:38px!important;
-    margin:0!important;
+  #distributorHelpModal .svt139-modal{
+    width:min(1080px, calc(100vw - 80px))!important;
+    max-height:calc(100vh - 48px)!important;
+    overflow:auto!important;
+    background:#fff!important;
+    border:1px solid rgba(203,213,225,.88)!important;
+    border-radius:24px!important;
+    padding:26px 28px 22px!important;
+    box-shadow:0 34px 86px rgba(2,6,23,.24), 0 12px 28px rgba(15,23,42,.12)!important;
+    color:#071a35!important;
+    position:relative!important;
     box-sizing:border-box!important;
-    border-radius:9px!important;
-    padding:0 10px!important;
-    font-size:13px!important;
-    font-weight:800!important;
-    line-height:normal!important;
-    transform:none!important;
   }
-
-  #invoiceBox #invoiceConsumption{width:78px!important;min-width:78px!important;max-width:78px!important;}
-  #invoiceBox #invoiceDays{width:76px!important;min-width:76px!important;max-width:76px!important;}
-  #invoiceBox #invoiceValue{width:104px!important;min-width:104px!important;max-width:104px!important;}
-  #invoiceBox #workSchedule{width:184px!important;min-width:184px!important;max-width:184px!important;padding-right:28px!important;}
-
-  #invoiceBox .field-hint{display:none!important;}
-
-  #invoiceBox[style*="display: grid"] .invoice-attach,
-  #invoiceBox[style*="display:grid"] .invoice-attach{
-    grid-column:2!important;
-    align-self:end!important;
-    justify-self:end!important;
+  #distributorHelpModal .svt139-close{
+    position:absolute!important;
+    top:18px!important;
+    right:18px!important;
+    width:46px!important;
+    height:46px!important;
+    border-radius:999px!important;
+    border:1px solid #dbe5f0!important;
+    background:#fff!important;
+    color:#061731!important;
+    font-size:30px!important;
+    font-weight:300!important;
+    line-height:1!important;
     display:flex!important;
     align-items:center!important;
-    justify-content:flex-end!important;
-    width:100%!important;
-    margin:0!important;
-    padding:0!important;
-    transform:none!important;
-    position:static!important;
-    top:auto!important;
+    justify-content:center!important;
+    box-shadow:0 10px 24px rgba(15,23,42,.09)!important;
+    cursor:pointer!important;
   }
-
-  #invoiceBox[style*="display: grid"] #invoiceDrop.file-inline,
-  #invoiceBox[style*="display:grid"] #invoiceDrop.file-inline{
-    width:390px!important;
-    min-width:390px!important;
-    max-width:390px!important;
-    min-height:42px!important;
-    height:42px!important;
-    margin:0!important;
-    padding:6px 14px!important;
+  #distributorHelpModal .svt139-head{
+    text-align:center!important;
+    padding:4px 58px 0!important;
+  }
+  #distributorHelpModal .svt139-head h2{
+    margin:0 0 8px!important;
+    font-size:34px!important;
+    line-height:1.12!important;
+    letter-spacing:-.045em!important;
+    font-weight:850!important;
+    color:#071a35!important;
+  }
+  #distributorHelpModal .svt139-head p{
+    margin:0 auto 18px!important;
+    max-width:760px!important;
+    font-size:14px!important;
+    line-height:1.45!important;
+    color:#263852!important;
+    font-weight:500!important;
+  }
+  #distributorHelpModal .svt139-tabs{
+    display:grid!important;
+    grid-template-columns:repeat(5, minmax(0,1fr))!important;
+    gap:12px!important;
+    margin:0 0 16px!important;
+  }
+  #distributorHelpModal .svt139-tab{
+    height:52px!important;
+    min-width:0!important;
+    border-radius:18px!important;
+    border:1px solid #dbe5f0!important;
+    background:#fff!important;
+    color:#091b37!important;
     display:flex!important;
-    flex-direction:row!important;
-    flex-wrap:nowrap!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:11px!important;
+    padding:0 16px!important;
+    font-size:14px!important;
+    line-height:1.1!important;
+    font-weight:800!important;
+    box-shadow:0 8px 18px rgba(15,23,42,.045)!important;
+    cursor:pointer!important;
+  }
+  #distributorHelpModal .svt139-tab svg{
+    width:25px!important;
+    height:25px!important;
+    flex:0 0 auto!important;
+  }
+  #distributorHelpModal .svt139-tab.active,
+  #distributorHelpModal .svt139-tab.is-active{
+    background:linear-gradient(180deg,#10ae52 0%,#04923f 100%)!important;
+    border-color:#058c3e!important;
+    color:#fff!important;
+    box-shadow:0 10px 22px rgba(0,132,61,.22)!important;
+  }
+  #distributorHelpModal .svt139-body{padding:0!important;}
+  #distributorHelpModal .svt139-panel{
+    gap:0!important;
+  }
+  #distributorHelpModal .svt139-hero{
+    min-height:164px!important;
+    border-radius:20px!important;
+    padding:20px 24px!important;
+    margin-bottom:16px!important;
+    border:1px solid #cfe6da!important;
+    background:linear-gradient(90deg,rgba(236,253,245,.96) 0%,rgba(250,255,252,.96) 70%)!important;
+    display:grid!important;
+    grid-template-columns:205px 1fr!important;
+    align-items:center!important;
+    gap:24px!important;
+    box-sizing:border-box!important;
+  }
+  #distributorHelpModal .svt139-art{
+    width:190px!important;
+    height:116px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    color:#069646!important;
+    overflow:visible!important;
+  }
+  #distributorHelpModal .svt139-illustration{
+    width:190px!important;
+    height:116px!important;
+    color:#069646!important;
+    overflow:visible!important;
+  }
+  #distributorHelpModal .svt139-copy h3{
+    margin:0 0 8px!important;
+    font-size:22px!important;
+    line-height:1.2!important;
+    letter-spacing:-.025em!important;
+    font-weight:850!important;
+    color:#071a35!important;
+  }
+  #distributorHelpModal .svt139-copy p{
+    margin:0!important;
+    max-width:670px!important;
+    font-size:14px!important;
+    line-height:1.55!important;
+    color:#142844!important;
+    font-weight:500!important;
+  }
+  #distributorHelpModal .svt139-grid{
+    display:grid!important;
+    grid-template-columns:1.05fr .95fr!important;
+    gap:14px!important;
+    margin-bottom:16px!important;
+  }
+  #distributorHelpModal .svt139-steps,
+  #distributorHelpModal .svt139-card{
+    border:1px solid #dfe8ef!important;
+    border-radius:18px!important;
+    background:#fff!important;
+    box-shadow:0 8px 20px rgba(15,23,42,.045)!important;
+  }
+  #distributorHelpModal .svt139-steps{
+    min-height:250px!important;
+    padding:18px 18px 16px!important;
+    box-sizing:border-box!important;
+  }
+  #distributorHelpModal .svt139-side{
+    display:grid!important;
+    grid-template-rows:112px 128px!important;
+    gap:14px!important;
+  }
+  #distributorHelpModal .svt139-card{
+    padding:18px!important;
+    box-sizing:border-box!important;
+    display:grid!important;
+    grid-template-columns:58px 1fr!important;
+    align-items:center!important;
+    gap:16px!important;
+  }
+  #distributorHelpModal .svt139-card-copy h4,
+  #distributorHelpModal .svt139-steps-head h4{
+    margin:0!important;
+    font-size:17px!important;
+    line-height:1.2!important;
+    font-weight:850!important;
+    color:#071a35!important;
+    letter-spacing:-.02em!important;
+  }
+  #distributorHelpModal .svt139-card-copy h4{font-size:16px!important;margin-bottom:8px!important;}
+  #distributorHelpModal .svt139-card-copy p{
+    margin:0!important;
+    font-size:13px!important;
+    line-height:1.5!important;
+    color:#172944!important;
+    font-weight:500!important;
+  }
+  #distributorHelpModal .svt139-iconbox{
+    width:46px!important;
+    height:46px!important;
+    border-radius:13px!important;
+    background:#e8f8ee!important;
+    color:#079646!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+  #distributorHelpModal .svt139-iconbox svg{width:28px!important;height:28px!important;}
+  #distributorHelpModal .svt139-steps-head{
+    display:flex!important;
+    align-items:center!important;
+    gap:14px!important;
+    padding-bottom:12px!important;
+    border-bottom:1px solid #e7eef5!important;
+    margin-bottom:12px!important;
+  }
+  #distributorHelpModal .svt139-steps ol{
+    list-style:none!important;
+    padding:0!important;
+    margin:0!important;
+    display:grid!important;
+    gap:7px!important;
+  }
+  #distributorHelpModal .svt139-steps li{
+    display:grid!important;
+    grid-template-columns:24px 1fr!important;
+    align-items:start!important;
+    gap:12px!important;
+    font-size:13px!important;
+    line-height:1.46!important;
+    color:#102642!important;
+    font-weight:600!important;
+  }
+  #distributorHelpModal .svt139-steps li b{
+    width:21px!important;
+    height:21px!important;
+    border-radius:999px!important;
+    background:#079646!important;
+    color:#fff!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    font-size:12px!important;
+    font-weight:850!important;
+    line-height:1!important;
+    box-shadow:0 5px 10px rgba(0,132,61,.16)!important;
+  }
+  #distributorHelpModal .svt139-footer{
+    border-top:1px solid #e2e8f0!important;
+    padding-top:14px!important;
+    display:grid!important;
+    grid-template-columns:320px 1fr!important;
+    gap:26px!important;
+    align-items:center!important;
+  }
+  #distributorHelpModal .svt139-cta{
+    min-width:320px!important;
+    height:54px!important;
+    border-radius:16px!important;
+    background:linear-gradient(180deg,#0fb455,#058f3f)!important;
+    color:#fff!important;
+    text-decoration:none!important;
+    display:flex!important;
     align-items:center!important;
     justify-content:center!important;
     gap:12px!important;
-    box-sizing:border-box!important;
-    transform:none!important;
-    position:static!important;
-    top:auto!important;
-    text-align:left!important;
+    font-size:16px!important;
+    line-height:1!important;
+    font-weight:850!important;
+    box-shadow:0 12px 24px rgba(0,132,61,.21)!important;
   }
-
-  #invoiceBox #invoiceDrop .file-button{height:28px!important;min-height:28px!important;padding:0 12px!important;white-space:nowrap!important;}
-  #invoiceBox #invoiceDrop .file-meta{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;gap:1px!important;min-width:0!important;text-align:left!important;line-height:1.12!important;}
-  #invoiceBox #invoiceDrop .file-meta strong,
-  #invoiceBox #invoiceDrop .file-meta span{text-align:left!important;line-height:1.12!important;}
-  #invoiceBox #invoiceFileName{grid-column:1 / -1!important;}
-
-  @media (max-width:900px){
-    #invoiceBox[style*="display: grid"],
-    #invoiceBox[style*="display:grid"]{grid-template-columns:1fr!important;row-gap:12px!important;}
-    #invoiceBox[style*="display: grid"] .invoice-grid,
-    #invoiceBox[style*="display:grid"] .invoice-grid{flex-wrap:wrap!important;}
-    #invoiceBox[style*="display: grid"] .invoice-attach,
-    #invoiceBox[style*="display:grid"] .invoice-attach{grid-column:1!important;justify-self:start!important;justify-content:flex-start!important;}
-    #invoiceBox[style*="display: grid"] #invoiceDrop.file-inline,
-    #invoiceBox[style*="display:grid"] #invoiceDrop.file-inline{width:100%!important;min-width:0!important;max-width:100%!important;}
+  #distributorHelpModal .svt139-cta svg{width:23px!important;height:23px!important;}
+  #distributorHelpModal .svt139-sources{
+    border-left:1px solid #d9e2ea!important;
+    padding-left:26px!important;
+    min-height:46px!important;
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:center!important;
+    gap:5px!important;
   }
-</style>
-<script id="svt-v136-true-v132-invoice-guard">
-(function(){
-  function syncInvoiceVisibility(){
-    var invoiceBox = document.getElementById('invoiceBox');
-    var invoiceBtn = document.getElementById('methodInvoiceCard');
-    var fileBox = document.getElementById('fileModeBox');
-    if(!invoiceBox || !invoiceBtn) return;
-    var invoiceActive = invoiceBtn.classList.contains('active');
-    invoiceBox.style.display = invoiceActive ? 'grid' : 'none';
-    if(fileBox) fileBox.style.display = invoiceActive ? 'none' : 'grid';
+  #distributorHelpModal .svt139-sources strong{
+    color:#53657d!important;
+    font-size:13px!important;
+    line-height:1.2!important;
+    font-weight:700!important;
   }
-  document.addEventListener('DOMContentLoaded', function(){
-    syncInvoiceVisibility();
-    var invoiceBtn = document.getElementById('methodInvoiceCard');
-    var fileBtn = document.getElementById('methodFileCard');
-    if(invoiceBtn) invoiceBtn.addEventListener('click', function(){ setTimeout(syncInvoiceVisibility, 0); });
-    if(fileBtn) fileBtn.addEventListener('click', function(){ setTimeout(syncInvoiceVisibility, 0); });
-  });
-})();
-</script>
-<!-- svt-v136-true-v132-invoice-baseline END -->
-
-<!-- svt-v137-invoice-row3-match START -->
-<style id="svt-v137-invoice-row3-match">
-  /* v137: Row 2 invoice upload must visually match Row 3 upload.
-     Scope: invoice mode only (#invoiceBox). Do not touch the help modal or other upload rows. */
-  @media (min-width:901px){
-    #invoiceBox[style*="display: grid"],
-    #invoiceBox[style*="display:grid"]{
-      grid-column:1 / span 2!important;
-      display:grid!important;
-      grid-template-columns:max-content minmax(0,1fr)!important;
-      column-gap:24px!important;
-      row-gap:0!important;
-      align-items:end!important;
-      width:100%!important;
-      max-width:100%!important;
-      min-width:0!important;
-      margin-top:14px!important;
-      padding:14px 0 0!important;
-      border-top:1px solid #e6eef6!important;
-      background:transparent!important;
-      box-shadow:none!important;
-      overflow:visible!important;
-    }
-
-    #invoiceBox .invoice-grid{
-      grid-column:1!important;
-      display:flex!important;
-      flex-direction:row!important;
-      flex-wrap:nowrap!important;
-      align-items:flex-end!important;
-      justify-content:flex-start!important;
-      gap:14px!important;
-      width:max-content!important;
-      max-width:max-content!important;
-      min-width:0!important;
-      margin:0!important;
-      padding:0!important;
-    }
-
-    #invoiceBox .invoice-field{
-      flex:0 0 auto!important;
-      display:flex!important;
-      flex-direction:column!important;
-      align-items:flex-start!important;
-      justify-content:flex-end!important;
-      gap:7px!important;
-      margin:0!important;
-      padding:0!important;
-      min-width:0!important;
-      transform:none!important;
-      position:static!important;
-    }
-
-    #invoiceBox .invoice-consumption-field{width:78px!important;min-width:78px!important;max-width:78px!important;}
-    #invoiceBox .invoice-days-field{width:76px!important;min-width:76px!important;max-width:76px!important;}
-    #invoiceBox .invoice-value-field{width:104px!important;min-width:104px!important;max-width:104px!important;}
-    #invoiceBox .invoice-program-field{width:118px!important;min-width:118px!important;max-width:118px!important;}
-
-    #invoiceBox .invoice-field label{
-      width:100%!important;
-      max-width:100%!important;
-      margin:0!important;
-      padding:0!important;
-      display:block!important;
-      position:static!important;
-      top:auto!important;
-      transform:none!important;
-      font-size:11.2px!important;
-      line-height:1.04!important;
-      font-weight:900!important;
-      letter-spacing:-.035em!important;
-      color:#071826!important;
-      white-space:normal!important;
-      text-align:left!important;
-    }
-    #invoiceBox .invoice-field label br{display:block!important;}
-
-    #invoiceBox .invoice-control,
-    #invoiceBox #invoiceConsumption,
-    #invoiceBox #invoiceDays,
-    #invoiceBox #invoiceValue,
-    #invoiceBox #workSchedule{
-      height:38px!important;
-      min-height:38px!important;
-      max-height:38px!important;
-      margin:0!important;
-      box-sizing:border-box!important;
-      border-radius:9px!important;
-      padding:0 10px!important;
-      font-size:13px!important;
-      font-weight:800!important;
-      line-height:normal!important;
-      transform:none!important;
-    }
-    #invoiceBox #invoiceConsumption{width:78px!important;min-width:78px!important;max-width:78px!important;}
-    #invoiceBox #invoiceDays{width:76px!important;min-width:76px!important;max-width:76px!important;}
-    #invoiceBox #invoiceValue{width:104px!important;min-width:104px!important;max-width:104px!important;}
-    #invoiceBox #workSchedule{width:118px!important;min-width:118px!important;max-width:118px!important;padding-right:26px!important;}
-    #invoiceBox .field-hint{display:none!important;}
-
-    #invoiceBox .invoice-attach{
-      grid-column:2!important;
-      grid-row:1!important;
-      align-self:end!important;
-      justify-self:end!important;
-      display:flex!important;
-      align-items:center!important;
-      justify-content:flex-end!important;
-      width:var(--svt-combo-w,318px)!important;
-      min-width:var(--svt-combo-w,318px)!important;
-      max-width:var(--svt-combo-w,318px)!important;
-      margin:0!important;
-      padding:0!important;
-      position:static!important;
-      top:auto!important;
-      transform:none!important;
-    }
-
-    #invoiceBox #invoiceDrop.file-inline{
-      width:var(--svt-combo-w,318px)!important;
-      min-width:var(--svt-combo-w,318px)!important;
-      max-width:var(--svt-combo-w,318px)!important;
-      min-height:46px!important;
-      height:auto!important;
-      padding:6px 10px!important;
-      gap:8px!important;
-      border-radius:14px!important;
-      box-sizing:border-box!important;
-      display:flex!important;
-      align-items:center!important;
-      justify-content:flex-start!important;
-      flex-direction:row!important;
-      flex-wrap:nowrap!important;
-      margin:0!important;
-      overflow:hidden!important;
-      position:static!important;
-      top:auto!important;
-      transform:none!important;
-    }
-    #invoiceBox #invoiceDrop .file-button{
-      height:34px!important;
-      min-height:34px!important;
-      padding:0 12px!important;
-      border-radius:10px!important;
-      font-size:12.5px!important;
-      gap:6px!important;
-      flex:0 0 auto!important;
-      white-space:nowrap!important;
-    }
-    #invoiceBox #invoiceDrop .file-button svg{width:14px!important;height:14px!important;}
-    #invoiceBox #invoiceDrop .file-meta{
-      max-width:170px!important;
-      min-width:0!important;
-      flex:0 1 170px!important;
-      overflow:hidden!important;
-      white-space:nowrap!important;
-      font-size:10.2px!important;
-      line-height:1.12!important;
-      display:flex!important;
-      flex-direction:column!important;
-      justify-content:center!important;
-      align-items:flex-start!important;
-      text-align:left!important;
-    }
-    #invoiceBox #invoiceDrop .file-meta strong,
-    #invoiceBox #invoiceDrop .file-meta span{
-      display:block!important;
-      white-space:nowrap!important;
-      overflow:hidden!important;
-      text-overflow:ellipsis!important;
-      line-height:1.12!important;
-      text-align:left!important;
-    }
-    #invoiceBox #invoiceFileName{grid-column:1 / -1!important;}
+  #distributorHelpModal .svt139-source-links{
+    display:flex!important;
+    align-items:center!important;
+    flex-wrap:wrap!important;
+    gap:10px 18px!important;
   }
-
-  @media (max-width:900px){
-    #invoiceBox[style*="display: grid"],
-    #invoiceBox[style*="display:grid"]{grid-column:1 / -1!important;grid-template-columns:1fr!important;row-gap:12px!important;}
-    #invoiceBox .invoice-grid{flex-wrap:wrap!important;width:100%!important;max-width:100%!important;}
-    #invoiceBox .invoice-field,
-    #invoiceBox .invoice-field label,
-    #invoiceBox .invoice-control,
-    #invoiceBox #invoiceConsumption,
-    #invoiceBox #invoiceDays,
-    #invoiceBox #invoiceValue,
-    #invoiceBox #workSchedule{width:100%!important;min-width:0!important;max-width:100%!important;}
-    #invoiceBox .invoice-attach,
-    #invoiceBox #invoiceDrop.file-inline{grid-column:1!important;width:100%!important;min-width:0!important;max-width:100%!important;justify-self:start!important;}
+  #distributorHelpModal .svt139-source-links a{
+    color:#078f42!important;
+    font-size:13px!important;
+    line-height:1.2!important;
+    font-weight:800!important;
+    text-decoration:none!important;
+    white-space:nowrap!important;
+  }
+  #distributorHelpModal .svt139-source-links a:hover{text-decoration:underline!important;}
+  @media (max-width: 980px){
+    #distributorHelpModal .svt139-modal{width:calc(100vw - 28px)!important;padding:22px 18px!important;}
+    #distributorHelpModal .svt139-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+    #distributorHelpModal .svt139-hero,
+    #distributorHelpModal .svt139-grid,
+    #distributorHelpModal .svt139-footer{grid-template-columns:1fr!important;}
+    #distributorHelpModal .svt139-side{grid-template-rows:auto!important;}
+    #distributorHelpModal .svt139-art{justify-self:center!important;}
+    #distributorHelpModal .svt139-sources{border-left:0!important;padding-left:0!important;}
   }
 </style>
-<script id="svt-v137-invoice-row3-match-script">
-(function(){
-  function applyV137InvoiceAlignment(){
-    var invoiceBox = document.getElementById('invoiceBox');
-    var invoiceDrop = document.getElementById('invoiceDrop');
-    var invoiceAttach = invoiceDrop ? invoiceDrop.closest('.invoice-attach') : null;
-    var row3Drop = document.getElementById('dropZone');
-    var work = document.getElementById('workSchedule');
-    if(work){
-      work.style.setProperty('width','118px','important');
-      work.style.setProperty('min-width','118px','important');
-      work.style.setProperty('max-width','118px','important');
-      work.style.setProperty('height','38px','important');
-      work.style.setProperty('min-height','38px','important');
-      work.style.setProperty('max-height','38px','important');
-      work.style.setProperty('padding-right','26px','important');
-    }
-    if(!invoiceBox || !invoiceDrop || !invoiceAttach || !row3Drop) return;
-    var invoiceVisible = getComputedStyle(invoiceBox).display !== 'none';
-    if(!invoiceVisible) return;
-    var r = row3Drop.getBoundingClientRect();
-    if(r && r.width > 40){
-      var width = Math.round(r.width) + 'px';
-      invoiceAttach.style.setProperty('width', width, 'important');
-      invoiceAttach.style.setProperty('min-width', width, 'important');
-      invoiceAttach.style.setProperty('max-width', width, 'important');
-      invoiceDrop.style.setProperty('width', width, 'important');
-      invoiceDrop.style.setProperty('min-width', width, 'important');
-      invoiceDrop.style.setProperty('max-width', width, 'important');
-      invoiceDrop.style.setProperty('min-height', Math.round(r.height || 46) + 'px', 'important');
-      invoiceDrop.dataset.svtV137MatchedToRow3 = 'true';
-    }
-  }
-  document.addEventListener('DOMContentLoaded', function(){
-    applyV137InvoiceAlignment();
-    ['methodInvoiceCard','methodFileCard'].forEach(function(id){
-      var el = document.getElementById(id);
-      if(el) el.addEventListener('click', function(){ setTimeout(applyV137InvoiceAlignment, 40); setTimeout(applyV137InvoiceAlignment, 180); });
-    });
-    window.addEventListener('resize', applyV137InvoiceAlignment);
-  });
-})();
-</script>
-<!-- svt-v137-invoice-row3-match END -->
+<!-- svt-v139-help-modal-compact-reference END -->
 
-  <style id="svt-v138-help-modal-reference-clean">
-/* v138: reference-aligned distributor help modal, scoped to #distributorHelpModal only */
-#distributorHelpModal.svt-help101-backdrop,
-#distributorHelpModal.svt-modal-backdrop{
-  position:fixed!important;
-  inset:0!important;
-  z-index:9999!important;
-  display:none!important;
-  align-items:center!important;
-  justify-content:center!important;
-  padding:34px!important;
-  background:rgba(15,23,42,.54)!important;
-  backdrop-filter:blur(8px)!important;
-  -webkit-backdrop-filter:blur(8px)!important;
-}
-#distributorHelpModal.svt-help101-backdrop.open,
-#distributorHelpModal.svt-modal-backdrop.open,
-#distributorHelpModal[aria-hidden="false"]{
-  display:flex!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-modal{
-  position:relative!important;
-  width:min(1296px,calc(100vw - 72px))!important;
-  max-height:min(90vh,930px)!important;
-  overflow:hidden!important;
-  border-radius:24px!important;
-  border:1px solid rgba(218,228,236,.95)!important;
-  background:linear-gradient(180deg,#ffffff 0%,#ffffff 74%,#fbfdff 100%)!important;
-  box-shadow:0 38px 86px rgba(15,23,42,.38)!important;
-  color:#071b38!important;
-  box-sizing:border-box!important;
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-close{
-  position:absolute!important;
-  right:24px!important;
-  top:22px!important;
-  width:48px!important;
-  height:48px!important;
-  border-radius:50%!important;
-  border:1px solid #dce5ee!important;
-  background:#fff!important;
-  box-shadow:0 11px 24px rgba(15,23,42,.08)!important;
-  color:#071b38!important;
-  font-size:32px!important;
-  font-weight:300!important;
-  z-index:8!important;
-  display:grid!important;
-  place-items:center!important;
-  line-height:1!important;
-  padding:0!important;
-  cursor:pointer!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-head{
-  text-align:center!important;
-  padding:36px 92px 20px!important;
-  background:transparent!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-head h2{
-  margin:0!important;
-  font-size:40px!important;
-  line-height:1.08!important;
-  letter-spacing:-.048em!important;
-  font-weight:950!important;
-  color:#071b38!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-head p{
-  margin:12px auto 0!important;
-  max-width:850px!important;
-  font-size:16px!important;
-  line-height:1.45!important;
-  color:#263753!important;
-  font-weight:520!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-tabs{
-  display:grid!important;
-  grid-template-columns:repeat(5,minmax(0,1fr))!important;
-  gap:14px!important;
-  padding:8px 34px 26px!important;
-  background:transparent!important;
-  align-items:center!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-tab{
-  height:52px!important;
-  min-width:0!important;
-  border-radius:15px!important;
-  border:1px solid #dfe6ee!important;
-  background:#fff!important;
-  box-shadow:0 4px 12px rgba(15,23,42,.025)!important;
-  color:#071b38!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  gap:12px!important;
-  padding:0 16px!important;
-  box-sizing:border-box!important;
-  font-size:14px!important;
-  font-weight:850!important;
-  letter-spacing:-.012em!important;
-  cursor:pointer!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-tab svg{
-  width:22px!important;
-  height:22px!important;
-  flex:0 0 22px!important;
-  stroke-width:2.05!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-tab.is-active,
-#distributorHelpModal.svt-help101-backdrop .svt-help101-tab.active{
-  color:#fff!important;
-  border-color:#079f42!important;
-  background:linear-gradient(180deg,#10ad4e 0%,#078f3c 100%)!important;
-  box-shadow:0 13px 24px rgba(6,151,65,.28), inset 0 1px 0 rgba(255,255,255,.18)!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-body{
-  padding:0 34px 24px!important;
-  overflow:auto!important;
-  max-height:calc(min(90vh,930px) - 180px)!important;
-  box-sizing:border-box!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-panel{
-  display:none!important;
-  gap:16px!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-panel.is-active,
-#distributorHelpModal.svt-help101-backdrop .svt-help101-panel.active{
-  display:grid!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-hero{
-  display:grid!important;
-  grid-template-columns:245px minmax(0,1fr)!important;
-  align-items:center!important;
-  min-height:190px!important;
-  padding:0 38px!important;
-  border-radius:16px!important;
-  border:1px solid #cfe7d8!important;
-  background:linear-gradient(90deg,#f4fff8 0%,#fbfffd 60%,#f7fff9 100%)!important;
-  box-shadow:0 3px 12px rgba(15,23,42,.018)!important;
-  box-sizing:border-box!important;
-  overflow:hidden!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-art{
-  width:225px!important;
-  height:160px!important;
-  display:grid!important;
-  place-items:center!important;
-  color:#07943f!important;
-  flex:0 0 auto!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-illustration{
-  width:196px!important;
-  height:140px!important;
-  color:#07943f!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-copy{
-  min-width:0!important;
-  padding:0!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-copy h3{
-  margin:0 0 10px!important;
-  font-size:27px!important;
-  line-height:1.2!important;
-  letter-spacing:-.035em!important;
-  font-weight:950!important;
-  color:#071b38!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-copy p{
-  margin:0!important;
-  max-width:760px!important;
-  font-size:18px!important;
-  line-height:1.58!important;
-  color:#263753!important;
-  font-weight:500!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-main{
-  display:grid!important;
-  grid-template-columns:minmax(0,1.02fr) minmax(0,1fr)!important;
-  gap:16px!important;
-  align-items:stretch!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-steps,
-#distributorHelpModal.svt-help101-backdrop .svt-help101-card{
-  border:1px solid #dfe6ee!important;
-  background:#fff!important;
-  border-radius:14px!important;
-  box-shadow:0 8px 23px rgba(15,23,42,.035)!important;
-  box-sizing:border-box!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-steps{
-  padding:28px 28px 22px!important;
-  min-height:300px!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-steps h4,
-#distributorHelpModal.svt-help101-backdrop .svt-help101-card h4{
-  display:flex!important;
-  align-items:center!important;
-  gap:16px!important;
-  margin:0!important;
-  color:#071b38!important;
-  font-size:24px!important;
-  line-height:1.1!important;
-  font-weight:950!important;
-  letter-spacing:-.035em!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-steps h4{
-  padding-bottom:18px!important;
-  border-bottom:1px solid #e2e8f0!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-steps h4 svg,
-#distributorHelpModal.svt-help101-backdrop .svt-help101-card h4 svg{
-  width:50px!important;
-  height:50px!important;
-  flex:0 0 50px!important;
-  padding:12px!important;
-  border-radius:12px!important;
-  color:#07943f!important;
-  background:#eaf8ef!important;
-  box-sizing:border-box!important;
-  stroke-width:2.05!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-steps ol{
-  margin:16px 0 0!important;
-  padding:0!important;
-  list-style:none!important;
-  display:grid!important;
-  gap:10px!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-steps li{
-  display:grid!important;
-  grid-template-columns:27px minmax(0,1fr)!important;
-  align-items:start!important;
-  gap:13px!important;
-  color:#071b38!important;
-  font-size:15px!important;
-  line-height:1.35!important;
-  font-weight:620!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-steps li b{
-  width:23px!important;
-  height:23px!important;
-  border-radius:50%!important;
-  display:grid!important;
-  place-items:center!important;
-  background:#07943f!important;
-  color:#fff!important;
-  font-size:12px!important;
-  font-weight:900!important;
-  line-height:1!important;
-  box-shadow:0 3px 8px rgba(7,148,63,.22)!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-side{
-  display:grid!important;
-  gap:16px!important;
-  grid-template-rows:1fr 1fr!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-card{
-  min-height:142px!important;
-  padding:24px 28px!important;
-  display:grid!important;
-  align-content:center!important;
-  gap:14px!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-card p{
-  margin:0 0 0 70px!important;
-  font-size:15.5px!important;
-  line-height:1.45!important;
-  color:#263753!important;
-  font-weight:560!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-footer{
-  display:grid!important;
-  grid-template-columns:390px 1fr!important;
-  align-items:center!important;
-  gap:30px!important;
-  margin-top:14px!important;
-  padding:18px 0 0!important;
-  border-top:1px solid #dfe6ee!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-cta{
-  height:62px!important;
-  width:100%!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  gap:14px!important;
-  border-radius:12px!important;
-  background:linear-gradient(180deg,#0aa64a 0%,#078f3d 100%)!important;
-  color:#fff!important;
-  text-decoration:none!important;
-  font-size:18px!important;
-  line-height:1!important;
-  font-weight:950!important;
-  box-shadow:0 15px 28px rgba(7,148,63,.25)!important;
-  box-sizing:border-box!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-sources{
-  min-height:62px!important;
-  display:flex!important;
-  align-items:center!important;
-  gap:28px!important;
-  padding-left:30px!important;
-  border-left:1px solid #dfe6ee!important;
-  color:#62718a!important;
-  font-size:14px!important;
-  line-height:1.3!important;
-  box-sizing:border-box!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-sources strong{
-  display:block!important;
-  min-width:155px!important;
-  color:#62718a!important;
-  font-weight:600!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-sources div{
-  display:flex!important;
-  align-items:center!important;
-  gap:20px!important;
-  flex-wrap:wrap!important;
-}
-#distributorHelpModal.svt-help101-backdrop .svt-help101-sources a{
-  color:#07943f!important;
-  text-decoration:none!important;
-  font-weight:850!important;
-  white-space:nowrap!important;
-}
-@media(max-width:980px){
-  #distributorHelpModal.svt-help101-backdrop{padding:18px!important;}
-  #distributorHelpModal.svt-help101-backdrop .svt-help101-tabs{grid-template-columns:1fr 1fr!important;}
-  #distributorHelpModal.svt-help101-backdrop .svt-help101-hero{grid-template-columns:1fr!important;text-align:center!important;padding:22px!important;}
-  #distributorHelpModal.svt-help101-backdrop .svt-help101-art{margin:auto!important;}
-  #distributorHelpModal.svt-help101-backdrop .svt-help101-main{grid-template-columns:1fr!important;}
-  #distributorHelpModal.svt-help101-backdrop .svt-help101-footer{grid-template-columns:1fr!important;}
-  #distributorHelpModal.svt-help101-backdrop .svt-help101-sources{border-left:0!important;padding-left:0!important;}
-}
-@media(max-width:640px){
-  #distributorHelpModal.svt-help101-backdrop .svt-help101-head{padding:28px 60px 14px!important;}
-  #distributorHelpModal.svt-help101-backdrop .svt-help101-head h2{font-size:26px!important;}
-  #distributorHelpModal.svt-help101-backdrop .svt-help101-tabs{grid-template-columns:1fr!important;padding-left:20px!important;padding-right:20px!important;}
-  #distributorHelpModal.svt-help101-backdrop .svt-help101-body{padding-left:20px!important;padding-right:20px!important;}
-}
-
-  </style>
 </head>
 <body data-energy-mode="electric">
   <div class="page">
@@ -5414,7 +5243,7 @@
                   </div>
                 </div>
                 <div class="invoice-attach">
-                  <div class="file-inline upload-zone" id="invoiceDrop">
+                  <div class="file-inline upload-zone" id="invoiceDrop" style="max-width:480px">
                     <input id="invoiceInput" type="file" hidden accept=".pdf,.jpg,.jpeg,.png,.xlsx,.xls,.csv">
                     <button type="button" class="file-button" id="invoiceChoose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M20 16.7A4 4 0 0 1 16.3 21H7.7A4 4 0 0 1 4 16.7"/></svg>Alege factură</button>
                     <div class="file-meta"><strong>Format acceptat</strong><span>.pdf, .jpg, .png, .xlsx, .xls, .csv</span></div>
@@ -5828,200 +5657,679 @@
     validateForm();
     document.addEventListener('DOMContentLoaded', initDistributorHelpModal);
   </script>
-<div class="svt-modal-backdrop svt-help101-backdrop" id="distributorHelpModal" aria-hidden="true">
-    <div class="svt-help101-modal" role="dialog" aria-modal="true" aria-labelledby="distHelpTitle">
-      <button class="svt-modal-close svt-help101-close" type="button" id="closeDistributorHelp" aria-label="Închide">×</button>
-      <header class="svt-help101-head">
+<div class="svt-modal-backdrop svt139-backdrop" id="distributorHelpModal" aria-hidden="true">
+    <div class="svt139-modal" role="dialog" aria-modal="true" aria-labelledby="distHelpTitle">
+      <button class="svt-modal-close svt139-close" type="button" id="closeDistributorHelp" aria-label="Închide">×</button>
+      <header class="svt139-head">
         <h2 id="distHelpTitle">Cum obții fișierul orar / curba de sarcină?</h2>
         <p>Alege sursa corectă de date. Pentru analiza exactă ai nevoie de dată, oră/interval și consum kWh.</p>
       </header>
-
-      <nav class="svt-help101-tabs" id="distHelpTabs" role="tablist" aria-label="Surse date consum">
-        <button type="button" class="svt-help101-tab is-active" data-dist-tab="deer" aria-selected="true"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M8 21h8M7 8l5-5 5 5M6 13h12M8 13l-2 8M16 13l2 8M8 8h8"/></svg><span>DEER</span></button><button type="button" class="svt-help101-tab" data-dist-tab="retele" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 5 14h6l-1 8 9-13h-6l0-7Z"/></svg><span>Rețele Electrice</span></button><button type="button" class="svt-help101-tab" data-dist-tab="delgaz" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4 0 7-3 7-7 0-3-2-5-4-7-.8-.8-1.6-1.7-2-3-2 1.5-3 3.5-3 6-1.5-.7-2.5-1.7-3-3-1.2 2-2 4.1-2 7 0 4 3 7 7 7Z"/></svg><span>Delgaz Grid</span></button><button type="button" class="svt-help101-tab" data-dist-tab="oltenia" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><circle cx="12" cy="16" r="3"/><path d="M10.5 10.2 12 13M13.5 13 15 10.2M11 8h2"/></svg><span>Distribuție Oltenia</span></button><button type="button" class="svt-help101-tab" data-dist-tab="furnizor" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Furnizor / aplicație</span></button>
+      <nav class="svt139-tabs" id="distHelpTabs" role="tablist" aria-label="Surse date consum">
+        <button type="button" class="svt139-tab active is-active" data-dist-tab="deer" aria-selected="true"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7 21h10M7 8l5-5 5 5M6 13h12M8 13l-2 8M16 13l2 8"/></svg><span>DEER</span></button><button type="button" class="svt139-tab" data-dist-tab="retele" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 5 14h6l-1 8 9-13h-6l0-7Z"/></svg><span>Rețele Electrice</span></button><button type="button" class="svt139-tab" data-dist-tab="delgaz" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4 0 7-3 7-7 0-3-2-5-4-7-.8-.8-1.6-1.7-2-3-2 1.5-3 3.5-3 6-1.5-.7-2.5-1.7-3-3-1.2 2-2 4.1-2 7 0 4 3 7 7 7Z"/></svg><span>Delgaz Grid</span></button><button type="button" class="svt139-tab" data-dist-tab="oltenia" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><circle cx="12" cy="16" r="3"/><path d="M10.5 10.2 12 13M13.5 13 15 10.2M11 8h2"/></svg><span>Distribuție Oltenia</span></button><button type="button" class="svt139-tab" data-dist-tab="furnizor" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Furnizor / aplicație</span></button>
       </nav>
-
-      <div class="svt-help101-body">
-        <section class="svt-help101-panel is-active" data-dist-panel="deer" style="display:grid">
-          <article class="svt-help101-hero">
-            <div class="svt-help101-art"><svg viewBox="0 0 240 168" class="svt-help101-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="120" cy="86" r="72" fill="currentColor" opacity=".08" stroke="none"/><path d="M82 138h84M124 30v108M94 138l30-108 30 108M100 70h48M106 96h36M92 70l32-40 32 40M102 118h44"/><path d="M72 138V102h25v36M161 138v-22h22v22M68 102h31M157 116h29"/><path d="M154 62c18-9 34-9 48 0M158 82c13-6 26-6 39 0"/></svg></div>
-            <div class="svt-help101-copy">
+      <div class="svt139-body">
+        <section class="svt139-panel active is-active" data-dist-panel="deer" style="display:grid">
+          <article class="svt139-hero">
+            <div class="svt139-art"><svg viewBox="0 0 240 150" class="svt139-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="112" cy="75" r="58" fill="currentColor" opacity=".09" stroke="none"/><path d="M48 128h144"/><path d="M113 26v102M76 128 113 26l37 102M91 66h44M84 86h58M78 67l35-41 35 41"/><path d="M54 128V96h28v32M62 105h12M62 117h12"/><path d="M158 128V107h24v21M164 115h6"/><path d="M144 52c22-10 42-10 60 0M150 72c16-7 31-7 47 0"/><path d="M197 128v-22M187 113c4-10 16-10 20 0M188 122h18"/></svg></div>
+            <div class="svt139-copy">
               <h3>DEER — Transilvania Nord, Transilvania Sud, Muntenia Nord</h3>
               <p>Portalul DEER permite accesul la date proprii de măsurare pentru locurile de consum din zonele de concesiune DEER. În funcție de tipul contorului și contul disponibil, poți consulta istoricul de consum și curbele de sarcină.</p>
             </div>
           </article>
-
-          <div class="svt-help101-main">
-            <article class="svt-help101-steps">
-              <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg><span>Pașii de urmat</span></h4>
+          <div class="svt139-grid">
+            <article class="svt139-steps">
+              <div class="svt139-steps-head"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><h4>Pașii de urmat</h4></div>
               <ol><li><b>1</b><span>Intră în portalul DEER / Portal date.</span></li><li><b>2</b><span>Creează cont sau autentifică-te.</span></li><li><b>3</b><span>Selectează locul de consum / POD.</span></li><li><b>4</b><span>Caută zona de date de măsurare / curbe de sarcină.</span></li><li><b>5</b><span>Alege perioada dorită.</span></li><li><b>6</b><span>Descarcă fișierul, preferabil Excel/CSV.</span></li></ol>
             </article>
-            <aside class="svt-help101-side">
-              <article class="svt-help101-card">
-                <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 13h6M9 17h5"/></svg><span>Ce fișier cauți?</span></h4>
-                <p>Excel/CSV cu dată, oră/interval și consum kWh.</p>
-              </article>
-              <article class="svt-help101-card">
-                <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 18h.01"/></svg><span>Atenție</span></h4>
-                <p>Datele disponibile depind de tipul contorului, istoricul disponibil și drepturile contului.</p>
-              </article>
+            <aside class="svt139-side">
+              <article class="svt139-card"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 13h6M9 17h5"/></svg></span><div class="svt139-card-copy"><h4>Ce fișier cauți?</h4><p>Excel/CSV cu dată, oră/interval și consum kWh.</p></div></article>
+              <article class="svt139-card"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 18h.01"/></svg></span><div class="svt139-card-copy"><h4>Atenție</h4><p>Datele disponibile depind de tipul contorului, istoricul disponibil și drepturile contului.</p></div></article>
             </aside>
           </div>
-
-          <footer class="svt-help101-footer">
-            <a class="svt-help101-cta" href="https://www.distributie-energie.ro/date-de-masurare/" target="_blank" rel="noopener">↗ Deschide portalul oficial</a>
-            <div class="svt-help101-sources"><strong>Surse și documentație</strong><div><a href="https://www.distributie-energie.ro/date-de-masurare/" target="_blank" rel="noopener">DEER — Date de măsurare ↗</a><a href="https://www.distributie-energie.ro/acces-la-portal/" target="_blank" rel="noopener">DEER — Acces la portal ↗</a></div></div>
+          <footer class="svt139-footer">
+            <a class="svt139-cta" href="https://www.distributie-energie.ro/date-de-masurare/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/><path d="M5 5h6"/><path d="M5 5v14h14v-6"/></svg><span>Deschide portalul oficial</span></a>
+            <div class="svt139-sources"><strong>Surse și documentație</strong><div class="svt139-source-links"><a href="https://www.distributie-energie.ro/date-de-masurare/" target="_blank" rel="noopener">DEER — Date de măsurare ↗</a><a href="https://www.distributie-energie.ro/acces-la-portal/" target="_blank" rel="noopener">DEER — Acces la portal ↗</a></div></div>
           </footer>
-        </section><section class="svt-help101-panel" data-dist-panel="retele" style="display:none">
-          <article class="svt-help101-hero">
-            <div class="svt-help101-art"><svg viewBox="0 0 240 168" class="svt-help101-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="120" cy="86" r="72" fill="currentColor" opacity=".08" stroke="none"/><path d="M82 138h84M124 30v108M94 138l30-108 30 108M100 70h48M106 96h36M92 70l32-40 32 40M102 118h44"/><path d="M72 138V102h25v36M161 138v-22h22v22M68 102h31M157 116h29"/><path d="M154 62c18-9 34-9 48 0M158 82c13-6 26-6 39 0"/></svg></div>
-            <div class="svt-help101-copy">
+        </section><section class="svt139-panel" data-dist-panel="retele" style="display:none">
+          <article class="svt139-hero">
+            <div class="svt139-art"><svg viewBox="0 0 240 150" class="svt139-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="112" cy="76" r="58" fill="currentColor" opacity=".09" stroke="none"/><path d="M42 128h154"/><path d="M109 24v104M72 128l37-104 37 104M86 62h46M80 83h58M76 64l33-40 33 40"/><path d="M138 43c28-12 52-11 72 2M142 64c24-9 46-8 64 3M145 85c20-5 37-3 55 6"/><path d="M55 128V104h24v24M164 128v-18h26v18"/><path d="M54 104h26M163 110h28"/></svg></div>
+            <div class="svt139-copy">
               <h3>Rețele Electrice România — Muntenia, Banat, Dobrogea</h3>
               <p>În contul Rețele Electrice, serviciul Date de consum include istoricul citirilor și, pentru contoare inteligente integrate în telecitire, curba de sarcină cu variația consumului în timp.</p>
             </div>
           </article>
-
-          <div class="svt-help101-main">
-            <article class="svt-help101-steps">
-              <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg><span>Pașii de urmat</span></h4>
+          <div class="svt139-grid">
+            <article class="svt139-steps">
+              <div class="svt139-steps-head"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><h4>Pașii de urmat</h4></div>
               <ol><li><b>1</b><span>Intră în contul tău Rețele Electrice.</span></li><li><b>2</b><span>Accesează Date de consum / Informații consum.</span></li><li><b>3</b><span>Selectează locul de consum / POD.</span></li><li><b>4</b><span>Deschide Curbe de sarcină.</span></li><li><b>5</b><span>Alege perioada analizată.</span></li><li><b>6</b><span>Exportă datele, dacă opțiunea este disponibilă.</span></li></ol>
             </article>
-            <aside class="svt-help101-side">
-              <article class="svt-help101-card">
-                <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 13h6M9 17h5"/></svg><span>Ce fișier cauți?</span></h4>
-                <p>Date orare sau la 15 minute, ideal în Excel/CSV.</p>
-              </article>
-              <article class="svt-help101-card">
-                <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 18h.01"/></svg><span>Atenție</span></h4>
-                <p>Dacă ai contor clasic sau contor inteligent fără istoric disponibil, curba de sarcină poate să nu apară.</p>
-              </article>
+            <aside class="svt139-side">
+              <article class="svt139-card"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 13h6M9 17h5"/></svg></span><div class="svt139-card-copy"><h4>Ce fișier cauți?</h4><p>Date orare sau la 15 minute, ideal în Excel/CSV.</p></div></article>
+              <article class="svt139-card"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 18h.01"/></svg></span><div class="svt139-card-copy"><h4>Atenție</h4><p>Dacă ai contor clasic sau contor inteligent fără istoric disponibil, curba de sarcină poate să nu apară.</p></div></article>
             </aside>
           </div>
-
-          <footer class="svt-help101-footer">
-            <a class="svt-help101-cta" href="https://www.reteleelectrice.ro/masurare/cum-masuram/" target="_blank" rel="noopener">↗ Deschide pagina Rețele Electrice</a>
-            <div class="svt-help101-sources"><strong>Surse și documentație</strong><div><a href="https://www.reteleelectrice.ro/masurare/cum-masuram/" target="_blank" rel="noopener">Rețele Electrice — Date de consum / curba de sarcină ↗</a></div></div>
+          <footer class="svt139-footer">
+            <a class="svt139-cta" href="https://www.reteleelectrice.ro/ro/clienti/informatii-consum.html" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/><path d="M5 5h6"/><path d="M5 5v14h14v-6"/></svg><span>Deschide pagina Rețele Electrice</span></a>
+            <div class="svt139-sources"><strong>Surse și documentație</strong><div class="svt139-source-links"><a href="https://www.reteleelectrice.ro/ro/clienti/informatii-consum.html" target="_blank" rel="noopener">Rețele Electrice — Date de consum / curba de sarcină ↗</a></div></div>
           </footer>
-        </section><section class="svt-help101-panel" data-dist-panel="delgaz" style="display:none">
-          <article class="svt-help101-hero">
-            <div class="svt-help101-art"><svg viewBox="0 0 240 168" class="svt-help101-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="120" cy="86" r="72" fill="currentColor" opacity=".08" stroke="none"/><rect x="76" y="50" width="86" height="92" rx="16"/><path d="M76 78h86M98 102h38M98 120h28"/><path d="M119 134c17 0 29-13 29-30 0-13-8-21-17-29-4 10-12 15-18 23-4 5-7 11-7 19 0 10 5 17 13 17Z"/><path d="M84 142h70M162 92h24M162 112h16M60 92h16M66 112h10"/></svg></div>
-            <div class="svt-help101-copy">
+        </section><section class="svt139-panel" data-dist-panel="delgaz" style="display:none">
+          <article class="svt139-hero">
+            <div class="svt139-art"><svg viewBox="0 0 240 150" class="svt139-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="118" cy="76" r="58" fill="currentColor" opacity=".09" stroke="none"/><path d="M50 126h144"/><rect x="78" y="46" width="80" height="74" rx="14"/><path d="M78 76H62M158 76h20M63 65v22M178 65v22"/><path d="M104 32h28M113 32v14M123 32v14"/><path d="M98 86h40M98 101h32"/><path d="M120 74c12 0 20-8 20-19M120 74c-12 0-20-8-20-19"/><path d="M120 55c4 6 7 10 7 15a7 7 0 0 1-14 0c0-5 3-9 7-15Z"/></svg></div>
+            <div class="svt139-copy">
               <h3>Delgaz Grid — Moldova / Nord-Est</h3>
               <p>Pentru contoarele SMART, Delgaz Grid permite consultarea datelor de măsură în contul de client, în zona de grafice și rapoarte date măsură. Raportul se solicită din portal și se descarcă după procesare.</p>
             </div>
           </article>
-
-          <div class="svt-help101-main">
-            <article class="svt-help101-steps">
-              <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg><span>Pașii de urmat</span></h4>
+          <div class="svt139-grid">
+            <article class="svt139-steps">
+              <div class="svt139-steps-head"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><h4>Pașii de urmat</h4></div>
               <ol><li><b>1</b><span>Intră în contul Delgaz.</span></li><li><b>2</b><span>Accesează Grafice și rapoarte date măsură.</span></li><li><b>3</b><span>Creează o solicitare nouă de raport.</span></li><li><b>4</b><span>Selectează locul de consum / POD.</span></li><li><b>5</b><span>Alege perioada și tipul raportului.</span></li><li><b>6</b><span>Descarcă raportul după ce statusul este finalizat.</span></li></ol>
             </article>
-            <aside class="svt-help101-side">
-              <article class="svt-help101-card">
-                <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 13h6M9 17h5"/></svg><span>Ce fișier cauți?</span></h4>
-                <p>Raport de consumuri / date măsură, preferabil tabelar.</p>
-              </article>
-              <article class="svt-help101-card">
-                <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 18h.01"/></svg><span>Atenție</span></h4>
-                <p>Datele sunt legate de contoarele SMART și perioada disponibilă în portal.</p>
-              </article>
+            <aside class="svt139-side">
+              <article class="svt139-card"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 13h6M9 17h5"/></svg></span><div class="svt139-card-copy"><h4>Ce fișier cauți?</h4><p>Raport de consumuri / date măsură, preferabil tabelar.</p></div></article>
+              <article class="svt139-card"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 18h.01"/></svg></span><div class="svt139-card-copy"><h4>Atenție</h4><p>Datele sunt legate de contoarele SMART și perioada disponibilă în portal.</p></div></article>
             </aside>
           </div>
-
-          <footer class="svt-help101-footer">
-            <a class="svt-help101-cta" href="https://delgaz.ro/platforma-smart-gestionare-consum" target="_blank" rel="noopener">↗ Deschide pagina oficială Delgaz</a>
-            <div class="svt-help101-sources"><strong>Surse și documentație</strong><div><a href="https://delgaz.ro/platforma-smart-gestionare-consum" target="_blank" rel="noopener">Delgaz Grid — Rapoarte date măsură ↗</a></div></div>
+          <footer class="svt139-footer">
+            <a class="svt139-cta" href="https://delgaz.ro/platforma-smart-gestionare-consum" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/><path d="M5 5h6"/><path d="M5 5v14h14v-6"/></svg><span>Deschide pagina oficială Delgaz</span></a>
+            <div class="svt139-sources"><strong>Surse și documentație</strong><div class="svt139-source-links"><a href="https://delgaz.ro/platforma-smart-gestionare-consum" target="_blank" rel="noopener">Delgaz Grid — Rapoarte date măsură ↗</a></div></div>
           </footer>
-        </section><section class="svt-help101-panel" data-dist-panel="oltenia" style="display:none">
-          <article class="svt-help101-hero">
-            <div class="svt-help101-art"><svg viewBox="0 0 240 168" class="svt-help101-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="120" cy="86" r="72" fill="currentColor" opacity=".08" stroke="none"/><path d="M70 138V58h24v80M94 86h36v52M130 72h34v66M62 138h112"/><path d="M96 62c30-18 56-17 82 3M96 86c31-14 55-13 78 4M96 110c30-8 54-6 78 8"/><circle cx="184" cy="126" r="18"/><path d="M176 126h16M184 118v16"/></svg></div>
-            <div class="svt-help101-copy">
+        </section><section class="svt139-panel" data-dist-panel="oltenia" style="display:none">
+          <article class="svt139-hero">
+            <div class="svt139-art"><svg viewBox="0 0 240 150" class="svt139-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="116" cy="78" r="58" fill="currentColor" opacity=".09" stroke="none"/><path d="M42 128h154"/><path d="M76 128V50h23v78M99 82h40v46M139 68h34v60"/><path d="M82 70h11M82 92h11M108 98h20M147 84h15"/><path d="M100 48c32-16 58-14 85 4M100 70c34-12 61-10 84 5M100 92c30-7 56-4 79 7"/><circle cx="188" cy="118" r="16"/><path d="M180 118h16M188 110v16"/></svg></div>
+            <div class="svt139-copy">
               <h3>Distribuție Energie Oltenia — Portal date măsurate / DEO Connect</h3>
               <p>În portalul de date măsurate, tabul Reads permite vizualizarea istoricului citirilor și a curbei de sarcină. Datele pot fi afișate tabelar/grafic la interval de 15 minute și exportate sub formă de tabel.</p>
             </div>
           </article>
-
-          <div class="svt-help101-main">
-            <article class="svt-help101-steps">
-              <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg><span>Pașii de urmat</span></h4>
+          <div class="svt139-grid">
+            <article class="svt139-steps">
+              <div class="svt139-steps-head"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><h4>Pașii de urmat</h4></div>
               <ol><li><b>1</b><span>Intră în portalul de date măsurate / DEO Connect.</span></li><li><b>2</b><span>Autentifică-te și selectează locul de consum.</span></li><li><b>3</b><span>Deschide tabul Reads.</span></li><li><b>4</b><span>În subtabul de selecție, alege perioada și tipul datelor.</span></li><li><b>5</b><span>Verifică afișarea tabelară/grafică.</span></li><li><b>6</b><span>Intră în tabul de export și descarcă tabelul.</span></li></ol>
             </article>
-            <aside class="svt-help101-side">
-              <article class="svt-help101-card">
-                <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 13h6M9 17h5"/></svg><span>Ce fișier cauți?</span></h4>
-                <p>Tabel exportat cu valori la 15 minute sau orare.</p>
-              </article>
-              <article class="svt-help101-card">
-                <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 18h.01"/></svg><span>Atenție</span></h4>
-                <p>Pentru vizualizare, perioada poate fi limitată în portal; verifică exportul pentru intervalul necesar.</p>
-              </article>
+            <aside class="svt139-side">
+              <article class="svt139-card"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 13h6M9 17h5"/></svg></span><div class="svt139-card-copy"><h4>Ce fișier cauți?</h4><p>Tabel exportat cu valori la 15 minute sau orare.</p></div></article>
+              <article class="svt139-card"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 18h.01"/></svg></span><div class="svt139-card-copy"><h4>Atenție</h4><p>Pentru vizualizare, perioada poate fi limitată în portal; verifică exportul pentru intervalul necesar.</p></div></article>
             </aside>
           </div>
-
-          <footer class="svt-help101-footer">
-            <a class="svt-help101-cta" href="https://portal.distributieoltenia.ro/" target="_blank" rel="noopener">↗ Deschide portalul DEO Connect</a>
-            <div class="svt-help101-sources"><strong>Surse și documentație</strong><div><a href="https://portal.distributieoltenia.ro/term-condition" target="_blank" rel="noopener">DEO Connect — termeni platformă ↗</a><a href="https://www.distributieoltenia.ro/ro/suport/accesare-istoric-de-consum.html" target="_blank" rel="noopener">Distribuție Oltenia — istoric de consum ↗</a></div></div>
+          <footer class="svt139-footer">
+            <a class="svt139-cta" href="https://portal.distributieoltenia.ro/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/><path d="M5 5h6"/><path d="M5 5v14h14v-6"/></svg><span>Deschide portalul DEO Connect</span></a>
+            <div class="svt139-sources"><strong>Surse și documentație</strong><div class="svt139-source-links"><a href="https://portal.distributieoltenia.ro/term-condition" target="_blank" rel="noopener">DEO Connect — termeni platformă ↗</a><a href="https://www.distributieoltenia.ro/ro/suport/accesare-istoric-de-consum.html" target="_blank" rel="noopener">Distribuție Oltenia — istoric de consum ↗</a></div></div>
           </footer>
-        </section><section class="svt-help101-panel" data-dist-panel="furnizor" style="display:none">
-          <article class="svt-help101-hero">
-            <div class="svt-help101-art"><svg viewBox="0 0 240 168" class="svt-help101-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="120" cy="86" r="72" fill="currentColor" opacity=".08" stroke="none"/><rect x="78" y="34" width="58" height="100" rx="14"/><circle cx="107" cy="62" r="13"/><path d="M88 102h38M88 116h30M144 70h34v62h-34zM152 86h18M152 102h18"/><circle cx="166" cy="128" r="19"/><path d="m158 128 6 6 13-15"/></svg></div>
-            <div class="svt-help101-copy">
+        </section><section class="svt139-panel" data-dist-panel="furnizor" style="display:none">
+          <article class="svt139-hero">
+            <div class="svt139-art"><svg viewBox="0 0 240 150" class="svt139-illustration" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="114" cy="76" r="58" fill="currentColor" opacity=".09" stroke="none"/><rect x="74" y="31" width="58" height="100" rx="14"/><path d="M95 42h16M96 118h14"/><circle cx="103" cy="65" r="13"/><path d="M84 101h38M84 113h30"/><path d="M142 60h36l16 16v54h-52z"/><path d="M178 60v18h16M151 86h28M151 100h28"/><circle cx="178" cy="124" r="18"/><path d="m169 124 6 6 13-15"/></svg></div>
+            <div class="svt139-copy">
               <h3>Furnizor / aplicație client — variantă de verificare</h3>
               <p>Aplicația furnizorului poate afișa facturi, indexuri și istoric de consum, dar nu garantează export orar sau la 15 minute. Pentru curba de sarcină completă, verifică mai întâi portalul distribuitorului.</p>
             </div>
           </article>
-
-          <div class="svt-help101-main">
-            <article class="svt-help101-steps">
-              <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg><span>Pașii de urmat</span></h4>
+          <div class="svt139-grid">
+            <article class="svt139-steps">
+              <div class="svt139-steps-head"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><h4>Pașii de urmat</h4></div>
               <ol><li><b>1</b><span>Verifică factura pentru codul POD și distribuitor.</span></li><li><b>2</b><span>Intră în aplicația furnizorului.</span></li><li><b>3</b><span>Caută zone precum Consum, Istoric consum, Date consum, Rapoarte.</span></li><li><b>4</b><span>Verifică dacă există export orar / 15 minute.</span></li><li><b>5</b><span>Dacă ai doar consum lunar, folosește varianta Am doar factura lunară.</span></li><li><b>6</b><span>Pentru analiză exactă, solicită datele măsurate de la distribuitor.</span></li></ol>
             </article>
-            <aside class="svt-help101-side">
-              <article class="svt-help101-card">
-                <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 13h6M9 17h5"/></svg><span>Ce fișier cauți?</span></h4>
-                <p>Export orar/15 minute, nu doar factura lunară.</p>
-              </article>
-              <article class="svt-help101-card">
-                <h4><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.05" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 18h.01"/></svg><span>Atenție</span></h4>
-                <p>Factura lunară nu este curba de sarcină. Este utilă pentru estimare, nu pentru analiză orară exactă.</p>
-              </article>
+            <aside class="svt139-side">
+              <article class="svt139-card"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 13h6M9 17h5"/></svg></span><div class="svt139-card-copy"><h4>Ce fișier cauți?</h4><p>Export orar/15 minute, nu doar factura lunară.</p></div></article>
+              <article class="svt139-card"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 18h.01"/></svg></span><div class="svt139-card-copy"><h4>Atenție</h4><p>Factura lunară nu este curba de sarcină. Este utilă pentru estimare, nu pentru analiză orară exactă.</p></div></article>
             </aside>
           </div>
-
-          <footer class="svt-help101-footer">
-            <a class="svt-help101-cta" href="https://www.anre.ro/ro/energie-electrica" target="_blank" rel="noopener">↗ Verifică în aplicația furnizorului</a>
-            <div class="svt-help101-sources"><strong>Surse și documentație</strong><div><a href="https://www.ppcenergy.ro/servicii-digitale/aplicatie-myppc/" target="_blank" rel="noopener">myPPC — facturi, index, consum, servicii ↗</a><a href="https://www.eon.ro/transmitere-index" target="_blank" rel="noopener">E.ON — cont Myline / index ↗</a></div></div>
+          <footer class="svt139-footer">
+            <a class="svt139-cta" href="https://www.anre.ro/ro/energie-electrica" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/><path d="M5 5h6"/><path d="M5 5v14h14v-6"/></svg><span>Verifică în aplicația furnizorului</span></a>
+            <div class="svt139-sources"><strong>Surse și documentație</strong><div class="svt139-source-links"><a href="https://www.ppcenergy.ro/servicii-digitale/aplicatie-myppc/" target="_blank" rel="noopener">myPPC — facturi, index, consum, servicii ↗</a><a href="https://www.eon.ro/transmitere-index" target="_blank" rel="noopener">E.ON — cont Myline / index ↗</a></div></div>
           </footer>
         </section>
       </div>
     </div>
   </div>
 
-  <script>
-    (function(){
-      const modal = document.getElementById('distributorHelpModal');
-      if(!modal || modal.dataset.help101Ready === 'true') return;
-      modal.dataset.help101Ready = 'true';
-      const tabs = modal.querySelectorAll('[data-dist-tab]');
-      const panels = modal.querySelectorAll('[data-dist-panel]');
-      tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          const key = tab.getAttribute('data-dist-tab');
-          tabs.forEach(t => {
-            const active = t.getAttribute('data-dist-tab') === key;
-            t.classList.toggle('is-active', active);
-            t.classList.toggle('active', active);
-            t.setAttribute('aria-selected', active ? 'true' : 'false');
-          });
-          panels.forEach(panel => {
-            const active = panel.getAttribute('data-dist-panel') === key;
-            panel.classList.toggle('is-active', active);
-            panel.classList.toggle('active', active);
-            panel.style.display = active ? 'grid' : 'none';
-          });
-        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="svt-v120-invoice-grid-upload-final-js">
+/* svt-v120-invoice-grid-upload-final START */
+(function () {
+  var fallback = { consum: 82, zile: 76, valoare: 104, program: 150 };
+
+  function norm(s) {
+    return String(s || '')
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function setImp(el, prop, value) {
+    if (el && el.style) el.style.setProperty(prop, value, 'important');
+  }
+
+  function getInvoiceGrid() {
+    var grids = Array.prototype.slice.call(document.querySelectorAll('#invoicePanel .invoice-grid, .invoice-grid'));
+    for (var i = 0; i < grids.length; i += 1) {
+      var t = norm(grids[i].textContent);
+      if (t.indexOf('consum total') >= 0 && t.indexOf('numar zile') >= 0 && t.indexOf('valoare factura') >= 0 && t.indexOf('program de') >= 0) return grids[i];
+    }
+    return null;
+  }
+
+  function directChildOf(parent, el) {
+    var n = el;
+    while (n && n.parentElement && n.parentElement !== parent) n = n.parentElement;
+    return n && n.parentElement === parent ? n : null;
+  }
+
+  function firstVisibleLabel(field) {
+    var candidates = Array.prototype.slice.call(field.querySelectorAll('label, .field-label, .small-label, strong, span'));
+    for (var i = 0; i < candidates.length; i += 1) {
+      var el = candidates[i];
+      if (!el || !el.textContent || !el.textContent.trim()) continue;
+      if (el.closest('.control') || el.closest('button') || el.closest('.file-inline') || el.closest('.invoice-attach')) continue;
+      var text = norm(el.textContent);
+      if (text.indexOf('consum') >= 0 || text.indexOf('numar') >= 0 || text.indexOf('valoare') >= 0 || text.indexOf('program') >= 0) return el;
+    }
+    return null;
+  }
+
+  function measureLabel(el, fallbackWidth) {
+    if (!el) return fallbackWidth;
+    var max = 0;
+    try {
+      var range = document.createRange();
+      range.selectNodeContents(el);
+      Array.prototype.slice.call(range.getClientRects()).forEach(function (r) {
+        if (r.width > 4 && r.height > 4) max = Math.max(max, Math.ceil(r.width));
       });
-    })();
-  </script>
+      try { range.detach(); } catch (e) {}
+    } catch (e) {}
+    if (!max && el.getBoundingClientRect) max = Math.ceil(el.getBoundingClientRect().width || 0);
+    if (!max) max = fallbackWidth;
+    return Math.max(62, Math.min(126, max));
+  }
+
+  function fieldsFromGrid(grid) {
+    var fields = Array.prototype.slice.call(grid.querySelectorAll('.field'));
+    var specs = [
+      { key: 'consum', needles: ['consum total', 'facturat'], col: 1 },
+      { key: 'zile', needles: ['numar zile', 'facturate'], col: 2 },
+      { key: 'valoare', needles: ['valoare factura', 'energie'], col: 3 },
+      { key: 'program', needles: ['program de', 'lucru'], col: 4 }
+    ];
+    return specs.map(function (spec, idx) {
+      var found = fields.find(function (f) {
+        var t = norm(f.textContent);
+        return spec.needles.every(function (needle) { return t.indexOf(needle) >= 0; });
+      });
+      if (!found) {
+        var controls = Array.prototype.slice.call(grid.querySelectorAll('input:not([type="file"]):not([type="checkbox"]):not([type="radio"]), select'));
+        var c = controls[idx];
+        found = c ? (c.closest('.field') || directChildOf(grid, c) || c.parentElement) : null;
+      }
+      return found ? { key: spec.key, col: spec.col, field: found } : null;
+    }).filter(Boolean);
+  }
+
+  function applyField(item) {
+    var field = item.field;
+    var label = firstVisibleLabel(field);
+    var width = measureLabel(label, fallback[item.key] || 82);
+    if (item.key === 'program') width = Math.max(150, width + 16);
+    var px = width + 'px';
+
+    field.classList.add('svt120-invoice-field');
+    field.style.setProperty('--svt120-w', px);
+    setImp(field, 'grid-column', String(item.col));
+    setImp(field, 'justify-self', 'start');
+    setImp(field, 'align-self', 'end');
+    setImp(field, 'width', px);
+    setImp(field, 'min-width', px);
+    setImp(field, 'max-width', px);
+    setImp(field, 'height', 'auto');
+    setImp(field, 'min-height', '0');
+    setImp(field, 'max-height', 'none');
+    setImp(field, 'margin', '0');
+    setImp(field, 'padding', '0');
+    setImp(field, 'transform', 'none');
+
+    if (label) {
+      setImp(label, 'width', px);
+      setImp(label, 'max-width', px);
+      setImp(label, 'line-height', '1.05');
+      setImp(label, 'margin-bottom', '8px');
+    }
+
+    Array.prototype.forEach.call(field.querySelectorAll('.field-hint'), function (h) { setImp(h, 'display', 'none'); });
+
+    var controls = field.querySelectorAll('.control, input:not([type="file"]):not([type="checkbox"]):not([type="radio"]), select');
+    Array.prototype.forEach.call(controls, function (c) {
+      setImp(c, 'width', px);
+      setImp(c, 'min-width', px);
+      setImp(c, 'max-width', px);
+      setImp(c, 'height', '38px');
+      setImp(c, 'min-height', '38px');
+      setImp(c, 'max-height', '38px');
+      setImp(c, 'line-height', 'normal');
+      setImp(c, 'box-sizing', 'border-box');
+      setImp(c, 'transform', 'none');
+      if ((item.key === 'consum' || item.key === 'valoare') && 'placeholder' in c) c.placeholder = '';
+    });
+  }
+
+  function findUploadSeed(grid) {
+    var candidates = Array.prototype.slice.call(grid.querySelectorAll('button, label, a, .btn, .file-btn, .invoice-attach, .file-inline, div, span'))
+      .filter(function (el) { return norm(el.textContent).indexOf('alege factura') >= 0; });
+    candidates.sort(function (a, b) { return norm(a.textContent).length - norm(b.textContent).length; });
+    return candidates[0] || null;
+  }
+
+  function uploadBoxFromSeed(grid, seed) {
+    if (!seed) return null;
+    var box = seed.closest('.invoice-attach') || seed.closest('.file-inline') || seed.closest('.upload-card') || seed.closest('.file-card') || seed.closest('.file-upload') || seed.closest('label') || seed.parentElement;
+    var n = box;
+    for (var i = 0; n && n !== grid && i < 6; i += 1, n = n.parentElement) {
+      var t = norm(n.textContent);
+      if (t.indexOf('alege factura') >= 0 && t.indexOf('format acceptat') >= 0) box = n;
+    }
+    return box;
+  }
+
+  function applyUpload(grid) {
+    var seed = findUploadSeed(grid);
+    if (!seed) return;
+    var gridItem = directChildOf(grid, seed) || seed.closest('.field') || seed.parentElement;
+    var box = uploadBoxFromSeed(grid, seed) || gridItem;
+
+    gridItem.classList.add('svt120-invoice-upload-cell');
+    box.classList.add('svt120-invoice-upload-box');
+
+    setImp(gridItem, 'grid-column', '5');
+    setImp(gridItem, 'justify-self', 'end');
+    setImp(gridItem, 'align-self', 'end');
+    setImp(gridItem, 'display', 'flex');
+    setImp(gridItem, 'align-items', 'center');
+    setImp(gridItem, 'justify-content', 'center');
+    setImp(gridItem, 'margin', '0');
+    setImp(gridItem, 'padding', '0');
+    setImp(gridItem, 'position', 'static');
+    setImp(gridItem, 'top', 'auto');
+    setImp(gridItem, 'transform', 'none');
+
+    setImp(box, 'width', 'min(400px, 100%)');
+    setImp(box, 'min-width', '300px');
+    setImp(box, 'max-width', '400px');
+    setImp(box, 'min-height', '46px');
+    setImp(box, 'position', 'static');
+    setImp(box, 'top', 'auto');
+    setImp(box, 'transform', 'none');
+    setImp(box, 'display', 'flex');
+    setImp(box, 'flex-direction', 'row');
+    setImp(box, 'flex-wrap', 'nowrap');
+    setImp(box, 'align-items', 'center');
+    setImp(box, 'justify-content', 'center');
+    setImp(box, 'gap', '12px');
+    setImp(box, 'margin', '0');
+    setImp(box, 'padding-top', '8px');
+    setImp(box, 'padding-bottom', '8px');
+    setImp(box, 'text-align', 'center');
+  }
+
+  function applyInvoiceFix() {
+    var grid = getInvoiceGrid();
+    if (!grid) return;
+    grid.classList.add('svt120-invoice-grid');
+    setImp(grid, 'display', 'grid');
+    setImp(grid, 'grid-template-columns', 'max-content max-content max-content max-content minmax(330px, 1fr)');
+    setImp(grid, 'column-gap', '12px');
+    setImp(grid, 'row-gap', '6px');
+    setImp(grid, 'align-items', 'end');
+
+    fieldsFromGrid(grid).forEach(applyField);
+    applyUpload(grid);
+  }
+
+  function schedule() {
+    applyInvoiceFix();
+    window.requestAnimationFrame(applyInvoiceFix);
+    setTimeout(applyInvoiceFix, 80);
+    setTimeout(applyInvoiceFix, 300);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule);
+  else schedule();
+  window.addEventListener('load', schedule);
+  document.addEventListener('click', function () { setTimeout(applyInvoiceFix, 0); }, true);
+  document.addEventListener('focusin', function () { setTimeout(applyInvoiceFix, 0); }, true);
+  window.addEventListener('resize', function () { setTimeout(applyInvoiceFix, 80); });
+})();
+/* svt-v120-invoice-grid-upload-final END */
+</script>
+
+
+<script id="svt-v130-invoice-upload-force-window-down-js">
+/* svt-v130-invoice-upload-force-window-down START */
+(function(){
+  var SHIFT = 34;
+
+  function norm(value){
+    return String(value || '')
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function setImp(el, prop, value){
+    if (!el || !el.style) return;
+    el.style.setProperty(prop, value, 'important');
+  }
+
+  function visible(el){
+    if (!el || !el.getBoundingClientRect) return false;
+    var r = el.getBoundingClientRect();
+    return r.width > 20 && r.height > 10;
+  }
+
+  function getPanel(){
+    return document.getElementById('invoicePanel') || document;
+  }
+
+  function scoreCandidate(el){
+    if (!visible(el)) return -9999;
+    var txt = norm(el.textContent);
+    if (txt.indexOf('alege factura') < 0) return -9999;
+    var r = el.getBoundingClientRect();
+    var cs = window.getComputedStyle ? window.getComputedStyle(el) : null;
+    var score = 0;
+
+    // Vrem fereastra verde punctata, nu butonul si nu gridul mare.
+    if (txt.indexOf('format acceptat') >= 0) score += 80;
+    if (cs && String(cs.borderStyle || '').indexOf('dashed') >= 0) score += 120;
+    if (el.matches && el.matches('.file-inline, .invoice-attach, .invoice-attach-wrap, .upload-zone, .upload-box, .dropzone')) score += 90;
+    if (r.width >= 240 && r.width <= 520) score += 80;
+    if (r.height >= 38 && r.height <= 90) score += 70;
+    if (r.width > 650) score -= 160; // exclude grid/panel
+    if (el.matches && el.matches('button, label, input, select')) score -= 120; // exclude button itself
+    return score;
+  }
+
+  function findUploadWindow(){
+    var panel = getPanel();
+    var all = Array.prototype.slice.call(panel.querySelectorAll('*'));
+    var best = null;
+    var bestScore = -9999;
+
+    all.forEach(function(el){
+      var sc = scoreCandidate(el);
+      if (sc > bestScore) { bestScore = sc; best = el; }
+    });
+
+    if (best && bestScore > 0) return best;
+
+    // fallback: gaseste textul, apoi urca la primul container rezonabil, dar nu la grid/panel.
+    for (var i = 0; i < all.length; i += 1) {
+      if (norm(all[i].textContent).indexOf('alege factura') < 0) continue;
+      var node = all[i];
+      for (var guard = 0; guard < 6 && node && node.parentElement && node !== panel; guard += 1) {
+        var r = node.getBoundingClientRect ? node.getBoundingClientRect() : {width:0,height:0};
+        var t = norm(node.textContent);
+        if (t.indexOf('alege factura') >= 0 && r.width >= 240 && r.width <= 560 && r.height >= 30 && r.height <= 110) return node;
+        node = node.parentElement;
+      }
+    }
+    return null;
+  }
+
+  function apply(){
+    var win = findUploadWindow();
+    if (!win) return;
+
+    win.classList.add('svt130-upload-window');
+    win.setAttribute('data-svt-v130-upload-force-down', String(SHIFT));
+
+    // Resetăm încercările vechi pe acest container și apoi mutăm doar containerul.
+    setImp(win, 'position', 'relative');
+    setImp(win, 'top', SHIFT + 'px');
+    setImp(win, 'bottom', 'auto');
+    setImp(win, 'transform', 'none');
+    setImp(win, 'margin-top', '0px');
+    setImp(win, 'margin-bottom', '0px');
+    setImp(win, 'align-self', 'center');
+    setImp(win, 'justify-self', 'end');
+    setImp(win, 'z-index', '2');
+  }
+
+  function schedule(){
+    apply();
+    if (window.requestAnimationFrame) window.requestAnimationFrame(apply);
+    setTimeout(apply, 50);
+    setTimeout(apply, 150);
+    setTimeout(apply, 400);
+    setTimeout(apply, 900);
+    setTimeout(apply, 1600);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule);
+  else schedule();
+  window.addEventListener('load', schedule);
+  window.addEventListener('resize', schedule);
+  document.addEventListener('click', function(ev){
+    var panel = getPanel();
+    if (panel && panel.contains && panel.contains(ev.target)) schedule();
+  }, true);
+  document.addEventListener('focusin', function(ev){
+    var panel = getPanel();
+    if (panel && panel.contains && panel.contains(ev.target)) schedule();
+  }, true);
+})();
+/* svt-v130-invoice-upload-force-window-down END */
+</script>
+
+<script id="svt-v131-invoice-labels-down-js">
+/* svt-v131-invoice-labels-down START */
+(function(){
+  var LABEL_TOP = 14;
+  var targets = [
+    'consum total',
+    'numar zile',
+    'valoare factura',
+    'program de lucru'
+  ];
+
+  function norm(value){
+    return String(value || '')
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function setImp(el, prop, value){
+    if (!el || !el.style) return;
+    el.style.setProperty(prop, value, 'important');
+  }
+
+  function fieldMatches(field){
+    var text = norm(field.textContent);
+    return targets.some(function(t){ return text.indexOf(t) >= 0; });
+  }
+
+  function findLabel(field){
+    var label = field.querySelector('label');
+    if (label) return label;
+
+    var possible = field.querySelector('.field-label, .label, .input-label, .control-label, .form-label');
+    if (possible) return possible;
+
+    var children = Array.prototype.slice.call(field.children || []);
+    for (var i = 0; i < children.length; i += 1) {
+      var child = children[i];
+      if (!child || !child.textContent) continue;
+      if (norm(child.textContent).length > 0 && !child.matches('input, select, textarea, button')) return child;
+    }
+    return null;
+  }
+
+  function apply(){
+    var panel = document.getElementById('invoicePanel');
+    if (!panel) return;
+
+    var fields = Array.prototype.slice.call(panel.querySelectorAll('.invoice-grid .field'))
+      .filter(function(field){
+        return fieldMatches(field) && !!field.querySelector('input, select, textarea');
+      })
+      .slice(0, 4);
+
+    fields.forEach(function(field){
+      field.classList.add('svt131-invoice-field-label-down');
+      field.setAttribute('data-svt-v131-label-down', '14');
+
+      var label = findLabel(field);
+      if (!label) return;
+      label.classList.add('svt131-label-target');
+      label.setAttribute('data-svt-v131-label-target', 'true');
+      setImp(label, 'position', 'relative');
+      setImp(label, 'top', LABEL_TOP + 'px');
+      setImp(label, 'transform', 'none');
+      setImp(label, 'margin-top', '0px');
+      setImp(label, 'margin-bottom', '0px');
+      setImp(label, 'padding-top', '0px');
+      setImp(label, 'padding-bottom', '0px');
+      setImp(label, 'z-index', '5');
+    });
+  }
+
+  function schedule(){
+    apply();
+    if (window.requestAnimationFrame) window.requestAnimationFrame(apply);
+    setTimeout(apply, 80);
+    setTimeout(apply, 250);
+    setTimeout(apply, 700);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule);
+  else schedule();
+  window.addEventListener('load', schedule);
+  window.addEventListener('resize', schedule);
+  document.addEventListener('click', function(ev){
+    var panel = document.getElementById('invoicePanel');
+    if (panel && panel.contains && panel.contains(ev.target)) schedule();
+  }, true);
+  document.addEventListener('focusin', function(ev){
+    var panel = document.getElementById('invoicePanel');
+    if (panel && panel.contains && panel.contains(ev.target)) schedule();
+  }, true);
+})();
+/* svt-v131-invoice-labels-down END */
+</script>
+<!-- svt-v132-invoice-labels-down-only-js START -->
+<script id="svt-v132-invoice-labels-down-only-js">
+(function () {
+  var TARGETS = {
+    "consum total facturat": true,
+    "numar zile facturate": true,
+    "număr zile facturate": true,
+    "valoare factura energie": true,
+    "valoare factură energie": true,
+    "program de lucru": true
+  };
+
+  function norm(value) {
+    return String(value || "")
+      .replace(/\u00a0/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+      .toLowerCase();
+  }
+
+  function plain(value) {
+    return norm(value)
+      .replace(/ă/g, "a")
+      .replace(/â/g, "a")
+      .replace(/î/g, "i")
+      .replace(/ș/g, "s")
+      .replace(/ş/g, "s")
+      .replace(/ț/g, "t")
+      .replace(/ţ/g, "t");
+  }
+
+  function isTarget(text) {
+    var n = norm(text);
+    var p = plain(text);
+    return TARGETS[n] || TARGETS[p];
+  }
+
+  function hasControl(el) {
+    return !!(el && el.querySelector && el.querySelector("input, select, textarea, button"));
+  }
+
+  function pickLabelElement(textNode) {
+    var el = textNode && textNode.parentElement;
+    for (var i = 0; el && i < 4; i += 1) {
+      var ownText = norm(el.textContent);
+      if (isTarget(ownText) && !hasControl(el)) return el;
+      el = el.parentElement;
+    }
+    return null;
+  }
+
+  function applyInvoiceLabelPosition() {
+    var root = document.getElementById("invoicePanel") || document;
+    var labels = [];
+    var selector = "label,.field-label,.form-label,.control-label,.label,.field-title,.invoice-label,.field > span,.field > div,.field strong,.field b";
+
+    root.querySelectorAll(selector).forEach(function (el) {
+      if (isTarget(el.textContent) && !hasControl(el)) labels.push(el);
+    });
+
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    var node;
+    while ((node = walker.nextNode())) {
+      if (!isTarget(node.nodeValue)) continue;
+      var chosen = pickLabelElement(node);
+      if (chosen) labels.push(chosen);
+    }
+
+    var seen = new Set();
+    labels.forEach(function (label) {
+      if (!label || seen.has(label)) return;
+      seen.add(label);
+      label.setAttribute("data-svt-v132-label-down", "true");
+      label.style.setProperty("position", "relative", "important");
+      label.style.setProperty("top", "16px", "important");
+      label.style.setProperty("transform", "none", "important");
+      label.style.setProperty("margin-bottom", "0", "important");
+      label.style.setProperty("line-height", "1.05", "important");
+      label.style.setProperty("z-index", "5", "important");
+    });
+  }
+
+  function schedule() {
+    applyInvoiceLabelPosition();
+    window.requestAnimationFrame(applyInvoiceLabelPosition);
+    setTimeout(applyInvoiceLabelPosition, 100);
+    setTimeout(applyInvoiceLabelPosition, 500);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", schedule);
+  } else {
+    schedule();
+  }
+  window.addEventListener("load", schedule);
+})();
+</script>
+<!-- svt-v132-invoice-labels-down-only-js END -->
 </body>
 </html>
 
