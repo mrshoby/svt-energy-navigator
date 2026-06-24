@@ -5636,152 +5636,215 @@
 <!-- svt-v139-help-modal-compact-reference END -->
 
 
-<!-- SVT v143 super compact help modal START -->
-<style id="svt-v143-super-compact-help-modal">
-/* direct and aggressive compacting for help modal only */
+<!-- SVT v144 explicit modal window heights START -->
+<style id="svt-v144-explicit-modal-window-heights">
+/*
+  v144: Explicit height fix for the help modal windows only.
+  Scope: #distributorHelpModal only.
+  Protected: invoice inputs, invoice upload, row 3 upload.
+*/
+
+/* keep modal compact */
 #distributorHelpModal .svt-v98-modal,
 #distributorHelpModal .svt-help101-modal,
 #distributorHelpModal [class*="modal"] {
-  max-width: 940px !important;
+  max-width: 980px !important;
 }
-#distributorHelpModal .svt-v98-head,
-#distributorHelpModal .svt-help101-head {
-  padding-top: 14px !important;
-  padding-bottom: 8px !important;
-}
-#distributorHelpModal .svt-v98-head h2,
-#distributorHelpModal .svt-help101-head h2,
-#distributorHelpModal h2 {
-  font-size: 25px !important;
-  line-height: 1.04 !important;
-  margin-bottom: 4px !important;
-}
-#distributorHelpModal .svt-v98-head p,
-#distributorHelpModal .svt-help101-head p {
-  font-size: 12px !important;
-  line-height: 1.22 !important;
-  margin: 0 auto !important;
-  max-width: 620px !important;
-}
+
+/* supplier tabs smaller */
 #distributorHelpModal #distHelpTabs,
 #distributorHelpModal .svt-help101-tabs {
   gap: 6px !important;
-  padding: 4px 18px 8px !important;
+  padding: 4px 22px 8px !important;
 }
+
 #distributorHelpModal [data-dist-tab],
 #distributorHelpModal .svt-help101-tab {
-  min-width: 92px !important;
-  max-width: 132px !important;
   height: 30px !important;
   min-height: 30px !important;
+  max-height: 30px !important;
+  min-width: 90px !important;
+  max-width: 136px !important;
   padding: 0 8px !important;
   border-radius: 10px !important;
-  gap: 5px !important;
-  font-size: 10.2px !important;
+  font-size: 10.5px !important;
   line-height: 1 !important;
-  font-weight: 900 !important;
+  gap: 5px !important;
 }
+
 #distributorHelpModal [data-dist-tab] svg,
 #distributorHelpModal .svt-help101-tab svg {
-  width: 13px !important; height: 13px !important; flex:0 0 13px !important;
+  width: 13px !important;
+  height: 13px !important;
+  flex: 0 0 13px !important;
 }
+
+/* body spacing */
 #distributorHelpModal .svt-help101-body,
 #distributorHelpModal .svt-v98-body {
-  padding: 0 18px 12px !important;
-  max-height: calc(88vh - 118px) !important;
+  padding: 0 20px 12px !important;
 }
-#distributorHelpModal [data-dist-panel],
-#distributorHelpModal .svt-help101-panel { gap: 6px !important; }
 
-/* Hero block nearly half */
+#distributorHelpModal [data-dist-panel],
+#distributorHelpModal .svt-help101-panel {
+  gap: 8px !important;
+}
+
+/* HERO WINDOW: explicit half-height */
 #distributorHelpModal .svt-help101-hero {
-  min-height: 0 !important;
-  height: auto !important;
-  padding: 6px 10px !important;
-  border-radius: 12px !important;
-  grid-template-columns: 82px 1fr !important;
-  gap: 10px !important;
+  height: 104px !important;
+  min-height: 104px !important;
+  max-height: 104px !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  padding: 8px 14px !important;
+  border-radius: 14px !important;
+  display: grid !important;
+  grid-template-columns: 94px minmax(0, 1fr) !important;
+  gap: 12px !important;
   align-items: center !important;
 }
+
 #distributorHelpModal .svt-help101-art {
-  width: 70px !important; height: 48px !important; justify-self:center !important;
+  width: 76px !important;
+  height: 56px !important;
+  max-width: 76px !important;
+  max-height: 56px !important;
+  justify-self: center !important;
+  overflow: hidden !important;
 }
+
 #distributorHelpModal .svt-help101-illustration,
 #distributorHelpModal .svt-help101-art svg {
-  width: 70px !important; height: 48px !important; max-width:70px !important; max-height:48px !important;
+  width: 76px !important;
+  height: 56px !important;
+  max-width: 76px !important;
+  max-height: 56px !important;
 }
+
+#distributorHelpModal .svt-help101-copy {
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+
 #distributorHelpModal .svt-help101-copy h3 {
-  font-size: 12.8px !important;
+  font-size: 14px !important;
   line-height: 1.08 !important;
-  margin: 0 0 3px !important;
+  margin: 0 0 4px !important;
   letter-spacing: -0.02em !important;
 }
+
 #distributorHelpModal .svt-help101-copy p {
+  font-size: 10.6px !important;
+  line-height: 1.22 !important;
+  margin: 0 !important;
+  max-width: 650px !important;
+}
+
+/* LOWER WINDOWS: fixed heights */
+#distributorHelpModal .svt-help101-main {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.05fr) minmax(300px, .95fr) !important;
+  gap: 8px !important;
+  align-items: stretch !important;
+}
+
+#distributorHelpModal .svt-help101-side {
+  display: grid !important;
+  gap: 8px !important;
+}
+
+/* PASII DE URMAT WINDOW: explicit height */
+#distributorHelpModal .svt-help101-steps {
+  height: 176px !important;
+  min-height: 176px !important;
+  max-height: 176px !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  padding: 8px 10px !important;
+  border-radius: 14px !important;
+}
+
+/* RIGHT WINDOWS: explicit half-height */
+#distributorHelpModal .svt-help101-card {
+  height: 84px !important;
+  min-height: 84px !important;
+  max-height: 84px !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  padding: 8px 10px !important;
+  border-radius: 14px !important;
+  align-content: start !important;
+}
+
+#distributorHelpModal .svt-help101-steps h4,
+#distributorHelpModal .svt-help101-card h4 {
+  font-size: 13px !important;
+  line-height: 1.05 !important;
+  margin: 0 0 5px !important;
+  gap: 7px !important;
+}
+
+#distributorHelpModal .svt-help101-steps h4 svg,
+#distributorHelpModal .svt-help101-card h4 svg {
+  width: 14px !important;
+  height: 14px !important;
+  padding: 6px !important;
+  border-radius: 8px !important;
+}
+
+#distributorHelpModal .svt-help101-steps ol {
+  padding: 5px 0 0 !important;
+  gap: 1px !important;
+  border-top: 1px solid #e6eef4 !important;
+}
+
+#distributorHelpModal .svt-help101-steps li {
+  display: grid !important;
+  grid-template-columns: 16px 1fr !important;
+  gap: 7px !important;
+  align-items: start !important;
+}
+
+#distributorHelpModal .svt-help101-steps li b {
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  min-height: 16px !important;
+  font-size: 8.8px !important;
+}
+
+#distributorHelpModal .svt-help101-steps li span,
+#distributorHelpModal .svt-help101-card p {
   font-size: 10px !important;
   line-height: 1.16 !important;
   margin: 0 !important;
-  max-width: 620px !important;
 }
 
-/* Lower cards strongly compacted */
-#distributorHelpModal .svt-help101-main {
-  gap: 6px !important;
-  grid-template-columns: minmax(0,1.04fr) minmax(260px,.96fr) !important;
-}
-#distributorHelpModal .svt-help101-side { gap: 6px !important; }
-#distributorHelpModal .svt-help101-steps,
-#distributorHelpModal .svt-help101-card {
-  border-radius: 12px !important;
-  min-height: 0 !important;
-}
-#distributorHelpModal .svt-help101-steps { padding: 8px 10px 7px !important; }
-#distributorHelpModal .svt-help101-card { padding: 8px 10px !important; align-content:start !important; }
-#distributorHelpModal .svt-help101-steps h4,
-#distributorHelpModal .svt-help101-card h4 {
-  font-size: 12.5px !important;
-  line-height: 1.02 !important;
-  margin: 0 0 4px !important;
-  gap: 7px !important;
-}
-#distributorHelpModal .svt-help101-steps h4 svg,
-#distributorHelpModal .svt-help101-card h4 svg {
-  width: 14px !important; height: 14px !important; padding: 6px !important; border-radius: 8px !important;
-}
-#distributorHelpModal .svt-help101-steps ol { padding-top: 5px !important; gap: 2px !important; }
-#distributorHelpModal .svt-help101-steps li {
-  grid-template-columns: 16px 1fr !important;
-  gap: 7px !important;
-  align-items:start !important;
-}
-#distributorHelpModal .svt-help101-steps li b {
-  width: 16px !important; height:16px !important; font-size:9px !important;
-}
-#distributorHelpModal .svt-help101-steps li span,
-#distributorHelpModal .svt-help101-card p {
-  font-size: 9.8px !important;
-  line-height: 1.16 !important;
-  margin: 0 !important;
-}
-
+/* compact footer so reduced windows are visible */
 #distributorHelpModal .svt-help101-footer {
-  grid-template-columns: 250px 1fr !important;
+  grid-template-columns: 270px 1fr !important;
   gap: 10px !important;
-  margin-top: 2px !important;
+  margin-top: 0 !important;
   padding-top: 8px !important;
 }
+
 #distributorHelpModal .svt-help101-cta {
-  min-height: 34px !important; height: 34px !important; border-radius: 10px !important; font-size: 11.5px !important; padding: 0 12px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  border-radius: 11px !important;
+  font-size: 11.5px !important;
+  padding: 0 12px !important;
 }
+
 #distributorHelpModal .svt-help101-sources {
-  gap: 2px !important; font-size: 10px !important; padding-left: 10px !important;
-}
-#distributorHelpModal .svt-help101-sources div { gap: 3px 10px !important; }
-#distributorHelpModal .svt-v98-close,
-#distributorHelpModal .svt-help101-close {
-  width: 36px !important; height: 36px !important; right: 18px !important; top: 14px !important; font-size: 22px !important;
+  font-size: 10.5px !important;
+  gap: 2px !important;
+  padding-left: 12px !important;
 }
 </style>
-<!-- SVT v143 super compact help modal END -->
+<!-- SVT v144 explicit modal window heights END -->
 </head>
 <body data-energy-mode="electric">
   <div class="page">
@@ -6440,6 +6503,7 @@
   </script>
 </body>
 </html>
+
 
 
 
