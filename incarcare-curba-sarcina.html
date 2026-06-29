@@ -5634,267 +5634,298 @@
   }
 </style>
 <!-- svt-v139-help-modal-compact-reference END -->
-<!-- SVT v156 compact help modal ONLY START -->
-<style id="svt-v156-compact-help-modal-only">
+<!-- SVT v157 professional page redesign START -->
+<style id="svt-v157-professional-page-redesign">
 /*
-  SVT v156
-  Scope: ONLY #distributorHelpModal.
-  Purpose: keep compact modal improvements after restore.
-  Protected: #invoiceBox, "2 Sursa datelor", "Alege factură", load curve upload.
+  SVT v157 — Professional UI/UX redesign for incarcare-curba-sarcina.html
+  Scope: visual layer only. Preserves existing JS logic and IDs.
+  Protected: no forced display on #invoiceBox, #fileModeBox, productionBox, or termic/electric sections.
 */
-
-/* Supplier tabs: narrower, long labels can wrap to 2 rows */
-#distributorHelpModal .svt139-tabs{
-  display:flex!important;
-  justify-content:center!important;
-  align-items:center!important;
-  gap:7px!important;
-  padding:6px 22px 10px!important;
-}
-#distributorHelpModal .svt139-tab,
-#distributorHelpModal [data-dist-tab].svt139-tab{
-  height:32px!important;
-  min-height:32px!important;
-  max-height:32px!important;
-  padding:0 7px!important;
-  border-radius:10px!important;
-  gap:5px!important;
-  font-size:10px!important;
-  line-height:1!important;
-  font-weight:900!important;
-  text-align:center!important;
-  white-space:normal!important;
-}
-#distributorHelpModal .svt139-tab[data-dist-tab="deer"]{width:86px!important;min-width:86px!important;max-width:86px!important;}
-#distributorHelpModal .svt139-tab[data-dist-tab="retele"]{width:112px!important;min-width:112px!important;max-width:112px!important;}
-#distributorHelpModal .svt139-tab[data-dist-tab="delgaz"]{width:104px!important;min-width:104px!important;max-width:104px!important;}
-#distributorHelpModal .svt139-tab[data-dist-tab="oltenia"]{width:116px!important;min-width:116px!important;max-width:116px!important;}
-#distributorHelpModal .svt139-tab[data-dist-tab="furnizor"]{width:118px!important;min-width:118px!important;max-width:118px!important;}
-#distributorHelpModal .svt139-tab svg{
-  width:13px!important;
-  height:13px!important;
-  flex:0 0 13px!important;
-}
-#distributorHelpModal .svt139-tab span{
-  display:block!important;
-  max-width:86px!important;
-  white-space:normal!important;
-  line-height:1!important;
-  text-align:center!important;
-}
-#distributorHelpModal .svt139-tab[data-dist-tab="oltenia"] span,
-#distributorHelpModal .svt139-tab[data-dist-tab="furnizor"] span{
-  font-size:9.4px!important;
-  line-height:.96!important;
+:root{
+  --svt157-bg:#f3f6f8;
+  --svt157-surface:#ffffff;
+  --svt157-surface-2:#f8fbfa;
+  --svt157-text:#071b34;
+  --svt157-ink:#0d2038;
+  --svt157-muted:#66758a;
+  --svt157-soft:#90a0b4;
+  --svt157-green:#09964b;
+  --svt157-green-2:#0bb45a;
+  --svt157-green-soft:#eaf8ef;
+  --svt157-border:#dce6ee;
+  --svt157-border-2:#edf2f6;
+  --svt157-shadow:0 24px 70px rgba(12,30,56,.10);
+  --svt157-shadow-card:0 12px 34px rgba(12,30,56,.07);
+  --svt157-radius:22px;
+  --svt157-radius-lg:30px;
 }
 
-/* Modal panel centered */
-#distributorHelpModal .svt139-panel{
-  justify-items:center!important;
+html,body{min-height:100%!important;}
+body[data-svt-ui="v157-professional"]{
+  color:var(--svt157-text)!important;
+  background:
+    radial-gradient(circle at 8% -5%, rgba(9,150,75,.13), transparent 32%),
+    radial-gradient(circle at 92% 0%, rgba(15,82,186,.08), transparent 30%),
+    linear-gradient(180deg,#fbfdfc 0%, var(--svt157-bg) 58%, #eef4f2 100%)!important;
+  letter-spacing:-.01em;
+}
+body[data-svt-ui="v157-professional"]::after{opacity:.09!important;}
+
+.page{
+  width:min(1180px, calc(100% - 40px))!important;
+  max-width:1180px!important;
+  margin:22px auto 36px!important;
+  padding:0!important;
 }
 
-/* Supplier description card: compact, narrower, centered */
-#distributorHelpModal .svt139-hero{
-  width:min(780px,100%)!important;
-  max-width:780px!important;
-  height:100px!important;
-  min-height:100px!important;
-  max-height:100px!important;
-  margin-left:auto!important;
-  margin-right:auto!important;
-  padding:8px 14px!important;
-  display:grid!important;
-  grid-template-columns:112px minmax(0,1fr)!important;
-  gap:12px!important;
-  align-items:center!important;
-  overflow:hidden!important;
-  box-sizing:border-box!important;
-  border-radius:15px!important;
+.svt157-topbar{
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  margin:0 0 16px;
+  padding:12px 16px 12px 14px;
+  border:1px solid rgba(220,230,238,.86);
+  border-radius:24px;
+  background:rgba(255,255,255,.82);
+  backdrop-filter:blur(18px);
+  box-shadow:0 14px 40px rgba(12,30,56,.06);
 }
-#distributorHelpModal .svt139-art{
-  width:96px!important;
-  height:64px!important;
-  max-width:96px!important;
-  max-height:64px!important;
-  overflow:hidden!important;
-  display:grid!important;
-  place-items:center!important;
-}
-#distributorHelpModal .svt139-art svg{
-  display:none!important;
-}
-#distributorHelpModal .svt139-art img,
-#distributorHelpModal .svt139-art .svt156-illustration{
-  width:96px!important;
-  height:64px!important;
-  max-width:96px!important;
-  max-height:64px!important;
-  object-fit:contain!important;
-  display:block!important;
-}
-#distributorHelpModal .svt139-copy{
-  width:560px!important;
-  max-width:560px!important;
-  margin-left:auto!important;
-  margin-right:auto!important;
-  text-align:center!important;
-  overflow:hidden!important;
-}
-#distributorHelpModal .svt139-copy h3{
-  width:fit-content!important;
-  max-width:540px!important;
-  margin:0 auto 4px!important;
-  text-align:center!important;
-  font-size:14px!important;
-  line-height:1.08!important;
-  font-weight:900!important;
-}
-#distributorHelpModal .svt139-copy p{
-  max-width:540px!important;
-  margin:0 auto!important;
-  text-align:center!important;
-  font-size:9.8px!important;
-  line-height:1.18!important;
-  font-weight:650!important;
-}
+.svt157-brand{display:inline-flex;align-items:center;gap:12px;text-decoration:none;color:var(--svt157-text);min-width:0;}
+.svt157-brand-mark{width:44px;height:44px;border-radius:16px;display:grid;place-items:center;color:var(--svt157-green);background:linear-gradient(135deg,#effaf3,#ffffff);border:1px solid #d9efe3;box-shadow:0 10px 26px rgba(9,150,75,.12);}
+.svt157-brand-mark svg{width:28px;height:28px;display:block;}
+.svt157-brand-copy{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.svt157-brand-copy strong{font-size:16px;font-weight:900;letter-spacing:-.025em;white-space:nowrap;}
+.svt157-brand-copy small{font-size:12px;font-weight:700;color:var(--svt157-muted);white-space:nowrap;}
+.svt157-topmeta{display:inline-flex;align-items:center;gap:10px;border:1px solid #dbe8e1;background:#f7fcf8;border-radius:999px;padding:8px 12px;color:#526277;font-size:12px;font-weight:800;white-space:nowrap;}
+.svt157-topmeta strong{color:var(--svt157-green);font-weight:900;}
 
-/* Steps + side cards compact and aligned */
-#distributorHelpModal .svt139-grid{
-  width:min(780px,100%)!important;
-  max-width:780px!important;
-  margin-left:auto!important;
-  margin-right:auto!important;
-  display:grid!important;
-  grid-template-columns:minmax(0,1fr) 290px!important;
-  gap:8px!important;
-  align-items:start!important;
+.svt-progress-outside{
+  max-width:760px!important;
+  margin:0 auto 16px!important;
+  padding:0!important;
+  filter:none!important;
 }
-#distributorHelpModal .svt139-side{
-  width:290px!important;
-  max-width:290px!important;
-  display:grid!important;
-  grid-template-rows:76px 76px!important;
-  gap:8px!important;
-  align-content:start!important;
+.svt-progress-dot{
+  width:32px!important;height:32px!important;border-radius:12px!important;
+  border:1px solid #d8e3eb!important;background:#fff!important;color:#6f7f92!important;
+  font-size:13px!important;font-weight:900!important;box-shadow:0 8px 22px rgba(12,30,56,.05)!important;
 }
-#distributorHelpModal .svt139-steps{
-  width:100%!important;
-  max-width:482px!important;
-  height:160px!important;
-  min-height:160px!important;
-  max-height:160px!important;
-  padding:9px 11px!important;
-  overflow:hidden!important;
-  box-sizing:border-box!important;
-  border-radius:15px!important;
-}
-#distributorHelpModal .svt139-card{
-  width:290px!important;
-  max-width:290px!important;
-  height:76px!important;
-  min-height:76px!important;
-  max-height:76px!important;
-  padding:8px 11px!important;
-  overflow:hidden!important;
-  box-sizing:border-box!important;
-  border-radius:15px!important;
-  display:grid!important;
-  grid-template-columns:31px 1fr!important;
-  gap:9px!important;
-  align-items:center!important;
-}
-#distributorHelpModal .svt139-steps-head{
-  display:flex!important;
-  align-items:center!important;
-  gap:8px!important;
-  margin:0 0 5px!important;
-}
-#distributorHelpModal .svt139-steps h4,
-#distributorHelpModal .svt139-card h4{
-  margin:0 0 2px!important;
-  font-size:12.5px!important;
-  line-height:1.05!important;
-  font-weight:900!important;
-}
-#distributorHelpModal .svt139-steps ol{
-  display:grid!important;
-  grid-template-columns:1fr 1fr!important;
-  column-gap:12px!important;
-  row-gap:2px!important;
-  margin:0!important;
-  padding:6px 0 0!important;
-}
-#distributorHelpModal .svt139-steps li{
-  display:grid!important;
-  grid-template-columns:16px 1fr!important;
-  gap:5px!important;
-  align-items:start!important;
-  margin:0!important;
-}
-#distributorHelpModal .svt139-steps li b{
-  width:16px!important;
-  height:16px!important;
-  min-width:16px!important;
-  min-height:16px!important;
-  font-size:8.5px!important;
-  line-height:1!important;
-}
-#distributorHelpModal .svt139-steps li span,
-#distributorHelpModal .svt139-card p{
-  margin:0!important;
-  font-size:9.4px!important;
-  line-height:1.13!important;
-  font-weight:650!important;
-}
-#distributorHelpModal .svt139-card-copy{
-  height:100%!important;
-  min-height:0!important;
-  display:flex!important;
-  flex-direction:column!important;
-  justify-content:center!important;
-  overflow:hidden!important;
-}
-#distributorHelpModal .svt139-iconbox{
-  width:28px!important;
-  height:28px!important;
-  min-width:28px!important;
-  min-height:28px!important;
-  border-radius:8px!important;
-}
-#distributorHelpModal .svt139-iconbox svg{
-  width:14px!important;
-  height:14px!important;
-}
+.svt-progress-dot.active{background:linear-gradient(135deg,var(--svt157-green),var(--svt157-green-2))!important;border-color:transparent!important;color:#fff!important;box-shadow:0 12px 26px rgba(9,150,75,.22)!important;}
+.svt-progress-line{height:2px!important;background:linear-gradient(90deg,#dbe6ee,#edf3f6)!important;border-radius:999px!important;}
+.svt-progress-label{font-size:11px!important;font-weight:900!important;color:#8795a7!important;margin-top:6px!important;}
+.svt-progress-label.active{color:var(--svt157-green)!important;}
 
-/* Footer stays in original/right layout, not shifted left */
-#distributorHelpModal .svt139-footer{
-  width:100%!important;
-  max-width:none!important;
-  margin-left:0!important;
-  margin-right:0!important;
+.hero{
+  border:1px solid rgba(220,230,238,.96)!important;
+  border-radius:34px!important;
+  background:rgba(255,255,255,.94)!important;
+  box-shadow:var(--svt157-shadow)!important;
+  padding:34px 34px 30px!important;
+  overflow:hidden;
+  position:relative;
+}
+.hero::before{
+  content:"";position:absolute;inset:0 0 auto 0;height:180px;pointer-events:none;
+  background:radial-gradient(circle at 50% -40%, rgba(9,150,75,.12), transparent 55%);
+}
+.wizard-shell{position:relative;z-index:1;max-width:1040px!important;margin:0 auto!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;}
+h1{
+  max-width:840px;margin:0 auto!important;text-align:center!important;color:var(--svt157-ink)!important;
+  font-size:clamp(38px,5vw,64px)!important;line-height:.98!important;font-weight:950!important;letter-spacing:-.065em!important;
+}
+.sub{
+  max-width:760px!important;margin:18px auto 18px!important;text-align:center!important;color:#64748b!important;
+  font-size:15.5px!important;line-height:1.55!important;font-weight:650!important;
+}
+.svt157-hero-meta{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin:0 auto 24px;}
+.svt157-hero-meta span{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 11px;border:1px solid #dcebe2;border-radius:999px;background:#f8fcf9;color:#637285;font-size:12px;font-weight:800;}
+.svt157-hero-meta b{color:var(--svt157-green);font-weight:950;}
+
+.flow-list{gap:14px!important;}
+.flow-row{
+  position:relative!important;
   display:grid!important;
-  grid-template-columns:370px minmax(0,1fr)!important;
-  gap:18px!important;
-  align-items:center!important;
-  padding-top:14px!important;
+  grid-template-columns:minmax(280px,.74fr) minmax(0,1fr)!important;
+  column-gap:24px!important;row-gap:14px!important;align-items:center!important;
+  min-height:92px!important;padding:18px 20px!important;
+  border:1px solid var(--svt157-border)!important;border-radius:22px!important;
+  background:linear-gradient(180deg,#fff 0%,#fbfdfc 100%)!important;
+  box-shadow:var(--svt157-shadow-card)!important;
 }
-#distributorHelpModal .svt139-sources{
-  justify-self:stretch!important;
-  padding-left:22px!important;
-  font-size:13px!important;
+.flow-row:hover{border-color:#cfe4d8!important;box-shadow:0 18px 45px rgba(12,30,56,.09)!important;}
+.flow-left{gap:12px!important;align-items:center!important;}
+.icon-badge{width:44px!important;height:44px!important;border-radius:16px!important;background:var(--svt157-green-soft)!important;color:var(--svt157-green)!important;border:1px solid #d8efe1!important;box-shadow:none!important;}
+.icon-badge svg{width:22px!important;height:22px!important;}
+.count-badge{width:28px!important;height:28px!important;font-size:14px!important;background:#fff!important;color:var(--svt157-green)!important;border:1px solid #cce9d7!important;box-shadow:0 8px 20px rgba(9,150,75,.10)!important;}
+.row-title{font-size:16px!important;line-height:1.16!important;color:var(--svt157-text)!important;font-weight:950!important;letter-spacing:-.025em!important;}
+.row-subtitle{margin-top:5px!important;color:var(--svt157-muted)!important;font-size:12.5px!important;line-height:1.38!important;font-weight:700!important;}
+.row-right{justify-content:flex-end!important;gap:10px!important;min-width:0!important;width:100%!important;}
+.row-chevron{display:none!important;}
+
+.choice-btn{
+  height:42px!important;min-width:134px!important;padding:0 16px!important;border-radius:14px!important;
+  border:1px solid #d7e2eb!important;background:#fff!important;color:#334155!important;
+  font-size:14px!important;font-weight:900!important;box-shadow:0 6px 18px rgba(12,30,56,.04)!important;
+  transition:background .16s ease,border-color .16s ease,box-shadow .16s ease,color .16s ease!important;
 }
-#distributorHelpModal .svt139-cta{
-  height:54px!important;
-  min-height:54px!important;
-  max-height:54px!important;
-  border-radius:14px!important;
-  font-size:14px!important;
+.choice-btn:hover{border-color:#b9d8c6!important;background:#fbfefc!important;color:var(--svt157-green)!important;}
+.choice-btn.active{background:linear-gradient(135deg,var(--svt157-green),var(--svt157-green-2))!important;border-color:transparent!important;color:#fff!important;box-shadow:0 14px 28px rgba(9,150,75,.23)!important;}
+.choice-btn svg{width:17px!important;height:17px!important;}
+.choice-btn.method{min-width:168px!important;height:46px!important;}
+.source-choice span{line-height:1.08!important;}
+
+.source-help{grid-column:1 / -1!important;margin:0!important;border:1px solid #deebe4!important;border-radius:16px!important;background:#f8fcf9!important;padding:12px 14px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;}
+.source-help-text{margin:0!important;color:#5d6d80!important;font-size:12.5px!important;font-weight:750!important;}
+.source-help-link{font-size:12.5px!important;color:var(--svt157-green)!important;font-weight:950!important;white-space:nowrap!important;}
+
+.file-inline{max-width:460px!important;min-height:58px!important;border-radius:18px!important;border:1.5px dashed #b9ddc7!important;background:#fbfefc!important;padding:9px 12px!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.55)!important;}
+.file-inline:hover,.file-inline.drag{border-color:var(--svt157-green)!important;background:#f6fcf8!important;}
+.file-button{height:40px!important;border-radius:13px!important;padding:0 16px!important;background:#fff!important;color:var(--svt157-green)!important;border:1px solid #b9e0c8!important;font-size:13px!important;font-weight:950!important;white-space:nowrap!important;}
+.file-button:hover{background:var(--svt157-green)!important;color:#fff!important;border-color:var(--svt157-green)!important;}
+.file-meta{font-size:11.5px!important;color:#738197!important;font-weight:750!important;line-height:1.25!important;}
+.file-meta strong{color:#334155!important;font-weight:950!important;}
+.selected-files{font-size:12px!important;color:#526277!important;font-weight:750!important;}
+
+.subpanel{grid-column:1 / -1!important;border-top:1px solid var(--svt157-border-2)!important;padding-top:14px!important;margin:0!important;}
+.invoice-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important;}
+.invoice-field label,.field label,.small-label{font-size:12px!important;font-weight:950!important;color:var(--svt157-text)!important;line-height:1.2!important;}
+.field-hint{font-size:11px!important;color:#75849a!important;font-weight:650!important;line-height:1.28!important;}
+.control,.invoice-control{height:42px!important;border-radius:14px!important;border:1px solid #d9e4ec!important;background:#fff!important;color:var(--svt157-text)!important;font-size:14px!important;font-weight:800!important;box-shadow:0 4px 14px rgba(12,30,56,.035)!important;}
+.control:focus,.invoice-control:focus{border-color:#9bd7b2!important;box-shadow:0 0 0 4px rgba(9,150,75,.11)!important;}
+.invoice-attach{margin-top:12px!important;display:flex!important;align-items:center!important;gap:12px!important;}
+#invoiceBox[style*="display: grid"] .invoice-grid,#invoiceBox[style*="display:grid"] .invoice-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
+#invoiceBox[style*="display: grid"] .invoice-attach,#invoiceBox[style*="display:grid"] .invoice-attach{justify-content:flex-end!important;}
+#invoiceBox[style*="display: grid"] #invoiceDrop,#invoiceBox[style*="display:grid"] #invoiceDrop{max-width:430px!important;width:100%!important;}
+
+.upload-flow-row .row-right,.tariff-flow-row .row-right,.pv-flow-row .row-right{justify-content:flex-end!important;}
+.inline-grid-2{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;max-width:460px!important;margin-left:auto!important;}
+.pv-check-under-title{margin-top:10px!important;font-size:13px!important;color:#334155!important;font-weight:850!important;}
+.production-box-inline{width:100%!important;max-width:470px!important;margin-left:auto!important;}
+.thermal-shell{border-radius:22px!important;border:1px solid var(--svt157-border)!important;box-shadow:var(--svt157-shadow-card)!important;background:#fff!important;}
+.message{border-radius:16px!important;margin-top:16px!important;}
+.actions{margin-top:18px!important;padding-top:18px!important;border-top:1px solid var(--svt157-border-2)!important;}
+.btn{height:48px!important;min-width:178px!important;border-radius:15px!important;font-size:14px!important;font-weight:950!important;}
+.btn-back{border:1px solid #cfe2d7!important;color:var(--svt157-green)!important;background:#fff!important;}
+.btn-next{background:linear-gradient(135deg,var(--svt157-green),var(--svt157-green-2))!important;box-shadow:0 14px 28px rgba(9,150,75,.22)!important;}
+
+/* Professional compact modal — matches supplied reference proportions */
+#distributorHelpModal.svt139-backdrop{background:rgba(15,23,42,.46)!important;backdrop-filter:blur(12px)!important;padding:24px!important;}
+#distributorHelpModal .svt139-modal{width:min(980px,calc(100vw - 40px))!important;max-height:min(760px,92vh)!important;border-radius:28px!important;border:1px solid rgba(226,235,242,.92)!important;background:rgba(255,255,255,.98)!important;box-shadow:0 34px 100px rgba(15,23,42,.28)!important;overflow:hidden!important;}
+#distributorHelpModal .svt139-close{top:18px!important;right:18px!important;width:40px!important;height:40px!important;border-radius:999px!important;background:#fff!important;border:1px solid #dfe8f0!important;color:#0f172a!important;box-shadow:0 12px 28px rgba(15,23,42,.10)!important;}
+#distributorHelpModal .svt139-head{padding:26px 70px 10px!important;text-align:center!important;background:#fff!important;}
+#distributorHelpModal .svt139-head h2{font-size:30px!important;line-height:1.05!important;margin:0 0 8px!important;font-weight:950!important;letter-spacing:-.045em!important;color:#071b34!important;}
+#distributorHelpModal .svt139-head p{margin:0 auto!important;max-width:720px!important;font-size:13px!important;line-height:1.4!important;color:#526277!important;font-weight:700!important;}
+#distributorHelpModal .svt139-tabs{display:flex!important;justify-content:center!important;align-items:center!important;gap:8px!important;padding:12px 28px 14px!important;background:#fff!important;border:0!important;}
+#distributorHelpModal .svt139-tab{height:36px!important;min-height:36px!important;max-height:36px!important;padding:0 10px!important;border-radius:14px!important;border:1px solid #dce6ee!important;background:#fff!important;color:#17243a!important;font-size:11px!important;font-weight:950!important;gap:6px!important;box-shadow:0 8px 20px rgba(15,23,42,.035)!important;}
+#distributorHelpModal .svt139-tab[data-dist-tab="deer"]{width:96px!important;min-width:96px!important;max-width:96px!important;}
+#distributorHelpModal .svt139-tab[data-dist-tab="retele"]{width:132px!important;min-width:132px!important;max-width:132px!important;}
+#distributorHelpModal .svt139-tab[data-dist-tab="delgaz"]{width:120px!important;min-width:120px!important;max-width:120px!important;}
+#distributorHelpModal .svt139-tab[data-dist-tab="oltenia"]{width:144px!important;min-width:144px!important;max-width:144px!important;}
+#distributorHelpModal .svt139-tab[data-dist-tab="furnizor"]{width:146px!important;min-width:146px!important;max-width:146px!important;}
+#distributorHelpModal .svt139-tab svg{width:15px!important;height:15px!important;flex:0 0 15px!important;}
+#distributorHelpModal .svt139-tab span{white-space:normal!important;line-height:1.02!important;text-align:center!important;}
+#distributorHelpModal .svt139-tab.active,#distributorHelpModal .svt139-tab.is-active{background:linear-gradient(135deg,#079a48,#0ab757)!important;border-color:transparent!important;color:#fff!important;box-shadow:0 16px 32px rgba(9,150,75,.25)!important;}
+#distributorHelpModal .svt139-body{padding:0 28px 22px!important;overflow:auto!important;max-height:calc(92vh - 142px)!important;}
+#distributorHelpModal .svt139-panel{justify-items:center!important;gap:10px!important;}
+#distributorHelpModal .svt139-hero{width:100%!important;max-width:820px!important;min-height:118px!important;height:118px!important;max-height:118px!important;padding:14px 20px!important;display:grid!important;grid-template-columns:128px minmax(0,1fr)!important;gap:18px!important;align-items:center!important;border-radius:17px!important;border:1px solid #d9eee2!important;background:linear-gradient(135deg,#f6fcf8,#ffffff)!important;overflow:hidden!important;}
+#distributorHelpModal .svt139-art{width:112px!important;height:82px!important;display:grid!important;place-items:center!important;overflow:hidden!important;}
+#distributorHelpModal .svt139-art svg{display:none!important;}
+#distributorHelpModal .svt139-art img,#distributorHelpModal .svt157-illustration{display:block!important;width:112px!important;height:82px!important;object-fit:contain!important;}
+#distributorHelpModal .svt139-copy{max-width:610px!important;text-align:left!important;overflow:hidden!important;}
+#distributorHelpModal .svt139-copy h3{margin:0 0 8px!important;font-size:18px!important;line-height:1.1!important;font-weight:950!important;letter-spacing:-.025em!important;color:#071b34!important;text-align:left!important;}
+#distributorHelpModal .svt139-copy p{margin:0!important;font-size:12.5px!important;line-height:1.45!important;color:#25364d!important;font-weight:650!important;text-align:left!important;}
+#distributorHelpModal .svt139-grid{width:100%!important;max-width:820px!important;display:grid!important;grid-template-columns:minmax(0,1fr) 360px!important;gap:12px!important;align-items:stretch!important;}
+#distributorHelpModal .svt139-steps{height:172px!important;min-height:172px!important;max-height:172px!important;border-radius:17px!important;border:1px solid #dfe7ee!important;background:#fff!important;padding:12px 14px!important;overflow:hidden!important;box-shadow:0 12px 30px rgba(15,23,42,.05)!important;}
+#distributorHelpModal .svt139-side{display:grid!important;grid-template-rows:80px 80px!important;gap:12px!important;align-content:start!important;}
+#distributorHelpModal .svt139-card{height:80px!important;min-height:80px!important;max-height:80px!important;border-radius:17px!important;border:1px solid #dfe7ee!important;background:#fff!important;padding:12px 14px!important;display:grid!important;grid-template-columns:38px 1fr!important;gap:12px!important;align-items:center!important;overflow:hidden!important;box-shadow:0 12px 30px rgba(15,23,42,.05)!important;}
+#distributorHelpModal .svt139-steps-head{display:flex!important;align-items:center!important;gap:10px!important;margin:0 0 8px!important;padding-bottom:8px!important;border-bottom:1px solid #edf2f6!important;}
+#distributorHelpModal .svt139-iconbox{width:34px!important;height:34px!important;min-width:34px!important;min-height:34px!important;border-radius:11px!important;background:#eaf8ef!important;color:#079a48!important;display:grid!important;place-items:center!important;}
+#distributorHelpModal .svt139-iconbox svg{width:17px!important;height:17px!important;}
+#distributorHelpModal .svt139-steps h4,#distributorHelpModal .svt139-card h4{margin:0 0 3px!important;font-size:14px!important;line-height:1.08!important;font-weight:950!important;color:#071b34!important;}
+#distributorHelpModal .svt139-steps ol{display:grid!important;grid-template-columns:1fr 1fr!important;column-gap:12px!important;row-gap:4px!important;margin:0!important;padding:0!important;list-style:none!important;}
+#distributorHelpModal .svt139-steps li{display:grid!important;grid-template-columns:18px 1fr!important;gap:7px!important;align-items:start!important;margin:0!important;}
+#distributorHelpModal .svt139-steps li b{width:18px!important;height:18px!important;border-radius:999px!important;display:grid!important;place-items:center!important;background:#079a48!important;color:#fff!important;font-size:9px!important;font-weight:950!important;line-height:1!important;}
+#distributorHelpModal .svt139-steps li span,#distributorHelpModal .svt139-card p{margin:0!important;font-size:10.7px!important;line-height:1.22!important;color:#1f2f44!important;font-weight:700!important;}
+#distributorHelpModal .svt139-card-copy{height:100%!important;min-width:0!important;display:flex!important;flex-direction:column!important;justify-content:center!important;}
+#distributorHelpModal .svt139-footer{width:100%!important;max-width:820px!important;display:grid!important;grid-template-columns:300px minmax(0,1fr)!important;gap:18px!important;align-items:center!important;margin:0!important;padding-top:10px!important;border-top:1px solid #edf2f6!important;}
+#distributorHelpModal .svt139-cta{height:44px!important;border-radius:14px!important;background:linear-gradient(135deg,#079a48,#0ab757)!important;color:#fff!important;font-size:13px!important;font-weight:950!important;box-shadow:0 16px 30px rgba(9,150,75,.22)!important;}
+#distributorHelpModal .svt139-sources{padding-left:18px!important;border-left:1px solid #dfe7ee!important;font-size:12px!important;color:#526277!important;}
+#distributorHelpModal .svt139-source-links{display:flex!important;flex-wrap:wrap!important;gap:8px 16px!important;}
+#distributorHelpModal .svt139-source-links a{color:#079a48!important;font-size:12px!important;font-weight:900!important;text-decoration:none!important;}
+
+@media (max-width:980px){
+  .page{width:min(100% - 24px, 980px)!important;margin-top:14px!important;}
+  .svt157-topbar{height:auto;align-items:flex-start;flex-direction:column;padding:14px;}
+  .svt157-topmeta{align-self:stretch;justify-content:center;}
+  .hero{border-radius:26px!important;padding:26px 18px 22px!important;}
+  .flow-row{grid-template-columns:1fr!important;padding:16px!important;}
+  .row-right{justify-content:flex-start!important;flex-wrap:wrap!important;}
+  .source-help{align-items:flex-start!important;flex-direction:column!important;}
+  .invoice-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  .inline-grid-2{margin-left:0!important;max-width:none!important;}
+  #distributorHelpModal .svt139-grid{grid-template-columns:1fr!important;}
+  #distributorHelpModal .svt139-side{grid-template-rows:auto!important;grid-template-columns:1fr 1fr!important;}
+  #distributorHelpModal .svt139-card{width:auto!important;max-width:none!important;}
+  #distributorHelpModal .svt139-footer{grid-template-columns:1fr!important;gap:10px!important;}
+  #distributorHelpModal .svt139-sources{border-left:0!important;padding-left:0!important;}
+}
+@media (max-width:640px){
+  .page{width:calc(100% - 16px)!important;margin:8px auto 22px!important;}
+  .svt157-brand-copy small{white-space:normal;}
+  .svt157-topmeta{border-radius:16px;flex-wrap:wrap;}
+  .svt-progress-outside{display:none!important;}
+  .hero{padding:22px 14px 18px!important;border-radius:24px!important;}
+  h1{font-size:34px!important;letter-spacing:-.05em!important;}
+  .sub{font-size:14px!important;margin-bottom:14px!important;}
+  .svt157-hero-meta{justify-content:flex-start;}
+  .flow-row{min-height:0!important;border-radius:18px!important;padding:14px!important;}
+  .flow-left{align-items:flex-start!important;}
+  .icon-badge{width:38px!important;height:38px!important;border-radius:13px!important;}
+  .count-badge{width:24px!important;height:24px!important;font-size:12px!important;}
+  .choice-btn,.choice-btn.method{width:100%!important;min-width:0!important;justify-content:center!important;}
+  .row-right{width:100%!important;}
+  .file-inline{max-width:none!important;width:100%!important;align-items:flex-start!important;flex-direction:column!important;}
+  .invoice-grid,#invoiceBox[style*="display: grid"] .invoice-grid,#invoiceBox[style*="display:grid"] .invoice-grid{grid-template-columns:1fr!important;}
+  .invoice-attach{justify-content:stretch!important;}
+  #invoiceDrop{max-width:none!important;width:100%!important;}
+  .actions{flex-direction:column-reverse!important;}
+  .btn{width:100%!important;}
+  #distributorHelpModal.svt139-backdrop{padding:12px!important;}
+  #distributorHelpModal .svt139-modal{width:100%!important;border-radius:22px!important;}
+  #distributorHelpModal .svt139-head{padding:22px 54px 8px 18px!important;text-align:left!important;}
+  #distributorHelpModal .svt139-head h2{font-size:24px!important;text-align:left!important;}
+  #distributorHelpModal .svt139-tabs{justify-content:flex-start!important;overflow-x:auto!important;padding:10px 16px 12px!important;}
+  #distributorHelpModal .svt139-tab{flex:0 0 auto!important;}
+  #distributorHelpModal .svt139-body{padding:0 16px 16px!important;}
+  #distributorHelpModal .svt139-hero{height:auto!important;max-height:none!important;grid-template-columns:74px 1fr!important;padding:12px!important;}
+  #distributorHelpModal .svt139-art,#distributorHelpModal .svt139-art img{width:68px!important;height:52px!important;}
+  #distributorHelpModal .svt139-copy h3{font-size:16px!important;}
+  #distributorHelpModal .svt139-copy p{font-size:12px!important;}
+  #distributorHelpModal .svt139-steps{height:auto!important;max-height:none!important;}
+  #distributorHelpModal .svt139-steps ol{grid-template-columns:1fr!important;}
+  #distributorHelpModal .svt139-side{grid-template-columns:1fr!important;}
+  #distributorHelpModal .svt139-card{height:auto!important;min-height:78px!important;}
 }
 </style>
-<!-- SVT v156 compact help modal ONLY END -->
+<!-- SVT v157 professional page redesign END -->
 </head>
-<body data-energy-mode="electric">
+<body data-energy-mode="electric" data-svt-ui="v157-professional">
   <div class="page">
+    <header class="svt157-topbar" aria-label="SVT Energy Navigator header">
+      <a class="svt157-brand" href="./index.html" aria-label="Înapoi la pagina principală">
+        <span class="svt157-brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M16 3 28 10v12l-12 7-12-7V10L16 3Z" fill="currentColor" opacity=".12"/><path d="M16 5 26 11v10l-10 6-10-6V11L16 5Z" stroke="currentColor" stroke-width="2"/><path d="M10 18h5l-1.2 6L22 13h-5l1.2-5L10 18Z" fill="currentColor"/></svg>
+        </span>
+        <span class="svt157-brand-copy"><strong>SVT Energy Navigator</strong><small>Analiză consum & flexibilitate energetică</small></span>
+      </a>
+      <div class="svt157-topmeta" aria-label="Context pagină">
+        <span>Pasul 1 din 4</span>
+        <strong>Încărcare consum</strong>
+      </div>
+    </header>
+
     <section class="svt-progress svt-progress-outside" aria-label="Progres analiză" data-active-step="1">
   <div class="svt-progress-dot active" data-step-dot="1">1</div>
   <div class="svt-progress-line"></div>
@@ -5912,6 +5943,11 @@
       <div class="wizard-shell">
 <h1>Curba ta de consum zilnic</h1>
         <p class="sub">Încarcă datele de consum și completează detaliile minime necesare pentru a identifica exact când consumi energie scumpă din rețea. Dacă ai și producție locală, o poți adăuga opțional.</p>
+        <div class="svt157-hero-meta" aria-label="Opțiuni principale ale paginii">
+          <span><b>Recomandat</b> fișier orar / 15 minute</span>
+          <span><b>Alternativ</b> factură lunară estimată</span>
+          <span><b>Opțional</b> producție locală / PV</span>
+        </div>
 
         <div class="flow-list energy-switch-list">
             <div class="flow-row energy-switch-row">
@@ -6409,7 +6445,7 @@
       <div class="svt139-body">
         <section class="svt139-panel active is-active" data-dist-panel="deer" style="display:grid">
           <article class="svt139-hero">
-            <div class="svt139-art"><img class="svt156-illustration" src="assets/img/svt-help-modal/deer.png" alt="" aria-hidden="true"></div>
+            <div class="svt139-art"><img class="svt157-illustration" src="assets/img/svt-help-modal/deer.png" alt="" aria-hidden="true"></div>
             <div class="svt139-copy">
               <h3>DEER — Transilvania Nord, Transilvania Sud, Muntenia Nord</h3>
               <p>Portalul DEER permite accesul la date proprii de măsurare pentru locurile de consum din zonele de concesiune DEER. În funcție de tipul contorului și contul disponibil, poți consulta istoricul de consum și curbele de sarcină.</p>
@@ -6431,7 +6467,7 @@
           </footer>
         </section><section class="svt139-panel" data-dist-panel="retele" style="display:none">
           <article class="svt139-hero">
-            <div class="svt139-art"><img class="svt156-illustration" src="assets/img/svt-help-modal/retele.png" alt="" aria-hidden="true"></div>
+            <div class="svt139-art"><img class="svt157-illustration" src="assets/img/svt-help-modal/retele.png" alt="" aria-hidden="true"></div>
             <div class="svt139-copy">
               <h3>Rețele Electrice România — Muntenia, Banat, Dobrogea</h3>
               <p>În contul Rețele Electrice, serviciul Date de consum include istoricul citirilor și, pentru contoare inteligente integrate în telecitire, curba de sarcină cu variația consumului în timp.</p>
@@ -6453,7 +6489,7 @@
           </footer>
         </section><section class="svt139-panel" data-dist-panel="delgaz" style="display:none">
           <article class="svt139-hero">
-            <div class="svt139-art"><img class="svt156-illustration" src="assets/img/svt-help-modal/delgaz.png" alt="" aria-hidden="true"></div>
+            <div class="svt139-art"><img class="svt157-illustration" src="assets/img/svt-help-modal/delgaz.png" alt="" aria-hidden="true"></div>
             <div class="svt139-copy">
               <h3>Delgaz Grid — Moldova / Nord-Est</h3>
               <p>Pentru contoarele SMART, Delgaz Grid permite consultarea datelor de măsură în contul de client, în zona de grafice și rapoarte date măsură. Raportul se solicită din portal și se descarcă după procesare.</p>
@@ -6475,7 +6511,7 @@
           </footer>
         </section><section class="svt139-panel" data-dist-panel="oltenia" style="display:none">
           <article class="svt139-hero">
-            <div class="svt139-art"><img class="svt156-illustration" src="assets/img/svt-help-modal/oltenia.png" alt="" aria-hidden="true"></div>
+            <div class="svt139-art"><img class="svt157-illustration" src="assets/img/svt-help-modal/oltenia.png" alt="" aria-hidden="true"></div>
             <div class="svt139-copy">
               <h3>Distribuție Energie Oltenia — Portal date măsurate / DEO Connect</h3>
               <p>În portalul de date măsurate, tabul Reads permite vizualizarea istoricului citirilor și a curbei de sarcină. Datele pot fi afișate tabelar/grafic la interval de 15 minute și exportate sub formă de tabel.</p>
@@ -6497,7 +6533,7 @@
           </footer>
         </section><section class="svt139-panel" data-dist-panel="furnizor" style="display:none">
           <article class="svt139-hero">
-            <div class="svt139-art"><img class="svt156-illustration" src="assets/img/svt-help-modal/furnizor.png" alt="" aria-hidden="true"></div>
+            <div class="svt139-art"><img class="svt157-illustration" src="assets/img/svt-help-modal/furnizor.png" alt="" aria-hidden="true"></div>
             <div class="svt139-copy">
               <h3>Furnizor / aplicație client — variantă de verificare</h3>
               <p>Aplicația furnizorului poate afișa facturi, indexuri și istoric de consum, dar nu garantează export orar sau la 15 minute. Pentru curba de sarcină completă, verifică mai întâi portalul distribuitorului.</p>
@@ -6550,7 +6586,6 @@
   </script>
 </body>
 </html>
-
 
 
 
