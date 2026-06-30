@@ -5910,6 +5910,66 @@ h1{
 }
 </style>
 <!-- SVT v157 professional page redesign END -->
+<!-- SVT v159 remove top intro block START -->
+<style id="svt-v159-remove-top-intro-block">
+/*
+  SVT v159
+  Elimină vizual blocul de sus:
+  - SVT Energy Navigator
+  - Analiză consum & flexibilitate energetică
+  - Pasul 1 din 4
+  - Încărcare consum
+
+  Nu atinge:
+  - modalul distributorHelpModal
+  - imaginile PNG
+  - 2 Sursa datelor
+  - invoiceBox
+  - uploaduri
+*/
+
+/* Ascunde topbar-ul introdus în redesign */
+.svt157-topbar,
+.svt157-brand,
+.svt157-topbar .svt157-kicker,
+.svt157-topbar .svt157-progress,
+.svt157-topbar .svt157-page-step,
+.svt157-topbar .svt157-title {
+  display: none !important;
+}
+
+/* Dacă titlul/step-ul sunt într-un header dedicat, îl comprimăm complet */
+.svt157-shell > header:first-child,
+.svt157-app > header:first-child,
+.svt157-page > header:first-child,
+.svt157-layout > header:first-child {
+  min-height: 0 !important;
+}
+
+/* Reduce spațiul rămas deasupra conținutului principal */
+.svt157-shell,
+.svt157-app,
+.svt157-page,
+.svt157-layout,
+.svt157-main {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Primul card/secțiune începe mai sus */
+.svt157-main > *:first-child,
+.svt157-content > *:first-child,
+main > *:first-child {
+  margin-top: 0 !important;
+}
+
+/* Fallback foarte specific pe elemente textuale care pot fi în blocul intro */
+[aria-label="Pasul 1 din 4"],
+[data-step-label="Pasul 1 din 4"] {
+  display: none !important;
+}
+</style>
+<!-- SVT v159 remove top intro block END -->
 </head>
 <body data-energy-mode="electric" data-svt-ui="v157-professional">
   <div class="page">
