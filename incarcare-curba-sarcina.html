@@ -6477,6 +6477,173 @@ body[data-svt-ui="v157-professional"] .page{
 }
 </style>
 <!-- SVT v166 left progress + tariff cleanup END -->
+<!-- SVT v167 compact rows + aligned badges + tariff under title START -->
+<style id="svt-v167-row-alignment-tariff-under-title">
+/*
+  SVT v167
+  - Tip energie mai compact, subtitle pe un singur rand.
+  - Cercurile 1-5 uniformizate si aliniate.
+  - Detalii tarif: controalele mutate sub titlu/subtitlu, nu in dreapta.
+*/
+
+/* Uniformizare randuri si badge-uri numerice 1-5 */
+.flow-row{
+  align-items:center!important;
+}
+.flow-left{
+  display:grid!important;
+  grid-template-columns:44px 28px minmax(0,1fr)!important;
+  column-gap:12px!important;
+  align-items:center!important;
+}
+.icon-badge{
+  grid-column:1!important;
+  width:44px!important;
+  height:44px!important;
+  min-width:44px!important;
+  border-radius:16px!important;
+  display:grid!important;
+  place-items:center!important;
+  align-self:center!important;
+  justify-self:center!important;
+}
+.count-badge{
+  grid-column:2!important;
+  width:28px!important;
+  height:28px!important;
+  min-width:28px!important;
+  max-width:28px!important;
+  border-radius:999px!important;
+  display:grid!important;
+  place-items:center!important;
+  align-self:center!important;
+  justify-self:center!important;
+  padding:0!important;
+  margin:0!important;
+  line-height:1!important;
+  font-size:13px!important;
+  font-weight:950!important;
+  border:1px solid #bfe8d0!important;
+  background:#fff!important;
+  color:#079a48!important;
+  box-shadow:0 8px 18px rgba(9,150,75,.08)!important;
+}
+.title-wrap{
+  grid-column:3!important;
+  min-width:0!important;
+  align-self:center!important;
+}
+.row-title{
+  margin:0!important;
+  line-height:1.1!important;
+}
+.row-subtitle{
+  margin-top:4px!important;
+  line-height:1.25!important;
+}
+
+/* 1. Tip energie mai ingust si text pe un singur rand */
+.energy-switch-row{
+  min-height:68px!important;
+  height:auto!important;
+  padding:12px 18px!important;
+}
+.energy-switch-row .row-subtitle{
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  max-width:100%!important;
+}
+.energy-switch-row .icon-badge{
+  width:40px!important;
+  height:40px!important;
+  min-width:40px!important;
+  border-radius:14px!important;
+}
+.energy-switch-row .count-badge{
+  width:27px!important;
+  height:27px!important;
+  min-width:27px!important;
+  max-width:27px!important;
+}
+.energy-switch-row .row-right{
+  align-self:center!important;
+}
+
+/* Randurile 2-5: aceeasi logica de aliniere */
+.flow-row:not(.energy-switch-row) .flow-left{
+  align-items:center!important;
+}
+.upload-flow-row .flow-left,
+.pv-flow-row .flow-left,
+.tariff-flow-row .flow-left{
+  align-items:center!important;
+}
+
+/* 4. Detalii tarif: continutul tarif sub titlu/subtitlu */
+.tariff-flow-row{
+  grid-template-columns:minmax(0,1fr)!important;
+  align-items:start!important;
+  min-height:0!important;
+}
+.tariff-flow-row .flow-left{
+  width:100%!important;
+  grid-template-columns:44px 28px minmax(0,1fr)!important;
+  align-items:start!important;
+}
+.tariff-flow-row .icon-badge,
+.tariff-flow-row .count-badge{
+  margin-top:2px!important;
+}
+.tariff-flow-row .title-wrap{
+  align-self:start!important;
+}
+.tariff-flow-row .row-right{
+  display:none!important;
+}
+.tariff-flow-row .svt162-tariff-shell{
+  grid-column:3!important;
+  width:100%!important;
+  max-width:560px!important;
+  margin-top:13px!important;
+  margin-left:0!important;
+}
+.tariff-flow-row .svt162-price-control{
+  width:100%!important;
+}
+.tariff-flow-row .svt162-included-check,
+.tariff-flow-row .svt166-advanced-check{
+  width:100%!important;
+}
+.tariff-flow-row .svt162-advanced{
+  width:100%!important;
+}
+
+/* Pentru continutul mutat sub titlu, pastram spacing compact */
+.tariff-flow-row .svt162-hint{
+  margin-top:6px!important;
+}
+.tariff-flow-row .svt162-tariff-main{
+  width:100%!important;
+}
+
+/* Mobile fallback */
+@media (max-width:860px){
+  .flow-left,
+  .tariff-flow-row .flow-left{
+    grid-template-columns:40px 27px minmax(0,1fr)!important;
+    column-gap:10px!important;
+  }
+  .energy-switch-row .row-subtitle{
+    white-space:normal!important;
+  }
+  .tariff-flow-row .svt162-tariff-shell{
+    grid-column:1 / -1!important;
+    margin-top:12px!important;
+  }
+}
+</style>
+<!-- SVT v167 compact rows + aligned badges + tariff under title END -->
 </head>
 <body data-energy-mode="electric" data-svt-ui="v157-professional">
   <div class="page">
@@ -6602,87 +6769,88 @@ body[data-svt-ui="v157-professional"] .page{
                   <h3 class="row-title">Detalii tarif</h3>
                   <p class="row-subtitle">Introdu prețul mediu plătit din factură. Setările tehnice rămân opționale.</p>
                 </div>
-              </div>
-              <div class="row-right">
                 <div class="svt162-tariff-shell">
-                  <div class="svt162-tariff-main">
-                    <div class="svt162-price-field">
-                      <div class="small-label">Preț mediu plătit din factură</div>
-                      <div class="svt162-price-control">
-                        <input class="control" id="fixedTariff" type="number" min="0" step="0.0001" value="0.75" aria-label="Preț mediu plătit din factură">
-                        <span class="svt162-unit">lei/kWh</span>
-                      </div>
-                      <p class="svt162-hint">Calculează simplu: total factură ÷ kWh facturați.</p>
-                    </div>
-                      <input type="hidden" id="tariffType" value="fixed">
-                  </div>
+                                  <div class="svt162-tariff-main">
+                                    <div class="svt162-price-field">
+                                      <div class="small-label">Preț mediu plătit din factură</div>
+                                      <div class="svt162-price-control">
+                                        <input class="control" id="fixedTariff" type="number" min="0" step="0.0001" value="0.75" aria-label="Preț mediu plătit din factură">
+                                        <span class="svt162-unit">lei/kWh</span>
+                                      </div>
+                                      <p class="svt162-hint">Calculează simplu: total factură ÷ kWh facturați.</p>
+                                    </div>
+                                      <input type="hidden" id="tariffType" value="fixed">
+                                  </div>
+                
+                                  <label class="svt162-included-check" for="tariffFinalInvoiceCheck">
+                                    <input type="checkbox" id="tariffFinalInvoiceCheck" checked>
+                                    <span class="svt162-check-copy">
+                                      <strong>Pret final din factura, cu TVA si taxe incluse</strong>
+                                      <span>Pentru estimarea rapida nu trebuie sa stii distribuitorul sau nivelul de tensiune.</span>
+                                    </span>
+                                  </label>
+                                  <label class="svt166-advanced-check" for="tariffAdvancedCheck">
+                                    <input type="checkbox" id="tariffAdvancedCheck" aria-controls="tariffAdvancedPanel">
+                                    <span class="svt166-advanced-copy">
+                                      <strong>Setari avansate tarif</strong>
+                                      <span>Activeaza doar daca stii distribuitorul, nivelul de tensiune sau ce include pretul introdus.</span>
+                                    </span>
+                                  </label>
+                
+                
+                                  <div class="svt162-advanced" id="tariffAdvancedPanel" hidden>
+                                    <div class="svt162-advanced-grid">
+                                      <div>
+                                        <div class="svt162-mini-label">Distribuitor / zonă</div>
+                                        <select class="control" id="tariffDistributor" aria-label="Distribuitor sau zonă">
+                                          <option value="unknown" selected>Nu stiu</option>
+                                          <option value="deer">DEER</option>
+                                          <option value="retele">Rețele Electrice România</option>
+                                          <option value="delgaz">Delgaz Grid</option>
+                                          <option value="oltenia">Distribuție Energie Oltenia</option>
+                                          <option value="other">Alt distribuitor</option>
+                                        </select>
+                                        <p class="svt162-mini-note">Opțional. Completează doar dacă știi sigur.</p>
+                                      </div>
+                
+                                      <div>
+                                        <div class="svt162-mini-label">Prețul introdus reprezintă</div>
+                                        <select class="control" id="tariffPriceBasis" aria-label="Ce reprezintă prețul introdus">
+                                          <option value="final_gross" selected>Preț final din factură, cu TVA și taxe</option>
+                                          <option value="active_energy_only">Doar energia activă</option>
+                                          <option value="without_vat">Preț fără TVA</option>
+                                          <option value="unknown">Nu stiu</option>
+                                        </select>
+                                        <p class="svt162-mini-note">Default: prețul final plătit de client.</p>
+                                      </div>
+                
+                                      <div class="svt162-full">
+                                        <div class="svt162-mini-label">Nivel tensiune racordare</div>
+                                        <div class="svt162-voltage-links" role="list" aria-label="Nivel tensiune racordare">
+                                          <a class="svt162-voltage-link is-active" href="#tariffVoltageHelpPanel" data-voltage="unknown">Nu stiu</a>
+                                          <a class="svt162-voltage-link" href="#tariffVoltageHelpPanel" data-voltage="jt">Joasă tensiune</a>
+                                          <a class="svt162-voltage-link" href="#tariffVoltageHelpPanel" data-voltage="mt">Medie tensiune</a>
+                                          <a class="svt162-voltage-link" href="#tariffVoltageHelpPanel" data-voltage="it">Înaltă tensiune</a>
+                                        </div>
+                                        <input type="hidden" id="tariffVoltageLevel" value="unknown">
+                                        <p class="svt162-mini-note">Apasă sau treci cu mouse-ul peste un nivel pentru explicație.</p>
+                                      </div>
+                                    </div>
+                
+                                    <aside class="svt162-voltage-help" id="tariffVoltageHelpPanel" aria-live="polite">
+                                      <span class="svt162-help-kicker" data-help-kicker>Recomandat pentru clienti</span>
+                                      <h4 data-help-title>Nu stiu</h4>
+                                      <p data-help-body>Lasa aceasta optiune daca nu stii nivelul de tensiune. Pentru calculul simplu, pretul mediu din factura este suficient deoarece include deja reteaua, taxele si TVA.</p>
+                                      <div class="svt162-help-example" data-help-example>Foloseste: total factura / kWh facturati.</div>
+                                    </aside>
+                                  </div>
+                
+                                  <input type="hidden" id="consumptionDataSource" value="total">
+                                </div>
 
-                  <label class="svt162-included-check" for="tariffFinalInvoiceCheck">
-                    <input type="checkbox" id="tariffFinalInvoiceCheck" checked>
-                    <span class="svt162-check-copy">
-                      <strong>Pret final din factura, cu TVA si taxe incluse</strong>
-                      <span>Pentru estimarea rapida nu trebuie sa stii distribuitorul sau nivelul de tensiune.</span>
-                    </span>
-                  </label>
-                  <label class="svt166-advanced-check" for="tariffAdvancedCheck">
-                    <input type="checkbox" id="tariffAdvancedCheck" aria-controls="tariffAdvancedPanel">
-                    <span class="svt166-advanced-copy">
-                      <strong>Setari avansate tarif</strong>
-                      <span>Activeaza doar daca stii distribuitorul, nivelul de tensiune sau ce include pretul introdus.</span>
-                    </span>
-                  </label>
-
-
-                  <div class="svt162-advanced" id="tariffAdvancedPanel" hidden>
-                    <div class="svt162-advanced-grid">
-                      <div>
-                        <div class="svt162-mini-label">Distribuitor / zonă</div>
-                        <select class="control" id="tariffDistributor" aria-label="Distribuitor sau zonă">
-                          <option value="unknown" selected>Nu stiu</option>
-                          <option value="deer">DEER</option>
-                          <option value="retele">Rețele Electrice România</option>
-                          <option value="delgaz">Delgaz Grid</option>
-                          <option value="oltenia">Distribuție Energie Oltenia</option>
-                          <option value="other">Alt distribuitor</option>
-                        </select>
-                        <p class="svt162-mini-note">Opțional. Completează doar dacă știi sigur.</p>
-                      </div>
-
-                      <div>
-                        <div class="svt162-mini-label">Prețul introdus reprezintă</div>
-                        <select class="control" id="tariffPriceBasis" aria-label="Ce reprezintă prețul introdus">
-                          <option value="final_gross" selected>Preț final din factură, cu TVA și taxe</option>
-                          <option value="active_energy_only">Doar energia activă</option>
-                          <option value="without_vat">Preț fără TVA</option>
-                          <option value="unknown">Nu stiu</option>
-                        </select>
-                        <p class="svt162-mini-note">Default: prețul final plătit de client.</p>
-                      </div>
-
-                      <div class="svt162-full">
-                        <div class="svt162-mini-label">Nivel tensiune racordare</div>
-                        <div class="svt162-voltage-links" role="list" aria-label="Nivel tensiune racordare">
-                          <a class="svt162-voltage-link is-active" href="#tariffVoltageHelpPanel" data-voltage="unknown">Nu stiu</a>
-                          <a class="svt162-voltage-link" href="#tariffVoltageHelpPanel" data-voltage="jt">Joasă tensiune</a>
-                          <a class="svt162-voltage-link" href="#tariffVoltageHelpPanel" data-voltage="mt">Medie tensiune</a>
-                          <a class="svt162-voltage-link" href="#tariffVoltageHelpPanel" data-voltage="it">Înaltă tensiune</a>
-                        </div>
-                        <input type="hidden" id="tariffVoltageLevel" value="unknown">
-                        <p class="svt162-mini-note">Apasă sau treci cu mouse-ul peste un nivel pentru explicație.</p>
-                      </div>
-                    </div>
-
-                    <aside class="svt162-voltage-help" id="tariffVoltageHelpPanel" aria-live="polite">
-                      <span class="svt162-help-kicker" data-help-kicker>Recomandat pentru clienti</span>
-                      <h4 data-help-title>Nu stiu</h4>
-                      <p data-help-body>Lasa aceasta optiune daca nu stii nivelul de tensiune. Pentru calculul simplu, pretul mediu din factura este suficient deoarece include deja reteaua, taxele si TVA.</p>
-                      <div class="svt162-help-example" data-help-example>Foloseste: total factura / kWh facturati.</div>
-                    </aside>
-                  </div>
-
-                  <input type="hidden" id="consumptionDataSource" value="total">
-                </div>
               </div>
+              
+
             </div>
 
             <div class="flow-row pv-flow-row">
