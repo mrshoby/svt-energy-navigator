@@ -7064,117 +7064,93 @@ body[data-svt-ui="v157-professional"] .page{
 }
 </style>
 <!-- SVT v169 alignment compact rows pv fix END -->
-<!-- SVT v170 final row typography pv upload fix START -->
-<style id="svt-v170-final-row-typography-pv-upload-fix">
+<!-- SVT v170 compact upload pv text fix START -->
+<style id="svt-v170-compact-upload-pv-text-fix">
 /*
   SVT v170
-  Fix dupa screenshot:
-  - Randul 3 are height ca randul 1.
-  - Subtitlul randului 3 arata identic cu randurile 1 si 2.
-  - Toate titlurile principale au aceeasi marime/stil.
-  - PV: checkboxul nu mai intra peste upload; uploadul ramane in dreapta.
+  - Randul 3 are aceeasi inaltime vizuala ca Tip energie.
+  - Toate titlurile principale de rand au aceeasi marime.
+  - Toate subtitlurile de rand au aceeasi marime/stil.
+  - PV: checkboxul nu mai intra peste upload.
 */
 
 /* Titluri principale uniforme: Tip energie / Sursa datelor / Incarca fisierul / Detalii tarif / PV */
 .flow-row .row-title{
-  font-size:18px!important;
+  font-size:17px!important;
   line-height:1.08!important;
   font-weight:950!important;
   letter-spacing:-.025em!important;
-  color:#0d2038!important;
   margin:0!important;
+  color:#0d2038!important;
 }
-.flow-row .row-subtitle{
+
+/* Subtitluri uniforme */
+.flow-row .row-subtitle,
+.svt168-source-subrow .row-subtitle,
+.upload-flow-row .row-subtitle,
+.pv-flow-row .row-subtitle,
+.tariff-flow-row .row-subtitle{
   font-size:12.5px!important;
-  line-height:1.22!important;
+  line-height:1.2!important;
   font-weight:800!important;
-  color:#66758a!important;
+  color:#64748b!important;
   margin:4px 0 0!important;
   white-space:nowrap!important;
   overflow:visible!important;
   text-overflow:clip!important;
 }
 
-/* Icon + cerc numeric perfect uniforme pe toate randurile 1-5 */
-.flow-row > .flow-left{
-  display:grid!important;
-  grid-template-columns:44px 30px minmax(0,1fr)!important;
-  column-gap:12px!important;
-  align-items:center!important;
-}
-.flow-row > .flow-left > .icon-badge{
-  width:44px!important;
-  height:44px!important;
-  min-width:44px!important;
-  max-width:44px!important;
-  border-radius:16px!important;
-  display:grid!important;
-  place-items:center!important;
-  margin:0!important;
-  padding:0!important;
-  align-self:center!important;
-  justify-self:center!important;
-}
-.flow-row > .flow-left > .count-badge{
-  width:30px!important;
-  height:30px!important;
-  min-width:30px!important;
-  max-width:30px!important;
-  border-radius:999px!important;
-  display:grid!important;
-  place-items:center!important;
-  padding:0!important;
-  margin:0!important;
-  align-self:center!important;
-  justify-self:center!important;
-  box-sizing:border-box!important;
-  font-size:13px!important;
-  line-height:1!important;
-  font-weight:950!important;
-  border:1px solid #bfe8d0!important;
-  background:#fff!important;
-  color:#079a48!important;
-  box-shadow:0 8px 18px rgba(9,150,75,.08)!important;
-}
-
-/* Randurile 1,2,3 compacte si egale pe inaltime */
+/* Randurile 1, 2, 3 aceeasi inaltime compacta */
 .energy-switch-row,
 .flow-row:has(#methodFileCard),
 .upload-flow-row{
-  min-height:66px!important;
-  height:66px!important;
-  padding:10px 18px!important;
+  min-height:58px!important;
+  height:58px!important;
+  padding:8px 16px!important;
   align-items:center!important;
-  box-sizing:border-box!important;
-}
-.energy-switch-row .flow-left,
-.flow-row:has(#methodFileCard) .flow-left,
-.upload-flow-row .flow-left{
-  grid-template-columns:44px 30px minmax(360px,1fr)!important;
-}
-.energy-switch-row .row-right,
-.flow-row:has(#methodFileCard) .row-right,
-.upload-flow-row .row-right{
-  align-self:center!important;
 }
 
-/* 3 Incarca fisierul: zona upload sa nu mareasca randul */
+/* Icon/cerc mai compacte si uniforme in randurile 1-3 */
+.energy-switch-row > .flow-left,
+.flow-row:has(#methodFileCard) > .flow-left,
+.upload-flow-row > .flow-left{
+  grid-template-columns:40px 28px minmax(0,1fr)!important;
+  column-gap:11px!important;
+  align-items:center!important;
+}
+.energy-switch-row > .flow-left > .icon-badge,
+.flow-row:has(#methodFileCard) > .flow-left > .icon-badge,
+.upload-flow-row > .flow-left > .icon-badge{
+  width:40px!important;
+  height:40px!important;
+  min-width:40px!important;
+  max-width:40px!important;
+  border-radius:14px!important;
+}
+.energy-switch-row > .flow-left > .count-badge,
+.flow-row:has(#methodFileCard) > .flow-left > .count-badge,
+.upload-flow-row > .flow-left > .count-badge{
+  width:28px!important;
+  height:28px!important;
+  min-width:28px!important;
+  max-width:28px!important;
+}
+
+/* Randul 3: upload box foarte compact */
 .upload-flow-row #dropZone.file-inline{
-  height:38px!important;
   min-height:38px!important;
+  height:38px!important;
   max-height:38px!important;
   padding:3px 10px!important;
   align-items:center!important;
-  box-sizing:border-box!important;
-  overflow:hidden!important;
+  gap:9px!important;
 }
 .upload-flow-row #dropZone .file-button{
   height:30px!important;
   min-height:30px!important;
-  max-height:30px!important;
   padding:0 10px!important;
-  font-size:12px!important;
-  line-height:1!important;
+  border-radius:10px!important;
+  font-size:12.5px!important;
   white-space:nowrap!important;
 }
 .upload-flow-row #dropZone .file-meta{
@@ -7182,9 +7158,6 @@ body[data-svt-ui="v157-professional"] .page{
   flex-direction:column!important;
   justify-content:center!important;
   gap:1px!important;
-  height:32px!important;
-  min-height:32px!important;
-  overflow:hidden!important;
 }
 .upload-flow-row #dropZone .file-meta strong,
 .upload-flow-row #dropZone .file-meta span{
@@ -7192,166 +7165,168 @@ body[data-svt-ui="v157-professional"] .page{
   line-height:1.05!important;
   white-space:nowrap!important;
 }
-.upload-flow-row #fileName{
-  margin-top:2px!important;
-  line-height:1!important;
-}
 
-/* 2 Sursa datelor: link in linie, fara sa taie textul */
+/* Sursa datelor: linkul ramane langa text fara sa taie textul */
 .svt168-source-subrow{
   display:flex!important;
   align-items:center!important;
   gap:12px!important;
+  min-width:0!important;
   flex-wrap:nowrap!important;
 }
-.svt168-source-subrow .row-subtitle{
-  flex:0 0 auto!important;
-}
 .svt168-inline-help-link{
-  flex:0 0 auto!important;
   font-size:12px!important;
-  line-height:1!important;
+  line-height:1.1!important;
+  white-space:nowrap!important;
+  flex:0 0 auto!important;
 }
 
-/* PV: checkboxul nu mai intra peste upload */
+/* PV: layout stabil, checkbox in dreapta textului, upload separat in dreapta randului */
 .pv-flow-row{
-  grid-template-columns:minmax(0,1fr) 382px!important;
-  min-height:76px!important;
-  padding:13px 18px!important;
+  grid-template-columns:minmax(0,610px) minmax(300px,1fr)!important;
+  min-height:72px!important;
+  padding:12px 16px!important;
   align-items:center!important;
-  column-gap:16px!important;
+  column-gap:14px!important;
 }
 .pv-flow-row > .flow-left{
-  grid-template-columns:44px 30px minmax(0,1fr)!important;
+  grid-template-columns:40px 28px minmax(0,1fr)!important;
+  column-gap:11px!important;
   align-items:center!important;
-  min-width:0!important;
+}
+.pv-flow-row > .flow-left > .icon-badge{
+  width:40px!important;
+  height:40px!important;
+  min-width:40px!important;
+  max-width:40px!important;
+  border-radius:14px!important;
+}
+.pv-flow-row > .flow-left > .count-badge{
+  width:28px!important;
+  height:28px!important;
+  min-width:28px!important;
+  max-width:28px!important;
 }
 .pv-flow-row .title-wrap{
   display:grid!important;
-  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-columns:minmax(0,315px) 178px!important;
+  column-gap:12px!important;
   align-items:center!important;
+  width:100%!important;
   min-width:0!important;
 }
 .pv-flow-row .row-title,
 .pv-flow-row .row-subtitle{
+  grid-column:1!important;
   white-space:nowrap!important;
   overflow:visible!important;
   text-overflow:clip!important;
 }
+.pv-flow-row .row-title{
+  grid-row:1!important;
+}
+.pv-flow-row .row-subtitle{
+  grid-row:2!important;
+}
 .pv-flow-row .pv-check-under-title{
-  position:absolute!important;
-  right:372px!important;
-  top:50%!important;
-  transform:translateY(-50%)!important;
+  grid-column:2!important;
+  grid-row:1 / span 2!important;
+  align-self:center!important;
+  justify-self:start!important;
   width:178px!important;
   max-width:178px!important;
   min-width:178px!important;
   margin:0!important;
   padding:0!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:flex-start!important;
-  gap:7px!important;
   font-size:11.5px!important;
-  line-height:1.08!important;
+  line-height:1.1!important;
   font-weight:850!important;
-  color:#0d2038!important;
   white-space:normal!important;
+  gap:6px!important;
+  color:#0d2038!important;
 }
 .pv-flow-row .pv-check-under-title input{
-  width:15px!important;
-  height:15px!important;
-  min-width:15px!important;
+  width:14px!important;
+  height:14px!important;
+  min-width:14px!important;
   margin:0!important;
 }
 .pv-flow-row .row-right.pv-row-right{
-  width:382px!important;
-  min-width:382px!important;
-  max-width:382px!important;
   justify-content:flex-end!important;
   align-items:center!important;
-  position:relative!important;
-  z-index:2!important;
+  min-width:0!important;
 }
 .pv-flow-row #productionBox.production-box-inline{
-  width:382px!important;
-  min-width:382px!important;
-  max-width:382px!important;
-  flex:0 0 382px!important;
+  flex:0 0 330px!important;
+  width:330px!important;
+  max-width:330px!important;
+  min-width:330px!important;
 }
 .pv-flow-row #productionBox .production-inline{
-  width:382px!important;
-  min-width:382px!important;
-  max-width:382px!important;
+  width:330px!important;
+  max-width:330px!important;
+  min-width:330px!important;
   min-height:38px!important;
   height:38px!important;
   padding:3px 10px!important;
-  box-sizing:border-box!important;
-  overflow:hidden!important;
+  gap:9px!important;
 }
 .pv-flow-row #productionChoose{
   height:30px!important;
   min-height:30px!important;
-  max-height:30px!important;
   padding:0 10px!important;
-  font-size:12px!important;
-  white-space:nowrap!important;
+  border-radius:10px!important;
+  font-size:12.5px!important;
 }
 .pv-flow-row #productionBox .file-meta{
-  height:32px!important;
-  min-height:32px!important;
+  min-width:0!important;
   overflow:hidden!important;
-  display:flex!important;
-  flex-direction:column!important;
-  justify-content:center!important;
-  gap:1px!important;
 }
 .pv-flow-row #productionBox .file-meta strong,
 .pv-flow-row #productionBox .file-meta span{
-  font-size:10.5px!important;
+  font-size:10.2px!important;
   line-height:1.05!important;
   white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
 }
 
-/* Detalii tarif ramane sub titlu, dar titlul are aceeasi marime */
-.tariff-flow-row .row-title{
-  font-size:18px!important;
-}
-
-/* Responsiv */
+/* Fallback responsive */
 @media (max-width:1180px){
   .energy-switch-row,
   .flow-row:has(#methodFileCard),
-  .upload-flow-row,
-  .pv-flow-row{
+  .upload-flow-row{
     height:auto!important;
-    min-height:66px!important;
-    grid-template-columns:minmax(0,1fr)!important;
+    min-height:58px!important;
   }
   .flow-row .row-subtitle,
+  .svt168-source-subrow .row-subtitle,
+  .upload-flow-row .row-subtitle,
   .pv-flow-row .row-title,
   .pv-flow-row .row-subtitle{
     white-space:normal!important;
   }
-  .pv-flow-row .pv-check-under-title{
-    position:static!important;
-    transform:none!important;
-    width:auto!important;
-    min-width:0!important;
-    max-width:none!important;
-    margin-top:8px!important;
+  .pv-flow-row{
+    grid-template-columns:minmax(0,1fr)!important;
   }
-  .pv-flow-row .row-right.pv-row-right,
-  .pv-flow-row #productionBox.production-box-inline,
-  .pv-flow-row #productionBox .production-inline{
-    width:100%!important;
+  .pv-flow-row .title-wrap{
+    grid-template-columns:1fr!important;
+  }
+  .pv-flow-row .pv-check-under-title{
+    grid-column:1!important;
+    grid-row:auto!important;
+    width:auto!important;
+    max-width:none!important;
     min-width:0!important;
-    max-width:100%!important;
-    flex:1 1 100%!important;
+    margin-top:8px!important;
+    white-space:nowrap!important;
+  }
+  .pv-flow-row .row-right.pv-row-right{
+    justify-content:flex-start!important;
   }
 }
 </style>
-<!-- SVT v170 final row typography pv upload fix END -->
+<!-- SVT v170 compact upload pv text fix END -->
 </head>
 <body data-energy-mode="electric" data-svt-ui="v157-professional">
   <div class="page">
@@ -7371,7 +7346,7 @@ body[data-svt-ui="v157-professional"] .page{
 <main class="hero">
       <div class="wizard-shell">
 <h1>Curba ta de consum zilnic</h1>
-        <p class="sub">Încarcă datele de consum și completează detaliile minime necesare pentru a identifica exact când consumi energie scumpă din rețea. Dacă ai și producție locală, o poți adăuga opțional.</p>
+        <p class="sub">Incarca datele de consum si vezi rapid unde poti economisi energie.</p>
 <div class="flow-list energy-switch-list">
             <div class="flow-row energy-switch-row">
               <div class="flow-left">
