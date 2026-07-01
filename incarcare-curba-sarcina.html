@@ -6644,6 +6644,179 @@ body[data-svt-ui="v157-professional"] .page{
 }
 </style>
 <!-- SVT v167 compact rows + aligned badges + tariff under title END -->
+<!-- SVT v168 source upload pv cleanup START -->
+<style id="svt-v168-source-upload-pv-cleanup">
+/*
+  SVT v168
+  1) Sursa datelor: linkul "De unde obtii fisierul?" este langa subtitlu; caseta recomandata este stearsa.
+  2) Butonul "Incarc fisierul orar" este pe un singur rand.
+  3) Randul "Incarca fisierul" este compact ca Tip energie.
+  4) PV title este pe un singur rand si uploadul PV reapare la bifare.
+*/
+
+/* Sursa datelor: subtitlu + link pe aceeasi linie */
+.svt168-source-subrow{
+  display:flex!important;
+  align-items:center!important;
+  gap:12px!important;
+  min-width:0!important;
+  flex-wrap:nowrap!important;
+}
+.svt168-source-subrow .row-subtitle{
+  margin:4px 0 0!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+.svt168-inline-help-link{
+  margin-top:4px!important;
+  border:0!important;
+  background:transparent!important;
+  color:#079a48!important;
+  font:inherit!important;
+  font-size:12px!important;
+  line-height:1.1!important;
+  font-weight:950!important;
+  text-decoration:underline!important;
+  text-underline-offset:3px!important;
+  cursor:pointer!important;
+  white-space:nowrap!important;
+  padding:0!important;
+}
+.svt168-inline-help-link:hover,
+.svt168-inline-help-link:focus{
+  color:#065f31!important;
+  outline:none!important;
+}
+
+/* Sterge orice caseta helper ramasa la Sursa datelor */
+.source-help{
+  display:none!important;
+}
+
+/* Buton incarcare orara pe un singur rand */
+#methodFileCard.source-choice{
+  width:176px!important;
+  min-width:176px!important;
+  max-width:176px!important;
+  height:42px!important;
+  white-space:nowrap!important;
+  justify-content:center!important;
+  text-align:center!important;
+}
+#methodFileCard.source-choice span{
+  display:inline!important;
+  white-space:nowrap!important;
+  line-height:1!important;
+}
+
+/* Randul 3 - Incarca fisierul: height compact ca Tip energie */
+.upload-flow-row{
+  min-height:68px!important;
+  height:auto!important;
+  padding:12px 18px!important;
+  align-items:center!important;
+}
+.upload-flow-row .row-subtitle{
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+.upload-flow-row .icon-badge{
+  width:40px!important;
+  height:40px!important;
+  min-width:40px!important;
+  border-radius:14px!important;
+}
+.upload-flow-row .count-badge{
+  width:27px!important;
+  height:27px!important;
+  min-width:27px!important;
+  max-width:27px!important;
+}
+.upload-flow-row .row-right{
+  align-self:center!important;
+}
+.upload-flow-row #dropZone.file-inline{
+  min-height:42px!important;
+  height:42px!important;
+  padding:4px 10px!important;
+  align-items:center!important;
+}
+.upload-flow-row #dropZone .file-button{
+  height:32px!important;
+  min-height:32px!important;
+  padding:0 10px!important;
+  white-space:nowrap!important;
+}
+.upload-flow-row #dropZone .file-meta strong,
+.upload-flow-row #dropZone .file-meta span{
+  line-height:1.05!important;
+}
+.upload-flow-row #fileName{
+  margin-top:4px!important;
+}
+
+/* Randul 5 - PV: titlu pe un singur rand + upload vizibil la bifare */
+
+.pv-flow-row{
+  grid-template-columns:minmax(470px,.95fr) minmax(0,1fr)!important;
+}
+
+.pv-flow-row .row-title{
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+.pv-flow-row .title-wrap{
+  min-width:0!important;
+}
+.pv-flow-row .row-right.pv-row-right{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  min-width:0!important;
+}
+#productionBox.production-box-inline{
+  display:none!important;
+}
+#productionBox.production-box-inline.visible,
+#productionBox.production-box-inline.svt168-force-visible{
+  display:block!important;
+}
+.pv-flow-row #productionBox .production-inline{
+  min-height:42px!important;
+  height:auto!important;
+  padding:4px 10px!important;
+  align-items:center!important;
+}
+.pv-flow-row #productionChoose{
+  height:32px!important;
+  min-height:32px!important;
+  padding:0 10px!important;
+  white-space:nowrap!important;
+}
+.pv-flow-row #productionBox .file-meta strong,
+.pv-flow-row #productionBox .file-meta span{
+  white-space:nowrap!important;
+  line-height:1.05!important;
+}
+
+@media (max-width:860px){
+  .svt168-source-subrow{
+    flex-wrap:wrap!important;
+    gap:6px 10px!important;
+  }
+  .svt168-source-subrow .row-subtitle{
+    white-space:normal!important;
+  }
+  .upload-flow-row .row-subtitle,
+  .pv-flow-row .row-title{
+    white-space:normal!important;
+  }
+}
+</style>
+<!-- SVT v168 source upload pv cleanup END -->
 </head>
 <body data-energy-mode="electric" data-svt-ui="v157-professional">
   <div class="page">
@@ -6691,15 +6864,14 @@ body[data-svt-ui="v157-professional"] .page{
                 <div class="count-badge">2</div>
                 <div class="title-wrap">
                   <h3 class="row-title">Sursa datelor</h3>
-                  <p class="row-subtitle">Spune-ne de unde provin datele tale.</p>
+                  <div class="svt168-source-subrow">
+                    <p class="row-subtitle">Spune-ne de unde provin datele tale.</p>
+                    <button type="button" class="svt168-inline-help-link" id="openDistributorHelp" data-open-distributor-help="true">De unde obții fișierul?</button>
+                  </div>
                 </div>
               </div>
               <div class="row-right">
-                <button class="choice-btn method source-choice active" type="button" id="methodFileCard"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5v7A2.5 2.5 0 0 1 18.5 19h-13A2.5 2.5 0 0 1 3 16.5v-9Z"/></svg><span>Încarc fișierul<br>orar</span></button>
-              </div>
-              <div class="source-help">
-                <div class="source-help-text">Dacă ai fișierul orar, aceasta este varianta recomandată.</div>
-                <button type="button" class="source-help-link" id="openDistributorHelp" data-open-distributor-help="true">De unde obții fișierul?</button>
+                <button class="choice-btn method source-choice active" type="button" id="methodFileCard"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5v7A2.5 2.5 0 0 1 18.5 19h-13A2.5 2.5 0 0 1 3 16.5v-9Z"/></svg><span>Încarc fișierul orar</span></button>
               </div>
               <div class="subpanel" id="invoiceBox" style="display:none">
                 <div class="invoice-grid">
@@ -7179,7 +7351,7 @@ body[data-svt-ui="v157-professional"] .page{
     tabElectric.addEventListener('click', () => setTab('electric'));
     tabTermic.addEventListener('click', () => setTab('termic'));
     methodFileCard.addEventListener('click', () => setLoadMethod('file'));
-    methodInvoiceCard.addEventListener('click', () => setLoadMethod('invoice'));
+    if(window.methodInvoiceCard && methodInvoiceCard.addEventListener){ methodInvoiceCard.addEventListener('click', () => setLoadMethod('invoice')); }
     hasProduction.addEventListener('change', () => { productionBox.classList.toggle('visible', hasProduction.checked); if(!hasProduction.checked){ productionBox.classList.remove('embedded'); embeddedProductionDetected = false; productionFiles = []; productionFileName.textContent = ''; productionDrop.classList.remove('has-file'); } validateForm(); });
     fixedTariff.addEventListener('input', validateForm);
     document.getElementById('invoiceConsumption').addEventListener('input', validateForm);
@@ -7584,6 +7756,43 @@ body[data-svt-ui="v157-professional"] .page{
 })();
 </script>
 <!-- SVT v166 advanced checkbox behavior END -->
+<!-- SVT v168 safe source pv behavior START -->
+<script id="svt-v168-safe-source-pv-behavior">
+(function(){
+  function ready(fn){
+    if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn);
+    else fn();
+  }
+  ready(function(){
+    // Dupa eliminarea butonului factura lunara, evitam erori JS vechi care opreau restul scriptului.
+    const invoiceBtn = document.getElementById("methodInvoiceCard");
+    if(!invoiceBtn && typeof window.methodInvoiceCard === "undefined"){
+      window.methodInvoiceCard = { addEventListener:function(){} };
+    }
+
+    // Reparatie defensiva pentru upload PV: la bifare, productionBox trebuie sa apara mereu.
+    const hasProduction = document.getElementById("hasProduction");
+    const productionBox = document.getElementById("productionBox");
+    const productionDrop = document.getElementById("productionDrop");
+    const productionFileName = document.getElementById("productionFileName");
+    if(hasProduction && productionBox){
+      function syncProductionBox(){
+        const on = !!hasProduction.checked;
+        productionBox.classList.toggle("visible", on);
+        productionBox.classList.toggle("svt168-force-visible", on);
+        if(!on){
+          productionBox.classList.remove("embedded");
+          if(productionDrop) productionDrop.classList.remove("has-file");
+          if(productionFileName) productionFileName.textContent = "";
+        }
+      }
+      hasProduction.addEventListener("change", syncProductionBox);
+      syncProductionBox();
+    }
+  });
+})();
+</script>
+<!-- SVT v168 safe source pv behavior END -->
 </body>
 </html>
 
