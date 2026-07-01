@@ -5923,12 +5923,12 @@ body[data-svt-ui="v157-professional"] .page{
 }
 </style>
 <!-- SVT v160 top intro physically removed END -->
-<!-- SVT v163 tariff floating help layout fix START -->
-<style id="svt-v163-tariff-floating-help-layout-fix">
+<!-- SVT v164 tariff right-gutter help START -->
+<style id="svt-v164-tariff-right-gutter-help">
 /*
-  SVT v163
-  Fix: panoul explicativ JT/MT/IT este floating/fixed in dreapta paginii,
-  nu mai participa la layout si nu mai impinge/strica randul Detalii tarif.
+  SVT v164
+  Panoul explicativ pentru Nu stiu / JT / MT / IT apare in dreapta,
+  in zona libera de langa continutul principal, fara sa intre in layout.
 */
 .tariff-flow-row{
   overflow:visible!important;
@@ -6036,19 +6036,9 @@ body[data-svt-ui="v157-professional"] .page{
   accent-color:#079a48!important;
   flex:0 0 auto!important;
 }
-.svt162-check-copy{
-  display:grid!important;
-  gap:2px!important;
-}
-.svt162-check-copy strong{
-  color:#0f5132!important;
-  font-weight:950!important;
-}
-.svt162-check-copy span{
-  color:#66758b!important;
-  font-size:11.5px!important;
-  font-weight:700!important;
-}
+.svt162-check-copy{display:grid!important;gap:2px!important}
+.svt162-check-copy strong{color:#0f5132!important;font-weight:950!important}
+.svt162-check-copy span{color:#66758b!important;font-size:11.5px!important;font-weight:700!important}
 .svt162-advanced-toggle{
   justify-self:start!important;
   height:34px!important;
@@ -6065,18 +6055,9 @@ body[data-svt-ui="v157-professional"] .page{
   cursor:pointer!important;
   box-shadow:0 8px 18px rgba(12,30,56,.045)!important;
 }
-.svt162-advanced-toggle:hover{
-  background:#f6fcf8!important;
-  border-color:#abd8bf!important;
-}
-.svt162-advanced-toggle svg{
-  width:14px!important;
-  height:14px!important;
-  transition:transform .16s ease!important;
-}
-.svt162-advanced-toggle[aria-expanded="true"] svg{
-  transform:rotate(180deg)!important;
-}
+.svt162-advanced-toggle:hover{background:#f6fcf8!important;border-color:#abd8bf!important}
+.svt162-advanced-toggle svg{width:14px!important;height:14px!important;transition:transform .16s ease!important}
+.svt162-advanced-toggle[aria-expanded="true"] svg{transform:rotate(180deg)!important}
 .svt162-advanced{
   position:relative!important;
   display:grid!important;
@@ -6088,17 +6069,13 @@ body[data-svt-ui="v157-professional"] .page{
   box-shadow:0 14px 30px rgba(12,30,56,.06)!important;
   overflow:visible!important;
 }
-.svt162-advanced[hidden]{
-  display:none!important;
-}
+.svt162-advanced[hidden]{display:none!important}
 .svt162-advanced-grid{
   display:grid!important;
   grid-template-columns:1fr 1fr!important;
   gap:11px!important;
 }
-.svt162-advanced-grid .svt162-full{
-  grid-column:1 / -1!important;
-}
+.svt162-advanced-grid .svt162-full{grid-column:1 / -1!important}
 .svt162-mini-label{
   margin:0 0 6px!important;
   color:#102235!important;
@@ -6149,37 +6126,38 @@ body[data-svt-ui="v157-professional"] .page{
   box-shadow:0 12px 22px rgba(9,150,75,.20)!important;
 }
 
-/* Panou separat de layout: sta in dreapta viewportului, peste marginea libera a paginii. */
+/* v164: panou in "right gutter" - zona libera din dreapta continutului principal */
 .svt162-voltage-help{
   position:fixed!important;
-  right:28px!important;
-  top:50%!important;
-  transform:translateY(-50%) translateX(12px)!important;
-  width:330px!important;
-  min-height:128px!important;
-  padding:14px!important;
+  left:auto!important;
+  right:auto!important;
+  top:auto!important;
+  width:292px!important;
+  min-height:160px!important;
+  padding:15px!important;
   border:1px solid #dbece4!important;
-  border-radius:18px!important;
-  background:rgba(255,255,255,.98)!important;
-  box-shadow:0 24px 58px rgba(12,30,56,.16)!important;
+  border-radius:19px!important;
+  background:rgba(255,255,255,.985)!important;
+  box-shadow:0 24px 64px rgba(12,30,56,.18)!important;
   color:#334155!important;
   z-index:99999!important;
   opacity:0!important;
   visibility:hidden!important;
   pointer-events:none!important;
+  transform:translateX(14px)!important;
   transition:opacity .14s ease, transform .14s ease, visibility .14s ease!important;
 }
 .svt162-voltage-help.is-visible{
   opacity:1!important;
   visibility:visible!important;
-  transform:translateY(-50%) translateX(0)!important;
   pointer-events:auto!important;
+  transform:translateX(0)!important;
 }
 .svt162-voltage-help::before{
   content:"";
   position:absolute;
   left:-8px;
-  top:32px;
+  top:34px;
   width:14px;
   height:14px;
   transform:rotate(45deg);
@@ -6222,38 +6200,44 @@ body[data-svt-ui="v157-professional"] .page{
   font-size:11.5px!important;
   font-weight:850!important;
 }
-@media (max-width:1500px){
-  .svt162-voltage-help{
-    right:18px!important;
-    width:300px!important;
-  }
+.svt162-voltage-help.is-inline-fallback{
+  position:relative!important;
+  left:auto!important;
+  top:auto!important;
+  width:100%!important;
+  min-height:0!important;
+  transform:none!important;
+  display:none!important;
 }
-@media (max-width:1280px){
+.svt162-voltage-help.is-inline-fallback.is-visible{
+  display:block!important;
+  transform:none!important;
+}
+.svt162-voltage-help.is-inline-fallback::before{display:none!important}
+
+@media (max-width:1450px){
   .svt162-voltage-help{
     position:relative!important;
-    right:auto!important;
+    left:auto!important;
     top:auto!important;
-    transform:none!important;
     width:100%!important;
     min-height:0!important;
-    opacity:1!important;
-    visibility:visible!important;
-    pointer-events:auto!important;
+    transform:none!important;
     display:none!important;
   }
   .svt162-voltage-help.is-visible{
     display:block!important;
     transform:none!important;
   }
-  .svt162-voltage-help::before{display:none!important;}
+  .svt162-voltage-help::before{display:none!important}
 }
 @media (max-width:860px){
-  .svt162-tariff-shell{width:100%!important;max-width:none!important;}
-  .svt162-tariff-main{grid-template-columns:1fr!important;}
-  .svt162-advanced-grid{grid-template-columns:1fr!important;}
+  .svt162-tariff-shell{width:100%!important;max-width:none!important}
+  .svt162-tariff-main{grid-template-columns:1fr!important}
+  .svt162-advanced-grid{grid-template-columns:1fr!important}
 }
 </style>
-<!-- SVT v163 tariff floating help layout fix END -->
+<!-- SVT v164 tariff right-gutter help END -->
 </head>
 <body data-energy-mode="electric" data-svt-ui="v157-professional">
   <div class="page">
@@ -6981,8 +6965,8 @@ body[data-svt-ui="v157-professional"] .page{
       });
     })();
   </script>
-<!-- SVT v163 tariff floating help behavior START -->
-<script id="svt-v163-tariff-floating-help-behavior">
+<!-- SVT v164 tariff right-gutter help behavior START -->
+<script id="svt-v164-tariff-right-gutter-help-behavior">
 (function(){
   function ready(fn){
     if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn);
@@ -7023,9 +7007,63 @@ body[data-svt-ui="v157-professional"] .page{
     return document.getElementById("tariffVoltageHelpPanel");
   }
 
+  function rightGutterLeft(panelWidth){
+    const hero = document.querySelector(".hero");
+    const page = document.querySelector(".page");
+    const tariffRow = document.querySelector(".tariff-flow-row");
+    const heroRect = hero ? hero.getBoundingClientRect() : null;
+    const pageRect = page ? page.getBoundingClientRect() : null;
+    const rowRect = tariffRow ? tariffRow.getBoundingClientRect() : null;
+
+    // marginea continutului mare, nu marginea cardului interior
+    const contentRight =
+      (heroRect && heroRect.right) ||
+      (pageRect && pageRect.right) ||
+      (rowRect && rowRect.right) ||
+      Math.round(window.innerWidth * 0.72);
+
+    const desiredLeft = contentRight + 50; // zona marcata in screenshot
+    const maxLeft = window.innerWidth - panelWidth - 38;
+    const minLeft = (rowRect ? rowRect.right + 34 : contentRight + 24);
+
+    return Math.max(Math.min(desiredLeft, maxLeft), Math.min(minLeft, maxLeft));
+  }
+
+  function positionHelp(){
+    const p = panel();
+    const tariffRow = document.querySelector(".tariff-flow-row");
+    if(!p || !tariffRow) return;
+
+    if(window.innerWidth <= 1450){
+      p.classList.add("is-inline-fallback");
+      p.style.left = "";
+      p.style.top = "";
+      return;
+    }
+
+    p.classList.remove("is-inline-fallback");
+
+    const pRect = p.getBoundingClientRect();
+    const panelWidth = pRect.width || 292;
+    const rowRect = tariffRow.getBoundingClientRect();
+
+    const left = rightGutterLeft(panelWidth);
+
+    // Aliniere in zona rosie din dreapta, langa blocul Detalii tarif,
+    // nu langa linkul mic din interiorul formularului.
+    const desiredTop = rowRect.top + 78;
+    const maxTop = window.innerHeight - (pRect.height || 170) - 28;
+    const top = Math.max(92, Math.min(desiredTop, maxTop));
+
+    p.style.left = Math.round(left) + "px";
+    p.style.top = Math.round(top) + "px";
+  }
+
   function showHelp(){
     const p = panel();
-    if(p) p.classList.add("is-visible");
+    if(!p) return;
+    positionHelp();
+    p.classList.add("is-visible");
   }
 
   function hideHelp(force){
@@ -7074,6 +7112,7 @@ body[data-svt-ui="v157-professional"] .page{
           adv.removeAttribute("hidden");
           toggle.setAttribute("aria-expanded", "true");
           setHelp(document.getElementById("tariffVoltageLevel")?.value || "unknown", false, false);
+          setTimeout(positionHelp, 0);
         }
       });
     }
@@ -7087,14 +7126,14 @@ body[data-svt-ui="v157-professional"] .page{
       });
       link.addEventListener("mouseleave", function(){
         clearTimeout(hoverTimer);
-        hoverTimer = setTimeout(function(){ hideHelp(false); }, 180);
+        hoverTimer = setTimeout(function(){ hideHelp(false); }, 160);
       });
       link.addEventListener("focus", function(){
         setHelp(key, false, true);
       });
       link.addEventListener("blur", function(){
         clearTimeout(hoverTimer);
-        hoverTimer = setTimeout(function(){ hideHelp(false); }, 180);
+        hoverTimer = setTimeout(function(){ hideHelp(false); }, 160);
       });
       link.addEventListener("click", function(event){
         event.preventDefault();
@@ -7111,9 +7150,15 @@ body[data-svt-ui="v157-professional"] .page{
       });
       p.addEventListener("mouseleave", function(){
         clearTimeout(hoverTimer);
-        hoverTimer = setTimeout(function(){ hideHelp(false); }, 180);
+        hoverTimer = setTimeout(function(){ hideHelp(false); }, 160);
       });
     }
+
+    window.addEventListener("resize", positionHelp, {passive:true});
+    window.addEventListener("scroll", function(){
+      const p = panel();
+      if(p && p.classList.contains("is-visible")) positionHelp();
+    }, {passive:true});
 
     document.addEventListener("keydown", function(event){
       if(event.key === "Escape"){
@@ -7148,10 +7193,11 @@ body[data-svt-ui="v157-professional"] .page{
     }
 
     setHelp("unknown", true, false);
+    setTimeout(positionHelp, 0);
   });
 })();
 </script>
-<!-- SVT v163 tariff floating help behavior END -->
+<!-- SVT v164 tariff right-gutter help behavior END -->
 </body>
 </html>
 
