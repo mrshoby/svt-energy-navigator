@@ -5923,12 +5923,12 @@ body[data-svt-ui="v157-professional"] .page{
 }
 </style>
 <!-- SVT v160 top intro physically removed END -->
-<!-- SVT v164 tariff right-gutter help START -->
-<style id="svt-v164-tariff-right-gutter-help">
+<!-- SVT v165 tariff fixed-right visible help START -->
+<style id="svt-v165-tariff-fixed-right-visible-help">
 /*
-  SVT v164
-  Panoul explicativ pentru Nu stiu / JT / MT / IT apare in dreapta,
-  in zona libera de langa continutul principal, fara sa intre in layout.
+  SVT v165
+  Fix final: panoul explicativ sta fixed in dreapta ecranului, in zona libera.
+  Nu mai depinde de scroll/card si nu mai cade jos.
 */
 .tariff-flow-row{
   overflow:visible!important;
@@ -6126,14 +6126,17 @@ body[data-svt-ui="v157-professional"] .page{
   box-shadow:0 12px 22px rgba(9,150,75,.20)!important;
 }
 
-/* v164: panou in "right gutter" - zona libera din dreapta continutului principal */
+/* v165: fixed permanent in dreapta zonei libere, mereu vizibil complet */
 .svt162-voltage-help{
   position:fixed!important;
+  top:340px!important;
+  right:46px!important;
   left:auto!important;
-  right:auto!important;
-  top:auto!important;
-  width:292px!important;
-  min-height:160px!important;
+  bottom:auto!important;
+  width:306px!important;
+  max-height:calc(100vh - 390px)!important;
+  min-height:150px!important;
+  overflow:auto!important;
   padding:15px!important;
   border:1px solid #dbece4!important;
   border-radius:19px!important;
@@ -6144,7 +6147,7 @@ body[data-svt-ui="v157-professional"] .page{
   opacity:0!important;
   visibility:hidden!important;
   pointer-events:none!important;
-  transform:translateX(14px)!important;
+  transform:translateX(12px)!important;
   transition:opacity .14s ease, transform .14s ease, visibility .14s ease!important;
 }
 .svt162-voltage-help.is-visible{
@@ -6200,27 +6203,26 @@ body[data-svt-ui="v157-professional"] .page{
   font-size:11.5px!important;
   font-weight:850!important;
 }
-.svt162-voltage-help.is-inline-fallback{
-  position:relative!important;
-  left:auto!important;
-  top:auto!important;
-  width:100%!important;
-  min-height:0!important;
-  transform:none!important;
-  display:none!important;
-}
-.svt162-voltage-help.is-inline-fallback.is-visible{
-  display:block!important;
-  transform:none!important;
-}
-.svt162-voltage-help.is-inline-fallback::before{display:none!important}
 
-@media (max-width:1450px){
+/* Desktop mediu: ramane fixed in dreapta, dar mai compact */
+@media (max-width:1600px){
+  .svt162-voltage-help{
+    right:24px!important;
+    width:286px!important;
+    top:320px!important;
+    max-height:calc(100vh - 360px)!important;
+  }
+}
+
+/* Doar pe ecrane mici nu are loc in dreapta, deci cade sub setari */
+@media (max-width:1180px){
   .svt162-voltage-help{
     position:relative!important;
-    left:auto!important;
     top:auto!important;
+    right:auto!important;
+    left:auto!important;
     width:100%!important;
+    max-height:none!important;
     min-height:0!important;
     transform:none!important;
     display:none!important;
@@ -6237,7 +6239,7 @@ body[data-svt-ui="v157-professional"] .page{
   .svt162-advanced-grid{grid-template-columns:1fr!important}
 }
 </style>
-<!-- SVT v164 tariff right-gutter help END -->
+<!-- SVT v165 tariff fixed-right visible help END -->
 </head>
 <body data-energy-mode="electric" data-svt-ui="v157-professional">
   <div class="page">
@@ -6965,8 +6967,8 @@ body[data-svt-ui="v157-professional"] .page{
       });
     })();
   </script>
-<!-- SVT v164 tariff right-gutter help behavior START -->
-<script id="svt-v164-tariff-right-gutter-help-behavior">
+<!-- SVT v165 tariff fixed-right visible help behavior START -->
+<script id="svt-v165-tariff-fixed-right-visible-help-behavior">
 (function(){
   function ready(fn){
     if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn);
@@ -7007,62 +7009,20 @@ body[data-svt-ui="v157-professional"] .page{
     return document.getElementById("tariffVoltageHelpPanel");
   }
 
-  function rightGutterLeft(panelWidth){
-    const hero = document.querySelector(".hero");
-    const page = document.querySelector(".page");
-    const tariffRow = document.querySelector(".tariff-flow-row");
-    const heroRect = hero ? hero.getBoundingClientRect() : null;
-    const pageRect = page ? page.getBoundingClientRect() : null;
-    const rowRect = tariffRow ? tariffRow.getBoundingClientRect() : null;
-
-    // marginea continutului mare, nu marginea cardului interior
-    const contentRight =
-      (heroRect && heroRect.right) ||
-      (pageRect && pageRect.right) ||
-      (rowRect && rowRect.right) ||
-      Math.round(window.innerWidth * 0.72);
-
-    const desiredLeft = contentRight + 50; // zona marcata in screenshot
-    const maxLeft = window.innerWidth - panelWidth - 38;
-    const minLeft = (rowRect ? rowRect.right + 34 : contentRight + 24);
-
-    return Math.max(Math.min(desiredLeft, maxLeft), Math.min(minLeft, maxLeft));
-  }
-
-  function positionHelp(){
+  function fitPanelInViewport(){
     const p = panel();
-    const tariffRow = document.querySelector(".tariff-flow-row");
-    if(!p || !tariffRow) return;
+    if(!p || window.innerWidth <= 1180) return;
 
-    if(window.innerWidth <= 1450){
-      p.classList.add("is-inline-fallback");
-      p.style.left = "";
-      p.style.top = "";
-      return;
-    }
-
-    p.classList.remove("is-inline-fallback");
-
-    const pRect = p.getBoundingClientRect();
-    const panelWidth = pRect.width || 292;
-    const rowRect = tariffRow.getBoundingClientRect();
-
-    const left = rightGutterLeft(panelWidth);
-
-    // Aliniere in zona rosie din dreapta, langa blocul Detalii tarif,
-    // nu langa linkul mic din interiorul formularului.
-    const desiredTop = rowRect.top + 78;
-    const maxTop = window.innerHeight - (pRect.height || 170) - 28;
-    const top = Math.max(92, Math.min(desiredTop, maxTop));
-
-    p.style.left = Math.round(left) + "px";
-    p.style.top = Math.round(top) + "px";
+    // Pozitie stabila in zona din dreapta, dar ne asiguram ca nu iese jos.
+    const desiredTop = Math.min(340, Math.max(120, window.innerHeight - 320));
+    p.style.top = desiredTop + "px";
+    p.style.maxHeight = Math.max(170, window.innerHeight - desiredTop - 34) + "px";
   }
 
   function showHelp(){
     const p = panel();
     if(!p) return;
-    positionHelp();
+    fitPanelInViewport();
     p.classList.add("is-visible");
   }
 
@@ -7112,7 +7072,7 @@ body[data-svt-ui="v157-professional"] .page{
           adv.removeAttribute("hidden");
           toggle.setAttribute("aria-expanded", "true");
           setHelp(document.getElementById("tariffVoltageLevel")?.value || "unknown", false, false);
-          setTimeout(positionHelp, 0);
+          fitPanelInViewport();
         }
       });
     }
@@ -7154,11 +7114,8 @@ body[data-svt-ui="v157-professional"] .page{
       });
     }
 
-    window.addEventListener("resize", positionHelp, {passive:true});
-    window.addEventListener("scroll", function(){
-      const p = panel();
-      if(p && p.classList.contains("is-visible")) positionHelp();
-    }, {passive:true});
+    window.addEventListener("resize", fitPanelInViewport, {passive:true});
+    window.addEventListener("scroll", fitPanelInViewport, {passive:true});
 
     document.addEventListener("keydown", function(event){
       if(event.key === "Escape"){
@@ -7193,11 +7150,11 @@ body[data-svt-ui="v157-professional"] .page{
     }
 
     setHelp("unknown", true, false);
-    setTimeout(positionHelp, 0);
+    fitPanelInViewport();
   });
 })();
 </script>
-<!-- SVT v164 tariff right-gutter help behavior END -->
+<!-- SVT v165 tariff fixed-right visible help behavior END -->
 </body>
 </html>
 
