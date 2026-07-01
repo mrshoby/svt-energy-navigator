@@ -7875,6 +7875,228 @@ body[data-svt-ui="v157-professional"] .page{
 }
 </style>
 <!-- SVT v172 bottom pv tariff layout fix END -->
+<!-- SVT v173 pv checkbox upload exact fix START -->
+<style id="svt-v173-pv-checkbox-upload-exact-fix">
+/*
+  SVT v173
+  Fix strict pentru randul 5:
+  - checkboxul "Am si productie..." sta FIX sub textul "Adauga-ti productia...";
+  - uploadul PV copiaza dimensiunea/forma/alinierea uploadului de la randul 3.
+*/
+
+/* Rand 5: doua zone clare - stanga text+checkbox, dreapta upload */
+.pv-flow-row{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 390px!important;
+  column-gap:18px!important;
+  align-items:center!important;
+  min-height:70px!important;
+  height:auto!important;
+  padding:10px 18px!important;
+}
+
+/* Stanga: icon, cerc, text */
+.pv-flow-row > .flow-left{
+  grid-column:1!important;
+  display:grid!important;
+  grid-template-columns:40px 28px minmax(0,1fr)!important;
+  column-gap:12px!important;
+  align-items:center!important;
+  min-width:0!important;
+  width:100%!important;
+}
+
+/* Titlu + subtitlu + checkbox raman toate in aceeasi coloana, unul sub altul */
+.pv-flow-row .title-wrap{
+  grid-column:3!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  gap:0!important;
+  min-width:0!important;
+  width:100%!important;
+  max-width:none!important;
+  align-self:center!important;
+}
+
+.pv-flow-row .row-title{
+  display:block!important;
+  width:auto!important;
+  max-width:none!important;
+  margin:0!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+}
+
+.pv-flow-row .row-subtitle{
+  display:block!important;
+  width:auto!important;
+  max-width:none!important;
+  margin:4px 0 0!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+}
+
+/* Exact sub "Adauga-ti productia locala daca o ai." */
+.pv-flow-row .pv-check-under-title{
+  position:static!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  align-self:flex-start!important;
+  width:auto!important;
+  min-width:0!important;
+  max-width:none!important;
+  margin:5px 0 0 0!important;
+  padding:0!important;
+  gap:7px!important;
+  font-size:12px!important;
+  line-height:1.05!important;
+  font-weight:850!important;
+  color:#0d2038!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  transform:none!important;
+}
+
+.pv-flow-row .pv-check-under-title input{
+  width:15px!important;
+  height:15px!important;
+  min-width:15px!important;
+  max-width:15px!important;
+  margin:0!important;
+  padding:0!important;
+  accent-color:#079a48!important;
+}
+
+/* Dreapta: upload PV fix pe aceeasi axa si aceeasi dimensiune ca randul 3 */
+.pv-flow-row > .row-right.pv-row-right{
+  grid-column:2!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  width:390px!important;
+  min-width:390px!important;
+  max-width:390px!important;
+  margin:0!important;
+  padding:0!important;
+  gap:0!important;
+}
+
+/* Cand e bifat, apare. Cand nu e bifat, ramane ascuns. */
+#productionBox.production-box-inline{
+  display:none!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  width:390px!important;
+  min-width:390px!important;
+  max-width:390px!important;
+  flex:0 0 390px!important;
+}
+
+#productionBox.production-box-inline.visible,
+#productionBox.production-box-inline.svt168-force-visible{
+  display:block!important;
+}
+
+/* Identic cu fereastra upload de la randul 3 */
+#productionBox .production-inline,
+#productionBox #productionDrop.file-inline.upload-zone,
+#productionDrop.file-inline.upload-zone{
+  width:390px!important;
+  min-width:390px!important;
+  max-width:390px!important;
+  height:36px!important;
+  min-height:36px!important;
+  max-height:36px!important;
+  padding:3px 10px!important;
+  margin:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:10px!important;
+  border:1px dashed #9bd7b2!important;
+  border-radius:15px!important;
+  background:#fbfefd!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+}
+
+#productionChoose.file-button,
+#productionChoose{
+  height:29px!important;
+  min-height:29px!important;
+  max-height:29px!important;
+  padding:0 10px!important;
+  border-radius:10px!important;
+  font-size:12px!important;
+  white-space:nowrap!important;
+  flex:0 0 auto!important;
+}
+
+#productionBox .file-meta{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  gap:1px!important;
+  min-width:0!important;
+  overflow:hidden!important;
+}
+
+#productionBox .file-meta strong,
+#productionBox .file-meta span{
+  font-size:10.5px!important;
+  line-height:1.02!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+
+/* selected files / note nu trebuie sa deformeze randul */
+#productionBox .selected-files,
+#productionBox .embedded-note{
+  max-width:390px!important;
+  margin-top:3px!important;
+  font-size:10.5px!important;
+  line-height:1.15!important;
+}
+
+/* Responsive fallback */
+@media (max-width:1180px){
+  .pv-flow-row{
+    grid-template-columns:1fr!important;
+  }
+  .pv-flow-row > .row-right.pv-row-right{
+    grid-column:1!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:100%!important;
+    justify-content:flex-start!important;
+    margin-top:10px!important;
+  }
+  #productionBox.production-box-inline,
+  #productionBox .production-inline,
+  #productionBox #productionDrop.file-inline.upload-zone,
+  #productionDrop.file-inline.upload-zone{
+    width:100%!important;
+    min-width:0!important;
+    max-width:100%!important;
+  }
+  .pv-flow-row .row-title,
+  .pv-flow-row .row-subtitle,
+  .pv-flow-row .pv-check-under-title{
+    white-space:normal!important;
+  }
+}
+</style>
+<!-- SVT v173 pv checkbox upload exact fix END -->
 </head>
 <body data-energy-mode="electric" data-svt-ui="v157-professional">
   <div class="page">
