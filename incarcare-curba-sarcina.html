@@ -5923,25 +5923,25 @@ body[data-svt-ui="v157-professional"] .page{
 }
 </style>
 <!-- SVT v160 top intro physically removed END -->
-<!-- SVT v162 simple tariff advanced settings START -->
-<style id="svt-v162-simple-tariff-advanced-settings">
+<!-- SVT v163 tariff floating help layout fix START -->
+<style id="svt-v163-tariff-floating-help-layout-fix">
 /*
-  SVT v162
-  Scop: Detalii tarif simplu pentru clienți + setări avansate opționale.
-  Nu modifică logica uploadurilor, invoiceBox sau modalul distributorHelpModal.
+  SVT v163
+  Fix: panoul explicativ JT/MT/IT este floating/fixed in dreapta paginii,
+  nu mai participa la layout si nu mai impinge/strica randul Detalii tarif.
 */
 .tariff-flow-row{
   overflow:visible!important;
+  position:relative!important;
   z-index:6!important;
 }
 .tariff-flow-row .row-right{
   overflow:visible!important;
-  align-items:stretch!important;
 }
 .svt162-tariff-shell{
-  width:100%!important;
+  width:min(100%,560px)!important;
   max-width:560px!important;
-  margin-left:auto!important;
+  margin-left:0!important;
   position:relative!important;
   display:grid!important;
   gap:10px!important;
@@ -5949,21 +5949,17 @@ body[data-svt-ui="v157-professional"] .page{
 }
 .svt162-tariff-main{
   display:grid!important;
-  grid-template-columns:minmax(0,1fr) 148px!important;
-  gap:12px!important;
+  grid-template-columns:minmax(0,1fr) 142px!important;
+  gap:10px!important;
   align-items:start!important;
 }
-.svt162-price-field,
-.svt162-fixed-card{
-  min-width:0!important;
-}
 .svt162-price-control{
-  height:44px!important;
+  height:42px!important;
   display:grid!important;
   grid-template-columns:minmax(0,1fr) auto!important;
   align-items:center!important;
   border:1px solid #d9e4ec!important;
-  border-radius:15px!important;
+  border-radius:14px!important;
   background:#fff!important;
   box-shadow:0 4px 14px rgba(12,30,56,.035)!important;
   overflow:hidden!important;
@@ -5974,7 +5970,7 @@ body[data-svt-ui="v157-professional"] .page{
 }
 .svt162-price-control #fixedTariff{
   width:100%!important;
-  height:42px!important;
+  height:40px!important;
   border:0!important;
   box-shadow:none!important;
   border-radius:0!important;
@@ -5985,7 +5981,7 @@ body[data-svt-ui="v157-professional"] .page{
   height:100%!important;
   display:inline-flex!important;
   align-items:center!important;
-  padding:0 12px!important;
+  padding:0 11px!important;
   border-left:1px solid #e4edf3!important;
   color:#526277!important;
   font-size:12px!important;
@@ -5994,14 +5990,14 @@ body[data-svt-ui="v157-professional"] .page{
   background:#f8fbfa!important;
 }
 .svt162-fixed-pill{
-  height:44px!important;
+  height:42px!important;
   display:flex!important;
   align-items:center!important;
   justify-content:center!important;
   gap:7px!important;
-  padding:0 12px!important;
+  padding:0 11px!important;
   border:1px solid #d9e4ec!important;
-  border-radius:15px!important;
+  border-radius:14px!important;
   background:linear-gradient(180deg,#fff,#f9fcfb)!important;
   color:#0f5132!important;
   font-size:13px!important;
@@ -6085,11 +6081,11 @@ body[data-svt-ui="v157-professional"] .page{
   position:relative!important;
   display:grid!important;
   gap:12px!important;
-  padding:14px!important;
+  padding:13px!important;
   border:1px solid #dbece4!important;
-  border-radius:18px!important;
+  border-radius:17px!important;
   background:linear-gradient(180deg,#fbfefc,#ffffff)!important;
-  box-shadow:0 16px 36px rgba(12,30,56,.07)!important;
+  box-shadow:0 14px 30px rgba(12,30,56,.06)!important;
   overflow:visible!important;
 }
 .svt162-advanced[hidden]{
@@ -6098,7 +6094,7 @@ body[data-svt-ui="v157-professional"] .page{
 .svt162-advanced-grid{
   display:grid!important;
   grid-template-columns:1fr 1fr!important;
-  gap:12px!important;
+  gap:11px!important;
 }
 .svt162-advanced-grid .svt162-full{
   grid-column:1 / -1!important;
@@ -6152,25 +6148,38 @@ body[data-svt-ui="v157-professional"] .page{
   color:#fff!important;
   box-shadow:0 12px 22px rgba(9,150,75,.20)!important;
 }
+
+/* Panou separat de layout: sta in dreapta viewportului, peste marginea libera a paginii. */
 .svt162-voltage-help{
-  position:absolute!important;
-  left:calc(100% + 16px)!important;
-  top:0!important;
-  width:292px!important;
+  position:fixed!important;
+  right:28px!important;
+  top:50%!important;
+  transform:translateY(-50%) translateX(12px)!important;
+  width:330px!important;
   min-height:128px!important;
   padding:14px!important;
   border:1px solid #dbece4!important;
   border-radius:18px!important;
   background:rgba(255,255,255,.98)!important;
-  box-shadow:0 22px 52px rgba(12,30,56,.13)!important;
+  box-shadow:0 24px 58px rgba(12,30,56,.16)!important;
   color:#334155!important;
-  z-index:30!important;
+  z-index:99999!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  transition:opacity .14s ease, transform .14s ease, visibility .14s ease!important;
+}
+.svt162-voltage-help.is-visible{
+  opacity:1!important;
+  visibility:visible!important;
+  transform:translateY(-50%) translateX(0)!important;
+  pointer-events:auto!important;
 }
 .svt162-voltage-help::before{
   content:"";
   position:absolute;
   left:-8px;
-  top:28px;
+  top:32px;
   width:14px;
   height:14px;
   transform:rotate(45deg);
@@ -6213,23 +6222,38 @@ body[data-svt-ui="v157-professional"] .page{
   font-size:11.5px!important;
   font-weight:850!important;
 }
-@media (max-width:1380px){
+@media (max-width:1500px){
+  .svt162-voltage-help{
+    right:18px!important;
+    width:300px!important;
+  }
+}
+@media (max-width:1280px){
   .svt162-voltage-help{
     position:relative!important;
-    left:auto!important;
+    right:auto!important;
     top:auto!important;
+    transform:none!important;
     width:100%!important;
     min-height:0!important;
+    opacity:1!important;
+    visibility:visible!important;
+    pointer-events:auto!important;
+    display:none!important;
+  }
+  .svt162-voltage-help.is-visible{
+    display:block!important;
+    transform:none!important;
   }
   .svt162-voltage-help::before{display:none!important;}
 }
 @media (max-width:860px){
-  .svt162-tariff-shell{max-width:none!important;margin-left:0!important;}
+  .svt162-tariff-shell{width:100%!important;max-width:none!important;}
   .svt162-tariff-main{grid-template-columns:1fr!important;}
   .svt162-advanced-grid{grid-template-columns:1fr!important;}
 }
 </style>
-<!-- SVT v162 simple tariff advanced settings END -->
+<!-- SVT v163 tariff floating help layout fix END -->
 </head>
 <body data-energy-mode="electric" data-svt-ui="v157-professional">
   <div class="page">
@@ -6363,7 +6387,7 @@ body[data-svt-ui="v157-professional"] .page{
                   <p class="row-subtitle">Introdu prețul mediu plătit din factură. Setările tehnice rămân opționale.</p>
                 </div>
               </div>
-              <div class="row-right" style="width:100%">
+              <div class="row-right">
                 <div class="svt162-tariff-shell">
                   <div class="svt162-tariff-main">
                     <div class="svt162-price-field">
@@ -6384,8 +6408,8 @@ body[data-svt-ui="v157-professional"] .page{
                   <label class="svt162-included-check" for="tariffFinalInvoiceCheck">
                     <input type="checkbox" id="tariffFinalInvoiceCheck" checked>
                     <span class="svt162-check-copy">
-                      <strong>Preț final din factură, cu TVA și taxe incluse</strong>
-                      <span>Pentru estimarea rapidă nu trebuie să știi distribuitorul sau nivelul de tensiune.</span>
+                      <strong>Pret final din factura, cu TVA si taxe incluse</strong>
+                      <span>Pentru estimarea rapida nu trebuie sa stii distribuitorul sau nivelul de tensiune.</span>
                     </span>
                   </label>
 
@@ -6399,7 +6423,7 @@ body[data-svt-ui="v157-professional"] .page{
                       <div>
                         <div class="svt162-mini-label">Distribuitor / zonă</div>
                         <select class="control" id="tariffDistributor" aria-label="Distribuitor sau zonă">
-                          <option value="unknown" selected>Nu știu</option>
+                          <option value="unknown" selected>Nu stiu</option>
                           <option value="deer">DEER</option>
                           <option value="retele">Rețele Electrice România</option>
                           <option value="delgaz">Delgaz Grid</option>
@@ -6415,7 +6439,7 @@ body[data-svt-ui="v157-professional"] .page{
                           <option value="final_gross" selected>Preț final din factură, cu TVA și taxe</option>
                           <option value="active_energy_only">Doar energia activă</option>
                           <option value="without_vat">Preț fără TVA</option>
-                          <option value="unknown">Nu știu</option>
+                          <option value="unknown">Nu stiu</option>
                         </select>
                         <p class="svt162-mini-note">Default: prețul final plătit de client.</p>
                       </div>
@@ -6423,7 +6447,7 @@ body[data-svt-ui="v157-professional"] .page{
                       <div class="svt162-full">
                         <div class="svt162-mini-label">Nivel tensiune racordare</div>
                         <div class="svt162-voltage-links" role="list" aria-label="Nivel tensiune racordare">
-                          <a class="svt162-voltage-link is-active" href="#tariffVoltageHelpPanel" data-voltage="unknown">Nu știu</a>
+                          <a class="svt162-voltage-link is-active" href="#tariffVoltageHelpPanel" data-voltage="unknown">Nu stiu</a>
                           <a class="svt162-voltage-link" href="#tariffVoltageHelpPanel" data-voltage="jt">Joasă tensiune</a>
                           <a class="svt162-voltage-link" href="#tariffVoltageHelpPanel" data-voltage="mt">Medie tensiune</a>
                           <a class="svt162-voltage-link" href="#tariffVoltageHelpPanel" data-voltage="it">Înaltă tensiune</a>
@@ -6434,10 +6458,10 @@ body[data-svt-ui="v157-professional"] .page{
                     </div>
 
                     <aside class="svt162-voltage-help" id="tariffVoltageHelpPanel" aria-live="polite">
-                      <span class="svt162-help-kicker" data-help-kicker>Recomandat pentru clienți</span>
-                      <h4 data-help-title>Nu știu</h4>
-                      <p data-help-body>Lasă această opțiune dacă nu știi nivelul de tensiune. Pentru calculul simplu, prețul mediu din factură este suficient deoarece include deja rețeaua, taxele și TVA.</p>
-                      <div class="svt162-help-example" data-help-example>Folosește: total factură / kWh facturați.</div>
+                      <span class="svt162-help-kicker" data-help-kicker>Recomandat pentru clienti</span>
+                      <h4 data-help-title>Nu stiu</h4>
+                      <p data-help-body>Lasa aceasta optiune daca nu stii nivelul de tensiune. Pentru calculul simplu, pretul mediu din factura este suficient deoarece include deja reteaua, taxele si TVA.</p>
+                      <div class="svt162-help-example" data-help-example>Foloseste: total factura / kWh facturati.</div>
                     </aside>
                   </div>
 
@@ -6957,8 +6981,8 @@ body[data-svt-ui="v157-professional"] .page{
       });
     })();
   </script>
-<!-- SVT v162 tariff advanced behavior START -->
-<script id="svt-v162-tariff-advanced-behavior">
+<!-- SVT v163 tariff floating help behavior START -->
+<script id="svt-v163-tariff-floating-help-behavior">
 (function(){
   function ready(fn){
     if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn);
@@ -6967,39 +6991,57 @@ body[data-svt-ui="v157-professional"] .page{
 
   const HELP = {
     unknown: {
-      kicker: "Recomandat pentru clienți",
-      title: "Nu știu",
-      body: "Lasă această opțiune dacă nu știi nivelul de tensiune. Pentru calculul simplu, prețul mediu din factură este suficient deoarece include deja rețeaua, taxele și TVA.",
-      example: "Folosește: total factură / kWh facturați."
+      kicker: "Recomandat pentru clienti",
+      title: "Nu stiu",
+      body: "Lasa aceasta optiune daca nu stii nivelul de tensiune. Pentru calculul simplu, pretul mediu din factura este suficient deoarece include deja reteaua, taxele si TVA.",
+      example: "Foloseste: total factura / kWh facturati."
     },
     jt: {
-      kicker: "Joasă tensiune",
-      title: "JT — joasă tensiune",
-      body: "Este cazul cel mai des întâlnit pentru locuințe, birouri, magazine și firme mici. Alimentarea este de regulă 230/400 V.",
-      example: "Dacă nu ai post trafo propriu, cel mai probabil ești la JT."
+      kicker: "Joasa tensiune",
+      title: "JT - joasa tensiune",
+      body: "Este cazul cel mai des intalnit pentru locuinte, birouri, magazine si firme mici. Alimentarea este de regula 230/400 V.",
+      example: "Daca nu ai post trafo propriu, cel mai probabil esti la JT."
     },
     mt: {
       kicker: "Medie tensiune",
-      title: "MT — medie tensiune",
-      body: "Este folosită de consumatori mai mari: hale, fabrici, clădiri comerciale mari sau locații cu post de transformare propriu.",
-      example: "Apare de obicei în contract/aviz ca racordare la 6–20 kV."
+      title: "MT - medie tensiune",
+      body: "Este folosita de consumatori mai mari: hale, fabrici, cladiri comerciale mari sau locatii cu post de transformare propriu.",
+      example: "Apare de obicei in contract/aviz ca racordare la 6-20 kV."
     },
     it: {
-      kicker: "Înaltă tensiune",
-      title: "IT — înaltă tensiune",
-      body: "Este specifică pentru consumatori industriali foarte mari, racordați direct la rețele de înaltă tensiune.",
-      example: "Rar pentru clienți obișnuiți; apare clar în contractele tehnice."
+      kicker: "Inalta tensiune",
+      title: "IT - inalta tensiune",
+      body: "Este specifica pentru consumatori industriali foarte mari, racordati direct la retele de inalta tensiune.",
+      example: "Rar pentru clienti obisnuiti; apare clar in contractele tehnice."
     }
   };
 
-  function setHelp(key, select){
+  let helpPinned = false;
+  let hoverTimer = null;
+
+  function panel(){
+    return document.getElementById("tariffVoltageHelpPanel");
+  }
+
+  function showHelp(){
+    const p = panel();
+    if(p) p.classList.add("is-visible");
+  }
+
+  function hideHelp(force){
+    const p = panel();
+    if(!p) return;
+    if(force || !helpPinned) p.classList.remove("is-visible");
+  }
+
+  function setHelp(key, select, reveal){
     const data = HELP[key] || HELP.unknown;
-    const panel = document.getElementById("tariffVoltageHelpPanel");
-    if(panel){
-      const kicker = panel.querySelector("[data-help-kicker]");
-      const title = panel.querySelector("[data-help-title]");
-      const body = panel.querySelector("[data-help-body]");
-      const example = panel.querySelector("[data-help-example]");
+    const p = panel();
+    if(p){
+      const kicker = p.querySelector("[data-help-kicker]");
+      const title = p.querySelector("[data-help-title]");
+      const body = p.querySelector("[data-help-body]");
+      const example = p.querySelector("[data-help-example]");
       if(kicker) kicker.textContent = data.kicker;
       if(title) title.textContent = data.title;
       if(body) body.textContent = data.body;
@@ -7014,33 +7056,80 @@ body[data-svt-ui="v157-professional"] .page{
         link.setAttribute("aria-current", active ? "true" : "false");
       });
     }
+    if(reveal) showHelp();
   }
 
   ready(function(){
     const toggle = document.getElementById("tariffAdvancedToggle");
-    const panel = document.getElementById("tariffAdvancedPanel");
-    if(toggle && panel){
+    const adv = document.getElementById("tariffAdvancedPanel");
+    if(toggle && adv){
       toggle.addEventListener("click", function(){
-        const isOpen = !panel.hasAttribute("hidden");
+        const isOpen = !adv.hasAttribute("hidden");
         if(isOpen){
-          panel.setAttribute("hidden", "");
+          adv.setAttribute("hidden", "");
           toggle.setAttribute("aria-expanded", "false");
+          helpPinned = false;
+          hideHelp(true);
         }else{
-          panel.removeAttribute("hidden");
+          adv.removeAttribute("hidden");
           toggle.setAttribute("aria-expanded", "true");
-          setHelp(document.getElementById("tariffVoltageLevel")?.value || "unknown", false);
+          setHelp(document.getElementById("tariffVoltageLevel")?.value || "unknown", false, false);
         }
       });
     }
 
     document.querySelectorAll(".svt162-voltage-link").forEach(function(link){
       const key = link.getAttribute("data-voltage") || "unknown";
-      link.addEventListener("mouseenter", function(){ setHelp(key, false); });
-      link.addEventListener("focus", function(){ setHelp(key, false); });
+      link.addEventListener("mouseenter", function(){
+        helpPinned = false;
+        clearTimeout(hoverTimer);
+        setHelp(key, false, true);
+      });
+      link.addEventListener("mouseleave", function(){
+        clearTimeout(hoverTimer);
+        hoverTimer = setTimeout(function(){ hideHelp(false); }, 180);
+      });
+      link.addEventListener("focus", function(){
+        setHelp(key, false, true);
+      });
+      link.addEventListener("blur", function(){
+        clearTimeout(hoverTimer);
+        hoverTimer = setTimeout(function(){ hideHelp(false); }, 180);
+      });
       link.addEventListener("click", function(event){
         event.preventDefault();
-        setHelp(key, true);
+        helpPinned = true;
+        setHelp(key, true, true);
       });
+    });
+
+    const p = panel();
+    if(p){
+      p.addEventListener("mouseenter", function(){
+        clearTimeout(hoverTimer);
+        showHelp();
+      });
+      p.addEventListener("mouseleave", function(){
+        clearTimeout(hoverTimer);
+        hoverTimer = setTimeout(function(){ hideHelp(false); }, 180);
+      });
+    }
+
+    document.addEventListener("keydown", function(event){
+      if(event.key === "Escape"){
+        helpPinned = false;
+        hideHelp(true);
+      }
+    });
+
+    document.addEventListener("click", function(event){
+      const p = panel();
+      const isVoltage = event.target.closest && event.target.closest(".svt162-voltage-link");
+      const isPanel = p && p.contains(event.target);
+      if(!isVoltage && !isPanel){
+        helpPinned = false;
+        hideHelp(false);
+      }
     });
 
     const finalCheck = document.getElementById("tariffFinalInvoiceCheck");
@@ -7058,11 +7147,11 @@ body[data-svt-ui="v157-professional"] .page{
       });
     }
 
-    setHelp("unknown", true);
+    setHelp("unknown", true, false);
   });
 })();
 </script>
-<!-- SVT v162 tariff advanced behavior END -->
+<!-- SVT v163 tariff floating help behavior END -->
 </body>
 </html>
 
