@@ -7331,84 +7331,70 @@ body[data-svt-ui="v157-professional"] .page{
 }
 </style>
 <!-- SVT v170 final alignment + pv upload fix END -->
-<!-- SVT v171 tariff pv hero fix START -->
-<style id="svt-v171-tariff-pv-hero-fix">
+<!-- SVT v171 tariff pv final layout START -->
+<style id="svt-v171-tariff-pv-final-layout">
 /*
   SVT v171
-  - Hero subtitle mai aproape de titlu.
-  - PV: text checkbox complet + upload PV restaurat ca stil/aliniere cu uploadul principal.
-  - Detalii tarif: fara subtitlu; inputul pret in dreapta; input mai scurt; cele doua optiuni pe acelasi rand.
+  - Hero subtitle mai aproape de H1.
+  - PV: text checkbox complet, upload PV aliniat si dimensionat ca uploadul de consum.
+  - Detalii tarif: fara subtitlu, input compact in dreapta, cele doua checkbox-uri pe acelasi rand.
 */
 
-/* 1. Hero subtitle mai aproape de titlu */
-.hero h1,
-.wizard-shell h1{
+/* 1. Subtitlul mai aproape de titlul mare */
+.hero h1{
   margin-bottom:6px!important;
 }
-.hero .sub,
-.wizard-shell .sub{
-  margin-top:6px!important;
+.hero .sub{
+  margin-top:4px!important;
   margin-bottom:18px!important;
 }
 
-/* 2. PV: checkbox complet, fara sa intre peste upload; upload ca la randul 3 */
+/* 2. PV: nu trunchia checkboxul, nu mai intra peste upload, upload ca la randul 3 */
 .pv-flow-row{
-  grid-template-columns:minmax(0,1fr) minmax(0,390px)!important;
-  min-height:72px!important;
-  padding:10px 16px!important;
-  column-gap:16px!important;
+  grid-template-columns:minmax(0,1fr) 390px!important;
+  column-gap:18px!important;
+  min-height:70px!important;
+  padding:10px 18px!important;
   align-items:center!important;
 }
 .pv-flow-row > .flow-left{
   display:grid!important;
-  grid-template-columns:40px 28px minmax(0,1fr)!important;
+  grid-template-columns:40px 28px minmax(340px,1fr) auto!important;
   column-gap:12px!important;
   align-items:center!important;
-}
-.pv-flow-row > .flow-left > .icon-badge{
-  width:40px!important;
-  height:40px!important;
-  min-width:40px!important;
-  max-width:40px!important;
-}
-.pv-flow-row > .flow-left > .count-badge{
-  width:28px!important;
-  height:28px!important;
-  min-width:28px!important;
-  max-width:28px!important;
+  min-width:0!important;
 }
 .pv-flow-row .title-wrap{
   grid-column:3!important;
   display:block!important;
   min-width:0!important;
   max-width:none!important;
-  width:100%!important;
+  align-self:center!important;
 }
 .pv-flow-row .row-title{
-  font-size:17px!important;
-  line-height:1.08!important;
   white-space:nowrap!important;
   overflow:visible!important;
   text-overflow:clip!important;
-  margin:0!important;
 }
 .pv-flow-row .row-subtitle{
-  font-size:12.5px!important;
-  line-height:1.18!important;
   white-space:nowrap!important;
-  margin:4px 0 0!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
 }
 .pv-flow-row .pv-check-under-title{
+  grid-column:4!important;
+  align-self:center!important;
+  justify-self:end!important;
+  width:auto!important;
+  min-width:max-content!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
   display:flex!important;
   align-items:center!important;
-  width:max-content!important;
-  max-width:none!important;
-  min-width:0!important;
-  margin:7px 0 0!important;
-  padding:0!important;
   gap:7px!important;
   font-size:12px!important;
-  line-height:1.05!important;
+  line-height:1!important;
   font-weight:850!important;
   white-space:nowrap!important;
   overflow:visible!important;
@@ -7422,21 +7408,19 @@ body[data-svt-ui="v157-professional"] .page{
 }
 .pv-flow-row .row-right.pv-row-right{
   grid-column:2!important;
+  width:390px!important;
+  min-width:390px!important;
+  max-width:390px!important;
   display:flex!important;
   align-items:center!important;
   justify-content:flex-end!important;
-  width:100%!important;
-  max-width:390px!important;
   flex-wrap:nowrap!important;
   gap:0!important;
 }
-/* Restaurare upload PV ca uploadul principal: aceeasi latime/aliniere/buton */
 #productionBox.production-box-inline{
   margin:0!important;
   padding:0!important;
   border:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
   width:390px!important;
   min-width:390px!important;
   max-width:390px!important;
@@ -7447,7 +7431,7 @@ body[data-svt-ui="v157-professional"] .page{
   display:block!important;
 }
 #productionBox .production-inline,
-#productionDrop.file-inline.upload-zone.production-inline{
+#productionBox .file-inline.upload-zone{
   width:390px!important;
   min-width:390px!important;
   max-width:390px!important;
@@ -7456,9 +7440,8 @@ body[data-svt-ui="v157-professional"] .page{
   padding:3px 10px!important;
   align-items:center!important;
   justify-content:flex-start!important;
-  gap:10px!important;
+  border-style:dashed!important;
 }
-#productionChoose.file-button,
 #productionChoose{
   height:29px!important;
   min-height:29px!important;
@@ -7477,53 +7460,33 @@ body[data-svt-ui="v157-professional"] .page{
   white-space:nowrap!important;
 }
 
-/* 3. Detalii tarif: input in dreapta, fara subtitlu, optiuni pe acelasi rand */
+/* 3. Detalii tarif: inapoi pe dreapta, input compact, fara subtitlu */
 .tariff-flow-row{
-  grid-template-columns:minmax(0,330px) minmax(0,1fr)!important;
-  min-height:150px!important;
+  grid-template-columns:minmax(330px,.58fr) minmax(0,1fr)!important;
+  column-gap:24px!important;
+  align-items:center!important;
+  min-height:126px!important;
   padding:16px 18px!important;
-  align-items:start!important;
-  column-gap:22px!important;
 }
-.tariff-flow-row > .flow-left{
+.tariff-flow-row .flow-left{
   display:grid!important;
   grid-template-columns:40px 28px minmax(0,1fr)!important;
   column-gap:12px!important;
   align-items:center!important;
-  align-self:start!important;
-  min-width:0!important;
-}
-.tariff-flow-row > .flow-left > .icon-badge{
-  width:40px!important;
-  height:40px!important;
-  min-width:40px!important;
-  max-width:40px!important;
-}
-.tariff-flow-row > .flow-left > .count-badge{
-  width:28px!important;
-  height:28px!important;
-  min-width:28px!important;
-  max-width:28px!important;
 }
 .tariff-flow-row .title-wrap{
-  display:block!important;
   grid-column:3!important;
-  min-width:0!important;
+  display:block!important;
 }
-.tariff-flow-row .row-title{
-  font-size:17px!important;
-  line-height:1.08!important;
-  margin:0!important;
-}
-.tariff-flow-row .row-subtitle{
+.tariff-flow-row .title-wrap .row-subtitle{
   display:none!important;
 }
 .tariff-flow-row .row-right{
   display:flex!important;
-  align-items:flex-start!important;
+  align-items:center!important;
   justify-content:flex-end!important;
-  min-width:0!important;
   width:100%!important;
+  min-width:0!important;
 }
 .tariff-flow-row .svt162-tariff-shell{
   width:100%!important;
@@ -7535,17 +7498,17 @@ body[data-svt-ui="v157-professional"] .page{
 .tariff-flow-row .svt162-tariff-main{
   display:flex!important;
   justify-content:flex-end!important;
-  align-items:flex-start!important;
   width:100%!important;
 }
 .tariff-flow-row .svt162-price-field{
-  width:340px!important;
-  max-width:340px!important;
-  justify-self:end!important;
+  width:320px!important;
+  max-width:320px!important;
+  margin-left:auto!important;
 }
 .tariff-flow-row .svt162-price-control{
   height:38px!important;
-  min-height:38px!important;
+  width:320px!important;
+  max-width:320px!important;
   border-radius:13px!important;
 }
 .tariff-flow-row .svt162-price-control #fixedTariff{
@@ -7558,73 +7521,79 @@ body[data-svt-ui="v157-professional"] .page{
 }
 .tariff-flow-row .svt162-hint{
   font-size:11px!important;
-  line-height:1.2!important;
+  line-height:1.15!important;
   margin-top:5px!important;
+}
+.tariff-flow-row .svt162-check-row{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:10px!important;
+  width:100%!important;
 }
 .tariff-flow-row .svt162-included-check,
 .tariff-flow-row .svt166-advanced-check{
-  min-height:54px!important;
   width:100%!important;
+  min-height:48px!important;
   padding:9px 10px!important;
   border-radius:14px!important;
-  align-items:flex-start!important;
 }
-.tariff-flow-row .svt162-check-copy strong,
-.tariff-flow-row .svt166-advanced-copy strong{
-  font-size:12.3px!important;
+.tariff-flow-row .svt162-included-check strong,
+.tariff-flow-row .svt166-advanced-check strong{
+  font-size:12px!important;
+  line-height:1.05!important;
+}
+.tariff-flow-row .svt162-included-check span span,
+.tariff-flow-row .svt166-advanced-check span span{
+  font-size:10.5px!important;
   line-height:1.15!important;
 }
-.tariff-flow-row .svt162-check-copy span,
-.tariff-flow-row .svt166-advanced-copy span{
-  font-size:10.8px!important;
-  line-height:1.25!important;
-}
-.tariff-flow-row .svt171-tariff-options{
-  display:grid!important;
-  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
-  gap:10px!important;
-  width:100%!important;
-  align-items:stretch!important;
-}
+
+/* Setarile avansate sub cele doua checkbox-uri, pe toata latimea din dreapta */
 .tariff-flow-row .svt162-advanced{
-  grid-column:1 / -1!important;
   width:100%!important;
-  margin-top:0!important;
 }
 
-/* Mobile/tablet */
+/* Responsive */
 @media (max-width:1180px){
   .pv-flow-row,
   .tariff-flow-row{
     grid-template-columns:1fr!important;
   }
-  .pv-flow-row .row-right.pv-row-right,
-  .tariff-flow-row .row-right{
-    grid-column:1!important;
-    justify-content:flex-start!important;
-    max-width:none!important;
+  .pv-flow-row > .flow-left{
+    grid-template-columns:40px 28px minmax(0,1fr)!important;
   }
   .pv-flow-row .pv-check-under-title{
+    grid-column:3!important;
+    justify-self:start!important;
+    margin-top:8px!important;
+    min-width:0!important;
     white-space:normal!important;
-    width:auto!important;
   }
+  .pv-flow-row .row-right.pv-row-right,
   #productionBox.production-box-inline,
   #productionBox .production-inline,
-  #productionDrop.file-inline.upload-zone.production-inline{
+  #productionBox .file-inline.upload-zone{
     width:100%!important;
     min-width:0!important;
     max-width:100%!important;
   }
-  .tariff-flow-row .svt162-price-field{
-    width:100%!important;
-    max-width:340px!important;
+  .tariff-flow-row .row-right{
+    justify-content:flex-start!important;
   }
-  .tariff-flow-row .svt171-tariff-options{
+  .tariff-flow-row .svt162-tariff-shell{
+    max-width:100%!important;
+  }
+  .tariff-flow-row .svt162-price-field,
+  .tariff-flow-row .svt162-price-control{
+    width:100%!important;
+    max-width:100%!important;
+  }
+  .tariff-flow-row .svt162-check-row{
     grid-template-columns:1fr!important;
   }
 }
 </style>
-<!-- SVT v171 tariff pv hero fix END -->
+<!-- SVT v171 tariff pv final layout END -->
 </head>
 <body data-energy-mode="electric" data-svt-ui="v157-professional">
   <div class="page">
@@ -7751,6 +7720,9 @@ body[data-svt-ui="v157-professional"] .page{
                 
 
               </div>
+              
+
+            
               <div class="row-right">
                 <div class="svt162-tariff-shell">
                                                   <div class="svt162-tariff-main">
@@ -7765,7 +7737,7 @@ body[data-svt-ui="v157-professional"] .page{
                                                       <input type="hidden" id="tariffType" value="fixed">
                                                   </div>
                                 
-                                                  <div class="svt171-tariff-options">
+                                                  <div class="svt162-check-row">
                 <label class="svt162-included-check" for="tariffFinalInvoiceCheck">
                                                     <input type="checkbox" id="tariffFinalInvoiceCheck" checked>
                                                     <span class="svt162-check-copy">
@@ -7780,11 +7752,10 @@ body[data-svt-ui="v157-professional"] .page{
                                                       <span>Activeaza doar daca stii distribuitorul, nivelul de tensiune sau ce include pretul introdus.</span>
                                                     </span>
                                                   </label>
-                                
-                                
-                                                  
                 </div>
-                <div class="svt162-advanced" id="tariffAdvancedPanel" hidden>
+                                
+                                
+                                                  <div class="svt162-advanced" id="tariffAdvancedPanel" hidden>
                                                     <div class="svt162-advanced-grid">
                                                       <div>
                                                         <div class="svt162-mini-label">Distribuitor / zonă</div>
@@ -7834,8 +7805,6 @@ body[data-svt-ui="v157-professional"] .page{
                                                   <input type="hidden" id="consumptionDataSource" value="total">
                                                 </div>
               </div>
-              
-
             </div>
 
             <div class="flow-row pv-flow-row">
