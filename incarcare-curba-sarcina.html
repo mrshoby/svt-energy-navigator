@@ -9584,6 +9584,51 @@ body[data-svt-ui="v157-professional"]{
   }
 }
 
+
+
+/* SVT v198 — Direct price mode shows only Pret pe kWh */
+.svt194-tariff-row.is-direct-price-mode .svt194-advanced-toggle,
+.svt194-tariff-row.is-direct-price-mode .svt194-advanced-panel{
+  display:none!important;
+}
+.svt194-tariff-row.is-direct-price-mode .svt194-top-fields{
+  grid-column:2!important;
+  grid-row:1 / span 2!important;
+  align-self:center!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  min-width:0!important;
+}
+.svt194-tariff-row.is-direct-price-mode .svt194-direct-fields{
+  display:block!important;
+  width:210px!important;
+  min-width:210px!important;
+  max-width:210px!important;
+}
+.svt194-tariff-row.is-direct-price-mode .svt194-direct-fields[hidden]{
+  display:block!important;
+}
+.svt194-tariff-row.is-direct-price-mode .svt194-invoice-fields{
+  display:none!important;
+}
+.svt194-tariff-row.is-direct-price-mode .svt194-field[for="fixedTariff"] > span{
+  font-size:9.5px!important;
+  line-height:1.05!important;
+  font-weight:950!important;
+  white-space:nowrap!important;
+}
+.svt194-tariff-row.is-direct-price-mode #fixedTariff{
+  font-size:14px!important;
+  font-weight:950!important;
+}
+@media (max-width:980px){
+  .svt194-tariff-row.is-direct-price-mode .svt194-top-fields{
+    grid-column:1!important;
+    grid-row:auto!important;
+  }
+}
+
 </style>
 <!-- SVT v174 bottom background fix END -->
 </head>
@@ -10127,8 +10172,14 @@ body[data-svt-ui="v157-professional"]{
       });
       const invoicePanel = document.querySelector('[data-tariff-mode-panel="invoice_calculation"]');
       const directPanel = document.querySelector('[data-tariff-mode-panel="direct_price"]');
+      const tariffRow = document.querySelector('.tariff-flow-row');
       if(invoicePanel) invoicePanel.hidden = !invoice;
       if(directPanel) directPanel.hidden = invoice;
+      if(tariffRow){
+        tariffRow.dataset.tariffMode = normalized;
+        tariffRow.classList.toggle('is-direct-price-mode', !invoice);
+        tariffRow.classList.toggle('is-invoice-calculation-mode', invoice);
+      }
       updateEffectiveTariff();
     }
 
