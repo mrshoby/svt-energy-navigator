@@ -6582,182 +6582,475 @@ body[data-svt-ui="v157-professional"] .page{
 
 /* 4. Detalii tarif: continutul tarif sub titlu/subtitlu */
 .tariff-flow-row{
-  grid-template-columns:minmax(0,1fr)!important;
-  align-items:start!important;
-  min-height:0!important;
+  min-height:220px!important;
+  height:auto!important;
+  grid-template-columns:1fr!important;
+  align-items:stretch!important;
+  padding:22px 26px!important;
+  column-gap:0!important;
+  position:relative!important;
+  overflow:visible!important;
 }
 .tariff-flow-row .flow-left{
+  grid-column:1!important;
+  grid-row:1!important;
   width:100%!important;
-  grid-template-columns:44px 28px minmax(0,1fr)!important;
+  display:grid!important;
+  grid-template-columns:48px 34px minmax(0,1fr)!important;
+  grid-template-rows:auto auto!important;
+  column-gap:14px!important;
+  row-gap:18px!important;
   align-items:start!important;
+  padding:0!important;
+  position:static!important;
+  z-index:auto!important;
 }
-.tariff-flow-row .icon-badge,
-.tariff-flow-row .count-badge{
-  margin-top:2px!important;
-}
-.tariff-flow-row .title-wrap{
+.tariff-flow-row .icon-badge{
+  grid-column:1!important;
+  grid-row:1!important;
   align-self:start!important;
+  justify-self:start!important;
+  width:48px!important;
+  height:48px!important;
+  min-width:48px!important;
+  border-radius:16px!important;
 }
-.tariff-flow-row .row-right{
-  display:none!important;
+.tariff-flow-row .count-badge{
+  grid-column:2!important;
+  grid-row:1!important;
+  align-self:start!important;
+  justify-self:center!important;
+  margin-top:8px!important;
 }
-.tariff-flow-row .svt162-tariff-shell{
+.tariff-flow-row .title-wrap.tariff-title-wrap{
   grid-column:3!important;
-  width:100%!important;
-  max-width:560px!important;
-  margin-top:13px!important;
-  margin-left:0!important;
-}
-.tariff-flow-row .svt162-price-control{
-  width:100%!important;
-}
-.tariff-flow-row .svt162-included-check,
-.tariff-flow-row .svt166-advanced-check{
-  width:100%!important;
-}
-.tariff-flow-row .svt162-advanced{
-  width:100%!important;
-}
-
-/* Pentru continutul mutat sub titlu, pastram spacing compact */
-.tariff-flow-row .svt162-hint{
-  margin-top:6px!important;
-}
-.tariff-flow-row .svt162-tariff-main{
-  width:100%!important;
-}
-
-/* Mobile fallback */
-@media (max-width:860px){
-  .flow-left,
-  .tariff-flow-row .flow-left{
-    grid-template-columns:40px 27px minmax(0,1fr)!important;
-    column-gap:10px!important;
-  }
-  .energy-switch-row .row-subtitle{
-    white-space:normal!important;
-  }
-  .tariff-flow-row .svt162-tariff-shell{
-    grid-column:1 / -1!important;
-    margin-top:12px!important;
-  }
-}
-</style>
-<!-- SVT v167 compact rows + aligned badges + tariff under title END -->
-<!-- SVT v168 source upload pv cleanup START -->
-<style id="svt-v168-source-upload-pv-cleanup">
-/*
-  SVT v168
-  1) Sursa datelor: linkul "De unde obtii fisierul?" este langa subtitlu; caseta recomandata este stearsa.
-  2) Butonul "Incarc fisierul orar" este pe un singur rand.
-  3) Randul "Incarca fisierul" este compact ca Tip energie.
-  4) PV title este pe un singur rand si uploadul PV reapare la bifare.
-*/
-
-/* Sursa datelor: subtitlu + link pe aceeasi linie */
-.svt168-source-subrow{
+  grid-row:1!important;
+  align-self:start!important;
   display:flex!important;
   align-items:center!important;
-  gap:12px!important;
+  justify-content:flex-start!important;
+  gap:18px!important;
   min-width:0!important;
-  flex-wrap:nowrap!important;
+  padding:7px 0 0!important;
 }
-.svt168-source-subrow .row-subtitle{
-  margin:4px 0 0!important;
+.tariff-flow-row .title-wrap.tariff-title-wrap .row-title{
+  margin:0!important;
+  font-size:22px!important;
+  line-height:1!important;
+  letter-spacing:-.035em!important;
+  color:#0b203a!important;
+  font-weight:950!important;
   white-space:nowrap!important;
-  overflow:hidden!important;
-  text-overflow:ellipsis!important;
 }
-.svt168-inline-help-link{
-  margin-top:4px!important;
+.tariff-title-helper{
+  display:inline-flex!important;
+  align-items:center!important;
+  min-width:0!important;
+  color:#5f6f84!important;
+  font-size:12px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+.tariff-flow-row .row-right.tariff-row-right{
+  grid-column:3!important;
+  grid-row:2!important;
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  height:auto!important;
+  align-self:start!important;
+  justify-self:stretch!important;
+  padding:0!important;
+  margin:0!important;
+  overflow:visible!important;
+}
+.tariff-flow-row .svt162-tariff-shell{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  display:grid!important;
+  grid-template-columns:minmax(420px,500px) minmax(560px,1fr)!important;
+  grid-template-areas:
+    "methods panel"
+    "checks advanced"!important;
+  column-gap:30px!important;
+  row-gap:18px!important;
+  align-items:start!important;
+  overflow:visible!important;
+}
+.tariff-intro,
+.tariff-question{
+  display:none!important;
+}
+.tariff-methods{
+  grid-area:methods!important;
+  width:100%!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  align-items:start!important;
+  gap:28px!important;
+  margin:0!important;
+}
+.tariff-method-card{
+  min-width:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  padding:0!important;
+  box-shadow:none!important;
+}
+.tariff-method-select{
+  display:grid!important;
+  grid-template-columns:16px minmax(0,1fr)!important;
+  gap:7px!important;
+  align-items:start!important;
+  margin:0!important;
+  color:#0b203a!important;
+  cursor:pointer!important;
+  white-space:normal!important;
+}
+.tariff-method-select input{
+  width:15px!important;
+  height:15px!important;
+  min-width:15px!important;
+  margin:1px 0 0!important;
+  accent-color:#079640!important;
+}
+.tariff-method-select strong{
+  display:block!important;
+  color:#0b203a!important;
+  font-size:13px!important;
+  line-height:1.05!important;
+  font-weight:950!important;
+}
+.tariff-method-select small{
+  display:block!important;
+  margin-top:2px!important;
+  color:#66758a!important;
+  font-size:10px!important;
+  line-height:1.1!important;
+  font-weight:850!important;
+}
+.tariff-active-panel{
+  grid-area:panel!important;
+  width:100%!important;
+  min-width:0!important;
+  align-self:start!important;
+  margin:0!important;
+}
+.tariff-flow-row .svt162-tariff-shell[data-tariff-method="invoice_calculation"] .tariff-known-body,
+.tariff-flow-row .svt162-tariff-shell[data-tariff-method="direct_price"] .tariff-invoice-body{
+  display:none!important;
+}
+.tariff-flow-row .svt162-tariff-shell[data-tariff-method="direct_price"] .tariff-known-body{
+  display:flex!important;
+  justify-content:flex-start!important;
+  align-items:start!important;
+  min-height:50px!important;
+}
+.tariff-invoice-body{
+  display:block!important;
+  width:100%!important;
+}
+.tariff-invoice-fields{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(150px,1.16fr)!important;
+  gap:12px!important;
+  margin:0!important;
+  align-items:start!important;
+}
+.tariff-mini-field,
+.tariff-flow-row .svt162-price-field{
+  display:grid!important;
+  gap:5px!important;
+  margin:0!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+}
+.tariff-mini-field > span,
+.tariff-flow-row .svt162-price-field > span,
+.tariff-flow-row .svt162-mini-label{
+  display:block!important;
+  color:#0b203a!important;
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:950!important;
+  white-space:nowrap!important;
+}
+.tariff-input-unit,
+.tariff-flow-row .svt162-price-control{
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  height:38px!important;
+  min-height:38px!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:8px!important;
+  padding:0 10px!important;
+  border:1px solid #d9e4ec!important;
+  border-radius:12px!important;
+  background:#fff!important;
+  overflow:hidden!important;
+  box-shadow:none!important;
+}
+.tariff-input-unit input,
+.tariff-flow-row .svt162-price-control #fixedTariff{
+  width:100%!important;
+  height:36px!important;
+  min-height:36px!important;
+  min-width:0!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+  padding:0!important;
   border:0!important;
   background:transparent!important;
-  color:#079a48!important;
-  font:inherit!important;
-  font-size:12px!important;
-  line-height:1.1!important;
+  color:#0b203a!important;
+  font-size:13px!important;
+  line-height:1!important;
   font-weight:950!important;
-  text-decoration:underline!important;
-  text-underline-offset:3px!important;
-  cursor:pointer!important;
+  text-align:left!important;
+  box-shadow:none!important;
+}
+#calculatedTariffPreview,
+#effectiveTariffPreview{
+  font-size:18px!important;
+  font-weight:950!important;
+}
+.tariff-input-unit b,
+.tariff-flow-row .svt162-unit{
+  color:#263854!important;
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:950!important;
   white-space:nowrap!important;
   padding:0!important;
 }
-.svt168-inline-help-link:hover,
-.svt168-inline-help-link:focus{
-  color:#065f31!important;
-  outline:none!important;
+.tariff-calculated-unit,
+.tariff-effective-unit{
+  background:#f7fcf9!important;
+  border-color:#cfe9da!important;
 }
-
-/* Sterge orice caseta helper ramasa la Sursa datelor */
-.source-help{
+.tariff-field-help,
+.tariff-example,
+.tariff-inline-notice{
   display:none!important;
 }
-
-/* Buton incarcare orara pe un singur rand */
-#methodFileCard.source-choice{
-  width:176px!important;
-  min-width:176px!important;
-  max-width:176px!important;
-  height:42px!important;
-  white-space:nowrap!important;
-  justify-content:center!important;
-  text-align:center!important;
+.tariff-flow-row .svt162-check-row{
+  grid-area:checks!important;
+  display:block!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
 }
-#methodFileCard.source-choice span{
-  display:inline!important;
-  white-space:nowrap!important;
-  line-height:1!important;
+.tariff-flow-row .svt166-advanced-check{
+  width:max-content!important;
+  max-width:100%!important;
+  min-height:0!important;
+  display:grid!important;
+  grid-template-columns:16px minmax(0,1fr)!important;
+  gap:7px!important;
+  align-items:start!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  cursor:pointer!important;
 }
-
-/* Randul 3 - Incarca fisierul: height compact ca Tip energie */
-.upload-flow-row{
-  min-height:68px!important;
-  height:auto!important;
-  padding:12px 18px!important;
-  align-items:center!important;
+.tariff-flow-row .svt166-advanced-check input{
+  width:15px!important;
+  height:15px!important;
+  min-width:15px!important;
+  margin:1px 0 0!important;
+  accent-color:#079640!important;
 }
-.upload-flow-row .row-subtitle{
-  white-space:nowrap!important;
-  overflow:hidden!important;
-  text-overflow:ellipsis!important;
-}
-.upload-flow-row .icon-badge{
-  width:40px!important;
-  height:40px!important;
-  min-width:40px!important;
-  border-radius:14px!important;
-}
-.upload-flow-row .count-badge{
-  width:27px!important;
-  height:27px!important;
-  min-width:27px!important;
-  max-width:27px!important;
-}
-.upload-flow-row .row-right{
-  align-self:center!important;
-}
-.upload-flow-row #dropZone.file-inline{
-  min-height:42px!important;
-  height:42px!important;
-  padding:4px 10px!important;
-  align-items:center!important;
-}
-.upload-flow-row #dropZone .file-button{
-  height:32px!important;
-  min-height:32px!important;
-  padding:0 10px!important;
-  white-space:nowrap!important;
-}
-.upload-flow-row #dropZone .file-meta strong,
-.upload-flow-row #dropZone .file-meta span{
+.svt166-advanced-copy strong{
+  display:block!important;
+  color:#0b203a!important;
+  font-size:13px!important;
   line-height:1.05!important;
+  font-weight:950!important;
 }
-.upload-flow-row #fileName{
-  margin-top:4px!important;
+.svt166-advanced-copy span{
+  display:block!important;
+  margin-top:2px!important;
+  color:#66758a!important;
+  font-size:10px!important;
+  line-height:1.12!important;
+  font-weight:850!important;
 }
-
-/* Randul 5 - PV: titlu pe un singur rand + upload vizibil la bifare */
+.tariff-flow-row .svt162-advanced{
+  grid-area:advanced!important;
+  width:100%!important;
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.tariff-flow-row .svt162-advanced[hidden]{
+  display:none!important;
+}
+.tariff-flow-row .svt162-advanced-grid{
+  width:100%!important;
+  display:grid!important;
+  grid-template-columns:minmax(130px,1fr) minmax(130px,1fr) minmax(150px,1fr) minmax(170px,1.16fr)!important;
+  gap:12px!important;
+  align-items:start!important;
+  margin:0!important;
+}
+.tariff-flow-row .svt162-advanced-grid > div,
+.tariff-flow-row .svt162-advanced-grid > label{
+  min-width:0!important;
+}
+.tariff-flow-row .svt162-full{
+  grid-column:auto!important;
+}
+.tariff-flow-row select.control{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  height:38px!important;
+  min-height:38px!important;
+  padding:0 10px!important;
+  border:1px solid #d9e4ec!important;
+  border-radius:12px!important;
+  background:#fff!important;
+  color:#0b203a!important;
+  font-size:12px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  box-shadow:none!important;
+}
+.tariff-flow-row .svt162-voltage-help{
+  display:none!important;
+  position:static!important;
+  width:auto!important;
+  max-width:none!important;
+  margin-top:7px!important;
+  padding:8px!important;
+  border:1px solid #dce9e4!important;
+  border-radius:10px!important;
+  background:#fff!important;
+  box-shadow:none!important;
+}
+.tariff-flow-row .svt162-voltage-help.is-visible{
+  display:block!important;
+}
+.tariff-flow-row .svt162-voltage-help h4{
+  margin:2px 0 3px!important;
+  font-size:11px!important;
+  line-height:1!important;
+  color:#0b203a!important;
+}
+.tariff-flow-row .svt162-voltage-help p,
+.tariff-flow-row .svt162-help-example{
+  margin:0!important;
+  color:#66758a!important;
+  font-size:9.5px!important;
+  line-height:1.18!important;
+  font-weight:800!important;
+}
+.tariff-flow-row .svt162-help-kicker{
+  color:#079640!important;
+  font-size:9px!important;
+  font-weight:950!important;
+  text-transform:none!important;
+}
+.tariff-side-notes{
+  display:block!important;
+  margin:0!important;
+}
+.tariff-side-note{
+  min-width:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+}
+.tariff-side-note-label,
+.tariff-side-note-invoice,
+.tariff-side-note-direct{
+  display:none!important;
+}
+.tariff-side-note p{
+  margin:0!important;
+  color:#66758a!important;
+  font-size:12px!important;
+  line-height:1.32!important;
+  font-weight:900!important;
+}
+.tariff-flow-row .svt162-tariff-shell:not(.is-advanced-open) .tariff-side-note-advanced{
+  display:block!important;
+}
+@media (min-width:721px){
+  .tariff-flow-row #tariffSideNotes{
+    position:fixed!important;
+    top:148px!important;
+    right:calc((100vw - min(var(--svt173-layout-w),calc(100vw - 24px))) / 2 + var(--svt173-page-edge))!important;
+    z-index:7!important;
+    width:var(--svt173-side-note-w)!important;
+    max-width:var(--svt173-side-note-w)!important;
+    min-height:0!important;
+    padding:clamp(14px,1.1vw,20px) clamp(14px,1.2vw,20px)!important;
+    border:1px solid #dce9e4!important;
+    border-radius:clamp(14px,1vw,18px)!important;
+    background:rgba(255,255,255,.88)!important;
+    color:#52647c!important;
+    box-shadow:0 22px 52px rgba(21,37,60,.10)!important;
+    backdrop-filter:blur(10px)!important;
+    -webkit-backdrop-filter:blur(10px)!important;
+  }
+  .tariff-flow-row #tariffSideNotes p{
+    font-size:clamp(11px,.76vw,13px)!important;
+    line-height:1.32!important;
+    font-weight:900!important;
+  }
+  .tariff-flow-row #tariffSideNotes.is-warning{
+    border-color:#f2d5a6!important;
+    background:rgba(255,250,241,.9)!important;
+  }
+  .tariff-flow-row #tariffSideNotes #tariffAdvancedNotice.is-warning{
+    color:#b45309!important;
+  }
+}
+@media (max-width:1180px){
+  .tariff-flow-row{
+    min-height:0!important;
+  }
+  .tariff-flow-row .svt162-tariff-shell{
+    grid-template-columns:1fr!important;
+    grid-template-areas:
+      "methods"
+      "panel"
+      "checks"
+      "advanced"!important;
+    row-gap:14px!important;
+  }
+  .tariff-methods,
+  .tariff-invoice-fields,
+  .tariff-flow-row .svt162-check-row,
+  .tariff-flow-row .svt162-advanced-grid{
+    grid-template-columns:1fr!important;
+  }
+  .tariff-flow-row #tariffSideNotes{
+    position:static!important;
+    width:100%!important;
+    max-width:none!important;
+    margin-top:10px!important;
+    padding:12px!important;
+    border:1px solid #dce9e4!important;
+    border-radius:14px!important;
+    background:#fbfefc!important;
+  }
+}
 
 .pv-flow-row{
   grid-template-columns:minmax(470px,.95fr) minmax(0,1fr)!important;
@@ -9163,16 +9456,13 @@ body[data-svt-ui="v157-professional"]{
               <div class="flow-left">
                 <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2.5" width="14" height="19" rx="2"/><path d="M8.5 7h7M8.5 11h7M8.5 15h7"/></svg></div>
                 <div class="count-badge">4</div>
-                <div class="title-wrap">
+                <div class="title-wrap tariff-title-wrap">
                   <h3 class="row-title">Detalii tarif</h3>
+                  <span class="tariff-title-helper">Cum vrei sa introduci costul energiei?</span>
                 </div>
+
                 <div class="row-right tariff-row-right">
                   <div class="svt162-tariff-shell is-advanced-open" data-tariff-method="invoice_calculation">
-                    <div class="tariff-intro">
-                      <p class="tariff-question">Cat platesti energia?</p>
-                      <p class="tariff-mode-label">Cum vrei sa introduci costul energiei?</p>
-                    </div>
-
                     <div class="tariff-methods" role="radiogroup" aria-label="Cum vrei sa introduci costul energiei">
                       <section class="tariff-method-card tariff-method-card-primary is-selected">
                         <label class="tariff-method-select" for="tariffInputModeInvoice">
@@ -9205,6 +9495,7 @@ body[data-svt-ui="v157-professional"]{
                               <b>lei</b>
                             </div>
                           </label>
+
                           <label class="tariff-mini-field" for="invoiceBilledConsumption">
                             <span>Consum facturat</span>
                             <div class="tariff-input-unit">
@@ -9212,6 +9503,7 @@ body[data-svt-ui="v157-professional"]{
                               <b>kWh</b>
                             </div>
                           </label>
+
                           <label class="tariff-mini-field" for="calculatedTariffPreview">
                             <span>Pret calculat automat</span>
                             <div class="tariff-input-unit tariff-calculated-unit">
@@ -9220,6 +9512,7 @@ body[data-svt-ui="v157-professional"]{
                             </div>
                           </label>
                         </div>
+
                         <p class="tariff-field-help">Il gasesti pe factura la „Consum facturat”, „Energie activa” sau „Consum energie electrica”.</p>
                         <p class="tariff-example">Exemplu: 750 lei / 1000 kWh = 0.75 lei/kWh</p>
                         <p class="tariff-inline-notice" id="tariffInlineNotice" aria-live="polite"></p>
@@ -9286,11 +9579,10 @@ body[data-svt-ui="v157-professional"]{
                         <label class="tariff-mini-field tariff-effective-field" for="effectiveTariffPreview">
                           <span>Pret folosit in calcule</span>
                           <div class="tariff-input-unit tariff-effective-unit">
-                            <input class="control" id="effectiveTariffPreview" type="text" value="0.75" readonly aria-label="Pret folosit in calcule">
+                            <input class="control" id="effectiveTariffPreview" type="text" value="0.00" readonly aria-label="Pret folosit in calcule">
                             <b>lei/kWh</b>
                           </div>
                         </label>
-
                       </div>
 
                       <aside class="svt162-voltage-help" id="tariffVoltageHelpPanel" aria-live="polite">
@@ -9302,18 +9594,7 @@ body[data-svt-ui="v157-professional"]{
                     </div>
 
                     <aside class="tariff-side-notes" id="tariffSideNotes" aria-label="Explicatii tarif">
-                      <section class="tariff-side-note tariff-side-note-invoice">
-                        <div class="tariff-side-note-label">Consum facturat</div>
-                        <p>Il gasesti pe factura la „Consum facturat”, „Energie activa” sau „Consum energie electrica”.</p>
-                        <p class="tariff-side-example">Exemplu: 750 lei / 1000 kWh = 0.75 lei/kWh</p>
-                      </section>
-                      <section class="tariff-side-note tariff-side-note-direct">
-                        <div class="tariff-side-note-label">Pret pe kWh</div>
-                        <p>Completeaza pretul mediu pe care il cunosti, in lei/kWh.</p>
-                        <p class="tariff-side-example">Daca nu esti sigur, foloseste „Calculeaza din factura”.</p>
-                      </section>
                       <section class="tariff-side-note tariff-side-note-advanced">
-                        <div class="tariff-side-note-label">Pretul introdus reprezinta</div>
                         <p class="tariff-advanced-note" id="tariffAdvancedNotice" aria-live="polite">Distribuitorul si nivelul de tensiune ajuta doar la estimari orientative. Cel mai corect pret este cel calculat din total factura / consum facturat.</p>
                       </section>
                     </aside>
