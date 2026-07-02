@@ -4655,20 +4655,20 @@
   }
 
 
-/* SVT v191 — clean rebuild ONLY for section 4 Detalii tarif */
+/* SVT v192 — section 4 Detalii tarif visual fit fix */
 .svt191-tariff-row{
-  min-height:220px!important;
+  min-height:196px!important;
   height:auto!important;
-  padding:22px 26px!important;
+  padding:18px 20px!important;
   grid-template-columns:1fr!important;
   align-items:stretch!important;
-  overflow:visible!important;
+  overflow:hidden!important;
 }
 .svt191-tariff-row .svt191-tariff-left{
   width:100%!important;
+  min-width:0!important;
   display:grid!important;
-  grid-template-columns:48px 34px minmax(0,1fr)!important;
-  grid-template-rows:auto!important;
+  grid-template-columns:56px 38px minmax(0,1fr)!important;
   column-gap:14px!important;
   align-items:start!important;
 }
@@ -4680,13 +4680,13 @@
   min-width:48px!important;
   border-radius:16px!important;
   align-self:start!important;
+  justify-self:start!important;
 }
 .svt191-tariff-row .count-badge{
   grid-column:2!important;
   grid-row:1!important;
-  align-self:start!important;
-  justify-self:center!important;
   margin-top:8px!important;
+  align-self:start!important;
 }
 .svt191-tariff-card{
   grid-column:3!important;
@@ -4695,14 +4695,15 @@
   min-width:0!important;
   display:grid!important;
   grid-template-columns:1fr!important;
-  grid-template-rows:auto auto!important;
-  gap:16px!important;
+  gap:12px!important;
   position:relative!important;
+  overflow:hidden!important;
 }
 .svt191-tariff-head{
   display:flex!important;
-  align-items:center!important;
-  gap:18px!important;
+  align-items:baseline!important;
+  justify-content:flex-start!important;
+  gap:14px!important;
   width:100%!important;
   min-width:0!important;
   padding-top:5px!important;
@@ -4717,9 +4718,9 @@
   white-space:nowrap!important;
 }
 .svt191-tariff-head span{
-  color:#5f6f84!important;
+  color:#5e7186!important;
   font-size:12px!important;
-  line-height:1!important;
+  line-height:1.15!important;
   font-weight:900!important;
   white-space:nowrap!important;
 }
@@ -4727,26 +4728,27 @@
   width:100%!important;
   min-width:0!important;
   display:grid!important;
-  grid-template-columns:minmax(420px,500px) minmax(560px,1fr)!important;
-  grid-template-rows:auto auto!important;
-  column-gap:30px!important;
-  row-gap:18px!important;
+  grid-template-columns:370px minmax(0,1fr)!important;
+  column-gap:22px!important;
+  row-gap:12px!important;
   align-items:start!important;
 }
 .svt191-tariff-methods{
   grid-column:1!important;
-  grid-row:1!important;
+  grid-row:1 / span 2!important;
   display:grid!important;
-  grid-template-columns:1fr 1fr!important;
-  gap:28px!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  column-gap:22px!important;
+  row-gap:10px!important;
   min-width:0!important;
+  align-content:start!important;
 }
 .svt191-method,
 .svt191-advanced-toggle{
   display:grid!important;
-  grid-template-columns:16px minmax(0,1fr)!important;
+  grid-template-columns:18px minmax(0,1fr)!important;
   align-items:start!important;
-  gap:7px!important;
+  gap:10px!important;
   padding:0!important;
   margin:0!important;
   border:0!important;
@@ -4756,18 +4758,18 @@
 }
 .svt191-method input,
 .svt191-advanced-toggle input{
-  width:15px!important;
-  height:15px!important;
-  min-width:15px!important;
+  width:18px!important;
+  height:18px!important;
+  min-width:18px!important;
   margin:1px 0 0!important;
-  accent-color:#079640!important;
+  accent-color:#0aa04b!important;
 }
 .svt191-method strong,
 .svt191-advanced-toggle strong{
   display:block!important;
   color:#0b203a!important;
-  font-size:13px!important;
-  line-height:1.05!important;
+  font-size:12px!important;
+  line-height:1.08!important;
   font-weight:950!important;
 }
 .svt191-method small,
@@ -4781,8 +4783,7 @@
 }
 .svt191-advanced-toggle{
   grid-column:1 / span 2!important;
-  grid-row:2!important;
-  margin-top:14px!important;
+  margin-top:12px!important;
   width:max-content!important;
   max-width:100%!important;
 }
@@ -4792,30 +4793,29 @@
   min-width:0!important;
   display:grid!important;
   grid-template-columns:1fr!important;
-  gap:16px!important;
+  gap:12px!important;
+  align-content:start!important;
 }
 .svt191-invoice-fields{
   display:grid!important;
-  grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(150px,1.16fr)!important;
-  gap:12px!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:10px!important;
   align-items:start!important;
+  min-width:0!important;
 }
 .svt191-direct-fields{
-  width:33%!important;
-  min-width:180px!important;
+  width:220px!important;
+  min-width:0!important;
 }
-.svt191-direct-fields[hidden]{
-  display:none!important;
-}
+.svt191-direct-fields[hidden]{display:none!important;}
 .svt191-advanced-panel{
   display:grid!important;
-  grid-template-columns:minmax(130px,1fr) minmax(130px,1fr) minmax(150px,1fr) minmax(170px,1.16fr)!important;
-  gap:12px!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:10px!important;
   align-items:start!important;
+  min-width:0!important;
 }
-.svt191-advanced-panel[hidden]{
-  display:none!important;
-}
+.svt191-advanced-panel[hidden]{display:none!important;}
 .svt191-field{
   display:grid!important;
   gap:5px!important;
@@ -4826,7 +4826,7 @@
   display:block!important;
   color:#0b203a!important;
   font-size:11px!important;
-  line-height:1!important;
+  line-height:1.05!important;
   font-weight:950!important;
   white-space:nowrap!important;
 }
@@ -4839,8 +4839,8 @@
   grid-template-columns:minmax(0,1fr) auto!important;
   align-items:center!important;
   gap:8px!important;
-  padding:0 10px!important;
-  border:1px solid #d9e4ec!important;
+  padding:0 11px!important;
+  border:1px solid #cfe0d8!important;
   border-radius:12px!important;
   background:#fff!important;
   overflow:hidden!important;
@@ -4849,38 +4849,38 @@
 .svt191-unit-input input{
   width:100%!important;
   min-width:0!important;
-  height:36px!important;
-  min-height:36px!important;
+  height:34px!important;
+  min-height:34px!important;
   padding:0!important;
   border:0!important;
   background:transparent!important;
   color:#0b203a!important;
   font-size:13px!important;
   line-height:1!important;
-  font-weight:950!important;
+  font-weight:900!important;
   outline:none!important;
   box-shadow:none!important;
 }
 .svt191-unit-input b{
-  color:#263854!important;
+  color:#253853!important;
   font-size:11px!important;
   line-height:1!important;
   font-weight:950!important;
   white-space:nowrap!important;
 }
 .svt191-result-input{
-  background:#f7fcf9!important;
-  border-color:#cfe9da!important;
+  background:#f6fbf8!important;
+  border-color:#cfe0d8!important;
 }
 #calculatedTariffPreview,
 #effectiveTariffPreview{
-  font-size:18px!important;
+  font-size:16px!important;
   font-weight:950!important;
 }
 .svt191-field select.control{
   width:100%!important;
-  max-width:100%!important;
   min-width:0!important;
+  max-width:100%!important;
   height:38px!important;
   min-height:38px!important;
   padding:0 10px!important;
@@ -4894,8 +4894,23 @@
   outline:none!important;
   box-shadow:none!important;
 }
-.svt191-side-note{
-  display:block!important;
+@media (min-width:721px){
+  .svt191-side-note{
+    position:fixed!important;
+    top:180px!important;
+    right:calc((100vw - min(var(--svt173-layout-w),calc(100vw - 24px))) / 2 + var(--svt173-page-edge))!important;
+    z-index:7!important;
+    width:var(--svt173-side-note-w)!important;
+    max-width:var(--svt173-side-note-w)!important;
+    padding:16px 16px!important;
+    border:1px solid #dce9e4!important;
+    border-radius:18px!important;
+    background:rgba(255,255,255,.88)!important;
+    color:#52647c!important;
+    box-shadow:0 22px 52px rgba(21,37,60,.10)!important;
+    backdrop-filter:blur(10px)!important;
+    -webkit-backdrop-filter:blur(10px)!important;
+  }
 }
 .svt191-side-note p{
   margin:0!important;
@@ -4904,40 +4919,14 @@
   line-height:1.32!important;
   font-weight:900!important;
 }
-@media (min-width:721px){
-  .svt191-side-note{
-    position:fixed!important;
-    top:148px!important;
-    right:calc((100vw - min(var(--svt173-layout-w),calc(100vw - 24px))) / 2 + var(--svt173-page-edge))!important;
-    z-index:7!important;
-    width:var(--svt173-side-note-w)!important;
-    max-width:var(--svt173-side-note-w)!important;
-    min-height:0!important;
-    padding:clamp(14px,1.1vw,20px) clamp(14px,1.2vw,20px)!important;
-    border:1px solid #dce9e4!important;
-    border-radius:clamp(14px,1vw,18px)!important;
-    background:rgba(255,255,255,.88)!important;
-    color:#52647c!important;
-    box-shadow:0 22px 52px rgba(21,37,60,.10)!important;
-    backdrop-filter:blur(10px)!important;
-    -webkit-backdrop-filter:blur(10px)!important;
-  }
+@media (max-width:1260px){
+  .svt191-tariff-main{grid-template-columns:1fr!important;}
+  .svt191-tariff-methods,
+  .svt191-tariff-fields{grid-column:1!important; grid-row:auto!important;}
+  .svt191-invoice-fields,
+  .svt191-advanced-panel{grid-template-columns:1fr!important;}
 }
 @media (max-width:1180px){
-  .svt191-tariff-main{
-    grid-template-columns:1fr!important;
-  }
-  .svt191-tariff-methods,
-  .svt191-tariff-fields{
-    grid-column:1!important;
-  }
-  .svt191-tariff-fields{
-    grid-row:auto!important;
-  }
-  .svt191-invoice-fields,
-  .svt191-advanced-panel{
-    grid-template-columns:1fr!important;
-  }
   .svt191-side-note{
     position:static!important;
     width:100%!important;
@@ -4949,6 +4938,7 @@
     background:#fbfefc!important;
   }
 }
+
 
 </style>
 <script id="svt-v136-true-v132-invoice-guard">
@@ -8770,7 +8760,7 @@ body[data-svt-ui="v157-professional"]{
                         </label>
                       </div>
 
-                      <input type="hidden" id="tariffFinalInvoiceCheck">
+                      <input type="checkbox" id="tariffFinalInvoiceCheck" checked hidden>
                       <input type="hidden" id="consumptionDataSource" value="total">
                     </div>
                   </div>
@@ -8967,6 +8957,7 @@ body[data-svt-ui="v157-professional"]{
       const tariffShell = document.querySelector('.tariff-flow-row .svt162-tariff-shell');
       if(tariffShell) tariffShell.classList.toggle('is-advanced-open', !!open);
       if(tariffSideNotes) tariffSideNotes.classList.toggle('is-advanced-open', !!open);
+      document.querySelectorAll('.svt191-advanced-toggle').forEach(label => label.classList.toggle('is-active', !!open));
     }
 
     function getNetworkEstimate(distributor, voltage){
@@ -9070,6 +9061,14 @@ body[data-svt-ui="v157-professional"]{
         const active = invoice ? card.classList.contains('tariff-method-card-primary') : card.classList.contains('tariff-known-card');
         card.classList.toggle('is-selected', active);
       });
+      document.querySelectorAll('.svt191-method').forEach(label => {
+        const input = label.querySelector('input[type="radio"]');
+        label.classList.toggle('is-active', !!input && input.checked);
+      });
+      const invoicePanel = document.querySelector('[data-tariff-mode-panel="invoice_calculation"]');
+      const directPanel = document.querySelector('[data-tariff-mode-panel="direct_price"]');
+      if(invoicePanel) invoicePanel.hidden = !invoice;
+      if(directPanel) directPanel.hidden = invoice;
       updateEffectiveTariff();
     }
 
@@ -9319,6 +9318,7 @@ body[data-svt-ui="v157-professional"]{
     wireDropZone(productionDrop, productionInput, productionChoose, productionFileName, 'production');
     wireDropZone(invoiceDrop, invoiceInput, invoiceChoose, invoiceFileName, 'invoice');
     setTariffMethod('invoice_calculation');
+    setAdvancedPanelOpen(true);
 
     function initDistributorHelpModal(){
       const modal = document.getElementById('distributorHelpModal');
@@ -9751,90 +9751,5 @@ body[data-svt-ui="v157-professional"]{
 })();
 </script>
 <!-- SVT v168 safe source pv behavior END -->
-
-<script id="svt-v191-tariff-only-js">
-(function(){
-  function ready(fn){document.readyState==="loading"?document.addEventListener("DOMContentLoaded",fn):fn();}
-  function toNumber(value){
-    var n = parseFloat(String(value || "").replace(",", "."));
-    return Number.isFinite(n) ? n : 0;
-  }
-  function formatTariff(value){
-    if(!Number.isFinite(value) || value <= 0) return "0.00";
-    return value.toFixed(4).replace(/0+$/,"").replace(/\.$/,"");
-  }
-  ready(function(){
-    var invoiceMode = document.getElementById("tariffInputModeInvoice");
-    var directMode = document.getElementById("tariffInputModeDirect");
-    var invoicePanel = document.querySelector('[data-tariff-mode-panel="invoice_calculation"]');
-    var directPanel = document.querySelector('[data-tariff-mode-panel="direct_price"]');
-    var total = document.getElementById("invoiceTotalValue");
-    var billed = document.getElementById("invoiceBilledConsumption");
-    var calculated = document.getElementById("calculatedTariffPreview");
-    var fixed = document.getElementById("fixedTariff");
-    var basis = document.getElementById("tariffPriceBasis");
-    var effective = document.getElementById("effectiveTariffPreview");
-    var advancedCheck = document.getElementById("tariffAdvancedCheck");
-    var advancedPanel = document.getElementById("tariffAdvancedPanel");
-    var finalCheck = document.getElementById("tariffFinalInvoiceCheck");
-    var methods = Array.prototype.slice.call(document.querySelectorAll(".svt191-method"));
-
-    function activeMode(){
-      return directMode && directMode.checked ? "direct_price" : "invoice_calculation";
-    }
-
-    function updateMethodUI(){
-      var mode = activeMode();
-      if(invoicePanel) invoicePanel.hidden = mode !== "invoice_calculation";
-      if(directPanel) directPanel.hidden = mode !== "direct_price";
-      methods.forEach(function(label){
-        var input = label.querySelector("input");
-        label.classList.toggle("is-active", !!input && input.checked);
-      });
-      updateTariff();
-    }
-
-    function baseTariff(){
-      if(activeMode() === "invoice_calculation"){
-        var x = toNumber(total && total.value);
-        var y = toNumber(billed && billed.value);
-        var calc = x > 0 && y > 0 ? x / y : 0;
-        if(calculated) calculated.value = formatTariff(calc);
-        if(fixed && calc > 0) fixed.value = formatTariff(calc);
-        return calc;
-      }
-      return toNumber(fixed && fixed.value);
-    }
-
-    function updateTariff(){
-      var value = baseTariff();
-      var basisValue = basis ? basis.value : "unknown";
-      var eff = value;
-      if(value > 0 && activeMode() === "direct_price" && basisValue === "without_vat"){
-        eff = value * 1.19;
-      }
-      if(effective) effective.value = formatTariff(eff);
-      if(finalCheck) finalCheck.value = basisValue === "final_gross" ? "true" : "false";
-      if(window.validateForm) window.validateForm();
-    }
-
-    [invoiceMode,directMode].forEach(function(el){
-      if(el) el.addEventListener("change", updateMethodUI);
-    });
-    [total,billed,fixed,basis].forEach(function(el){
-      if(el) el.addEventListener("input", updateTariff);
-      if(el) el.addEventListener("change", updateTariff);
-    });
-    if(advancedCheck && advancedPanel){
-      advancedCheck.addEventListener("change", function(){
-        advancedPanel.hidden = !advancedCheck.checked;
-      });
-      advancedPanel.hidden = !advancedCheck.checked;
-    }
-    updateMethodUI();
-  });
-})();
-</script>
-
 </body>
 </html>
