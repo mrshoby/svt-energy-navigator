@@ -9586,11 +9586,8 @@ body[data-svt-ui="v157-professional"]{
 
 
 
-/* SVT v198 — direct price replaces calculated tariff field */
-.svt194-direct-fields[hidden]{
-  display:none!important;
-}
-.svt194-direct-fields:not([hidden]){
+/* SVT v198 — Direct price replaces Pret calculat automat slot */
+.svt194-direct-fields{
   width:100%!important;
   min-width:0!important;
   display:grid!important;
@@ -9598,38 +9595,25 @@ body[data-svt-ui="v157-professional"]{
   gap:7px!important;
   align-items:start!important;
 }
-.svt194-direct-fields:not([hidden]) .svt194-field{
+.svt194-direct-fields[hidden]{
+  display:none!important;
+}
+.svt194-direct-fields .svt194-field{
   grid-column:3!important;
   width:100%!important;
   min-width:0!important;
 }
-.svt194-direct-fields:not([hidden]) .svt194-field > span{
-  font-size:8.6px!important;
-  line-height:1.05!important;
-  font-weight:950!important;
-  white-space:nowrap!important;
+.svt194-tariff-main:has(#tariffInputModeDirect:checked) .svt194-invoice-fields{
+  display:none!important;
 }
-.svt194-direct-fields:not([hidden]) .svt194-unit-input{
-  height:32px!important;
-  min-height:32px!important;
-  border-radius:10px!important;
-  padding:0 8px!important;
-  gap:5px!important;
-}
-.svt194-direct-fields:not([hidden]) #fixedTariff{
-  height:30px!important;
-  min-height:30px!important;
-  font-size:15px!important;
-  font-weight:950!important;
-}
-.svt194-direct-fields:not([hidden]) .svt194-unit-input b{
-  font-size:8.8px!important;
+.svt194-tariff-main:has(#tariffInputModeInvoice:checked) .svt194-direct-fields{
+  display:none!important;
 }
 @media (max-width:980px){
-  .svt194-direct-fields:not([hidden]){
+  .svt194-direct-fields{
     grid-template-columns:1fr!important;
   }
-  .svt194-direct-fields:not([hidden]) .svt194-field{
+  .svt194-direct-fields .svt194-field{
     grid-column:1!important;
   }
 }
