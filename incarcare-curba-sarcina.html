@@ -10278,7 +10278,7 @@ body[data-svt-ui="v157-professional"]{
       targetZoneEl.classList.add('has-file');
       if(targetType === 'consumption'){
         consumptionFiles = arr;
-        targetNameEl.textContent = arr.length === 1 ? 'Fișier încărcat cu succes!' : 'Fișiere încărcate cu succes!';
+        targetNameEl.textContent = '';
         embeddedProductionDetected = false;
         productionBox.classList.remove('embedded');
         try{
@@ -10298,14 +10298,14 @@ body[data-svt-ui="v157-professional"]{
       }
       if(targetType === 'production'){
         productionFiles = arr;
-        targetNameEl.textContent = arr.length === 1 ? 'Fișier încărcat cu succes!' : 'Fișiere încărcate cu succes!';
+        targetNameEl.textContent = '';
         productionBox.classList.remove('embedded');
         embeddedProductionDetected = false;
         clearMessage();
       }
       if(targetType === 'invoice'){
         invoiceFile = arr[0];
-        targetNameEl.textContent = 'Fișier încărcat cu succes!';
+        targetNameEl.textContent = '';
         clearMessage();
       }
       validateForm();

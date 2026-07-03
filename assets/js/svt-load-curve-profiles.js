@@ -19,6 +19,12 @@
   const LEARNED_MODELS_KEY = "svtEnergyImportModels";
   const LEARNED_MODELS_VERSION = 2;
   const LEARNED_MODELS_LIMIT = 50;
+  const SERVIO_LEARNING_KEYS = [
+    "servio.dataLearning.v442","servio.dataLearning.v441","servio.dataLearning.v440","servio.dataLearning.v439",
+    "servio.dataLearning.v438","servio.dataLearning.v437","servio.dataLearning.v436","servio.dataLearning.v435",
+    "servio.dataLearning.v434","servio.dataLearning.v433","servio.dataLearning.v432","servio.dataLearning.v431",
+    "servio.dataLearning.v430"
+  ];
 
   function norm(s){
     return String(s ?? "")
@@ -534,12 +540,117 @@
     };
   }
 
+  function servioRoleToSvtRole(role){
+    return ({
+      timestamp:"timestamp",
+      date:"date",
+      time:"time",
+      consumption:"consumption",
+      consumptionKwh:"consumption",
+      loadKwh:"consumption",
+      production:"production",
+      productionKwh:"production",
+      generationKwh:"production",
+      import:"importEnergy",
+      importKwh:"importEnergy",
+      importEnergy:"importEnergy",
+      export:"exportEnergy",
+      exportKwh:"exportEnergy",
+      exportEnergy:"exportEnergy",
+      cost:"cost",
+      costRon:"cost",
+      tariff:"tariff",
+      tariffRonKwh:"tariff",
+      unit:"unit"
+    })[role] || role;
+  }
+
+  function normalizeServioColumnMap(columnMap){
+    const out = {};
+    Object.entries(columnMap || {}).forEach(([role, value]) => {
+      if (value === null || value === undefined || value === "") return;
+      const svtRole = servioRoleToSvtRole(role);
+      if (!["timestamp","date","time","consumption","production","importEnergy","exportEnergy","cost","tariff","unit"].includes(svtRole)) return;
+      out[svtRole] = value;
+    });
+    return out;
+  }
+
+  function normalizeServioLearningFile(entry, key, index){
+    const template = entry?.importTemplate || entry?.template || entry || {};
+    const columnMap = normalizeServioColumnMap(template.columnMap || entry?.columnMap || entry?.mappingDraft?.columnMap || {});
+    if (!roleCoverage(columnMap).hasTime || !roleCoverage(columnMap).hasEnergy) return null;
+    const confidenceRaw = Number(template.averageConfidence || entry?.confidence || entry?.mappingConfidence || 82);
+    const confidence = confidenceRaw > 1 ? confidenceRaw / 100 : confidenceRaw;
+    const headerSignature = template.fingerprint?.headerSignature || (entry?.previewRows || []).slice(0,3).join(" | ");
+    const headerKeywords = String(headerSignature || "")
+      .split(/[^A-Za-z0-9ăâîșşțţĂÂÎȘŞȚŢ]+/)
+      .map(x => x.trim())
+      .filter(x => x.length >= 2)
+      .slice(0, 24);
+    return normalizeLearnedModel({
+      modelId:`servio:${template.id || entry?.id || key + ":" + index}`,
+      modelName:template.name || entry?.templateName || entry?.fileName || "Servio Data Learning",
+      source:"servio-data-learning",
+      fileSignature:{
+        extension:template.fileType || entry?.fileType || "",
+        columnCount:null,
+        headerKeywords
+      },
+      columnMapping:columnMap,
+      unitConversion:{
+        from:template.parsingRules?.unit || entry?.unitProfile?.unit || "kWh",
+        to:"kWh",
+        factor:1
+      },
+      confidence:clamp(confidence || 0.82),
+      createdAt:template.createdAt || entry?.createdAt || new Date().toISOString(),
+      lastUsedAt:template.lastUsedAt || entry?.lastUsedAt || template.updatedAt || new Date().toISOString(),
+      lastTrainedAt:template.updatedAt || entry?.updatedAt || template.createdAt || new Date().toISOString(),
+      usageCount:Number(template.usageCount || entry?.usageCount || 0),
+      sampleCount:Number(template.consumptionRules?.sampleCount || template.productionRules?.sampleCount || entry?.consumptionProfile?.sampleCount || entry?.productionProfile?.sampleCount || 0),
+      parserVersion:"servio-v442-data-learning-bridge"
+    });
+  }
+
+  function readServioLearningModelsPayload(){
+    try {
+      if (typeof localStorage === "undefined") return [];
+      const all = [];
+      SERVIO_LEARNING_KEYS.forEach(key => {
+        let parsed = [];
+        try { parsed = JSON.parse(localStorage.getItem(key) || "[]"); } catch(e) { parsed = []; }
+        if (!Array.isArray(parsed)) return;
+        parsed.forEach((entry, index) => {
+          const model = normalizeServioLearningFile(entry, key, index);
+          if (model) all.push(model);
+        });
+      });
+      const byId = new Map();
+      all.forEach(model => {
+        if (!byId.has(model.modelId)) byId.set(model.modelId, model);
+      });
+      return [...byId.values()];
+    } catch(e) {
+      return [];
+    }
+  }
+
+  function mergeLearnedModels(ownModels, externalModels){
+    const byId = new Map();
+    [...(ownModels || []), ...(externalModels || [])].forEach(model => {
+      if (!model?.modelId) return;
+      if (!byId.has(model.modelId)) byId.set(model.modelId, model);
+    });
+    return [...byId.values()].slice(0, LEARNED_MODELS_LIMIT);
+  }
+
   function readLearnedModelsPayload(){
     try {
       if (typeof localStorage === "undefined") return [];
       const parsed = JSON.parse(localStorage.getItem(LEARNED_MODELS_KEY) || "[]");
       const list = Array.isArray(parsed) ? parsed : (Array.isArray(parsed?.models) ? parsed.models : []);
-      return list.map(normalizeLearnedModel).filter(Boolean);
+      return mergeLearnedModels(list.map(normalizeLearnedModel).filter(Boolean), readServioLearningModelsPayload());
     } catch(e) { return []; }
   }
 

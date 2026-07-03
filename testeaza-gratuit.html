@@ -1182,10 +1182,298 @@
       border-radius:999px!important;
     }
 
+    @media(max-width:430px){
+      .svt-progress-outside{
+        grid-template-columns:26px 58px 26px 58px 26px 58px 26px!important;
+        column-gap:4px!important;
+        width:calc(100vw - 28px)!important;
+      }
+      .svt-progress-outside .svt-progress-line{
+        min-width:58px!important;
+      }
+      .svt-progress-label{
+        width:64px!important;
+        max-width:64px!important;
+        font-size:9.4px!important;
+      }
+    }
+
   
     /* v208: Q1 follows the same simple Chart.js curve style as load/PV charts. */
     .q1-chart-wrap{height:320px}
     @media(max-width:720px){.q1-chart-wrap{height:280px}}
+
+    /* v218: Q1 practical 24h what-if scenarios */
+    .q1-scenarios{
+      margin-top:14px;
+      display:grid;
+      gap:12px;
+    }
+    .q1-scenario-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:14px;
+    }
+    .q1-scenario-head h3{
+      margin:0;
+      color:var(--navy);
+      font-size:18px;
+      line-height:1.1;
+      font-weight:1000;
+      letter-spacing:-.025em;
+    }
+    .q1-scenario-head p{
+      margin:4px 0 0;
+      color:var(--muted);
+      font-size:12.5px;
+      line-height:1.35;
+      font-weight:750;
+    }
+    .q1-scenario-buttons{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:10px;
+    }
+    .q1-scenario-btn{
+      min-height:72px;
+      border:1px solid #dfe8f1;
+      border-radius:14px;
+      background:#fff;
+      padding:11px 12px;
+      text-align:left;
+      color:var(--navy);
+      font-family:inherit;
+      cursor:pointer;
+      box-shadow:0 8px 18px rgba(15,23,42,.04);
+      transition:.16s ease;
+    }
+    .q1-scenario-btn:hover,
+    .q1-scenario-btn.active{
+      border-color:#9bd8b3;
+      background:#f7fcf9;
+      box-shadow:0 12px 26px rgba(7,148,63,.10);
+    }
+    .q1-scenario-btn strong{
+      display:block;
+      font-size:13px;
+      line-height:1.15;
+      font-weight:1000;
+      letter-spacing:-.01em;
+    }
+    .q1-scenario-btn span{
+      display:block;
+      margin-top:5px;
+      color:#66758f;
+      font-size:11.2px;
+      line-height:1.25;
+      font-weight:750;
+    }
+    .q1-scenario-result{
+      border:1px solid #e1eadf;
+      border-radius:16px;
+      background:linear-gradient(180deg,#fbfefc,#fff);
+      padding:13px;
+      display:grid;
+      gap:12px;
+    }
+    .q1-scenario-stats{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:9px;
+    }
+    .q1-scenario-stat{
+      border:1px solid #e6edf4;
+      border-radius:13px;
+      background:#fff;
+      padding:10px 11px;
+      min-width:0;
+    }
+    .q1-scenario-stat strong{
+      display:block;
+      color:var(--navy);
+      font-size:17px;
+      line-height:1.05;
+      font-weight:1000;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .q1-scenario-stat span{
+      display:block;
+      margin-top:4px;
+      color:#66758f;
+      font-size:10.8px;
+      line-height:1.25;
+      font-weight:800;
+    }
+    .q1-scenario-chart{
+      height:210px;
+      position:relative;
+      border:1px solid #eef2f6;
+      border-radius:14px;
+      background:#fff;
+      padding:10px;
+    }
+    .q1-scenario-note{
+      margin:0;
+      color:#60718b;
+      font-size:12px;
+      line-height:1.4;
+      font-weight:700;
+    }
+    .q1-cta{
+      margin-top:2px;
+      border:1px solid #cfeadb;
+      border-radius:16px;
+      background:linear-gradient(135deg,#f5fcf8,#ffffff);
+      padding:14px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+    }
+    .q1-cta strong{
+      display:block;
+      color:var(--navy);
+      font-size:15px;
+      line-height:1.15;
+      font-weight:1000;
+    }
+    .q1-cta span{
+      display:block;
+      margin-top:4px;
+      color:#65758d;
+      font-size:12.2px;
+      line-height:1.35;
+      font-weight:750;
+    }
+    .q1-contact-btn{
+      height:42px;
+      min-width:150px;
+      border:0;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--green),var(--green2));
+      color:#fff;
+      font-family:inherit;
+      font-size:13px;
+      font-weight:1000;
+      cursor:pointer;
+      box-shadow:0 12px 24px rgba(7,148,63,.18);
+    }
+    .contact-modal-backdrop{
+      position:fixed;
+      inset:0;
+      z-index:80;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      background:rgba(7,24,38,.38);
+      backdrop-filter:blur(6px);
+    }
+    .contact-modal-backdrop.open{display:flex}
+    .contact-modal{
+      width:min(480px,100%);
+      border:1px solid #dfe8f1;
+      border-radius:20px;
+      background:#fff;
+      box-shadow:0 24px 70px rgba(15,23,42,.24);
+      padding:22px;
+      color:var(--navy);
+    }
+    .contact-modal-head{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:flex-start;
+    }
+    .contact-modal h2{
+      margin:0;
+      font-size:24px;
+      line-height:1.05;
+      font-weight:1000;
+      letter-spacing:-.035em;
+    }
+    .contact-modal p{
+      margin:8px 0 0;
+      color:#60718b;
+      font-size:13px;
+      line-height:1.45;
+      font-weight:750;
+    }
+    .contact-close{
+      width:34px;
+      height:34px;
+      border-radius:999px;
+      border:1px solid #dfe8f1;
+      background:#fff;
+      color:#41516a;
+      cursor:pointer;
+      font-size:18px;
+      line-height:1;
+      font-weight:900;
+    }
+    .contact-list{
+      margin-top:16px;
+      display:grid;
+      gap:10px;
+    }
+    .contact-item{
+      border:1px solid #e5edf4;
+      border-radius:14px;
+      background:#fbfcfe;
+      padding:12px 13px;
+    }
+    .contact-item span{
+      display:block;
+      color:#66758f;
+      font-size:11px;
+      font-weight:1000;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+    }
+    .contact-item a,
+    .contact-item strong{
+      display:block;
+      margin-top:4px;
+      color:var(--navy);
+      font-size:14px;
+      line-height:1.35;
+      font-weight:950;
+      text-decoration:none;
+    }
+    .contact-actions{
+      margin-top:16px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .contact-actions a{
+      height:42px;
+      padding:0 14px;
+      border-radius:12px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid #cfeadb;
+      color:#086b36;
+      background:#f6fcf8;
+      font-size:13px;
+      font-weight:1000;
+      text-decoration:none;
+    }
+    @media(max-width:860px){
+      .q1-scenario-buttons{grid-template-columns:1fr}
+      .q1-scenario-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .q1-cta{align-items:stretch;flex-direction:column}
+      .q1-contact-btn{width:100%}
+    }
+    @media(max-width:560px){
+      .q1-scenario-head{display:block}
+      .q1-scenario-stats{grid-template-columns:1fr}
+      .q1-scenario-chart{height:190px}
+    }
 
   </style>
 </head>
@@ -1219,7 +1507,38 @@
     </footer>
   </main>
 
+  <div class="contact-modal-backdrop" id="servelectContactModal" aria-hidden="true">
+    <div class="contact-modal" role="dialog" aria-modal="true" aria-labelledby="servelectContactTitle">
+      <div class="contact-modal-head">
+        <div>
+          <h2 id="servelectContactTitle">Contact Servelect</h2>
+          <p>Trimite-ne datele tale și pregătim o analiză aplicată pentru soluții precum BESS, PZU, cogenerare sau optimizarea consumului.</p>
+        </div>
+        <button class="contact-close" type="button" data-close-contact aria-label="Închide">×</button>
+      </div>
+      <div class="contact-list">
+        <div class="contact-item">
+          <span>E-mail consultanță</span>
+          <a href="mailto:consultanta@servelect.ro">consultanta@servelect.ro</a>
+        </div>
+        <div class="contact-item">
+          <span>Telefon</span>
+          <a href="tel:+40364730808">+40 364 730 808</a>
+        </div>
+        <div class="contact-item">
+          <span>Adresă</span>
+          <strong>Str. Fabricii de Zahăr 109, Cluj-Napoca, România</strong>
+        </div>
+      </div>
+      <div class="contact-actions">
+        <a href="mailto:consultanta@servelect.ro?subject=Analiz%C4%83%20SVT%20Energy%20Navigator">Scrie e-mail</a>
+        <a href="tel:+40364730808">Sună Servelect</a>
+      </div>
+    </div>
+  </div>
+
   <script src="./assets/js/svt-load-curve-profiles.js?v=51-engine-fix"></script>
+  <script src="./assets/js/svt-external-energy-data.js?v=221-opcom-pzu"></script>
   <script src="./assets/js/svt-analysis-engine.js?v=51-engine-fix"></script>
   <script>
     const allQuestions = [
@@ -1286,12 +1605,7 @@
       return ctx.consumptionDataSource || analysis?.meta?.consumptionDataSource || dataset?.meta?.consumptionDataSource || 'total';
     }
     function sourceWarningHtml(question){
-      const source = getConsumptionDataSource();
-      if(source === 'total') return '';
-      const text = source === 'grid'
-        ? 'Fișierul încărcat pare să arate doar energia cumpărată din rețea, nu consumul total. Dacă ai panouri solare, rezultatele sunt estimative deoarece energia produsă și folosită direct nu apare complet în fișier.'
-        : 'Tipul fișierului cu consum nu este sigur. Tratăm rezultatele ca estimare și îți recomandăm să le verifici cu datele din contor sau din aplicația panourilor.';
-      return `<div class="svt-source-warning"><strong>Notă de interpretare ${question ? '· ' + esc(question) : ''}:</strong> ${esc(text)}</div>`;
+      return '';
     }
 
 
@@ -1596,12 +1910,16 @@
     }
 
     function q1BuildHourlyDay(rows, dayKey){
-      const hours = Array.from({length:24}, (_,hour)=>({hour, gridKwh:0, expensiveKwh:0, cost:0, expensiveCost:0, count:0}));
+      const hours = Array.from({length:24}, (_,hour)=>({hour, gridKwh:0, productionKwh:0, surplusKwh:0, expensiveKwh:0, cost:0, expensiveCost:0, count:0}));
       rows.filter(r => svtDayKey(r) === dayKey).forEach(r => {
         const hour = Math.max(0, Math.min(23, svtHourFromRow(r)));
         const grid = Number(r.gridKwh || 0);
+        const production = Number(r.productionKwh || 0);
+        const surplus = Number(r.surplusKwh || 0);
         const cost = Number(r.gridCostRon || 0);
         hours[hour].gridKwh += grid;
+        hours[hour].productionKwh += production;
+        hours[hour].surplusKwh += surplus;
         hours[hour].cost += cost;
         hours[hour].count += 1;
         if(r.isExpensive){
@@ -1620,12 +1938,375 @@
       return hours;
     }
 
+    const Q1_PZU_PROFILE = [0.74,0.71,0.69,0.70,0.74,0.82,0.96,1.12,1.08,0.98,0.90,0.84,0.82,0.84,0.90,1.02,1.17,1.34,1.43,1.33,1.15,0.98,0.86,0.77];
+    const Q1_PZU_AVG = Q1_PZU_PROFILE.reduce((a,b)=>a+b,0) / Q1_PZU_PROFILE.length;
+
+    function q1FixedTariff(data){
+      return Number(data?.meta?.fixedTariffRonKwh || data?.totals?.fixedTariffRonKwh || 0.75) || 0.75;
+    }
+
+    function q1PzuPrice(hour, fixedTariff, scenarioContext){
+      const ext = window.SVTExternalEnergyData;
+      const marketData = scenarioContext?.marketData || null;
+      if(ext?.scaledHourlyPrice){
+        return ext.scaledHourlyPrice(hour, fixedTariff, marketData);
+      }
+      const multiplier = Q1_PZU_PROFILE[Math.max(0, Math.min(23, Number(hour) || 0))] || 1;
+      return Math.max(0.01, fixedTariff * multiplier / Q1_PZU_AVG);
+    }
+
+    function q1AverageCheapestPzuPrice(hourly, fixedTariff, scenarioContext){
+      const ordered = hourly.slice()
+        .map(h => ({hour:h.hour, price:q1PzuPrice(h.hour, fixedTariff, scenarioContext)}))
+        .sort((a,b)=>a.price-b.price)
+        .slice(0,6);
+      return ordered.reduce((a,x)=>a+x.price,0) / Math.max(1, ordered.length);
+    }
+
+    function q1AverageCheapestBessChargePrice(hourly, fixedTariff, scenarioContext){
+      const market = scenarioContext?.marketData || null;
+      const records = Array.isArray(market?.records) ? market.records : [];
+      if(records.length >= 90){
+        const rawPrices = records.map(r => Number(r.priceRonKwh || 0)).filter(v => v > 0);
+        const avg = rawPrices.reduce((a,b)=>a+b,0) / Math.max(1, rawPrices.length);
+        if(avg > 0){
+          const ordered = records
+            .map(r => Math.max(0.01, fixedTariff * Number(r.priceRonKwh || 0) / avg))
+            .filter(v => Number.isFinite(v) && v > 0)
+            .sort((a,b)=>a-b)
+            .slice(0,24);
+          if(ordered.length) return ordered.reduce((a,b)=>a+b,0) / ordered.length;
+        }
+      }
+      return q1AverageCheapestPzuPrice(hourly, fixedTariff, scenarioContext);
+    }
+
+    function q1BessEconomics(defaults={}){
+      const efficiency = Math.max(0.75, Math.min(0.98, Number(defaults.efficiencyPct || 90) / 100));
+      const socWindow = Math.max(0.1, Math.min(1, (Number(defaults.maxSocPct || 90) - Number(defaults.minSocPct || 10)) / 100));
+      const capacityMWh = Math.max(0.001, Number(defaults.capacityMWh || 2));
+      const usableDischargeKwh = Math.max(1, capacityMWh * 1000 * socWindow * efficiency);
+      const investmentLei = Math.max(0, capacityMWh * 1000 * Number(defaults.batteryCostEurKwh || 200) * Number(defaults.eurRon || 4.97));
+      const lifecycleCycles = Math.max(1, Number(defaults.lifecycleCycles || 6000));
+      const degradationRonKwh = investmentLei / (lifecycleCycles * usableDischargeKwh);
+      const variableRonKwh = Math.max(0, Number(defaults.variableCostRonKwh || 0));
+      return {
+        efficiency,
+        socWindow,
+        degradationRonKwh,
+        variableRonKwh,
+        chargeCostForDischargeRonKwh: buyRonKwh => Number(buyRonKwh || 0) / efficiency + degradationRonKwh + variableRonKwh,
+        minSpreadRonKwh: buyRonKwh => Number(buyRonKwh || 0) * (1 / efficiency - 1) + degradationRonKwh + variableRonKwh
+      };
+    }
+
+    function q1AllocateByExpensiveHours(hourly, limitKwh, callback){
+      let remaining = Math.max(0, Number(limitKwh) || 0);
+      const ordered = hourly.slice()
+        .filter(h => Number(h.expensiveKwh || 0) > 0)
+        .sort((a,b)=>(Number(b.expensiveCost || 0) - Number(a.expensiveCost || 0)));
+      for(const h of ordered){
+        if(remaining <= 0) break;
+        const used = Math.min(Number(h.expensiveKwh || 0), remaining);
+        if(used > 0){
+          callback(h, used);
+          remaining -= used;
+        }
+      }
+    }
+
+    function q1BuildScenarioEstimations(hourly, data, scenarioContext={}){
+      const fixedTariff = q1FixedTariff(data);
+      const dailyGrid = hourly.reduce((a,h)=>a + Number(h.gridKwh || 0), 0);
+      const dailyFixedCost = hourly.reduce((a,h)=>a + Number(h.gridKwh || 0) * fixedTariff, 0);
+      const expensiveKwh = hourly.reduce((a,h)=>a + Number(h.expensiveKwh || 0), 0);
+      const surplusKwh = hourly.reduce((a,h)=>a + Number(h.surplusKwh || 0), 0);
+      const nonZeroLoads = hourly.map(h => Number(h.gridKwh || 0)).filter(v => v > 0);
+      const avgGrid = dailyGrid / Math.max(1, nonZeroLoads.length || 24);
+      const minGrid = nonZeroLoads.length ? Math.min(...nonZeroLoads) : 0;
+      const loadFactor = avgGrid > 0 ? minGrid / avgGrid : 0;
+      const cheapPzu = q1AverageCheapestPzuPrice(hourly, fixedTariff, scenarioContext);
+      const bessChargePrice = q1AverageCheapestBessChargePrice(hourly, fixedTariff, scenarioContext);
+      const minUsefulSignal = Math.max(2, dailyFixedCost * 0.005);
+      const scenarioCost = savings => Math.max(0, dailyFixedCost - Number(savings || 0));
+
+      const pzuBars = hourly.map(h => {
+        const pzu = q1PzuPrice(h.hour, fixedTariff, scenarioContext);
+        return Number(h.gridKwh || 0) * (fixedTariff - pzu);
+      });
+      const pzuScenarioCost = hourly.reduce((a,h)=>a + Number(h.gridKwh || 0) * q1PzuPrice(h.hour, fixedTariff, scenarioContext), 0);
+      const pzuSavings = dailyFixedCost - pzuScenarioCost;
+
+      const shiftBars = Array.from({length:24}, () => 0);
+      const shiftKwh = Math.min(expensiveKwh * 0.22, dailyGrid * 0.12, 120);
+      let shiftedKwh = 0;
+      q1AllocateByExpensiveHours(hourly, shiftKwh, (h, used) => {
+        const saving = Math.max(0, used * (q1PzuPrice(h.hour, fixedTariff, scenarioContext) - cheapPzu));
+        shiftBars[h.hour] += saving;
+        shiftedKwh += used;
+      });
+      const shiftSavings = shiftBars.reduce((a,b)=>a+b,0);
+
+      const reduceBars = Array.from({length:24}, () => 0);
+      const reduceKwh = Math.min(expensiveKwh * 0.10, dailyGrid * 0.06, 80);
+      let reducedKwh = 0;
+      q1AllocateByExpensiveHours(hourly, reduceKwh, (h, used) => {
+        reduceBars[h.hour] += used * fixedTariff;
+        reducedKwh += used;
+      });
+      const reduceSavings = reduceBars.reduce((a,b)=>a+b,0);
+
+      const pvUseBars = Array.from({length:24}, () => 0);
+      const pvUsefulKwh = Math.min(surplusKwh, expensiveKwh * 0.45, 120);
+      let pvMoved = 0;
+      q1AllocateByExpensiveHours(hourly, pvUsefulKwh, (h, used) => {
+        pvUseBars[h.hour] += used * fixedTariff;
+        pvMoved += used;
+      });
+      const pvUseSavings = pvUseBars.reduce((a,b)=>a+b,0);
+
+      const bessBars = Array.from({length:24}, () => 0);
+      const bessDefaults = scenarioContext?.bessReference?.defaults || {};
+      const bessEconomics = q1BessEconomics(bessDefaults);
+      const bessEfficiency = bessEconomics.efficiency;
+      const bessSocWindow = bessEconomics.socWindow;
+      const bessReferenceKwh = Math.max(0, Number(bessDefaults.capacityMWh || 0) * 1000 * bessSocWindow);
+      const bessSizingLimit = bessReferenceKwh > 0 ? Math.min(bessReferenceKwh, Math.max(250, dailyGrid * 0.25)) : 250;
+      const bessCapacity = Math.min(expensiveKwh, Math.max(0, dailyGrid * 0.18), bessSizingLimit);
+      let bessShifted = 0;
+      let bessPvStored = Math.min(surplusKwh, bessCapacity);
+      let pvRemaining = bessPvStored;
+      const bessGridChargeCost = bessEconomics.chargeCostForDischargeRonKwh(bessChargePrice);
+      q1AllocateByExpensiveHours(hourly, bessCapacity, (h, used) => {
+        const fromPv = Math.min(used, pvRemaining);
+        pvRemaining -= fromPv;
+        const fromGrid = Math.max(0, used - fromPv);
+        const pzuAvoided = q1PzuPrice(h.hour, fixedTariff, scenarioContext);
+        const pvSaving = fromPv * fixedTariff;
+        const gridShiftSaving = Math.max(0, fromGrid * (pzuAvoided - bessGridChargeCost));
+        bessBars[h.hour] += pvSaving + gridShiftSaving;
+        bessShifted += used;
+      });
+      const bessSavings = bessBars.reduce((a,b)=>a+b,0);
+
+      const cogenBars = Array.from({length:24}, () => 0);
+      const cogenUnitCost = Math.max(0.45, fixedTariff * 0.76);
+      const cogenCovered = Math.min(expensiveKwh * 0.60, dailyGrid * 0.35, 250);
+      q1AllocateByExpensiveHours(hourly, cogenCovered, (h, used) => {
+        cogenBars[h.hour] += Math.max(0, used * (fixedTariff - cogenUnitCost));
+      });
+      const cogenSavings = cogenBars.reduce((a,b)=>a+b,0);
+
+      const candidates = [
+        {
+          key:'shift',
+          title:'Cât economisesc dacă mut consumul în ore mai ieftine?',
+          short:'Pentru aparate sau procese care pot porni mai târziu.',
+          chartTitle:'Economie estimată prin mutarea consumului',
+          bars:shiftBars,
+          savings:shiftSavings,
+          affectedKwh:shiftedKwh,
+          currentCost:dailyFixedCost,
+          scenarioCost:scenarioCost(shiftSavings),
+          score:shiftSavings + (shiftedKwh > 0 ? 8 : 0),
+          force:shiftedKwh > 0,
+          note:`Estimare pe 24h: am presupus că până la ${fmt(shiftedKwh,1)} kWh din orele scumpe pot fi mutați în cele mai bune ore ale zilei.`
+        },
+        {
+          key:'reduce_peak',
+          title:'Cât economisesc dacă reduc consumul în orele scumpe?',
+          short:'Pentru orele în care consumi mult și energia costă mai mult.',
+          chartTitle:'Economie estimată prin reducerea consumului scump',
+          bars:reduceBars,
+          savings:reduceSavings,
+          affectedKwh:reducedKwh,
+          currentCost:dailyFixedCost,
+          scenarioCost:scenarioCost(reduceSavings),
+          score:reduceSavings + (reducedKwh > 0 ? 7 : 0),
+          force:reducedKwh > 0,
+          note:`Estimare pe 24h: am redus orientativ ${fmt(reducedKwh,1)} kWh din orele cele mai scumpe. Este scenariul cel mai simplu când există consumatori necritici: climatizare, compresoare, pompe, încărcări sau procese care pot fi limitate.`
+        },
+        {
+          key:'bess',
+          title:'Cât economisesc cu o baterie?',
+          short:'Bateria păstrează energia și o folosește când curentul e scump.',
+          chartTitle:'Economie estimată cu baterie',
+          bars:bessBars,
+          savings:bessSavings,
+          affectedKwh:bessShifted,
+          currentCost:dailyFixedCost,
+          scenarioCost:scenarioCost(bessSavings),
+          score:bessSavings + (surplusKwh > 0 ? 12 : 4),
+          visible:bessShifted > 0 && bessSavings > minUsefulSignal,
+          note:`Estimare pe 24h: bateria este folosită doar acolo unde diferența de preț acoperă pierderile și uzura. Dacă există surplus fotovoltaic, acesta este folosit primul.`
+        },
+        {
+          key:'pzu',
+          title:'Cât economisesc dacă prețul se schimbă pe ore?',
+          short:'Compară costul tău cu un preț diferit de la o oră la alta.',
+          chartTitle:'Diferență estimată cu prețuri pe ore',
+          bars:pzuBars,
+          savings:pzuSavings,
+          affectedKwh:dailyGrid,
+          currentCost:dailyFixedCost,
+          scenarioCost:pzuScenarioCost,
+          score:pzuSavings,
+          visible:Math.abs(pzuSavings) > minUsefulSignal,
+          force:Math.abs(pzuSavings) > minUsefulSignal * 2,
+          note:pzuSavings >= 0
+            ? 'Estimare pe 24h: pentru această zi, orele tale de consum par mai bune decât media zilnică.'
+            : 'Estimare pe 24h: pentru această zi, consumul cade în ore relativ scumpe, deci un preț orar ar putea crește costul dacă nu muți consumul.'
+        },
+        {
+          key:'pv_self_use',
+          title:'Cât economisesc dacă folosesc mai bine energia din panouri?',
+          short:'Apare dacă ai panouri și rămâne energie nefolosită.',
+          chartTitle:'Economie estimată din energia produsă local',
+          bars:pvUseBars,
+          savings:pvUseSavings,
+          affectedKwh:pvMoved,
+          currentCost:dailyFixedCost,
+          scenarioCost:scenarioCost(pvUseSavings),
+          score:pvUseSavings + 15,
+          visible:surplusKwh > 1 && pvMoved > 0,
+          note:`Estimare pe 24h: am folosit ${fmt(pvMoved,1)} kWh din surplusul fotovoltaic în orele în care cumpărai energie scumpă din rețea. Pentru calcul exact este importantă potrivirea orară între invertor și consum.`
+        },
+        {
+          key:'cogen',
+          title:'Cât economisesc dacă produc energie și căldură împreună?',
+          short:'Pentru locații care au nevoie constantă de curent și căldură.',
+          chartTitle:'Economie estimată prin producție locală',
+          bars:cogenBars,
+          savings:cogenSavings,
+          affectedKwh:cogenCovered,
+          currentCost:dailyFixedCost,
+          scenarioCost:scenarioCost(cogenSavings),
+          score:cogenSavings + (dailyGrid > 300 && loadFactor > 0.25 ? 10 : -20),
+          visible:dailyGrid > 300 && loadFactor > 0.20 && cogenSavings > minUsefulSignal,
+          note:`Estimare pe 24h: cogenerarea acoperă până la 60% din energia scumpă, cu cost electric net estimat la ${fmt(cogenUnitCost,2)} lei/kWh. Are sens mai ales dacă energia termică produsă este folosită local.`
+        }
+      ];
+
+      const visible = candidates
+        .filter(s => s.visible !== false)
+        .filter(s => s.force || Math.abs(Number(s.savings || 0)) > minUsefulSignal || Number(s.affectedKwh || 0) > 0)
+        .sort((a,b) => Number(b.score || 0) - Number(a.score || 0))
+        .slice(0, 5);
+
+      return visible.length ? visible : candidates.slice(0,2);
+    }
+
+    function q1ScenarioValueHtml(scenario){
+      const loss = Number(scenario.savings || 0) < 0;
+      const value = fmt(Math.abs(Number(scenario.savings || 0)), 0);
+      return `<strong>${loss ? '+' : ''}${value} lei</strong><span>${loss ? 'cost suplimentar estimat / 24h' : 'economie estimată / 24h'}</span>`;
+    }
+
+    function q1ScenarioButtonsHtml(scenarios){
+      return (scenarios || []).map(s => `
+        <button class="q1-scenario-btn" type="button" data-q1-scenario="${esc(s.key)}">
+          <strong>${esc(s.title)}</strong>
+          <span>${esc(s.short)}</span>
+        </button>
+      `).join('');
+    }
+
+    function q1RenderScenarioButtons(scenarios, preferredKey){
+      const wrap = document.getElementById('q1ScenarioButtons');
+      if(!wrap || !Array.isArray(scenarios) || !scenarios.length) return;
+      const key = scenarios.some(s => s.key === preferredKey) ? preferredKey : scenarios[0].key;
+      wrap.innerHTML = q1ScenarioButtonsHtml(scenarios);
+      q1BindScenarioButtons(scenarios, key);
+    }
+
+    function q1RenderScenarioResult(scenarios, key){
+      const scenario = scenarios.find(s => s.key === key) || scenarios[0];
+      const target = document.getElementById('q1ScenarioResult');
+      if(!scenario || !target) return;
+
+      document.querySelectorAll('[data-q1-scenario]').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-q1-scenario') === scenario.key);
+      });
+
+      if(activeCharts.q1Scenario){
+        activeCharts.q1Scenario.destroy();
+        activeCharts.q1Scenario = null;
+      }
+
+      target.innerHTML = `
+        <div class="q1-scenario-stats">
+          <div class="q1-scenario-stat">${q1ScenarioValueHtml(scenario)}</div>
+          <div class="q1-scenario-stat"><strong>${fmt(scenario.affectedKwh || 0,1)} kWh</strong><span>energie influențată / 24h</span></div>
+          <div class="q1-scenario-stat"><strong>${fmt(scenario.currentCost || 0,0)} lei</strong><span>cost actual estimat / 24h</span></div>
+          <div class="q1-scenario-stat"><strong>${fmt(scenario.scenarioCost || 0,0)} lei</strong><span>cost după scenariu / 24h</span></div>
+        </div>
+        <div class="q1-scenario-chart"><canvas id="q1ScenarioChart"></canvas></div>
+        <p class="q1-scenario-note">${esc(scenario.note)}</p>
+      `;
+
+      activeCharts.q1Scenario = new Chart(document.getElementById('q1ScenarioChart'), {
+        type:'bar',
+        data:{
+          labels:Array.from({length:24}, (_,h)=>`${String(h).padStart(2,'0')}:00`),
+          datasets:[{
+            label:scenario.chartTitle,
+            data:scenario.bars,
+            backgroundColor:ctx => Number(ctx.raw || 0) >= 0 ? 'rgba(7,148,63,.72)' : 'rgba(220,38,38,.68)',
+            borderColor:ctx => Number(ctx.raw || 0) >= 0 ? '#07943f' : '#dc2626',
+            borderWidth:1,
+            borderRadius:7,
+            barPercentage:.72,
+            categoryPercentage:.82
+          }]
+        },
+        options:{
+          responsive:true,
+          maintainAspectRatio:false,
+          interaction:{mode:'index',intersect:false},
+          plugins:{
+            legend:{display:false},
+            tooltip:{callbacks:{
+              label:ctx => {
+                const value = Number(ctx.raw || 0);
+                return `${value >= 0 ? 'Economie' : 'Cost suplimentar'}: ${fmt(Math.abs(value),2)} lei`;
+              }
+            }}
+          },
+          scales:{
+            x:{ticks:{maxTicksLimit:12},grid:{display:false}},
+            y:{title:{display:true,text:'lei / oră'},grid:{color:'rgba(148,163,184,.18)'}}
+          }
+        }
+      });
+    }
+
+    function q1BindScenarioButtons(scenarios, preferredKey){
+      document.querySelectorAll('[data-q1-scenario]').forEach(btn => {
+        btn.addEventListener('click', () => q1RenderScenarioResult(scenarios, btn.getAttribute('data-q1-scenario')));
+      });
+      q1RenderScenarioResult(scenarios, preferredKey || scenarios[0]?.key || 'bess');
+    }
+
+    async function q1LoadScenarioContext(dayKey){
+      const ext = window.SVTExternalEnergyData;
+      if(!ext) return {};
+      const [marketData, bessReference] = await Promise.all([
+        ext.loadOpcomPzu ? ext.loadOpcomPzu({day:dayKey}) : Promise.resolve(null),
+        ext.loadBessReference ? ext.loadBessReference() : Promise.resolve(null)
+      ]);
+      return {marketData, bessReference};
+    }
+
     function renderQuestion1Result(box, data){
       const rows = data.chartRows || [];
 
       if(activeCharts.q1){
         activeCharts.q1.destroy();
         activeCharts.q1 = null;
+      }
+      if(activeCharts.q1Scenario){
+        activeCharts.q1Scenario.destroy();
+        activeCharts.q1Scenario = null;
       }
 
       if(!rows.length){
@@ -1640,6 +2321,7 @@
       const dateLabel = svtShortDay({timestamp:dayKey});
       const labels = hourly.map(h => `${String(h.hour).padStart(2,'0')}:00`);
       const defaultHoverText = `${fmt(totalExpensive,1)} kWh · ${fmt(totalCost,0)} lei`;
+      const scenarios = q1BuildScenarioEstimations(hourly, data);
 
       box.innerHTML = `
         <div class="svt-viz-shell">
@@ -1651,6 +2333,26 @@
             <span class="pill" id="q1HoverValue">${esc(defaultHoverText)}</span>
           </div>
           <div class="chart-wrap q1-chart-wrap"><canvas id="question1Chart"></canvas></div>
+          <div class="q1-scenarios">
+            <div class="q1-scenario-head">
+              <div>
+                <h3>Unde apare economia în următoarele 24h?</h3>
+                <p>Aplicația afișează scenariile relevante pentru profilul zilei și estimează beneficiul pe ore.</p>
+              </div>
+              <span class="pill">estimare 24h</span>
+            </div>
+            <div class="q1-scenario-buttons" id="q1ScenarioButtons">
+              ${q1ScenarioButtonsHtml(scenarios)}
+            </div>
+            <div class="q1-scenario-result" id="q1ScenarioResult"></div>
+            <div class="q1-cta">
+              <div>
+                <strong>Vrei o analiză aplicată pe datele tale reale?</strong>
+                <span>Servelect poate valida scenariul potrivit, dimensionarea și economia realistă înainte de investiție.</span>
+              </div>
+              <button class="q1-contact-btn" type="button" data-open-contact>Contactează-ne</button>
+            </div>
+          </div>
         </div>
       `;
 
@@ -1708,6 +2410,12 @@
           }
         }
       });
+      q1BindScenarioButtons(scenarios);
+      q1LoadScenarioContext(dayKey).then(context => {
+        const currentKey = document.querySelector('[data-q1-scenario].active')?.getAttribute('data-q1-scenario');
+        const updatedScenarios = q1BuildScenarioEstimations(hourly, data, context);
+        q1RenderScenarioButtons(updatedScenarios, currentKey);
+      }).catch(() => {});
     }
 
     function handleQuestion2(cardArg){
@@ -1793,7 +2501,7 @@
 
     async function processInlineProduction(files, fileNameEl, box, card){
       try{
-        fileNameEl.textContent = files.length === 1 ? `Fișier selectat: ${files[0].name}` : `Fișiere selectate (${files.length}): ${files.map(f=>f.name).join(', ')}`;
+        fileNameEl.textContent = '';
         box.innerHTML = `
           <div class="loading-panel">
             <div class="spinner"></div>
@@ -3485,6 +4193,35 @@
       return `<div class="q6-bars">${rows.map(x => `<div class="q6-bar-row"><div class="q6-bar-name">${esc(x.name)}</div><div class="q6-bar-track"><div class="q6-bar-fill ${x.annualUseful <= 0 ? 'warn' : ''}" style="width:${Math.max(2, Math.round(Number(x.annualUseful || 0) / max * 100))}%"></div></div><div class="q6-bar-value">${fmt(x.annualUseful || 0,1)} MWh/an</div></div>`).join('')}</div>`;
     }
 
+
+    function openServelectContact(){
+      const modal = document.getElementById('servelectContactModal');
+      if(!modal) return;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden','false');
+    }
+
+    function closeServelectContact(){
+      const modal = document.getElementById('servelectContactModal');
+      if(!modal) return;
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden','true');
+    }
+
+    document.addEventListener('click', e => {
+      if(e.target.closest('[data-open-contact]')){
+        e.preventDefault();
+        openServelectContact();
+      }
+      if(e.target.closest('[data-close-contact]') || e.target.id === 'servelectContactModal'){
+        e.preventDefault();
+        closeServelectContact();
+      }
+    });
+
+    document.addEventListener('keydown', e => {
+      if(e.key === 'Escape') closeServelectContact();
+    });
 
     // Momentan butonul Continuă nu face nimic.
     document.getElementById('continueBtn')?.addEventListener('click', () => {});
