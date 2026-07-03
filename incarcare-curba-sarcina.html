@@ -9854,10 +9854,10 @@ body[data-svt-ui="v157-professional"]{
                       <label class="svt194-field" for="tariffPriceBasis">
                         <span>Pretul introdus reprezinta</span>
                         <select class="control" id="tariffPriceBasis" aria-label="Ce reprezinta pretul introdus">
-                          <option value="final_gross">Pret final din factura</option>
+                          <option value="final_gross" selected>Pret final din factura</option>
                           <option value="active_energy_only">Doar energia activa</option>
                           <option value="without_vat">Pret fara TVA</option>
-                          <option value="unknown" selected>Nu stiu</option>
+                          <option value="unknown">Nu stiu</option>
                         </select>
                       </label>
 
@@ -10029,13 +10029,7 @@ body[data-svt-ui="v157-professional"]{
     let embeddedProductionDetected = false;
 
     function showMessage(type, text){ message.className = 'message ' + type; message.textContent = text; }
-
-    function fileListText(files, singular, plural){
-      if(!files || !files.length) return '';
-      const names = files.map(f => f.name);
-      if(files.length === 1) return `${singular}: ${names[0]}`;
-      return `${plural} (${files.length}): ${names.join(', ')}`;
-    }
+    function clearMessage(){ message.className = 'message'; message.textContent = ''; }
 
     function setTab(tab){
       currentTab = tab;
@@ -10052,10 +10046,10 @@ body[data-svt-ui="v157-professional"]{
 
     function setLoadMethod(method){
       loadMethod = method;
-      methodFileCard.classList.toggle('active', method === 'file');
-      methodInvoiceCard.classList.toggle('active', method === 'invoice');
-      fileModeBox.style.display = method === 'file' ? 'grid' : 'none';
-      invoiceBox.style.display = method === 'invoice' ? 'grid' : 'none';
+      if(methodFileCard) methodFileCard.classList.toggle('active', method === 'file');
+      if(methodInvoiceCard) methodInvoiceCard.classList.toggle('active', method === 'invoice');
+      if(fileModeBox) fileModeBox.style.display = method === 'file' ? 'grid' : 'none';
+      if(invoiceBox) invoiceBox.style.display = method === 'invoice' ? 'grid' : 'none';
       validateForm();
     }
 
@@ -10154,6 +10148,25 @@ body[data-svt-ui="v157-professional"]{
       return value > 0 ? value : Number(fixedTariff?.value || 0);
     }
 
+    function getCalculatedInvoiceTariffValue(){
+      const total = Number(invoiceTotalValue?.value || 0);
+      const billed = Number(invoiceBilledConsumption?.value || 0);
+      const calculated = Number(calculatedTariffPreview?.value || 0);
+      return total > 0 && billed > 0 && calculated > 0 ? calculated : 0;
+    }
+
+    function tariffIsReadyForContinue(){
+      const effectiveTariff = Number(effectiveTariffPreview?.value || 0);
+      if(currentTariffInputMode() === 'invoice_calculation'){
+        return getCalculatedInvoiceTariffValue() > 0 && effectiveTariff > 0;
+      }
+      return Number(fixedTariff?.value || 0) > 0 && effectiveTariff > 0;
+    }
+
+    function thermalIsReadyForContinue(){
+      return Number(document.getElementById('annualThermal')?.value || 0) > 0;
+    }
+
     function buildTariffContext(){
       const context = updateEffectiveTariff();
       return {
@@ -10229,6 +10242,34 @@ body[data-svt-ui="v157-professional"]{
       }
     }
 
+    function rememberUploadMeta(zone){
+      const meta = zone?.querySelector?.('.file-meta');
+      if(!meta || zone.dataset.metaRemembered === '1') return;
+      zone.dataset.metaRemembered = '1';
+      zone.dataset.defaultMetaStrong = meta.querySelector('strong')?.textContent || '';
+      zone.dataset.defaultMetaSpan = meta.querySelector('span')?.textContent || '';
+    }
+
+    function setUploadSuccess(zone, files){
+      const arr = Array.from(files || []);
+      const meta = zone?.querySelector?.('.file-meta');
+      if(!meta || !arr.length) return;
+      rememberUploadMeta(zone);
+      const strong = meta.querySelector('strong');
+      const span = meta.querySelector('span');
+      if(strong) strong.textContent = arr.length === 1 ? 'Fișier încărcat cu succes!' : 'Fișiere încărcate cu succes!';
+      if(span) span.textContent = '';
+    }
+
+    function resetUploadMeta(zone){
+      const meta = zone?.querySelector?.('.file-meta');
+      if(!meta || zone?.dataset?.metaRemembered !== '1') return;
+      const strong = meta.querySelector('strong');
+      const span = meta.querySelector('span');
+      if(strong) strong.textContent = zone.dataset.defaultMetaStrong || '';
+      if(span) span.textContent = zone.dataset.defaultMetaSpan || '';
+    }
+
     function aggregateDatasets(datasets, mode, tariff){
       const map = new Map();
       const fileNames = [];
@@ -10276,6 +10317,7 @@ body[data-svt-ui="v157-professional"]{
       if(!arr.length) return;
       try{ validateFiles(arr); } catch(e){ showMessage('err', e.message || String(e)); return; }
       targetZoneEl.classList.add('has-file');
+      setUploadSuccess(targetZoneEl, arr);
       if(targetType === 'consumption'){
         consumptionFiles = arr;
         targetNameEl.textContent = '';
@@ -10322,11 +10364,11 @@ body[data-svt-ui="v157-professional"]{
     }
 
     function validateForm(){
-      const tariffMethod = currentTariffInputMode();
-      const effectiveTariff = getEffectiveTariffValue();
-      const tariffOk = tariffMethod === 'invoice_calculation'
-        ? effectiveTariff > 0
-        : Number(fixedTariff.value) > 0 && effectiveTariff > 0;
+      if(currentTab === 'termic'){
+        continueBtn.disabled = !thermalIsReadyForContinue();
+        return;
+      }
+      const tariffOk = tariffIsReadyForContinue();
       let dataOk = true;
       if(currentTab === 'electric'){
         if(loadMethod === 'file') dataOk = consumptionFiles.length > 0;
@@ -10353,6 +10395,21 @@ body[data-svt-ui="v157-professional"]{
       return { rows, meta:{ fileName:'Estimare din factura lunară', sourceProfile:'invoice_monthly_manual_estimate', rowsCount:rows.length, intervalMinutes:60, fixedPriceRonKwh:tariff, invoiceFileName: invoiceFile ? invoiceFile.name : null, warning:'Estimare: factura lunară nu conține distribuția reală pe ore.' } };
     }
 
+    function removeProductionFromDataset(dataset){
+      if(!dataset) return dataset;
+      dataset.rows = (dataset.rows || []).map(row => ({
+        ...row,
+        pvKwh: 0,
+        productionKwh: 0,
+        surplusKwh: 0
+      }));
+      dataset.meta = dataset.meta || {};
+      dataset.meta.hasEmbeddedProduction = false;
+      dataset.meta.productionDetectedInMainFile = false;
+      dataset.meta.productionFileNames = [];
+      return dataset;
+    }
+
     function createSVTDataFingerprint(dataset, tariff, loadMethod, sourceType){
       const rows = dataset?.rows || [];
       const totalConsumption = rows.reduce((a,r)=>a + Number(r.electricKwh || r.consumptionKwh || 0),0);
@@ -10368,9 +10425,20 @@ body[data-svt-ui="v157-professional"]{
     async function continueFlow(){
       try{
         if(!window.SVTLoadCurveProfiles || !window.SVTAnalysisEngine){ showMessage('err', 'Modulele de analiză nu s-au încărcat corect. Reîncarcă pagina cu Ctrl+F5.'); return; }
+        validateForm();
+        if(continueBtn.disabled){
+          if(currentTab === 'termic' && !thermalIsReadyForContinue()){
+            showMessage('err', 'Completează consumul anual estimat pentru analiza termică.');
+          } else if(currentTab === 'electric' && currentTariffInputMode() === 'invoice_calculation' && !getCalculatedInvoiceTariffValue()){
+            showMessage('err', 'Completează Total factura și Consum facturat pentru a calcula prețul.');
+          } else {
+            showMessage('err', 'Completează datele obligatorii înainte de a continua.');
+          }
+          return;
+        }
         showMessage('warn', 'Procesăm datele...');
         const tariffContext = buildTariffContext();
-        const tariff = Number(tariffContext.effectiveTariffPreview || tariffContext.fixedTariff || 0.75);
+        const tariff = Number(tariffContext.effectiveTariffRonKwh || tariffContext.effectiveTariffPreview || tariffContext.fixedTariff || 0.75);
         const consumptionDataSource = document.getElementById('consumptionDataSource')?.value || 'total';
         if(currentTab === 'termic'){
           const navigatorContext = { selectedMode:'termic', loadMethod:'thermal', hasElectricData:false, hasThermalData:true, hasProduction:false, fixedTariffRonKwh:tariff, tariffDetails:tariffContext, thermal:{ monitored: document.getElementById('thermalMonitored')?.value || '', source: document.getElementById('thermalSource')?.value || '', annualValue: Number(document.getElementById('annualThermal')?.value || 0), unit: document.getElementById('thermalUnit')?.value || '' }, createdAt:new Date().toISOString() };
@@ -10384,12 +10452,20 @@ body[data-svt-ui="v157-professional"]{
           if(!consumptionFiles || !consumptionFiles.length){ showMessage('err', 'Pentru a continua este obligatoriu să încarci fișierul / fișierele cu consumul electric.'); return; }
           dataset = await parseAndMergeFiles(consumptionFiles, 'electric', tariff);
         } else dataset = buildInvoiceDataset();
-        if(hasProduction.checked && productionFiles.length && !embeddedProductionDetected){
+        if(!hasProduction.checked){
+          dataset = removeProductionFromDataset(dataset);
+        } else if(productionFiles.length && !embeddedProductionDetected){
           const productionDataset = await parseAndMergeFiles(productionFiles, 'production', tariff);
           dataset = SVTAnalysisEngine.mergeProduction(dataset, productionDataset);
           dataset.meta.productionFileNames = productionDataset.meta.fileNames || [];
         }
-        if(embeddedProductionDetected || dataset?.meta?.productionDetectedInMainFile || dataset?.rows?.some(r => Number(r.pvKwh || 0) > 0)){ dataset.meta.hasEmbeddedProduction = true; dataset.meta.productionDetectedInMainFile = true; }
+        if(hasProduction.checked && (embeddedProductionDetected || dataset?.meta?.productionDetectedInMainFile || dataset?.rows?.some(r => Number(r.pvKwh || 0) > 0))){
+          dataset.meta.hasEmbeddedProduction = true;
+          dataset.meta.productionDetectedInMainFile = true;
+        } else {
+          dataset.meta.hasEmbeddedProduction = false;
+          dataset.meta.productionDetectedInMainFile = false;
+        }
         dataset.meta.fixedPriceRonKwh = tariff;
         dataset.meta.tariffDetails = tariffContext;
         dataset.meta.consumptionDataSource = consumptionDataSource;
@@ -10417,7 +10493,18 @@ body[data-svt-ui="v157-professional"]{
     tabTermic.addEventListener('click', () => setTab('termic'));
     methodFileCard.addEventListener('click', () => setLoadMethod('file'));
     if(window.methodInvoiceCard && methodInvoiceCard.addEventListener){ methodInvoiceCard.addEventListener('click', () => setLoadMethod('invoice')); }
-    hasProduction.addEventListener('change', () => { productionBox.classList.toggle('visible', hasProduction.checked); if(!hasProduction.checked){ productionBox.classList.remove('embedded'); embeddedProductionDetected = false; productionFiles = []; productionFileName.textContent = ''; productionDrop.classList.remove('has-file'); } validateForm(); });
+    hasProduction.addEventListener('change', () => {
+      productionBox.classList.toggle('visible', hasProduction.checked);
+      if(!hasProduction.checked){
+        productionBox.classList.remove('embedded');
+        embeddedProductionDetected = false;
+        productionFiles = [];
+        productionFileName.textContent = '';
+        productionDrop.classList.remove('has-file');
+        resetUploadMeta(productionDrop);
+      }
+      validateForm();
+    });
     if(tariffMethodInvoice) tariffMethodInvoice.addEventListener('change', () => { if(tariffMethodInvoice.checked) { setTariffMethod('invoice_calculation'); syncTariffFromInvoice(); } });
     if(tariffMethodKnown) tariffMethodKnown.addEventListener('change', () => { if(tariffMethodKnown.checked) setTariffMethod('direct_price'); });
     if(invoiceTotalValue) invoiceTotalValue.addEventListener('input', syncTariffFromInvoice);
@@ -10442,12 +10529,16 @@ body[data-svt-ui="v157-professional"]{
     if(tariffAdvancedCheck) tariffAdvancedCheck.addEventListener('change', () => { setAdvancedPanelOpen(tariffAdvancedCheck.checked); updateEffectiveTariff(); });
     document.getElementById('invoiceConsumption').addEventListener('input', validateForm);
     document.getElementById('invoiceDays').addEventListener('input', validateForm);
+    document.getElementById('annualThermal').addEventListener('input', validateForm);
+    document.getElementById('thermalMonitored').addEventListener('change', validateForm);
+    document.getElementById('thermalSource').addEventListener('change', validateForm);
+    document.getElementById('thermalUnit').addEventListener('change', validateForm);
     continueBtn.addEventListener('click', continueFlow);
 
     wireDropZone(dropZone, fileInput, chooseBtn, fileName, 'consumption');
     wireDropZone(productionDrop, productionInput, productionChoose, productionFileName, 'production');
     wireDropZone(invoiceDrop, invoiceInput, invoiceChoose, invoiceFileName, 'invoice');
-    setTariffMethod('invoice_calculation', { keepAdvancedSelection:true });
+    setTariffMethod('invoice_calculation');
     setAdvancedPanelOpen(true);
     updateEffectiveTariff();
 
