@@ -78,6 +78,130 @@
       position:relative;z-index:1;width:min(1040px,calc(100% - 72px));min-height:100vh;margin:0 auto;
       padding:42px 0 34px;display:grid;gap:14px;
     }
+    .question-jump-nav{
+      position:fixed;
+      left:max(10px,calc((100vw - 1040px) / 2 - 180px));
+      top:188px;
+      z-index:12;
+      width:138px;
+    }
+    .question-jump-list{
+      position:relative;
+      display:grid;
+      gap:10px;
+    }
+    .question-jump-list::before{
+      content:"";
+      position:absolute;
+      left:17px;
+      top:17px;
+      bottom:17px;
+      width:2px;
+      border-radius:999px;
+      background:#dce8f2;
+    }
+    .question-jump-btn{
+      position:relative;
+      z-index:1;
+      width:100%;
+      min-height:34px;
+      border:0;
+      background:transparent;
+      padding:0;
+      display:grid;
+      grid-template-columns:34px minmax(0,1fr);
+      gap:9px;
+      align-items:center;
+      color:#8290a4;
+      font-family:inherit;
+      text-align:left;
+      cursor:pointer;
+    }
+    .question-jump-no{
+      width:34px;
+      height:34px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:#fff;
+      border:1px solid #dbe6f0;
+      box-shadow:0 8px 18px rgba(15,23,42,.04);
+      color:#718198;
+      font-size:12px;
+      line-height:1;
+      font-weight:1000;
+      font-variant-numeric:tabular-nums;
+    }
+    .question-jump-label{
+      min-width:0;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      display:-webkit-box;
+      -webkit-line-clamp:2;
+      -webkit-box-orient:vertical;
+      font-size:11px;
+      line-height:1.1;
+      font-weight:950;
+    }
+    .question-jump-btn:hover .question-jump-no,
+    .question-jump-btn.active .question-jump-no{
+      background:var(--green);
+      border-color:var(--green);
+      color:#fff;
+      box-shadow:0 12px 24px rgba(7,148,63,.18);
+    }
+    .question-jump-btn:hover .question-jump-label,
+    .question-jump-btn.active .question-jump-label{
+      color:var(--green);
+    }
+    .q-item{scroll-margin-top:18px}
+    @media(max-width:1320px){
+      .question-jump-nav{
+        left:10px;
+        width:38px;
+      }
+      .question-jump-btn{
+        grid-template-columns:34px;
+      }
+      .question-jump-label{
+        display:none;
+      }
+    }
+    @media(min-width:761px) and (max-width:1320px){
+      .shell{
+        width:min(1040px,calc(100% - 136px));
+        margin-left:72px;
+        margin-right:auto;
+      }
+    }
+    @media(max-width:760px){
+      .question-jump-nav{
+        position:sticky;
+        top:8px;
+        left:auto;
+        width:calc(100% - 32px);
+        margin:4px auto 8px;
+        z-index:30;
+      }
+      .question-jump-list{
+        display:flex;
+        gap:8px;
+        overflow-x:auto;
+        padding:4px;
+        border:1px solid #dfe8f1;
+        border-radius:16px;
+        background:rgba(255,255,255,.92);
+        box-shadow:0 12px 28px rgba(15,23,42,.08);
+        scrollbar-width:none;
+      }
+      .question-jump-list::-webkit-scrollbar{display:none}
+      .question-jump-list::before{display:none}
+      .question-jump-btn{
+        width:auto;
+        flex:0 0 auto;
+      }
+      .q-item{scroll-margin-top:76px}
+    }
     .kicker{margin:0 0 12px;color:var(--green);font-size:14px;letter-spacing:.13em;text-transform:uppercase;font-weight:1000}
     h1{margin:0;color:var(--navy);font-size:clamp(34px,3.15vw,52px);line-height:1;letter-spacing:-.055em;font-weight:1000;white-space:nowrap;overflow:hidden}
     .subtitle{margin:7px 0 0;color:var(--muted);font-size:18px;line-height:1.25;font-weight:550}
@@ -1201,13 +1325,15 @@
   
     /* v208: Q1 follows the same simple Chart.js curve style as load/PV charts. */
     .q1-chart-wrap{height:320px}
+    .q1-viz-shell{overflow:visible}
     @media(max-width:720px){.q1-chart-wrap{height:280px}}
 
-    /* v218: Q1 practical 24h what-if scenarios */
+    /* v228: compact 24h what-if scenarios with side explanation */
     .q1-scenarios{
       margin-top:14px;
       display:grid;
       gap:12px;
+      position:relative;
     }
     .q1-scenario-head{
       display:flex;
@@ -1221,7 +1347,7 @@
       font-size:18px;
       line-height:1.1;
       font-weight:1000;
-      letter-spacing:-.025em;
+      letter-spacing:-.02em;
     }
     .q1-scenario-head p{
       margin:4px 0 0;
@@ -1230,69 +1356,86 @@
       line-height:1.35;
       font-weight:750;
     }
-    .q1-scenario-buttons{
+    .q1-scenario-workspace{
+      display:block;
+    }
+    .q1-scenario-main{
+      min-width:0;
       display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
       gap:10px;
     }
+    .q1-scenario-buttons{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:8px;
+    }
     .q1-scenario-btn{
-      min-height:72px;
+      height:56px;
+      min-width:0;
       border:1px solid #dfe8f1;
-      border-radius:14px;
+      border-radius:12px;
       background:#fff;
-      padding:11px 12px;
+      padding:8px 9px;
       text-align:left;
       color:var(--navy);
       font-family:inherit;
       cursor:pointer;
-      box-shadow:0 8px 18px rgba(15,23,42,.04);
-      transition:.16s ease;
+      box-shadow:0 8px 18px rgba(15,23,42,.035);
+      transition:border-color .16s ease, background .16s ease, box-shadow .16s ease;
+      display:grid;
+      grid-template-rows:1fr auto;
+      gap:3px;
     }
     .q1-scenario-btn:hover,
+    .q1-scenario-btn:focus-visible,
     .q1-scenario-btn.active{
-      border-color:#9bd8b3;
+      border-color:#8fd3aa;
       background:#f7fcf9;
-      box-shadow:0 12px 26px rgba(7,148,63,.10);
+      box-shadow:0 12px 24px rgba(7,148,63,.10);
+      outline:none;
     }
     .q1-scenario-btn strong{
-      display:block;
-      font-size:13px;
-      line-height:1.15;
-      font-weight:1000;
-      letter-spacing:-.01em;
-    }
-    .q1-scenario-btn span{
-      display:block;
-      margin-top:5px;
-      color:#66758f;
+      display:-webkit-box;
+      -webkit-line-clamp:2;
+      -webkit-box-orient:vertical;
+      overflow:hidden;
       font-size:11.2px;
-      line-height:1.25;
-      font-weight:750;
+      line-height:1.08;
+      font-weight:1000;
+      letter-spacing:0;
+    }
+    .q1-scenario-btn em{
+      color:#07943f;
+      font-style:normal;
+      font-size:10.8px;
+      line-height:1;
+      font-weight:1000;
+      white-space:nowrap;
     }
     .q1-scenario-result{
       border:1px solid #e1eadf;
-      border-radius:16px;
-      background:linear-gradient(180deg,#fbfefc,#fff);
-      padding:13px;
+      border-radius:14px;
+      background:#fff;
+      padding:10px;
       display:grid;
-      gap:12px;
+      gap:10px;
     }
     .q1-scenario-stats{
       display:grid;
       grid-template-columns:repeat(4,minmax(0,1fr));
-      gap:9px;
+      gap:7px;
     }
     .q1-scenario-stat{
       border:1px solid #e6edf4;
-      border-radius:13px;
-      background:#fff;
-      padding:10px 11px;
+      border-radius:11px;
+      background:#fbfcfe;
+      padding:8px 9px;
       min-width:0;
     }
     .q1-scenario-stat strong{
       display:block;
       color:var(--navy);
-      font-size:17px;
+      font-size:15px;
       line-height:1.05;
       font-weight:1000;
       white-space:nowrap;
@@ -1301,26 +1444,132 @@
     }
     .q1-scenario-stat span{
       display:block;
-      margin-top:4px;
+      margin-top:3px;
       color:#66758f;
-      font-size:10.8px;
-      line-height:1.25;
+      font-size:10px;
+      line-height:1.2;
       font-weight:800;
     }
     .q1-scenario-chart{
-      height:210px;
+      height:190px;
       position:relative;
       border:1px solid #eef2f6;
       border-radius:14px;
-      background:#fff;
+      background:#fbfcfe;
       padding:10px;
     }
-    .q1-scenario-note{
-      margin:0;
+    .q1-scenario-info{
+      position:absolute;
+      left:calc(100% + 18px);
+      top:50px;
+      width:240px;
+      min-height:144px;
+      border:1px solid #dfe8f1;
+      border-radius:16px;
+      background:#fff;
+      padding:14px;
       color:#60718b;
-      font-size:12px;
-      line-height:1.4;
-      font-weight:700;
+      box-shadow:0 18px 44px rgba(15,23,42,.08);
+      opacity:0;
+      transform:translateY(4px);
+      pointer-events:none;
+      transition:.16s ease;
+    }
+    .q1-scenario-info.is-visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+    .q1-scenario-info small{
+      display:block;
+      color:#07943f;
+      font-size:10px;
+      line-height:1;
+      font-weight:1000;
+      text-transform:uppercase;
+    }
+    .q1-scenario-info strong{
+      display:block;
+      margin-top:7px;
+      color:var(--navy);
+      font-size:14px;
+      line-height:1.15;
+      font-weight:1000;
+    }
+    .q1-scenario-info p{
+      margin:7px 0 0;
+      color:#60718b;
+      font-size:11.5px;
+      line-height:1.35;
+      font-weight:750;
+    }
+    .q1-scenario-side-metrics{
+      margin-top:10px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:7px;
+    }
+    .q1-scenario-side-metrics span{
+      border:1px solid #e6edf4;
+      border-radius:11px;
+      background:#fbfcfe;
+      padding:8px;
+      color:#07182b;
+      font-size:13px;
+      line-height:1;
+      font-weight:1000;
+    }
+    .q1-scenario-side-metrics b{
+      display:block;
+      margin-top:5px;
+      color:#6a7890;
+      font-size:9px;
+      line-height:1.15;
+      font-weight:850;
+    }
+    .q1-scenario-info .q1-scenario-side-note{
+      color:#5f6f86;
+      font-size:11px;
+      line-height:1.35;
+    }
+    @media(max-width:1180px){
+      .q1-scenario-btn strong{
+        font-size:10.6px;
+      }
+    }
+    @media(max-width:1260px){
+      .q1-scenario-info{
+        position:relative;
+        left:auto;
+        top:auto;
+        width:auto;
+        min-height:0;
+      }
+    }
+    @media(max-width:760px){
+      .q1-scenario-head{
+        align-items:flex-start;
+        flex-direction:column;
+      }
+      .q1-scenario-buttons{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+      .q1-scenario-stats{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+      .q1-scenario-chart{
+        height:176px;
+      }
+    }
+    @media(max-width:460px){
+      .q1-scenario-buttons,
+      .q1-scenario-stats,
+      .q1-scenario-side-metrics{
+        grid-template-columns:1fr;
+      }
+      .q1-scenario-btn{
+        height:auto;
+        min-height:48px;
+      }
     }
     .q1-cta{
       margin-top:2px;
@@ -1474,6 +1723,17 @@
       .q1-scenario-stats{grid-template-columns:1fr}
       .q1-scenario-chart{height:190px}
     }
+    .q2-pv-scenarios .q1-scenario-buttons{
+      grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+    .q2-pv-scenarios .q1-scenario-chart{
+      height:180px;
+    }
+    @media(max-width:860px){
+      .q2-pv-scenarios .q1-scenario-buttons{
+        grid-template-columns:1fr;
+      }
+    }
 
   </style>
 </head>
@@ -1491,6 +1751,7 @@
   <div class="svt-progress-label" data-step-label="3" style="grid-column:5">Rezultate</div>
   <div class="svt-progress-label" data-step-label="4" style="grid-column:7">Recomandări</div>
 </section>
+<aside class="question-jump-nav" id="questionJumpNav" aria-label="Navigare rapidă întrebări"></aside>
 <main class="shell">
     <section aria-labelledby="trialTitle">
       <p class="kicker">SVT ENERGY NAVIGATOR</p>
@@ -1554,6 +1815,8 @@
       {id:10, icon:'🎯', title:'Ce ar trebui să fac mâine pentru a reduce costul?', groups:['electric','thermal','forecast']}
     ];
     let activeCharts = {};
+    let questionJumpObserver = null;
+    let questionJumpLockUntil = 0;
 
     function setSVTProgressStep(step){
       const stage = Number(step) === 3 ? 'results' : 'processing';
@@ -1618,12 +1881,73 @@
     function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
     function fmt(v,d=2){return (Number(v)||0).toLocaleString('ro-RO',{maximumFractionDigits:d,minimumFractionDigits:d});}
 
+    function setQuestionJumpActive(id){
+      document.querySelectorAll('[data-question-jump]').forEach(btn => {
+        btn.classList.toggle('active', Number(btn.getAttribute('data-question-jump')) === Number(id));
+      });
+    }
+
+    function renderQuestionJumpNav(questions){
+      const nav = document.getElementById('questionJumpNav');
+      if(!nav) return;
+      nav.innerHTML = `
+        <div class="question-jump-list">
+          ${(questions || []).map((q, idx) => `
+            <button class="question-jump-btn" type="button" data-question-jump="${q.id}" aria-label="Mergi la întrebarea ${displayNumber(idx)}">
+              <span class="question-jump-no">${displayNumber(idx)}</span>
+              <span class="question-jump-label">${esc(q.title)}</span>
+            </button>
+          `).join('')}
+        </div>
+      `;
+      nav.querySelectorAll('[data-question-jump]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = Number(btn.getAttribute('data-question-jump'));
+          const target = document.querySelector(`[data-q-item="${id}"]`);
+          if(target){
+            questionJumpLockUntil = Date.now() + 1000;
+            setQuestionJumpActive(id);
+            target.scrollIntoView({behavior:'smooth', block:'start'});
+            const card = target.querySelector('.q-card');
+            if(card) card.focus({preventScroll:true});
+            window.setTimeout(() => setQuestionJumpActive(id), 650);
+          }
+        });
+      });
+      setQuestionJumpActive(questions?.[0]?.id || 1);
+    }
+
+    function observeQuestionJumpNav(){
+      if(questionJumpObserver) questionJumpObserver.disconnect();
+      const items = Array.from(document.querySelectorAll('[data-q-item]'));
+      if(!items.length) return;
+      if(!('IntersectionObserver' in window)){
+        window.addEventListener('scroll', () => {
+          if(Date.now() < questionJumpLockUntil) return;
+          const current = items
+            .map(item => ({item, top:Math.abs(item.getBoundingClientRect().top - 120)}))
+            .sort((a,b)=>a.top-b.top)[0]?.item;
+          if(current) setQuestionJumpActive(current.getAttribute('data-q-item'));
+        }, {passive:true});
+        return;
+      }
+      questionJumpObserver = new IntersectionObserver(entries => {
+        if(Date.now() < questionJumpLockUntil) return;
+        const visible = entries
+          .filter(entry => entry.isIntersecting)
+          .sort((a,b) => Math.abs(a.boundingClientRect.top) - Math.abs(b.boundingClientRect.top))[0];
+        if(visible) setQuestionJumpActive(visible.target.getAttribute('data-q-item'));
+      }, {root:null, rootMargin:'-30% 0px -55% 0px', threshold:[0, .2, .6]});
+      items.forEach(item => questionJumpObserver.observe(item));
+    }
+
     function render(){
       const ctx = getContext();
       const mode = ctx.selectedMode || 'electric';
       const analysis = getAnalysis();
       const questions = relevantQuestions(ctx);
       const grid = document.getElementById('questions');
+      renderQuestionJumpNav(questions);
 
       const modeLabel = mode === 'termic' ? 'Termic' : 'Electric';
       const dataLabel = mode === 'termic'
@@ -1656,6 +1980,7 @@
         card.addEventListener('click', () => {
           setSVTProgressStep(3);
           const q = Number(card.getAttribute('data-q'));
+          setQuestionJumpActive(q);
           if(q === 1) handleQuestion1(card);
           if(q === 2) handleQuestion2(card);
           if(q === 3) handleQuestion3(card);
@@ -1664,6 +1989,7 @@
           if(q === 6) handleQuestion6(card);
         });
       });
+      observeQuestionJumpNav();
     }
 
     function handleQuestion1(cardArg){
@@ -2187,13 +2513,18 @@
         }
       ];
 
-      const visible = candidates
-        .filter(s => s.visible !== false)
-        .filter(s => s.force || Math.abs(Number(s.savings || 0)) > minUsefulSignal || Number(s.affectedKwh || 0) > 0)
-        .sort((a,b) => Number(b.score || 0) - Number(a.score || 0))
-        .slice(0, 5);
+      const primaryOrder = ['pzu','bess','shift','reduce_peak'];
+      const primary = primaryOrder
+        .map(key => candidates.find(s => s.key === key))
+        .filter(Boolean);
 
-      return visible.length ? visible : candidates.slice(0,2);
+      return primary.length ? primary : candidates.slice(0,4);
+    }
+
+    function q1ScenarioValueText(scenario){
+      const loss = Number(scenario.savings || 0) < 0;
+      const value = fmt(Math.abs(Number(scenario.savings || 0)), 0);
+      return `${loss ? '+' : ''}${value} lei`;
     }
 
     function q1ScenarioValueHtml(scenario){
@@ -2206,9 +2537,30 @@
       return (scenarios || []).map(s => `
         <button class="q1-scenario-btn" type="button" data-q1-scenario="${esc(s.key)}">
           <strong>${esc(s.title)}</strong>
-          <span>${esc(s.short)}</span>
+          <em>${esc(q1ScenarioValueText(s))}</em>
         </button>
       `).join('');
+    }
+
+    function q1ScenarioInfoHtml(scenario, mode='selected'){
+      if(!scenario) return '';
+      return `
+        <small>${mode === 'hover' ? 'Info scenariu' : 'Scenariu selectat'}</small>
+        <strong>${esc(scenario.title)}</strong>
+        <p>${esc(scenario.short)}</p>
+        <div class="q1-scenario-side-metrics">
+          <span>${esc(q1ScenarioValueText(scenario))}<b>${Number(scenario.savings || 0) < 0 ? 'cost suplimentar / 24h' : 'economie / 24h'}</b></span>
+          <span>${fmt(scenario.affectedKwh || 0,1)} kWh<b>energie influențată</b></span>
+        </div>
+        <p class="q1-scenario-side-note">${esc(scenario.note)}</p>
+      `;
+    }
+
+    function q1UpdateScenarioInfo(scenario, mode='selected'){
+      const info = document.getElementById('q1ScenarioInfo');
+      if(!info || !scenario) return;
+      info.innerHTML = q1ScenarioInfoHtml(scenario, mode);
+      info.classList.add('is-visible');
     }
 
     function q1RenderScenarioButtons(scenarios, preferredKey){
@@ -2227,6 +2579,7 @@
       document.querySelectorAll('[data-q1-scenario]').forEach(btn => {
         btn.classList.toggle('active', btn.getAttribute('data-q1-scenario') === scenario.key);
       });
+      q1UpdateScenarioInfo(scenario, 'selected');
 
       if(activeCharts.q1Scenario){
         activeCharts.q1Scenario.destroy();
@@ -2241,27 +2594,31 @@
           <div class="q1-scenario-stat"><strong>${fmt(scenario.scenarioCost || 0,0)} lei</strong><span>cost după scenariu / 24h</span></div>
         </div>
         <div class="q1-scenario-chart"><canvas id="q1ScenarioChart"></canvas></div>
-        <p class="q1-scenario-note">${esc(scenario.note)}</p>
       `;
 
+      const scenarioLoss = Number(scenario.savings || 0) < 0;
+      const scenarioColor = scenarioLoss ? '#dc2626' : '#07943f';
+      const scenarioFill = scenarioLoss ? 'rgba(220,38,38,.10)' : 'rgba(7,148,63,.10)';
       activeCharts.q1Scenario = new Chart(document.getElementById('q1ScenarioChart'), {
-        type:'bar',
+        type:'line',
         data:{
           labels:Array.from({length:24}, (_,h)=>`${String(h).padStart(2,'0')}:00`),
           datasets:[{
             label:scenario.chartTitle,
             data:scenario.bars,
-            backgroundColor:ctx => Number(ctx.raw || 0) >= 0 ? 'rgba(7,148,63,.72)' : 'rgba(220,38,38,.68)',
-            borderColor:ctx => Number(ctx.raw || 0) >= 0 ? '#07943f' : '#dc2626',
-            borderWidth:1,
-            borderRadius:7,
-            barPercentage:.72,
-            categoryPercentage:.82
+            borderColor:scenarioColor,
+            backgroundColor:scenarioFill,
+            fill:true,
+            tension:.28,
+            pointRadius:ctx => Math.abs(Number(ctx.raw || 0)) > 0 ? 2.5 : 0,
+            pointHoverRadius:4,
+            borderWidth:2.4
           }]
         },
         options:{
           responsive:true,
           maintainAspectRatio:false,
+          resizeDelay:120,
           interaction:{mode:'index',intersect:false},
           plugins:{
             legend:{display:false},
@@ -2274,15 +2631,21 @@
           },
           scales:{
             x:{ticks:{maxTicksLimit:12},grid:{display:false}},
-            y:{title:{display:true,text:'lei / oră'},grid:{color:'rgba(148,163,184,.18)'}}
+            y:{ticks:{callback:value => `${fmt(Number(value || 0),0)} lei`},grid:{color:'rgba(148,163,184,.18)'}}
           }
         }
       });
     }
 
     function q1BindScenarioButtons(scenarios, preferredKey){
+      const getScenario = btn => scenarios.find(s => s.key === btn.getAttribute('data-q1-scenario')) || scenarios[0];
+      const selectedKey = () => document.querySelector('[data-q1-scenario].active')?.getAttribute('data-q1-scenario') || preferredKey || scenarios[0]?.key;
       document.querySelectorAll('[data-q1-scenario]').forEach(btn => {
         btn.addEventListener('click', () => q1RenderScenarioResult(scenarios, btn.getAttribute('data-q1-scenario')));
+        btn.addEventListener('mouseenter', () => q1UpdateScenarioInfo(getScenario(btn), 'hover'));
+        btn.addEventListener('focus', () => q1UpdateScenarioInfo(getScenario(btn), 'hover'));
+        btn.addEventListener('mouseleave', () => q1UpdateScenarioInfo(scenarios.find(s => s.key === selectedKey()) || scenarios[0], 'selected'));
+        btn.addEventListener('blur', () => q1UpdateScenarioInfo(scenarios.find(s => s.key === selectedKey()) || scenarios[0], 'selected'));
       });
       q1RenderScenarioResult(scenarios, preferredKey || scenarios[0]?.key || 'bess');
     }
@@ -2324,7 +2687,7 @@
       const scenarios = q1BuildScenarioEstimations(hourly, data);
 
       box.innerHTML = `
-        <div class="svt-viz-shell">
+        <div class="svt-viz-shell q1-viz-shell">
           <div class="result-head">
             <div>
               <h2>Orele care te costă cel mai mult</h2>
@@ -2341,10 +2704,15 @@
               </div>
               <span class="pill">estimare 24h</span>
             </div>
-            <div class="q1-scenario-buttons" id="q1ScenarioButtons">
-              ${q1ScenarioButtonsHtml(scenarios)}
+            <div class="q1-scenario-workspace">
+              <div class="q1-scenario-main">
+                <div class="q1-scenario-buttons" id="q1ScenarioButtons">
+                  ${q1ScenarioButtonsHtml(scenarios)}
+                </div>
+                <div class="q1-scenario-result" id="q1ScenarioResult"></div>
+              </div>
+              <aside class="q1-scenario-info" id="q1ScenarioInfo" aria-live="polite"></aside>
             </div>
-            <div class="q1-scenario-result" id="q1ScenarioResult"></div>
             <div class="q1-cta">
               <div>
                 <strong>Vrei o analiză aplicată pe datele tale reale?</strong>
@@ -2586,48 +2954,314 @@
       return {rows, meta:{fileName:fileNames.length > 1 ? `${fileNames.length} fișiere producție` : (fileNames[0] || 'producție locală'), fileNames, fixedPriceRonKwh:tariff, sourceProfile:'inline_production_upload'}};
     }
 
+    function q2RowValues(r){
+      const production = Number(r.productionKwh || 0);
+      const consumption = Number(r.consumptionKwh || r.electricKwh || r.gridKwh || 0);
+      const self = Math.min(production, consumption);
+      const surplus = Math.max(production - consumption, Number(r.surplusKwh || 0), 0);
+      const gridKwh = Math.max(Number(r.gridKwh || 0), consumption - self, 0);
+      return {production, consumption, self, surplus, gridKwh};
+    }
+
+    function q2ChooseSurplusDay(rows){
+      const byDay = new Map();
+      (rows || []).forEach(r => {
+        const key = svtDayKey(r);
+        const v = q2RowValues(r);
+        const prev = byDay.get(key) || {surplus:0, production:0};
+        prev.surplus += v.surplus;
+        prev.production += v.production;
+        byDay.set(key, prev);
+      });
+      const ranked = Array.from(byDay.entries()).sort((a,b) => (b[1].surplus - a[1].surplus) || (b[1].production - a[1].production));
+      return ranked[0]?.[0] || svtDayKey(rows?.[0] || {});
+    }
+
+    function q2BuildHourlyPvDay(rows, dayKey){
+      const hours = Array.from({length:24}, (_,hour)=>({hour, productionKwh:0, selfConsumedKwh:0, surplusKwh:0, gridKwh:0, count:0}));
+      (rows || []).filter(r => svtDayKey(r) === dayKey).forEach(r => {
+        const hour = Math.max(0, Math.min(23, svtHourFromRow(r)));
+        const v = q2RowValues(r);
+        hours[hour].productionKwh += v.production;
+        hours[hour].selfConsumedKwh += v.self;
+        hours[hour].surplusKwh += v.surplus;
+        hours[hour].gridKwh += v.gridKwh;
+        hours[hour].count += 1;
+      });
+      return hours;
+    }
+
+    function q2Totals(rows){
+      return (rows || []).reduce((acc, r) => {
+        const v = q2RowValues(r);
+        acc.production += v.production;
+        acc.self += v.self;
+        acc.surplus += v.surplus;
+        acc.grid += v.gridKwh;
+        return acc;
+      }, {production:0, self:0, surplus:0, grid:0});
+    }
+
+    function q2ExportTariff(data){
+      const dataset = getDataset();
+      return Number(data?.meta?.exportTariffRonKwh || data?.meta?.exportPriceRonKwh || dataset?.meta?.exportTariffRonKwh || dataset?.meta?.exportPriceRonKwh || 0.20) || 0.20;
+    }
+
+    function q2AllocateBySurplusHours(hourly, limitKwh, callback){
+      let remaining = Math.max(0, Number(limitKwh) || 0);
+      const ordered = hourly.slice()
+        .filter(h => Number(h.surplusKwh || 0) > 0)
+        .sort((a,b)=>Number(b.surplusKwh || 0) - Number(a.surplusKwh || 0));
+      for(const h of ordered){
+        if(remaining <= 0) break;
+        const used = Math.min(Number(h.surplusKwh || 0), remaining);
+        if(used > 0){
+          callback(h, used);
+          remaining -= used;
+        }
+      }
+    }
+
+    function q2AllocateByGridNeed(hourly, limitKwh, callback){
+      let remaining = Math.max(0, Number(limitKwh) || 0);
+      const ordered = hourly.slice()
+        .filter(h => Number(h.gridKwh || 0) > 0)
+        .sort((a,b) => {
+          const aEvening = a.hour >= 17 || a.hour <= 7 ? 1 : 0;
+          const bEvening = b.hour >= 17 || b.hour <= 7 ? 1 : 0;
+          return (bEvening - aEvening) || (Number(b.gridKwh || 0) - Number(a.gridKwh || 0));
+        });
+      for(const h of ordered){
+        if(remaining <= 0) break;
+        const used = Math.min(Number(h.gridKwh || 0), remaining);
+        if(used > 0){
+          callback(h, used);
+          remaining -= used;
+        }
+      }
+    }
+
+    function q2PvScenarioValueText(scenario){
+      return `${fmt(Math.max(0, Number(scenario.savings || 0)), 0)} lei`;
+    }
+
+    function q2PvScenarioButtonsHtml(scenarios){
+      return (scenarios || []).map(s => `
+        <button class="q1-scenario-btn" type="button" data-q2-pv-scenario="${esc(s.key)}">
+          <strong>${esc(s.title)}</strong>
+          <em>${esc(q2PvScenarioValueText(s))}</em>
+        </button>
+      `).join('');
+    }
+
+    function q2PvScenarioInfoHtml(scenario, mode='selected'){
+      if(!scenario) return '';
+      return `
+        <small>${mode === 'hover' ? 'Info scenariu' : 'Scenariu selectat'}</small>
+        <strong>${esc(scenario.title)}</strong>
+        <p>${esc(scenario.short)}</p>
+        <div class="q1-scenario-side-metrics">
+          <span>${esc(q2PvScenarioValueText(scenario))}<b>economie / 24h</b></span>
+          <span>${fmt(scenario.affectedKwh || 0,1)} kWh<b>energie influențată</b></span>
+        </div>
+        <p class="q1-scenario-side-note">${esc(scenario.note)}</p>
+      `;
+    }
+
+    function q2UpdatePvScenarioInfo(scenario, mode='selected'){
+      const info = document.getElementById('q2PvScenarioInfo');
+      if(!info || !scenario) return;
+      info.innerHTML = q2PvScenarioInfoHtml(scenario, mode);
+      info.classList.add('is-visible');
+    }
+
+    function q2BuildPvScenarioEstimations(hourly, data){
+      const fixedTariff = q1FixedTariff(data);
+      const exportTariff = q2ExportTariff(data);
+      const dailySelf = hourly.reduce((a,h)=>a + Number(h.selfConsumedKwh || 0), 0);
+      const dailySurplus = hourly.reduce((a,h)=>a + Number(h.surplusKwh || 0), 0);
+      const dailyGrid = hourly.reduce((a,h)=>a + Number(h.gridKwh || 0), 0);
+      const directBars = hourly.map(h => Number(h.selfConsumedKwh || 0) * Math.max(0, fixedTariff - exportTariff));
+      const directSavings = directBars.reduce((a,b)=>a+b,0);
+
+      const shiftBars = Array.from({length:24}, () => 0);
+      const shiftKwh = Math.min(dailySurplus, dailyGrid * 0.14, 120);
+      let shiftedKwh = 0;
+      q2AllocateBySurplusHours(hourly, shiftKwh, (h, used) => {
+        shiftBars[h.hour] += used * Math.max(0, fixedTariff - exportTariff);
+        shiftedKwh += used;
+      });
+      const shiftSavings = shiftBars.reduce((a,b)=>a+b,0);
+
+      const bessBars = Array.from({length:24}, () => 0);
+      const bessEconomics = q1BessEconomics({});
+      const dischargeLimit = Math.min(dailySurplus * bessEconomics.efficiency, dailyGrid, 250);
+      const inputForBattery = dischargeLimit / Math.max(0.01, bessEconomics.efficiency);
+      let dischargedKwh = 0;
+      q2AllocateByGridNeed(hourly, dischargeLimit, (h, used) => {
+        const inputKwh = used / Math.max(0.01, bessEconomics.efficiency);
+        const saving = Math.max(0, used * fixedTariff - inputKwh * exportTariff - used * bessEconomics.degradationRonKwh);
+        bessBars[h.hour] += saving;
+        dischargedKwh += used;
+      });
+      const bessSavings = bessBars.reduce((a,b)=>a+b,0);
+
+      return [
+        {
+          key:'self_use_now',
+          title:'Cât câștig deja din energia folosită direct?',
+          short:'Energia produsă local care este consumată imediat reduce energia cumpărată din rețea.',
+          chartTitle:'Economie din energia folosită direct',
+          bars:directBars,
+          savings:directSavings,
+          affectedKwh:dailySelf,
+          note:`Estimare pe 24h: energia folosită direct valorează diferența dintre energia cumpărată și energia trimisă în rețea. Am folosit ${fmt(dailySelf,1)} kWh consumați direct.`
+        },
+        {
+          key:'bess_surplus',
+          title:'Cât economisesc cu o baterie?',
+          short:'Bateria păstrează surplusul produs local și îl folosește când consumi din rețea.',
+          chartTitle:'Economie estimată cu baterie din surplus',
+          bars:bessBars,
+          savings:bessSavings,
+          affectedKwh:dischargedKwh,
+          note:`Estimare pe 24h: am folosit surplusul PV ca primă sursă pentru baterie. Calculul ține cont orientativ de randament, energie pierdută și uzura bateriei. Surplus disponibil pentru încărcare: ${fmt(inputForBattery,1)} kWh.`
+        },
+        {
+          key:'shift_to_pv',
+          title:'Cât economisesc dacă mut consumul în ore cu producție PV?',
+          short:'Opțional, pentru consumuri care pot porni când ai producție locală.',
+          chartTitle:'Economie estimată prin mutare în ore cu producție',
+          bars:shiftBars,
+          savings:shiftSavings,
+          affectedKwh:shiftedKwh,
+          note:`Estimare pe 24h: am presupus că ${fmt(shiftedKwh,1)} kWh pot fi mutați spre orele în care ai surplus de producție. Este relevant pentru pompe, compresoare, încărcări, climatizare sau procese care pot porni mai târziu.`
+        }
+      ];
+    }
+
+    function q2RenderPvScenarioResult(scenarios, key){
+      const scenario = scenarios.find(s => s.key === key) || scenarios[0];
+      const target = document.getElementById('q2PvScenarioResult');
+      if(!scenario || !target) return;
+      document.querySelectorAll('[data-q2-pv-scenario]').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-q2-pv-scenario') === scenario.key);
+      });
+      q2UpdatePvScenarioInfo(scenario, 'selected');
+
+      if(activeCharts.q2Scenario){
+        activeCharts.q2Scenario.destroy();
+        activeCharts.q2Scenario = null;
+      }
+
+      target.innerHTML = `
+        <div class="q1-scenario-stats">
+          <div class="q1-scenario-stat"><strong>${esc(q2PvScenarioValueText(scenario))}</strong><span>economie estimată / 24h</span></div>
+          <div class="q1-scenario-stat"><strong>${fmt(scenario.affectedKwh || 0,1)} kWh</strong><span>energie influențată / 24h</span></div>
+          <div class="q1-scenario-stat"><strong>${fmt(Math.max(...scenario.bars, 0),1)} lei</strong><span>cea mai bună oră</span></div>
+          <div class="q1-scenario-stat"><strong>PV</strong><span>estimare din producția locală</span></div>
+        </div>
+        <div class="q1-scenario-chart"><canvas id="q2PvScenarioChart"></canvas></div>
+      `;
+
+      activeCharts.q2Scenario = new Chart(document.getElementById('q2PvScenarioChart'), {
+        type:'line',
+        data:{
+          labels:Array.from({length:24}, (_,h)=>`${String(h).padStart(2,'0')}:00`),
+          datasets:[{
+            label:scenario.chartTitle,
+            data:scenario.bars,
+            borderColor:'#07943f',
+            backgroundColor:'rgba(7,148,63,.10)',
+            fill:true,
+            tension:.28,
+            pointRadius:ctx => Number(ctx.raw || 0) > 0 ? 2.5 : 0,
+            pointHoverRadius:4,
+            borderWidth:2.4
+          }]
+        },
+        options:{
+          responsive:true,
+          maintainAspectRatio:false,
+          resizeDelay:120,
+          interaction:{mode:'index',intersect:false},
+          plugins:{
+            legend:{display:false},
+            tooltip:{callbacks:{label:ctx => `Economie: ${fmt(Number(ctx.raw || 0),2)} lei`}}
+          },
+          scales:{
+            x:{ticks:{maxTicksLimit:12},grid:{display:false}},
+            y:{beginAtZero:true,ticks:{callback:value => `${fmt(Number(value || 0),0)} lei`},grid:{color:'rgba(148,163,184,.18)'}}
+          }
+        }
+      });
+    }
+
+    function q2BindPvScenarioButtons(scenarios, preferredKey){
+      const selectedKey = () => document.querySelector('[data-q2-pv-scenario].active')?.getAttribute('data-q2-pv-scenario') || preferredKey || scenarios[0]?.key;
+      const getScenario = btn => scenarios.find(s => s.key === btn.getAttribute('data-q2-pv-scenario')) || scenarios[0];
+      document.querySelectorAll('[data-q2-pv-scenario]').forEach(btn => {
+        btn.addEventListener('click', () => q2RenderPvScenarioResult(scenarios, btn.getAttribute('data-q2-pv-scenario')));
+        btn.addEventListener('mouseenter', () => q2UpdatePvScenarioInfo(getScenario(btn), 'hover'));
+        btn.addEventListener('focus', () => q2UpdatePvScenarioInfo(getScenario(btn), 'hover'));
+        btn.addEventListener('mouseleave', () => q2UpdatePvScenarioInfo(scenarios.find(s => s.key === selectedKey()) || scenarios[0], 'selected'));
+        btn.addEventListener('blur', () => q2UpdatePvScenarioInfo(scenarios.find(s => s.key === selectedKey()) || scenarios[0], 'selected'));
+      });
+      q2RenderPvScenarioResult(scenarios, selectedKey());
+    }
+
     function renderQuestion2Result(box, data){
       const rows = data.chartRows || [];
-      const step = Math.max(1, Math.ceil(rows.length / 280));
-      const sampled = rows.filter((_, i) => i % step === 0).map(r => {
-        const production = Number(r.productionKwh || 0);
-        const consumption = Number(r.consumptionKwh || 0);
-        const self = Math.min(production, consumption);
-        const surplus = Math.max(production - consumption, Number(r.surplusKwh || 0), 0);
-        return {...r, productionKwh:production, selfConsumedKwh:self, surplusKwh:surplus};
-      });
-
-      const totals = rows.reduce((acc, r) => {
-        const production = Number(r.productionKwh || 0);
-        const consumption = Number(r.consumptionKwh || 0);
-        const self = Math.min(production, consumption);
-        const surplus = Math.max(production - consumption, Number(r.surplusKwh || 0), 0);
-        acc.production += production;
-        acc.self += self;
-        acc.surplus += surplus;
+      const dayKey = q2ChooseSurplusDay(rows);
+      const hourly = q2BuildHourlyPvDay(rows, dayKey);
+      const totals = q2Totals(rows);
+      const dayTotals = hourly.reduce((acc, h) => {
+        acc.production += Number(h.productionKwh || 0);
+        acc.self += Number(h.selfConsumedKwh || 0);
+        acc.surplus += Number(h.surplusKwh || 0);
         return acc;
       }, {production:0, self:0, surplus:0});
-
       const selfRate = totals.production > 0 ? totals.self / totals.production * 100 : 0;
-      const topSurplus = rows.slice().map(r => {
-        const production = Number(r.productionKwh || 0);
-        const consumption = Number(r.consumptionKwh || 0);
-        const surplus = Math.max(production - consumption, Number(r.surplusKwh || 0), 0);
-        return {...r, surplusKwh:surplus};
-      }).filter(r => r.surplusKwh > 0).sort((a,b)=>new Date(a.timestamp)-new Date(b.timestamp));
+      const scenarios = q2BuildPvScenarioEstimations(hourly, data);
 
       box.innerHTML = `
         ${sourceWarningHtml('Q2')}
         <div class="answer-summary" id="answerSummaryQ2">
           <div class="summary-card"><strong>${fmt(totals.production)} kWh</strong><span>producție locală totală</span></div>
-          <div class="summary-card"><strong>${fmt(totals.self)} kWh</strong><span>energie consumată local</span></div>
-          <div class="summary-card"><strong>${fmt(totals.surplus)} kWh</strong><span>energie rămasă nefolosită direct · folosești direct ${fmt(selfRate,1)}%</span></div>
+          <div class="summary-card"><strong>${fmt(totals.self)} kWh</strong><span>energie consumată direct</span></div>
+          <div class="summary-card"><strong>${fmt(totals.surplus)} kWh</strong><span>energie rămasă nefolosită direct · autoconsum ${fmt(selfRate,1)}%</span></div>
         </div>
-        <div class="chart-wrap"><canvas id="question2Chart"></canvas></div>
-        <div class="top-list" id="topSurplusIntervals"></div>
+        <div class="svt-viz-shell q1-viz-shell">
+          <div class="result-head">
+            <div>
+              <h2>Energia produsă în plus</h2>
+              <p>${esc(svtShortDay({timestamp:dayKey}))} · grafic simplu pe 24h cu surplusul care poate fi folosit mai bine.</p>
+            </div>
+            <span class="pill">${fmt(dayTotals.surplus,1)} kWh surplus / zi</span>
+          </div>
+          <div class="chart-wrap q1-chart-wrap"><canvas id="question2Chart"></canvas></div>
+          <div class="q1-scenarios q2-pv-scenarios">
+            <div class="q1-scenario-head">
+              <div>
+                <h3>Ce poți face cu energia produsă în plus?</h3>
+                <p>Estimări pe 24h pentru autoconsum, baterie și mutarea consumului în orele cu producție PV.</p>
+              </div>
+              <span class="pill">estimare PV</span>
+            </div>
+            <div class="q1-scenario-workspace">
+              <div class="q1-scenario-main">
+                <div class="q1-scenario-buttons" id="q2PvScenarioButtons">
+                  ${q2PvScenarioButtonsHtml(scenarios)}
+                </div>
+                <div class="q1-scenario-result" id="q2PvScenarioResult"></div>
+              </div>
+              <aside class="q1-scenario-info" id="q2PvScenarioInfo" aria-live="polite"></aside>
+            </div>
+          </div>
+        </div>
         <div class="insight-grid">
-          <div class="insight-card"><h3>Interpretare</h3><p>Energia rămasă apare în orele în care produci mai mult decât consumi. Atunci merită să vezi dacă poți porni unele consumuri în acele ore sau dacă te ajută o baterie.</p></div>
-          <div class="insight-card"><h3>Recomandare</h3><ul><li>Mută, unde se poate, consumuri în orele în care produci energie.</li><li>Analizează o baterie dacă energia rămasă apare zilnic și consumul crește seara.</li><li>Verifică dacă fișierul arată consumul total sau doar energia cumpărată din rețea.</li></ul></div>
+          <div class="insight-card"><h3>Interpretare</h3><p>Surplusul apare când produci mai mult decât consumi în acel moment. El poate fi valorificat prin consum mutat în orele cu soare sau prin baterie, dacă se repetă suficient de des.</p></div>
+          <div class="insight-card"><h3>Recomandare</h3><ul><li>Începe cu consumurile ușor de mutat în orele cu producție PV.</li><li>Analizează bateria dacă surplusul apare zilnic și ai consum din rețea seara sau noaptea.</li><li>Pentru calcul exact contează prețul energiei cumpărate și prețul energiei trimise în rețea.</li></ul></div>
         </div>
       `;
 
@@ -2635,22 +3269,42 @@
       activeCharts.q2 = new Chart(document.getElementById('question2Chart'), {
         type:'line',
         data:{
-          labels:sampled.map(r=>r.label),
-          datasets:[
-            {label:'Energie produsă local',data:sampled.map(r=>r.productionKwh),borderColor:'#2563eb',backgroundColor:'rgba(37,99,235,.08)',fill:false,tension:.28,pointRadius:0,borderWidth:2},
-            {label:'Folosită direct',data:sampled.map(r=>r.selfConsumedKwh),borderColor:'#07943f',backgroundColor:'rgba(7,148,63,.12)',fill:true,tension:.28,pointRadius:0,borderWidth:2.2},
-            {label:'Rămasă nefolosită direct',data:sampled.map(r=>r.surplusKwh),borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,.12)',fill:true,tension:.28,pointRadius:0,borderWidth:2}
-          ]
+          labels:hourly.map(h=>`${String(h.hour).padStart(2,'0')}:00`),
+          datasets:[{
+            label:'Energie produsă în plus',
+            data:hourly.map(h=>h.surplusKwh),
+            borderColor:'#f59e0b',
+            backgroundColor:'rgba(245,158,11,.13)',
+            fill:true,
+            tension:.28,
+            pointRadius:ctx => Number(ctx.raw || 0) > 0 ? 2.5 : 0,
+            pointHoverRadius:4,
+            borderWidth:2.4
+          }]
         },
         options:{
-          responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
-          plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${Number(ctx.parsed.y||0).toLocaleString('ro-RO',{maximumFractionDigits:2})} kWh`}}},
-          scales:{x:{ticks:{maxTicksLimit:9}}, y:{beginAtZero:true,title:{display:true,text:'kWh / interval'}}}
+          responsive:true,
+          maintainAspectRatio:false,
+          resizeDelay:120,
+          events:['mousemove','mouseout','click','touchstart','touchmove'],
+          interaction:{mode:'index',intersect:false},
+          plugins:{
+            legend:{display:false},
+            tooltip:{callbacks:{
+              title:items => items?.[0]?.label || '',
+              label:ctx => {
+                const h = hourly[ctx.dataIndex] || {};
+                return `Surplus: ${fmt(h.surplusKwh || 0,2)} kWh · producție ${fmt(h.productionKwh || 0,2)} kWh · folosit direct ${fmt(h.selfConsumedKwh || 0,2)} kWh`;
+              }
+            }}
+          },
+          scales:{
+            x:{ticks:{maxTicksLimit:12},grid:{display:false}},
+            y:{beginAtZero:true,title:{display:true,text:'kWh / oră'},grid:{color:'rgba(148,163,184,.18)'}}
+          }
         }
       });
-
-      const target = document.getElementById('topSurplusIntervals');
-      target.innerHTML = renderQ2SurplusBoard(topSurplus);
+      q2BindPvScenarioButtons(scenarios);
     }
 
     function renderQ2SurplusBoard(rows){
