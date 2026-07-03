@@ -19,8 +19,8 @@ window.SVTReportRenderer = (() => {
         <div class="bar ${i<2?'red':i<4?'amber':'green'}"></div>
         <div>
           <strong>${x.localLabel}: ${fmt(x.kw,1)} kW la ${fmt(x.price,3)} RON/kWh</strong>
-          <span>Cost estimat în interval: ${ron(x.cost)}. Acesta este unul dintre intervalele unde consumul din rețea devine scump.</span>
-          <em>Acțiune: verifică dacă sarcina poate fi mutată sau eșalonată.</em>
+          <span>Cost estimat în interval: ${ron(x.cost)}. Acesta este unul dintre intervalele în care consumul te costă cel mai mult.</span>
+          <em>Acțiune: verifică dacă acest consum poate fi mutat sau pornit treptat.</em>
         </div>
       </div>`).join('');
 
@@ -51,7 +51,7 @@ window.SVTReportRenderer = (() => {
       type:'line',
       data:{ labels: sampled.map(x=>x.localLabel), datasets:[
         { label:'Consum electric kWh', data:sampled.map(x=>x.electricKwh), borderColor:'#e24b4a', backgroundColor:'rgba(226,75,74,.12)', borderWidth:2, pointRadius:0, fill:true, tension:.3 },
-        { label:'PV kWh', data:sampled.map(x=>x.pvKwh), borderColor:'#07943f', backgroundColor:'rgba(7,148,63,.10)', borderWidth:2, pointRadius:0, fill:false, tension:.3 }
+        { label:'Energie produsă local kWh', data:sampled.map(x=>x.pvKwh), borderColor:'#07943f', backgroundColor:'rgba(7,148,63,.10)', borderWidth:2, pointRadius:0, fill:false, tension:.3 }
       ]},
       options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom'}}, scales:{x:{ticks:{maxTicksLimit:8}}, y:{beginAtZero:true}} }
     }));
@@ -64,7 +64,7 @@ window.SVTReportRenderer = (() => {
     }));
     charts.push(new Chart(document.getElementById('chartPzu'), {
       type:'bar',
-      data:{ labels:['Tarif fix actual','Simulare PZU'], datasets:[
+      data:{ labels:['Preț fix actual','Preț schimbător pe ore'], datasets:[
         { label:'Cost RON', data:[a.totals.fixedCostRon, a.totals.pzuCostRon], backgroundColor:['rgba(226,75,74,.75)','rgba(7,148,63,.75)'], borderRadius:10 }
       ]},
       options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true}} }

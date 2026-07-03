@@ -1,12 +1,18 @@
 // v32 real parser smoke tests. Run from repo root with: node scripts/test-v32-load-curves.mjs
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 globalThis.window = globalThis;
+globalThis.localStorage = {
+  getItem() { return null; },
+  setItem() {},
+  removeItem() {},
+  clear() {}
+};
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
-await import(path.join(root, "assets/js/svt-load-curve-profiles.js"));
-await import(path.join(root, "assets/js/svt-analysis-engine.js"));
+await import(pathToFileURL(path.join(root, "assets/js/svt-load-curve-profiles.js")).href);
+await import(pathToFileURL(path.join(root, "assets/js/svt-analysis-engine.js")).href);
 
 const samples = [
   "test-data/01.2022.csv",
@@ -23,8 +29,8 @@ for (const rel of samples) {
   const aoa = SVTLoadCurveProfiles.parseCsvText(text);
   const dataset = SVTLoadCurveProfiles.parseAoa(aoa, { fileName:path.basename(p), fixedPriceRonKwh:0.75, contractPowerKw:100 });
   const analysis = SVTAnalysisEngine.analyze(dataset);
-  console.log(`${path.basename(p)} | ${dataset.meta.sourceProfile} | rows=${dataset.rows.length} | interval=${dataset.meta.intervalMinutes} | kWh=${analysis.totals.electricKwh}`);
-  if (dataset.rows.length > 1 && analysis.totals.electricKwh > 0) ok++;
+  console.log(`${path.basename(p)} | ${dataset.meta.sourceProfile} | rows=${dataset.rows.length} | interval=${dataset.meta.intervalMinutes} | kWh=${analysis.totals.consumptionKwh}`);
+  if (dataset.rows.length > 1 && analysis.totals.consumptionKwh > 0) ok++;
 }
 if (ok === 0) throw new Error("No real files parsed.");
 console.log(`PASS v32 real parser smoke: ${ok}/${samples.length} parsed.`);

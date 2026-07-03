@@ -81,7 +81,7 @@
         productionAlignedHits:alignedHits,
         productionAlignmentNote:useExact
           ? "Producția a fost potrivită pe timestamp exact."
-          : "Producția PVGIS/inverter a fost proiectată peste consum după lună, zi și oră, deoarece anul/minutul nu coincideau cu perioada curbei de sarcină."
+          : "Fișierul cu energia produsă a fost potrivit peste consum după lună, zi și oră, deoarece perioadele nu se suprapuneau perfect."
       }
     };
   }

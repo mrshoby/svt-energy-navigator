@@ -143,7 +143,8 @@ window.SVTUploadParser = (() => {
     }).filter(Boolean).sort((a,b)=>new Date(a.timestamp)-new Date(b.timestamp));
 
     if (rows.length < 2) throw new Error('Nu s-au putut citi suficiente rânduri valide cu dată/oră.');
-    rows.forEach(x => { if (!x.priceRonKwh) x.priceRonKwh = SVTPriceProfiles.priceForHour(x.hour); });
+    const fixedPrice = Number(mapping.fixedPrice || 0.75);
+    rows.forEach(x => { if (!x.priceRonKwh) x.priceRonKwh = fixedPrice > 0 ? fixedPrice : SVTPriceProfiles.priceForHour(x.hour); });
 
     return {
       meta: {

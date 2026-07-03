@@ -147,15 +147,15 @@
     },
     pv: {
       title: "Vreau să văd dacă folosesc bine energia produsă local.",
-      text: "Vom compara producția locală estimată cu profilul de consum și vom arăta energia care poate fi valorificată util."
+      text: "Vom compara energia produsă local cu orele în care consumi și îți arătăm cât poți folosi direct."
     },
     flex: {
       title: "Vreau să aflu ce consumuri pot muta în timp.",
-      text: "Vom căuta consumurile flexibile și intervalele în care mutarea lor poate aduce economie fără să afecteze procesul."
+      text: "Vom căuta echipamentele care pot porni în ore mai bune fără să afecteze activitatea."
     },
     investitii: {
       title: "Vreau să compar investiții energetice.",
-      text: "Vom estima impactul pentru BESS, pompă de căldură, boiler, puffer, cogenerare sau o investiție integrată."
+      text: "Vom estima impactul pentru o baterie, pompă de căldură, boiler sau altă investiție integrată."
     }
   };
 

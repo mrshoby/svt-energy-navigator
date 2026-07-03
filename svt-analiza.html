@@ -65,14 +65,14 @@
     </div>
 
     <section class="card" id="content">
-      <h1>Când consum din rețea energie scumpă?</h1>
+      <h1>Când mă costă cel mai mult energia?</h1>
       <p id="metaText">Grafic generat din fișierul încărcat.</p>
       <div class="chart"><canvas id="loadChart"></canvas></div>
     </section>
 
     <section class="card" id="topCard">
       <h1 style="font-size:22px">Top intervale scumpe</h1>
-      <p>Cu tarif fix, intervalul scump este intervalul în care consumul din rețea este mare, deci costul este mare.</p>
+      <p>La preț mediu fix, orele scumpe sunt orele în care consumi mult.</p>
       <div class="intervals" id="intervals"></div>
     </section>
   </main>
@@ -80,28 +80,28 @@
   <script>
     const data = JSON.parse(sessionStorage.getItem('svtAnalysis') || 'null');
     if (!data || !data.chartRows || !data.chartRows.length) {
-      content.innerHTML = '<div class="empty"><div><h1>Nu există fișier încărcat</h1><p>Revino la pagina de upload și încarcă o curbă de sarcină.</p><p><a class="btn green" href="./incarcare-curba-sarcina.html">Încarcă fișier</a></p></div></div>';
+      content.innerHTML = '<div class="empty"><div><h1>Nu există fișier încărcat</h1><p>Revino la pagina de încărcare și adaugă fișierul cu consumul.</p><p><a class="btn green" href="./incarcare-curba-sarcina.html">Încarcă fișier</a></p></div></div>';
       topCard.style.display='none';
     } else {
       const rows = data.chartRows || [];
       const step = Math.max(1, Math.ceil(rows.length / 320));
       const sampled = rows.filter((_, i) => i % step === 0);
       const hasProd = sampled.some(r => Number(r.productionKwh || 0) > 0);
-      metaText.textContent = `${data.meta.fileName || '-'} · tarif fix ${fmt(data.meta.fixedTariffRonKwh,3)} lei/kWh · consum din rețea calculat${hasProd ? ' cu producție locală' : ' fără producție locală'}.`;
+      metaText.textContent = `${data.meta.fileName || '-'} · preț mediu ${fmt(data.meta.fixedTariffRonKwh,3)} lei/kWh · consum calculat${hasProd ? ' cu energie produsă local' : ' fără energie produsă local'}.`;
 
       const sets = [
         {label:'Consum total', data:sampled.map(r=>r.consumptionKwh), borderColor:'#94a3b8', backgroundColor:'rgba(148,163,184,.08)', fill:false, tension:.28, pointRadius:0, borderWidth:1.8},
-        {label:'Consum din rețea', data:sampled.map(r=>r.gridKwh), borderColor:'#07943f', backgroundColor:'rgba(7,148,63,.13)', fill:true, tension:.28, pointRadius:0, borderWidth:2.4},
+        {label:'Energie cumpărată din rețea', data:sampled.map(r=>r.gridKwh), borderColor:'#07943f', backgroundColor:'rgba(7,148,63,.13)', fill:true, tension:.28, pointRadius:0, borderWidth:2.4},
         {label:'Intervale scumpe', data:sampled.map(r=>r.isExpensive?r.gridKwh:null), borderColor:'#dc2626', backgroundColor:'#dc2626', showLine:false, pointRadius:4, pointHoverRadius:6}
       ];
-      if (hasProd) sets.splice(1,0,{label:'Producție locală', data:sampled.map(r=>r.productionKwh), borderColor:'#2563eb', backgroundColor:'rgba(37,99,235,.08)', fill:false, tension:.28, pointRadius:0, borderWidth:2});
+      if (hasProd) sets.splice(1,0,{label:'Energie produsă local', data:sampled.map(r=>r.productionKwh), borderColor:'#2563eb', backgroundColor:'rgba(37,99,235,.08)', fill:false, tension:.28, pointRadius:0, borderWidth:2});
 
       new Chart(loadChart,{type:'line',data:{labels:sampled.map(r=>r.label),datasets:sets},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${Number(ctx.parsed.y||0).toLocaleString('ro-RO',{maximumFractionDigits:2})} kWh`}}},scales:{x:{ticks:{maxTicksLimit:12}},y:{beginAtZero:true,title:{display:true,text:'kWh / interval'}}}}});
 
       intervals.innerHTML = (data.expensiveIntervals || []).slice(0,8).map(x => `
         <div class="interval">
           <div class="rank">${x.rank}</div>
-          <div><strong>${esc(x.localLabel)}</strong><small>Consum rețea: ${fmt(x.gridKwh)} kWh · tarif fix: ${fmt(x.tariffRonKwh,3)} lei/kWh</small></div>
+          <div><strong>${esc(x.localLabel)}</strong><small>Energie cumpărată: ${fmt(x.gridKwh)} kWh · preț mediu: ${fmt(x.tariffRonKwh,3)} lei/kWh</small></div>
           <div class="cost">${fmt(x.gridCostRon)} lei</div>
         </div>
       `).join('');
