@@ -1,15 +1,13 @@
 {
   "ok": true,
-  "deliveryDay": "2026-07-03",
   "source": "OPCOM PZU / ROPEX_DAM_15min",
-  "sourceMode": "manual-seed-opcom-direct",
-  "fetchedAtUtc": "2026-07-03T07:48:25.001Z",
-  "updatedAtUtc": "2026-07-03T07:48:25.001Z",
-  "sourceUrl": "https://www.opcom.ro/rapoarte-pzu-raportPIP-export-csv/3/7/2026/ro",
+  "sourceMode": "external-cache-github",
+  "currency": "Lei/MWh",
+  "granularity": "15m",
   "intervals": 96,
-  "minPriceLeiMwh": 45,
-  "maxPriceLeiMwh": 1371,
-  "avgPriceLeiMwh": 571,
+  "min": 45,
+  "max": 1371,
+  "avg": 571,
   "records": [
     {
       "interval": 1,
@@ -971,5 +969,10 @@
       "rawPriceLeiMwh": 671.71,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     }
-  ]
+  ],
+  "deliveryDay": "2026-07-03",
+  "sourceUrl": "https://www.opcom.ro/rapoarte-pzu-raportPIP-export-csv/3/7/2026/ro",
+  "pageUrl": "https://www.opcom.ro/grafice-ip-raportPIP-si-volumTranzactionat/ro",
+  "updatedAtUtc": "2026-07-03T10:49:35.652Z",
+  "generatedBy": "GitHub Actions / scripts/fetch-opcom-pzu-cache.mjs"
 }
