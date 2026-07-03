@@ -28,8 +28,8 @@
   <!-- SVT V100 MODAL CLEAN 1TO1 AND INVOICE SHRINK -->
   <!-- SVT V101 HELP MODAL FROM ZERO -->
   <!-- SVT V137 INVOICE UPLOAD MATCH ROW3 + COMPACT LABEL WIDTHS -->
-  <title>Încarcă datele pentru analiză | SVT Energy Navigator</title>
-  <meta name="description" content="Încarcă fișierul cu consumul tău sau pornește de la factură. SVT Energy Navigator te ghidează pas cu pas."/>
+  <title>Curba ta de consum zilnic | SVT Energy Navigator</title>
+  <meta name="description" content="Încarcă datele de consum pentru a identifica momentele în care consumi energie scumpă din rețea."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
@@ -9172,7 +9172,6 @@ body[data-svt-ui="v157-professional"]{
   grid-column:2!important;
   grid-row:1!important;
   min-width:0!important;
-  transform:translateY(-6px)!important;
 }
 .svt194-invoice-fields{
   display:grid!important;
@@ -9306,18 +9305,6 @@ body[data-svt-ui="v157-professional"]{
   font-size:12px!important;
   line-height:1.32!important;
   font-weight:900!important;
-}
-.svt194-side-note strong{
-  display:block!important;
-  margin:0 0 5px!important;
-  color:#0b203a!important;
-  font-size:12px!important;
-  line-height:1.1!important;
-  font-weight:950!important;
-}
-.svt194-side-note.is-contextual{
-  border-color:#cfe9da!important;
-  background:rgba(255,255,255,.94)!important;
 }
 @media (max-width:1320px){
   .svt194-tariff-row.flow-row{
@@ -9528,7 +9515,6 @@ body[data-svt-ui="v157-professional"]{
   gap:7px!important;
   align-items:start!important;
   min-width:0!important;
-  transform:translateY(-6px)!important;
 }
 .svt194-advanced-panel[hidden]{display:none!important;}
 .svt194-field{
@@ -9553,7 +9539,6 @@ body[data-svt-ui="v157-professional"]{
   padding:0 8px!important;
   gap:5px!important;
   min-width:0!important;
-  transform:translateY(-5px)!important;
 }
 .svt194-unit-input input{
   height:30px!important;
@@ -9575,7 +9560,6 @@ body[data-svt-ui="v157-professional"]{
   padding:0 7px!important;
   font-size:10px!important;
   min-width:0!important;
-  transform:translateY(-5px)!important;
 }
 @media (min-width:721px){
   .svt194-side-note{
@@ -9632,33 +9616,6 @@ body[data-svt-ui="v157-professional"]{
   .svt194-direct-fields .svt194-field{
     grid-column:1!important;
   }
-  .svt194-top-fields,
-  .svt194-advanced-panel,
-  .svt194-unit-input,
-  .svt194-field select.control{
-    transform:none!important;
-  }
-  .svt194-tariff-methods{
-    grid-column:1!important;
-    grid-row:1!important;
-  }
-  .svt194-top-fields{
-    grid-column:1!important;
-    grid-row:2!important;
-    margin-top:8px!important;
-  }
-  .svt194-advanced-toggle{
-    grid-column:1!important;
-    grid-row:3!important;
-    margin-top:8px!important;
-  }
-  .svt194-advanced-panel{
-    grid-column:1!important;
-    grid-row:4!important;
-    margin-left:0!important;
-    width:100%!important;
-    margin-top:8px!important;
-  }
 }
 
 
@@ -9671,7 +9628,7 @@ body[data-svt-ui="v157-professional"]{
 .svt194-method input,
 .svt194-advanced-toggle input{
   margin-top:0!important;
-  transform:translateY(-3px)!important;
+  transform:translateY(-1px)!important;
 }
 .svt194-method > span,
 .svt194-advanced-toggle > span{
@@ -9684,517 +9641,19 @@ body[data-svt-ui="v157-professional"]{
 }
 
 
-/* SVT v203 — Detalii tarif compact reference layout */
-@media (min-width:981px){
-  .svt194-tariff-row.flow-row{
-    height:120px!important;
-    min-height:120px!important;
-    max-height:120px!important;
-    padding:0!important;
-    position:relative!important;
-    overflow:hidden!important;
-  }
-  .svt194-tariff-left.flow-left{
-    position:absolute!important;
-    inset:0!important;
-    display:block!important;
-    width:100%!important;
-    height:100%!important;
-    padding:0!important;
-    margin:0!important;
-  }
-  .svt194-tariff-row .icon-badge{
-    position:absolute!important;
-    left:20px!important;
-    top:22px!important;
-    width:40px!important;
-    height:40px!important;
-    min-width:40px!important;
-    border-radius:13px!important;
-  }
-  .svt194-tariff-row .icon-badge svg{
-    width:20px!important;
-    height:20px!important;
-  }
-  .svt194-tariff-row .count-badge{
-    position:absolute!important;
-    left:73px!important;
-    top:24px!important;
-    width:28px!important;
-    height:28px!important;
-    min-width:28px!important;
-    margin:0!important;
-    font-size:13px!important;
-  }
-  .svt194-tariff-card{
-    position:absolute!important;
-    left:115px!important;
-    top:20px!important;
-    width:calc(100% - 133px)!important;
-    height:82px!important;
-    display:block!important;
-    overflow:visible!important;
-  }
-  .svt194-tariff-head{
-    position:absolute!important;
-    left:0!important;
-    top:0!important;
-    width:205px!important;
-    height:42px!important;
-    display:block!important;
-    padding:0!important;
-    margin:0!important;
-  }
-  .svt194-tariff-head .row-title{
-    margin:0!important;
-    font-size:20px!important;
-    line-height:1!important;
-    letter-spacing:0!important;
-    font-weight:950!important;
-  }
-  .svt194-tariff-head span{
-    display:block!important;
-    margin-top:6px!important;
-    font-size:10px!important;
-    line-height:1!important;
-    font-weight:900!important;
-    white-space:nowrap!important;
-  }
-  .svt194-tariff-main{
-    position:absolute!important;
-    inset:0!important;
-    display:block!important;
-    width:100%!important;
-    height:100%!important;
-    min-width:0!important;
-  }
-  .svt194-tariff-methods{
-    position:absolute!important;
-    left:216px!important;
-    top:1px!important;
-    width:118px!important;
-    height:42px!important;
-    display:grid!important;
-    grid-template-columns:1fr!important;
-    grid-template-rows:18px 18px!important;
-    gap:5px!important;
-    margin:0!important;
-    padding:0!important;
-  }
-  .svt194-method{
-    display:grid!important;
-    grid-template-columns:13px minmax(0,1fr)!important;
-    gap:4px!important;
-    align-items:center!important;
-    height:18px!important;
-    min-height:18px!important;
-    padding:0!important;
-    margin:0!important;
-  }
-  .svt194-method input{
-    width:13px!important;
-    height:13px!important;
-    min-width:13px!important;
-    margin:0!important;
-    transform:none!important;
-  }
-  .svt194-method strong{
-    font-size:9.5px!important;
-    line-height:1!important;
-    font-weight:950!important;
-    white-space:nowrap!important;
-  }
-  .svt194-method small{
-    display:none!important;
-  }
-  .svt194-top-fields{
-    position:absolute!important;
-    left:346px!important;
-    top:-4px!important;
-    width:calc(100% - 346px)!important;
-    height:45px!important;
-    margin:0!important;
-    transform:none!important;
-  }
-  .svt194-invoice-fields,
-  .svt194-direct-fields{
-    display:grid!important;
-    grid-template-columns:minmax(0,116px) minmax(0,116px) minmax(0,132px)!important;
-    gap:7px!important;
-    align-items:start!important;
-    width:100%!important;
-    min-width:0!important;
-  }
-  .svt194-direct-fields[hidden]{
-    display:none!important;
-  }
-  .svt194-direct-fields .svt194-field{
-    grid-column:3!important;
-  }
-  .svt194-advanced-toggle{
-    position:absolute!important;
-    left:0!important;
-    top:55px!important;
-    width:205px!important;
-    max-width:205px!important;
-    display:grid!important;
-    grid-template-columns:15px minmax(0,1fr)!important;
-    gap:6px!important;
-    align-items:start!important;
-    margin:0!important;
-    padding:0!important;
-  }
-  .svt194-advanced-toggle input{
-    width:15px!important;
-    height:15px!important;
-    min-width:15px!important;
-    margin:0!important;
-    transform:none!important;
-  }
-  .svt194-advanced-toggle strong{
-    font-size:11.5px!important;
-    line-height:1.05!important;
-    white-space:nowrap!important;
-  }
-  .svt194-advanced-toggle small{
-    margin-top:2px!important;
-    font-size:9px!important;
-    line-height:1.08!important;
-  }
-  .svt194-advanced-panel{
-    position:absolute!important;
-    left:216px!important;
-    top:50px!important;
-    width:calc(100% - 216px)!important;
-    height:45px!important;
-    display:grid!important;
-    grid-template-columns:minmax(0,118px) minmax(0,118px) minmax(0,118px) minmax(0,132px)!important;
-    gap:8px!important;
-    align-items:start!important;
-    margin:0!important;
-    padding:0!important;
-    transform:none!important;
-  }
-  .svt194-advanced-panel[hidden]{
-    display:none!important;
-  }
-  .svt194-field{
-    gap:4px!important;
-  }
-  .svt194-field > span{
-    font-size:8.6px!important;
-    line-height:1!important;
-    margin:0!important;
-    white-space:nowrap!important;
-  }
-  .svt194-unit-input,
-  .svt194-field select.control{
-    height:32px!important;
-    min-height:32px!important;
-    border-radius:10px!important;
-    transform:none!important;
-  }
-  .svt194-unit-input{
-    padding:0 8px!important;
-  }
-  .svt194-field select.control{
-    padding:0 7px!important;
-    font-size:10px!important;
-  }
-  .svt194-unit-input input{
-    height:30px!important;
-    min-height:30px!important;
-  }
-  #calculatedTariffPreview,
-  #effectiveTariffPreview,
-  #fixedTariff{
-    font-size:15px!important;
-    line-height:1!important;
-    font-weight:950!important;
-  }
-}
 
-/* SVT v204 — vertical center page and fix tariff basis dropdown hit area */
-body[data-svt-ui="v157-professional"] .page{
-  min-height:100vh!important;
-  margin:0 auto!important;
-  align-items:center!important;
-}
-@supports (height:100dvh){
-  body[data-svt-ui="v157-professional"] .page{
-    min-height:100dvh!important;
-  }
-}
-@media (min-width:721px){
-  .tariff-flow-row #tariffSideNotes{
-    top:max(96px, calc(50dvh - 240px))!important;
-  }
-}
-@media (min-width:981px){
-  .svt194-top-fields{
-    z-index:4!important;
-  }
-  .svt194-advanced-panel{
-    z-index:6!important;
-    pointer-events:auto!important;
-  }
-  .svt194-field,
-  .svt194-field select.control{
-    position:relative!important;
-    pointer-events:auto!important;
-  }
-  #tariffPriceBasis{
-    z-index:7!important;
-    appearance:none!important;
-    -webkit-appearance:none!important;
-    padding:0 22px 0 7px!important;
-    font-size:8.2px!important;
-    letter-spacing:0!important;
-    text-overflow:clip!important;
-    background-color:#fff!important;
-    background-image:
-      linear-gradient(45deg, transparent 50%, #0b203a 50%),
-      linear-gradient(135deg, #0b203a 50%, transparent 50%)!important;
-    background-position:
-      calc(100% - 12px) 50%,
-      calc(100% - 7px) 50%!important;
-    background-size:5px 5px,5px 5px!important;
-    background-repeat:no-repeat!important;
-  }
-  #tariffPriceBasis::-ms-expand{
-    display:none;
-  }
-}
-@media (max-width:720px){
-  body[data-svt-ui="v157-professional"] .page{
-    min-height:100vh!important;
-    margin:0 auto!important;
-    align-items:stretch!important;
-  }
-}
-#tariffSideNotes{
-  opacity:0!important;
-  visibility:hidden!important;
-  pointer-events:none!important;
-  transform:translateY(4px)!important;
-  transition:opacity .16s ease, transform .16s ease, visibility .16s ease!important;
-}
-#tariffSideNotes.is-contextual,
-#tariffSideNotes.is-persistent{
-  opacity:1!important;
-  visibility:visible!important;
+/* SVT v200 — visible raise for Detalii tarif radio/checkbox boxes */
+.svt194-method input[type="radio"],
+.svt194-advanced-toggle input[type="checkbox"]{
+  position:relative!important;
+  top:-4px!important;
+  margin-top:0!important;
   transform:none!important;
+  align-self:start!important;
 }
-#tariffSideNotes #tariffAdvancedNotice{
-  font-size:clamp(8.8px,.68vw,11px)!important;
-  line-height:1.28!important;
-  font-weight:850!important;
-}
-#tariffSideNotes #tariffAdvancedNotice strong{
-  display:block!important;
-  margin-bottom:4px!important;
-  color:#0b203a!important;
-  font-size:clamp(9.2px,.72vw,11px)!important;
-  line-height:1.05!important;
-  font-weight:950!important;
-}
-@media (max-width:720px){
-  #tariffSideNotes{
-    max-height:0!important;
-    margin:0!important;
-    padding:0!important;
-    border:0!important;
-    overflow:hidden!important;
-    box-shadow:none!important;
-  }
-  #tariffSideNotes.is-contextual,
-  #tariffSideNotes.is-persistent{
-    max-height:120px!important;
-    margin-top:8px!important;
-    padding:9px 10px!important;
-    border:1px solid #dce9e4!important;
-  }
-}
-.upload-zone .upload-success-label{
-  display:none!important;
-}
-.upload-zone.upload-complete .file-meta{
-  display:none!important;
-}
-.upload-zone.upload-complete .upload-success-label{
-  display:flex!important;
-  align-items:center!important;
-  min-width:0!important;
-  margin-left:8px!important;
-  color:#079640!important;
-  font-size:11px!important;
-  line-height:1!important;
-  font-weight:950!important;
-  white-space:nowrap!important;
-  overflow:hidden!important;
-  text-overflow:ellipsis!important;
-}
-.upload-zone.upload-complete{
-  border-color:#9eddbb!important;
-  background:#fbfffd!important;
-}
-.svt-import-summary{
-  margin-top:10px;
-  padding:11px 12px;
-  border:1px solid #d8e9df;
-  border-radius:14px;
-  background:#fbfffd;
-  color:#31465a;
-  font-size:12px;
-  font-weight:750;
-  line-height:1.45;
-}
-.svt-import-summary strong{
-  display:block;
-  margin-bottom:5px;
-  color:#0b6b3a;
-  font-size:12px;
-  font-weight:950;
-}
-.svt-import-summary span{
-  display:block;
-}
-.svt-import-summary .summary-chips{
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
-  margin:6px 0 7px;
-}
-.svt-import-summary .summary-chip{
-  display:inline-flex;
-  align-items:center;
-  max-width:100%;
-  min-height:20px;
-  padding:3px 8px;
-  border:1px solid #d7e7df;
-  border-radius:999px;
-  background:#fff;
-  color:#36546a;
-  font-size:11px;
-  font-weight:900;
-  line-height:1;
-  white-space:nowrap;
-}
-.svt-import-summary .summary-chip.learning{
-  border-color:#a8dfbf;
-  background:#f1fff7;
-  color:#06713d;
-}
-.svt-import-summary .summary-note{
-  color:#52677d;
-  font-weight:800;
-}
-.svt-import-summary .warn{
-  margin-top:6px;
-  color:#8d5b08;
-}
-.thermal-upload-row{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(180px,240px);
-  gap:12px;
-  align-items:stretch;
-  margin:12px 0 16px;
-}
-.thermal-upload-row .file-inline{
-  min-height:58px;
-}
-.thermal-gas-factor{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:10px 12px;
-  border:1px solid #dce8ee;
-  border-radius:14px;
-  background:#f8fbfd;
-  color:#526277;
-  font-size:12px;
-  font-weight:800;
-  line-height:1.35;
-}
-.thermal-gas-factor input{
-  width:86px;
-  height:34px;
-  border:1px solid #cdd9e4;
-  border-radius:10px;
-  padding:0 8px;
-  font:inherit;
-  color:#0b203a;
-}
-.manual-mapping-box{
-  margin-top:14px;
-  padding:14px;
-  border:1px solid #f0d4a3;
-  border-radius:16px;
-  background:#fffaf1;
-  color:#4b3a16;
-}
-.manual-mapping-box h3{
-  margin:0 0 6px;
-  font-size:15px;
-  line-height:1.2;
-}
-.manual-mapping-box p{
-  margin:0 0 12px;
-  font-size:12px;
-  font-weight:750;
-  line-height:1.45;
-}
-.manual-mapping-grid{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:10px;
-}
-.manual-mapping-grid label{
-  display:grid;
-  gap:5px;
-  font-size:11px;
-  font-weight:900;
-  color:#5f4712;
-}
-.manual-mapping-grid select,
-.manual-mapping-grid input{
-  height:38px;
-  border:1px solid #e4c88f;
-  border-radius:11px;
-  padding:0 10px;
-  background:#fff;
-  color:#0b203a;
-  font:inherit;
-  font-size:12px;
-}
-.manual-mapping-actions{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-top:12px;
-}
-.manual-mapping-actions button{
-  height:38px;
-  border:0;
-  border-radius:11px;
-  padding:0 14px;
-  background:#148a46;
-  color:#fff;
-  font:inherit;
-  font-size:12px;
-  font-weight:950;
-  cursor:pointer;
-}
-.manual-mapping-actions .ghost{
-  background:#fff;
-  color:#5f4712;
-  border:1px solid #e4c88f;
-}
-@media (max-width:760px){
-  .thermal-upload-row,
-  .manual-mapping-grid{
-    grid-template-columns:1fr;
-  }
+.svt194-method,
+.svt194-advanced-toggle{
+  align-items:start!important;
 }
 
 </style>
@@ -10210,28 +9669,28 @@ body[data-svt-ui="v157-professional"] .page{
   <div class="svt-progress-dot" data-step-dot="3">3</div>
   <div class="svt-progress-line"></div>
   <div class="svt-progress-dot" data-step-dot="4">4</div>
-  <div class="svt-progress-label active" data-step-label="1" style="grid-column:1">Date</div>
+  <div class="svt-progress-label active" data-step-label="1" style="grid-column:1">Consum</div>
   <div class="svt-progress-label" data-step-label="2" style="grid-column:3">Procesare</div>
   <div class="svt-progress-label" data-step-label="3" style="grid-column:5">Rezultate</div>
   <div class="svt-progress-label" data-step-label="4" style="grid-column:7">Recomandări</div>
 </section>
 <main class="hero">
       <div class="wizard-shell">
-<h1>Încarcă datele pentru analiză</h1>
-        <p class="sub">Încarcă fișierul cu consumul tău sau pornește de la factură. Dacă nu știi un detaliu, alege „Nu știu” și aplicația calculează mai departe.</p>
+<h1>Curba ta de consum zilnic</h1>
+        <p class="sub">Incarca datele de consum si vezi rapid unde poti economisi energie.</p>
 <div class="flow-list energy-switch-list">
             <div class="flow-row energy-switch-row">
               <div class="flow-left">
                 <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg></div>
                 <div class="count-badge">1</div>
                 <div class="title-wrap">
-                  <h3 class="row-title">Ce vrei să verificăm?</h3>
-                  <p class="row-subtitle">Alege dacă vrei să analizăm electricitatea sau căldura.</p>
+                  <h3 class="row-title">Tip energie</h3>
+                  <p class="row-subtitle">Alege tipul de energie pentru care încarci consumul.</p>
                 </div>
               </div>
               <div class="row-right">
-                <button class="choice-btn active" type="button" id="tabElectric"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg>Electricitate</button>
-                <button class="choice-btn" type="button" id="tabTermic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 0-3 3v6.3a5 5 0 1 0 6 0V6a3 3 0 0 0-3-3Z"/><path d="M12 14V7"/></svg>Căldură</button>
+                <button class="choice-btn active" type="button" id="tabElectric"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg>Electric</button>
+                <button class="choice-btn" type="button" id="tabTermic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 0-3 3v6.3a5 5 0 1 0 6 0V6a3 3 0 0 0-3-3Z"/><path d="M12 14V7"/></svg>Termic</button>
               </div>
             </div>
           </div>
@@ -10245,32 +9704,32 @@ body[data-svt-ui="v157-professional"] .page{
                 <div class="icon-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5v7A2.5 2.5 0 0 1 18.5 19h-13A2.5 2.5 0 0 1 3 16.5v-9Z"/></svg></div>
                 <div class="count-badge">2</div>
                 <div class="title-wrap">
-                  <h3 class="row-title">De unde luăm consumul?</h3>
+                  <h3 class="row-title">Sursa datelor</h3>
                   <div class="svt168-source-subrow">
-                    <p class="row-subtitle">Cel mai bine este să încarci fișierul descărcat din contul de energie.</p>
-                    <button type="button" class="svt168-inline-help-link" id="openDistributorHelp" data-open-distributor-help="true">Cum găsesc fișierul?</button>
+                    <p class="row-subtitle">Spune-ne de unde provin datele tale.</p>
+                    <button type="button" class="svt168-inline-help-link" id="openDistributorHelp" data-open-distributor-help="true">De unde obții fișierul?</button>
                   </div>
                 </div>
               </div>
               <div class="row-right">
-                <button class="choice-btn method source-choice active" type="button" id="methodFileCard"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5v7A2.5 2.5 0 0 1 18.5 19h-13A2.5 2.5 0 0 1 3 16.5v-9Z"/></svg><span>Încarc fișierul cu consumul</span></button>
+                <button class="choice-btn method source-choice active" type="button" id="methodFileCard"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5v7A2.5 2.5 0 0 1 18.5 19h-13A2.5 2.5 0 0 1 3 16.5v-9Z"/></svg><span>Încarc fișierul orar</span></button>
               </div>
               <div class="subpanel" id="invoiceBox" style="display:none">
                 <div class="invoice-grid">
                   <div class="field invoice-field invoice-consumption-field">
                     <label for="invoiceConsumption">Consum total<br>facturat</label>
                     <input class="control invoice-control" id="invoiceConsumption" type="number" min="0" step="0.01" >
-                    <div class="field-hint">Cantitatea de energie trecută pe factură.</div>
+                    <div class="field-hint">kWh consumați în perioada facturată.</div>
                   </div>
                   <div class="field invoice-field invoice-days-field">
                     <label for="invoiceDays">Număr zile<br>facturate</label>
                     <input class="control invoice-control" id="invoiceDays" type="number" min="1" step="1" value="30">
-                    <div class="field-hint">Ne ajută să împărțim consumul pe zile.</div>
+                    <div class="field-hint">Necesar pentru estimare zilnică/orară.</div>
                   </div>
                   <div class="field invoice-field invoice-value-field">
                     <label for="invoiceValue">Valoare factură<br>energie</label>
                     <input class="control invoice-control" id="invoiceValue" type="number" min="0" step="0.01" >
-                    <div class="field-hint">Folosim totalul ca să aflăm prețul mediu plătit.</div>
+                    <div class="field-hint">Ajută la verificarea tarifului total mediu.</div>
                   </div>
                   <div class="field invoice-field invoice-program-field">
                     <label for="workSchedule">Program de<br>lucru</label>
@@ -10282,7 +9741,7 @@ body[data-svt-ui="v157-professional"] .page{
                       <option>S-D inclus</option>
                       <option>Alt program</option>
                     </select>
-                    <div class="field-hint">Ne ajută să estimăm când consumi mai mult.</div>
+                    <div class="field-hint">Ne ajută să repartizăm mai realist consumul pe ore.</div>
                   </div>
                 </div>
                 <div class="invoice-attach">
@@ -10301,8 +9760,8 @@ body[data-svt-ui="v157-professional"] .page{
                 <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 16.5 12 12.5 8 16.5"/><path d="M12 3v9.5"/><path d="M20 16.7A4 4 0 0 1 16.3 21H7.7A4 4 0 0 1 4 16.7"/></svg></div>
                 <div class="count-badge">3</div>
                 <div class="title-wrap">
-                  <h3 class="row-title">Încarcă fișierul cu consumul</h3>
-                  <p class="row-subtitle">Îl folosim ca să vedem când consumi cel mai mult.</p>
+                  <h3 class="row-title">Încarcă fișierul</h3>
+                  <p class="row-subtitle">Fișier cu consum orar exportat de pe contor.</p>
                 </div>
               </div>
               <div class="row-right">
@@ -10322,25 +9781,25 @@ body[data-svt-ui="v157-professional"] .page{
 
                 <div class="svt194-tariff-card">
                   <div class="svt194-tariff-head">
-                    <h3 class="row-title">Costul energiei din factură</h3>
-                    <span>Spune-ne cât plătești în medie. Restul calculăm automat.</span>
+                    <h3 class="row-title">Detalii tarif</h3>
+                    <span>Cum vrei sa introduci costul energiei?</span>
                   </div>
 
                   <div class="svt194-tariff-main">
-                    <div class="svt194-tariff-methods" role="radiogroup" aria-label="De unde luăm costul energiei">
+                    <div class="svt194-tariff-methods" role="radiogroup" aria-label="Cum vrei sa introduci costul energiei">
                       <label class="tariff-method-card tariff-method-card-primary svt194-method is-selected" for="tariffInputModeInvoice">
                         <input type="radio" name="tariffInputMode" id="tariffInputModeInvoice" value="invoice_calculation" checked>
                         <span>
-                          <strong>Calculează din factură</strong>
-                          <small>Cel mai simplu dacă ai factura la îndemână.</small>
+                          <strong>Calculeaza din factura</strong>
+                          <small>Cel mai simplu daca ai factura la indemana.</small>
                         </span>
                       </label>
 
                       <label class="tariff-method-card tariff-known-card svt194-method" for="tariffInputModeDirect">
                         <input type="radio" name="tariffInputMode" id="tariffInputModeDirect" value="direct_price">
                         <span>
-                          <strong>Știu prețul pe kWh</strong>
-                          <small>kWh înseamnă o unitate de energie de pe factură.</small>
+                          <strong>Stiu deja pretul pe kWh</strong>
+                          <small>Completeaza direct pretul pe care il cunosti.</small>
                         </span>
                       </label>
                     </div>
@@ -10348,7 +9807,7 @@ body[data-svt-ui="v157-professional"] .page{
                     <div class="svt194-top-fields">
                       <div class="svt194-invoice-fields" data-tariff-mode-panel="invoice_calculation">
                         <label class="svt194-field" for="invoiceTotalValue">
-                          <span>Total factură</span>
+                          <span>Total factura</span>
                           <div class="svt194-unit-input">
                             <input class="control" id="invoiceTotalValue" type="number" min="0" step="0.01" inputmode="decimal" aria-label="Total factura">
                             <b>lei</b>
@@ -10356,7 +9815,7 @@ body[data-svt-ui="v157-professional"] .page{
                         </label>
 
                         <label class="svt194-field" for="invoiceBilledConsumption">
-                          <span>Consum din factură</span>
+                          <span>Consum facturat</span>
                           <div class="svt194-unit-input">
                             <input class="control" id="invoiceBilledConsumption" type="number" min="0" step="0.01" inputmode="decimal" aria-label="Consum facturat">
                             <b>kWh</b>
@@ -10364,7 +9823,7 @@ body[data-svt-ui="v157-professional"] .page{
                         </label>
 
                         <label class="svt194-field svt194-result-field" for="calculatedTariffPreview">
-                          <span>Preț mediu calculat</span>
+                          <span>Pret calculat automat</span>
                           <div class="svt194-unit-input svt194-result-input">
                             <input class="control" id="calculatedTariffPreview" type="text" value="0.00" readonly aria-label="Pret calculat automat">
                             <b>lei/kWh</b>
@@ -10374,7 +9833,7 @@ body[data-svt-ui="v157-professional"] .page{
 
                       <div class="svt194-direct-fields" data-tariff-mode-panel="direct_price" hidden>
                         <label class="svt194-field svt194-result-field" for="fixedTariff">
-                          <span>Preț mediu plătit</span>
+                          <span>Pret pe kWh</span>
                           <div class="svt194-unit-input">
                             <input class="control" id="fixedTariff" type="number" min="0" step="0.0001" value="0.75" aria-label="Pret pe kWh">
                             <b>lei/kWh</b>
@@ -10384,48 +9843,48 @@ body[data-svt-ui="v157-professional"] .page{
                     </div>
 
                     <label class="svt194-advanced-toggle" for="tariffAdvancedCheck">
-                      <input type="checkbox" id="tariffAdvancedCheck" aria-controls="tariffAdvancedPanel">
+                      <input type="checkbox" id="tariffAdvancedCheck" aria-controls="tariffAdvancedPanel" checked>
                       <span>
-                        <strong>Am detalii suplimentare din factură</strong>
-                        <small>Opțional. Lasă nebifat dacă nu știi.</small>
+                        <strong>Am detalii tehnice despre tarif</strong>
+                        <small>Pentru firme sau analize mai exacte.</small>
                       </span>
                     </label>
 
-                    <div class="svt194-advanced-panel" id="tariffAdvancedPanel" hidden>
+                    <div class="svt194-advanced-panel" id="tariffAdvancedPanel">
                       <label class="svt194-field" for="tariffPriceBasis">
-                        <span>Prețul introdus include</span>
-                        <select class="control" id="tariffPriceBasis" aria-label="Ce include prețul introdus">
-                          <option value="final_gross" selected>Toate costurile din factură</option>
-                          <option value="active_energy_only">Doar energia, fără rețea și taxe</option>
-                          <option value="without_vat">Preț fără TVA</option>
-                          <option value="unknown">Nu știu</option>
+                        <span>Pretul introdus reprezinta</span>
+                        <select class="control" id="tariffPriceBasis" aria-label="Ce reprezinta pretul introdus">
+                          <option value="final_gross">Pret final din factura</option>
+                          <option value="active_energy_only">Doar energia activa</option>
+                          <option value="without_vat">Pret fara TVA</option>
+                          <option value="unknown" selected>Nu stiu</option>
                         </select>
                       </label>
 
                       <label class="svt194-field" for="tariffDistributor">
-                        <span>Zona distribuitorului</span>
-                        <select class="control" id="tariffDistributor" aria-label="Zona distribuitorului">
-                          <option value="unknown" selected>Nu știu</option>
+                        <span>Distribuitor / zona</span>
+                        <select class="control" id="tariffDistributor" aria-label="Distribuitor sau zona">
+                          <option value="unknown" selected>Nu stiu</option>
                           <option value="deer">DEER</option>
-                          <option value="retele">Rețele Electrice România</option>
+                          <option value="retele">Retele Electrice Romania</option>
                           <option value="delgaz">Delgaz Grid</option>
-                          <option value="oltenia">Distribuție Energie Oltenia</option>
+                          <option value="oltenia">Distributie Energie Oltenia</option>
                           <option value="other">Alt distribuitor</option>
                         </select>
                       </label>
 
                       <label class="svt194-field" for="tariffVoltageLevel">
-                        <span>Tip racordare</span>
-                        <select class="control" id="tariffVoltageLevel" aria-label="Tip racordare">
-                          <option value="unknown" selected>Nu știu</option>
-                          <option value="jt">Consumator mic / joasă tensiune</option>
-                          <option value="mt">Consumator mediu / medie tensiune</option>
-                          <option value="it">Consumator foarte mare / înaltă tensiune</option>
+                        <span>Nivel tensiune racordare</span>
+                        <select class="control" id="tariffVoltageLevel" aria-label="Nivel tensiune racordare">
+                          <option value="unknown" selected>Nu stiu</option>
+                          <option value="jt">Joasa tensiune</option>
+                          <option value="mt">Medie tensiune</option>
+                          <option value="it">Inalta tensiune</option>
                         </select>
                       </label>
 
                       <label class="svt194-field svt194-result-field" for="effectiveTariffPreview">
-                        <span>Preț folosit automat</span>
+                        <span>Pret folosit in calcule</span>
                         <div class="svt194-unit-input svt194-result-input">
                           <input class="control" id="effectiveTariffPreview" type="text" value="0.00" readonly aria-label="Pret folosit in calcule">
                           <b>lei/kWh</b>
@@ -10438,7 +9897,7 @@ body[data-svt-ui="v157-professional"] .page{
                   </div>
 
                   <aside class="tariff-side-notes svt194-side-note" id="tariffSideNotes" aria-label="Explicatii tarif">
-                    <p class="tariff-advanced-note" id="tariffAdvancedNotice" aria-live="polite">Pentru calculul simplu este suficient totalul facturii împărțit la consumul facturat.</p>
+                    <p class="tariff-advanced-note" id="tariffAdvancedNotice" aria-live="polite">Distribuitorul si nivelul de tensiune ajuta doar la estimari orientative. Cel mai corect pret este cel calculat din total factura / consum facturat.</p>
                   </aside>
                 </div>
               </div>
@@ -10449,9 +9908,9 @@ body[data-svt-ui="v157-professional"] .page{
                 <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="M6 20V9l3 2 3-7 3 7 3-2v11"/><path d="M9 20v-4M12 20v-6M15 20v-4"/></svg></div>
                 <div class="count-badge">5</div>
                 <div class="title-wrap">
-                  <h3 class="row-title">Panouri solare sau producție proprie (opțional)</h3>
-                  <p class="row-subtitle">Dacă produci energie la locație, adaugă fișierul ca să vedem cât folosești direct.</p>
-                  <label class="check-line pv-check-under-title" for="hasProduction"><input type="checkbox" id="hasProduction" checked> Am panouri solare sau producție proprie</label>
+                  <h3 class="row-title">Producție locală / fotovoltaică (opțional)</h3>
+                  <p class="row-subtitle">Adaugă-ți producția locală dacă o ai.</p>
+                  <label class="check-line pv-check-under-title" for="hasProduction"><input type="checkbox" id="hasProduction" checked> Am și producție locală / fotovoltaică</label>
                 </div>
               </div>
               <div class="row-right pv-row-right" style="width:100%">
@@ -10459,10 +9918,10 @@ body[data-svt-ui="v157-professional"] .page{
                   <div class="file-inline upload-zone production-inline" id="productionDrop">
                     <input id="productionInput" type="file" hidden multiple accept=".csv,.txt,.xlsx,.xls,.xlsm,.html,.htm">
                     <button type="button" class="file-button" id="productionChoose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M20 16.7A4 4 0 0 1 16.3 21H7.7A4 4 0 0 1 4 16.7"/></svg>Alege fișier</button>
-                    <div class="file-meta"><strong>Fișier de producție solară sau proprie</strong><span>.xlsx, .xls, .csv, .html</span></div>
+                    <div class="file-meta"><strong>Producție PV / inverter / PVGIS</strong><span>.xlsx, .xls, .csv, .html</span></div>
                   </div>
                   <div class="selected-files" id="productionFileName"></div>
-                  <div class="embedded-note" id="productionExistingBanner">Fișierul cu consumul conține deja și energia produsă</div>
+                  <div class="embedded-note" id="productionExistingBanner">Date producție existente în fișierul de consum încărcat mai sus</div>
                 </div>
               </div>
             </div>
@@ -10471,22 +9930,8 @@ body[data-svt-ui="v157-professional"] .page{
 
         <section id="termicSection" style="display:none">
           <div class="thermal-shell">
-            <div class="thermal-note"><strong>Spune-ne doar ce știi despre căldură</strong><br>Dacă nu ai măsurători separate, poți lăsa „Nu știu”. Avem nevoie doar de sursa principală și, dacă există, de o estimare anuală.</div>
-            <div class="thermal-mini-note" style="margin:-8px 0 14px;color:#6e8099;font-size:12px;font-weight:700;line-height:1.4">Poți încărca și un fișier cu energia termică, dacă îl ai. Acceptăm Excel, CSV sau HTML și îl transformăm automat în kWh termic.</div>
-            <div class="thermal-upload-row">
-              <div>
-                <div class="file-inline upload-zone" id="thermalDrop">
-                  <input id="thermalInput" type="file" hidden multiple accept=".csv,.txt,.xlsx,.xls,.xlsm,.html,.htm">
-                  <button type="button" class="file-button" id="thermalChoose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M20 16.7A4 4 0 0 1 16.3 21H7.7A4 4 0 0 1 4 16.7"/></svg>Alege fișier</button>
-                  <div class="file-meta"><strong>Consum termic, gaz sau agent termic</strong><span>.xlsx, .xls, .csv, .html</span></div>
-                </div>
-                <div class="selected-files" id="thermalFileName"></div>
-              </div>
-              <label class="thermal-gas-factor" for="gasPcsFactor">
-                <span>Dacă fișierul este în m³ gaz, folosim această valoare orientativă.</span>
-                <input id="gasPcsFactor" type="number" min="1" step="0.01" value="10.55" aria-label="kWh pe metru cub gaz">
-              </label>
-            </div>
+            <div class="thermal-note"><strong>Date termice minime recomandate</strong><br>Pentru componenta termică sunt utile: dacă există consum termic monitorizat, sursa principală de căldură și consumul anual estimat. Câmpurile de mai jos sunt salvate pentru analiza integrată.</div>
+            <div class="thermal-mini-note" style="margin:-8px 0 14px;color:#6e8099;font-size:12px;font-weight:700;line-height:1.4">În varianta actuală pentru termic nu există upload de fișier — ramura termică folosește doar datele minime de mai jos pentru estimare.</div>
             <div class="invoice-grid">
               <div class="field">
                 <label for="thermalMonitored">Ai consum termic monitorizat?</label>
@@ -10521,7 +9966,6 @@ body[data-svt-ui="v157-professional"] .page{
         </section>
 
         <div id="message" class="message" aria-live="polite"></div>
-        <div id="manualMappingBox" class="manual-mapping-box" hidden></div>
 
         <div class="actions">
           <a class="btn btn-back" href="./index.html">← Pagina principală</a>
@@ -10531,7 +9975,7 @@ body[data-svt-ui="v157-professional"] .page{
     </main>
   </div>
 
-  <script src="./assets/js/svt-load-curve-profiles.js?v=214-data-learning-complete"></script>
+  <script src="./assets/js/svt-load-curve-profiles.js?v=217-old-ui-data-learning"></script>
   <script src="./assets/js/svt-analysis-engine.js?v=75-reference-layout"></script>
   <script>
     const tabElectric = document.getElementById('tabElectric');
@@ -10556,11 +10000,6 @@ body[data-svt-ui="v157-professional"] .page{
     const productionInput = document.getElementById('productionInput');
     const productionChoose = document.getElementById('productionChoose');
     const productionFileName = document.getElementById('productionFileName');
-    const thermalDrop = document.getElementById('thermalDrop');
-    const thermalInput = document.getElementById('thermalInput');
-    const thermalChoose = document.getElementById('thermalChoose');
-    const thermalFileName = document.getElementById('thermalFileName');
-    const gasPcsFactor = document.getElementById('gasPcsFactor');
     const fixedTariff = document.getElementById('fixedTariff');
     const tariffInputModeInvoice = document.getElementById('tariffInputModeInvoice');
     const tariffInputModeDirect = document.getElementById('tariffInputModeDirect');
@@ -10581,215 +10020,21 @@ body[data-svt-ui="v157-professional"] .page{
     const tariffInlineNotice = document.getElementById('tariffInlineNotice');
     const continueBtn = document.getElementById('continueBtn');
     const message = document.getElementById('message');
-    const manualMappingBox = document.getElementById('manualMappingBox');
 
     let currentTab = 'electric';
     let loadMethod = 'file';
     let consumptionFiles = [];
     let productionFiles = [];
-    let thermalFiles = [];
     let invoiceFile = null;
     let embeddedProductionDetected = false;
-    const manualParsedDatasets = { consumption:null, production:null, thermal:null };
 
     function showMessage(type, text){ message.className = 'message ' + type; message.textContent = text; }
-
-    function clearMessage(){ message.className = 'message'; message.textContent = ''; }
-
-    function escapeHtml(value){
-      return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-    }
-
-    function getGasFactor(){
-      const value = Number(gasPcsFactor?.value || 10.55);
-      return Number.isFinite(value) && value > 0 ? value : 10.55;
-    }
-
-    function sameFileMeta(file, meta){
-      return !!file && !!meta && file.name === meta.name && file.size === meta.size && file.lastModified === meta.lastModified;
-    }
-
-    function fileMeta(file){
-      return file ? {name:file.name, size:file.size, lastModified:file.lastModified} : null;
-    }
 
     function fileListText(files, singular, plural){
       if(!files || !files.length) return '';
       const names = files.map(f => f.name);
       if(files.length === 1) return `${singular}: ${names[0]}`;
       return `${plural} (${files.length}): ${names.join(', ')}`;
-    }
-
-    function uploadSuccessText(files){
-      return files && files.length > 1 ? 'Fisiere incarcate cu succes!' : 'Fisier incarcat cu succes';
-    }
-
-    function setUploadSuccess(targetNameEl, targetZoneEl, files){
-      const text = uploadSuccessText(files);
-      if(targetNameEl){
-        targetNameEl.textContent = '';
-        targetNameEl.hidden = true;
-      }
-      if(!targetZoneEl) return;
-      targetZoneEl.classList.add('upload-complete');
-      let successLabel = targetZoneEl.querySelector('.upload-success-label');
-      if(!successLabel){
-        successLabel = document.createElement('div');
-        successLabel.className = 'upload-success-label';
-        successLabel.setAttribute('aria-live', 'polite');
-        targetZoneEl.appendChild(successLabel);
-      }
-      successLabel.textContent = text;
-    }
-
-    function clearUploadSuccess(targetNameEl, targetZoneEl){
-      if(targetNameEl){
-        targetNameEl.hidden = false;
-        targetNameEl.textContent = '';
-      }
-      if(!targetZoneEl) return;
-      targetZoneEl.classList.remove('upload-complete');
-      const successLabel = targetZoneEl.querySelector('.upload-success-label');
-      if(successLabel) successLabel.remove();
-      clearImportSummary(targetZoneEl);
-    }
-
-    function dayKeyFromTimestamp(value){
-      const d = new Date(value);
-      if(!Number.isFinite(d.getTime())) return '';
-      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    }
-
-    function formatRoDate(value){
-      const d = new Date(value);
-      return Number.isFinite(d.getTime()) ? d.toLocaleDateString('ro-RO') : '';
-    }
-
-    function inferDayCount(rows){
-      return new Set((rows || []).map(r => r.dayKey || dayKeyFromTimestamp(r.timestamp)).filter(Boolean)).size;
-    }
-
-    function inferDefaultDay(rows){
-      const byDay = new Map();
-      (rows || []).forEach(r => {
-        const key = r.dayKey || dayKeyFromTimestamp(r.timestamp);
-        if(!key) return;
-        const prev = byDay.get(key) || {energy:0,cost:0,peak:0};
-        const energy = Number(r.electricKwh || r.thermalKwh || r.pvKwh || 0);
-        const cost = Number(r.costRon || 0) || energy * Number(r.priceRonKwh || 0);
-        prev.energy += energy;
-        prev.cost += cost;
-        prev.peak = Math.max(prev.peak, energy);
-        byDay.set(key, prev);
-      });
-      return Array.from(byDay.entries()).sort((a,b)=>(b[1].cost-a[1].cost) || (b[1].energy-a[1].energy) || (b[1].peak-a[1].peak))[0]?.[0] || '';
-    }
-
-    function resolutionText(minutes){
-      const m = Number(minutes || 0);
-      if(m > 0 && m <= 16) return '15 minute';
-      if(m > 0 && m <= 35) return '30 minute';
-      if(m > 0 && m <= 75) return 'orar';
-      if(m >= 1300) return 'zilnic';
-      return m ? `${m} minute` : 'necunoscut';
-    }
-
-    function inferIntervalFromRows(rows){
-      const times = (rows || []).map(r => new Date(r.timestamp).getTime()).filter(Number.isFinite).sort((a,b)=>a-b).slice(0,300);
-      const diffs = [];
-      for(let i=1;i<times.length;i++){
-        const minutes = Math.round((times[i]-times[i-1])/60000);
-        if(minutes > 0 && minutes < 1440) diffs.push(minutes);
-      }
-      if(!diffs.length) return 60;
-      const shortDiffs = diffs.filter(d => d <= 180);
-      const pool = shortDiffs.length ? shortDiffs : diffs;
-      const counts = new Map();
-      pool.forEach(d => counts.set(d, (counts.get(d) || 0) + 1));
-      return Array.from(counts.entries()).sort((a,b)=>b[1]-a[1] || a[0]-b[0])[0]?.[0] || 60;
-    }
-
-    function describeDetectedType(dataset, mode){
-      const rows = dataset?.rows || [];
-      const hasElectric = rows.some(r => Number(r.electricKwh || 0) > 0);
-      const hasThermal = rows.some(r => Number(r.thermalKwh || 0) > 0);
-      const hasPv = rows.some(r => Number(r.pvKwh || 0) > 0);
-      const hasExport = rows.some(r => Number(r.electricExportKwh || 0) > 0);
-      if(mode === 'thermal' || (hasThermal && !hasElectric)) return 'consum termic';
-      if(mode === 'production' || (hasPv && !hasElectric)) return 'producție fotovoltaică / proprie';
-      if((hasPv || hasExport) && hasElectric) return 'fișier mixt: consum și producție';
-      return 'consum electric';
-    }
-
-    function describeLearningStatus(meta){
-      const stats = meta?.learningStats || {};
-      if(Number(stats.applied || 0) > 1) return `${stats.applied} modele învățate folosite`;
-      if(meta?.learningApplied || meta?.sourceProfile === 'learned_energy_table') return 'model învățat folosit';
-      if(meta?.learningStatus === 'trained') return 'format salvat';
-      return 'citire automată';
-    }
-
-    function describeLearningNote(meta){
-      const stats = meta?.learningStats || {};
-      if(Number(stats.applied || 0) > 0) return 'Am recunoscut structura din importuri anterioare.';
-      if(meta?.learningStatus === 'trained') return 'Am salvat structura pentru fișiere similare.';
-      return 'Structura a fost detectată automat.';
-    }
-
-    function humanImportWarning(warning){
-      if(warning === 'sub_hourly_15_minute_data') return 'Date la 15 minute: analiza le păstrează cronologic.';
-      return String(warning || '');
-    }
-
-    function clearImportSummary(zone){
-      if(!zone) return;
-      const parent = zone.parentElement || zone;
-      parent.querySelectorAll('.svt-import-summary').forEach(el => el.remove());
-    }
-
-    function renderImportSummary(zone, dataset, mode){
-      if(!zone || !dataset) return;
-      clearImportSummary(zone);
-      const parent = zone.parentElement || zone;
-      const meta = dataset.meta || {};
-      const rows = dataset.rows || [];
-      const start = meta.start || rows[0]?.timestamp;
-      const end = meta.end || rows[rows.length-1]?.timestamp;
-      const dayCount = meta.dayCount || inferDayCount(rows);
-      const type = describeDetectedType(dataset, mode);
-      const period = start && end ? `${formatRoDate(start)} – ${formatRoDate(end)}` : 'perioadă detectată automat';
-      const learningLabel = describeLearningStatus(meta);
-      const learningNote = describeLearningNote(meta);
-      const confidence = Number(meta.confidencePercent || (Number(meta.confidence || 0) * 100) || 0);
-      const fileCount = Array.isArray(meta.fileNames) ? meta.fileNames.length : 1;
-      const chips = [
-        meta.resolutionLabel ? `interval ${meta.resolutionLabel}` : '',
-        meta.unit ? `unitate ${meta.unit}` : '',
-        rows.length ? `${rows.length} rânduri` : '',
-        confidence ? `încredere ${Math.round(confidence)}%` : '',
-        fileCount > 1 ? `${fileCount} fișiere unite` : '',
-        learningLabel
-      ].filter(Boolean);
-      const warnings = Array.isArray(meta.warnings) ? meta.warnings.map(humanImportWarning).filter(Boolean).slice(0,2) : [];
-      const div = document.createElement('div');
-      div.className = 'svt-import-summary';
-      div.innerHTML = `
-        <strong>Am citit fișierul: ${escapeHtml(type)}</strong>
-        <div class="summary-chips">
-          ${chips.map(chip => `<span class="summary-chip ${chip === learningLabel ? 'learning' : ''}">${escapeHtml(chip)}</span>`).join('')}
-        </div>
-        <span>Am găsit date pentru ${escapeHtml(period)}.</span>
-        <span>${dayCount > 1 ? 'Analiza folosește toate zilele încărcate.' : 'Analiza folosește ziua încărcată.'}</span>
-        <span class="summary-note">${escapeHtml(learningNote)}</span>
-        ${warnings.map(warning => `<span class="warn">${escapeHtml(warning)}</span>`).join('')}
-      `;
-      parent.appendChild(div);
-    }
-
-    function hideManualMapping(){
-      if(!manualMappingBox) return;
-      manualMappingBox.hidden = true;
-      manualMappingBox.innerHTML = '';
     }
 
     function setTab(tab){
@@ -10802,16 +10047,15 @@ body[data-svt-ui="v157-professional"] .page{
       document.body.setAttribute('data-energy-mode', electric ? 'electric' : 'termic');
       message.className = 'message';
       message.textContent = '';
-      hideManualMapping();
       validateForm();
     }
 
     function setLoadMethod(method){
       loadMethod = method;
-      if(methodFileCard) methodFileCard.classList.toggle('active', method === 'file');
-      if(methodInvoiceCard) methodInvoiceCard.classList.toggle('active', method === 'invoice');
-      if(fileModeBox) fileModeBox.style.display = method === 'file' ? 'grid' : 'none';
-      if(invoiceBox) invoiceBox.style.display = method === 'invoice' ? 'grid' : 'none';
+      methodFileCard.classList.toggle('active', method === 'file');
+      methodInvoiceCard.classList.toggle('active', method === 'invoice');
+      fileModeBox.style.display = method === 'file' ? 'grid' : 'none';
+      invoiceBox.style.display = method === 'invoice' ? 'grid' : 'none';
       validateForm();
     }
 
@@ -10841,10 +10085,6 @@ body[data-svt-ui="v157-professional"] .page{
     function setAdvancedPanelOpen(open){
       if(tariffAdvancedCheck) tariffAdvancedCheck.checked = !!open;
       if(tariffAdvancedPanel) tariffAdvancedPanel.hidden = !open;
-      if(!open){
-        if(tariffFinalInvoiceCheck) tariffFinalInvoiceCheck.checked = true;
-        if(tariffPriceBasis) tariffPriceBasis.value = 'final_gross';
-      }
       const tariffShell = document.querySelector('.tariff-flow-row .svt162-tariff-shell');
       if(tariffShell) tariffShell.classList.toggle('is-advanced-open', !!open);
       if(tariffSideNotes) tariffSideNotes.classList.toggle('is-advanced-open', !!open);
@@ -10858,25 +10098,7 @@ body[data-svt-ui="v157-professional"] .page{
 
     function updateTariffNotices(messageText, warning){
       if(tariffAdvancedNotice){
-        let body = messageText || 'Opțional. Ajută doar dacă ai aceste informații pe factură.';
-        let title = 'Cost estimat';
-        if(body.includes('TVA estimat')){
-          title = 'Preț fără TVA';
-          body = 'Adăugăm TVA estimativ peste prețul introdus.';
-        } else if(body.includes('Estimare orientativa')){
-          title = 'Preț parțial';
-          body = 'Adăugăm estimativ costurile de rețea și TVA ca să ajungem la un preț final.';
-        } else if(body.includes('Verifica pretul')){
-          title = 'Verifică prețul';
-          body = 'Valoarea pare neobișnuită. Verifică totalul facturii și consumul facturat.';
-        } else if(body.includes('Pretul calculat')){
-          title = 'Preț calculat';
-          body = 'Folosim totalul facturii împărțit la consumul facturat.';
-        } else if(body.includes('Pretul final')){
-          title = 'Preț final';
-          body = 'Îl folosim direct, fără alte ajustări.';
-        }
-        tariffAdvancedNotice.innerHTML = `<strong>${title}</strong>${body}`;
+        tariffAdvancedNotice.textContent = messageText || 'Distribuitorul si nivelul de tensiune ajuta doar la estimari orientative. Cel mai corect pret este cel calculat din total factura / consum facturat.';
         tariffAdvancedNotice.classList.toggle('is-warning', !!warning);
       }
       if(tariffSideNotes){
@@ -10890,10 +10112,9 @@ body[data-svt-ui="v157-professional"] .page{
       if(inputMode === 'invoice_calculation' && !(Number(invoiceTotalValue?.value || 0) > 0 && Number(invoiceBilledConsumption?.value || 0) > 0)){
         inputTariff = 0;
       }
-      const advancedOpen = !!tariffAdvancedCheck?.checked;
-      const basis = !advancedOpen ? 'final_gross' : (tariffPriceBasis?.value || 'final_gross');
-      const distributor = advancedOpen ? (tariffDistributor?.value || 'unknown') : 'unknown';
-      const voltage = advancedOpen ? (tariffVoltageLevel?.value || 'unknown') : 'unknown';
+      const basis = tariffPriceBasis?.value || 'final_gross';
+      const distributor = tariffDistributor?.value || 'unknown';
+      const voltage = tariffVoltageLevel?.value || 'unknown';
       let effectiveTariff = inputTariff > 0 ? inputTariff : 0;
       let notice = '';
       let warning = false;
@@ -10901,15 +10122,15 @@ body[data-svt-ui="v157-professional"] .page{
       if(inputTariff > 0){
         if(basis === 'without_vat'){
           effectiveTariff = inputTariff * (1 + TARIFF_VAT_RATE);
-          notice = `Prețul folosit în calcule include TVA estimat de ${(TARIFF_VAT_RATE * 100).toFixed(0)}%.`;
+          notice = `Pretul folosit in calcule include TVA estimat de ${(TARIFF_VAT_RATE * 100).toFixed(0)}%.`;
         } else if(basis === 'active_energy_only'){
           const networkEstimate = getNetworkEstimate(distributor, voltage);
           effectiveTariff = (inputTariff + networkEstimate + TARIFF_TRANSPORT_SYSTEM_ESTIMATE) * (1 + TARIFF_VAT_RATE);
           warning = true;
-          notice = 'Estimare orientativa: adaugam costurile de retea si TVA. Pentru calcul exact foloseste total factura / consum facturat.';
+          notice = 'Estimare orientativa: adauga distributie, transport, servicii sistem si TVA. Pentru calcul exact foloseste total factura / consum facturat.';
         } else if(basis === 'unknown'){
           warning = true;
-          notice = 'Pentru o estimare mai bună, folosește totalul facturii și consumul facturat.';
+          notice = 'Pentru estimare mai corecta, foloseste totalul facturii si consumul facturat.';
         } else {
           notice = inputMode === 'invoice_calculation'
             ? 'Pretul calculat din total factura este folosit direct in analiza.'
@@ -10943,9 +10164,9 @@ body[data-svt-ui="v157-professional"] .page{
         fixedTariff: Number(fixedTariff?.value || 0),
         tariffFinalInvoiceCheck: !!tariffFinalInvoiceCheck?.checked,
         tariffAdvancedCheck: !!tariffAdvancedCheck?.checked,
-        tariffPriceBasis: context.basis,
-        tariffDistributor: context.distributor,
-        tariffVoltageLevel: context.voltage,
+        tariffPriceBasis: tariffPriceBasis?.value || 'final_gross',
+        tariffDistributor: tariffDistributor?.value || 'unknown',
+        tariffVoltageLevel: tariffVoltageLevel?.value || 'unknown',
         effectiveTariffPreview: Number(effectiveTariffPreview?.value || 0),
         effectiveTariffRonKwh: context.effectiveTariffRonKwh,
         vatRate: context.vatRate,
@@ -10993,7 +10214,7 @@ body[data-svt-ui="v157-professional"] .page{
         fixedTariff.value = tariff.toFixed(4);
       } else if(billed === 0 && invoiceBilledConsumption?.value){
         if(calculatedTariffPreview) calculatedTariffPreview.value = '0.00';
-        if(tariffInlineNotice) tariffInlineNotice.textContent = 'Consum facturat trebuie să fie mai mare de 0.';
+        if(tariffInlineNotice) tariffInlineNotice.textContent = 'Consum facturat trebuie sa fie mai mare de 0.';
       } else if(calculatedTariffPreview) {
         calculatedTariffPreview.value = '0.00';
       }
@@ -11012,39 +10233,20 @@ body[data-svt-ui="v157-professional"] .page{
       const map = new Map();
       const fileNames = [];
       const profiles = new Set();
-      const units = new Set();
-      const sourceModels = new Set();
-      const warnings = [];
-      const normalizedRows = [];
-      const learnedModelNames = new Set();
-      const learningStats = {applied:0, trained:0, auto:0};
-      let confidenceTotal = 0;
-      let confidenceCount = 0;
       let hasEmbeddedProduction = false;
       for(const ds of datasets){
         if(!ds || !ds.rows) continue;
         if(ds.meta?.fileName) fileNames.push(ds.meta.fileName);
         if(ds.meta?.sourceProfile) profiles.add(ds.meta.sourceProfile);
-        if(ds.meta?.unit) units.add(ds.meta.unit);
-        if(ds.meta?.sourceModel) sourceModels.add(ds.meta.sourceModel);
-        if(Array.isArray(ds.meta?.warnings)) warnings.push(...ds.meta.warnings);
-        if(ds.meta?.warning) warnings.push(ds.meta.warning);
-        if(ds.meta?.learnedModelName) learnedModelNames.add(ds.meta.learnedModelName);
-        if(ds.meta?.learningApplied || ds.meta?.sourceProfile === 'learned_energy_table') learningStats.applied += 1;
-        else if(ds.meta?.learningStatus === 'trained') learningStats.trained += 1;
-        else learningStats.auto += 1;
-        if(Number(ds.meta?.confidence) > 0){ confidenceTotal += Number(ds.meta.confidence); confidenceCount += 1; }
-        if(Array.isArray(ds.normalizedRows)) normalizedRows.push(...ds.normalizedRows);
         if(ds.meta?.hasEmbeddedProduction || ds.meta?.productionDetectedInMainFile) hasEmbeddedProduction = true;
         for(const r of ds.rows){
           const t = new Date(r.timestamp).getTime();
           if(!Number.isFinite(t)) continue;
           const key = String(t);
-          const existing = map.get(key) || { timestamp:new Date(t).toISOString(), localLabel:new Date(t).toLocaleString('ro-RO',{dateStyle:'short',timeStyle:'short'}), hour:new Date(t).getHours(), minute:new Date(t).getMinutes(), electricKwh:0, gridImportKwh:0, electricExportKwh:0, reactiveInductiveKvarh:0, reactiveCapacitiveKvarh:0, thermalKwh:0, pvKwh:0, priceRonKwh:tariff };
+          const existing = map.get(key) || { timestamp:new Date(t).toISOString(), localLabel:new Date(t).toLocaleString('ro-RO',{dateStyle:'short',timeStyle:'short'}), hour:new Date(t).getHours(), minute:new Date(t).getMinutes(), electricKwh:0, electricExportKwh:0, reactiveInductiveKvarh:0, reactiveCapacitiveKvarh:0, thermalKwh:0, pvKwh:0, priceRonKwh:tariff };
           if(mode === 'production') existing.pvKwh += Number(r.pvKwh || r.electricKwh || 0);
           else {
             existing.electricKwh += Number(r.electricKwh || 0);
-            existing.gridImportKwh += Number(r.gridImportKwh || 0);
             existing.electricExportKwh += Number(r.electricExportKwh || 0);
             existing.reactiveInductiveKvarh += Number(r.reactiveInductiveKvarh || 0);
             existing.reactiveCapacitiveKvarh += Number(r.reactiveCapacitiveKvarh || 0);
@@ -11057,183 +10259,16 @@ body[data-svt-ui="v157-professional"] .page{
       const rows = Array.from(map.values()).sort((a,b)=>new Date(a.timestamp)-new Date(b.timestamp));
       const start = rows[0]?.timestamp || null;
       const end = rows[rows.length-1]?.timestamp || null;
-      const intervalMinutes = inferIntervalFromRows(rows);
-      const dayCount = inferDayCount(rows);
-      const defaultDayKey = inferDefaultDay(rows);
-      const confidence = confidenceCount ? confidenceTotal / confidenceCount : 0.82;
-      return {
-        rows,
-        normalizedRows,
-        meta:{
-          fileName:fileNames.length > 1 ? `${fileNames.length} fișiere încărcate` : (fileNames[0] || 'fișier încărcat'),
-          fileNames,
-          sourceProfile:profiles.size > 1 ? 'multi_file_merged' : (Array.from(profiles)[0] || (mode === 'production' ? 'production_multi_file' : mode === 'thermal' ? 'thermal_multi_file' : 'electric_multi_file')),
-          sourceModel:sourceModels.size > 1 ? 'mai multe modele' : (Array.from(sourceModels)[0] || 'generic_energy_table'),
-          unit:units.size > 1 ? Array.from(units).join(', ') : (Array.from(units)[0] || 'kWh'),
-          intervalMinutes,
-          resolutionLabel:resolutionText(intervalMinutes),
-          fixedPriceRonKwh:tariff,
-          rowsCount:rows.length,
-          start,
-          end,
-          dayCount,
-          defaultDayKey,
-          defaultDayReason:dayCount > 1 ? 'auto_selected_day' : 'single_uploaded_day',
-          confidence,
-          confidencePercent:Math.round(confidence * 100),
-          learningApplied:learningStats.applied > 0,
-          learningStatus:learningStats.applied > 0 ? 'applied' : (learningStats.trained > 0 ? 'trained' : 'auto_detected'),
-          learnedModelName:learnedModelNames.size ? Array.from(learnedModelNames)[0] : null,
-          learningStats:{...learningStats, total:datasets.length, learnedModelNames:Array.from(learnedModelNames)},
-          warnings:[...new Set(warnings)],
-          normalizedRowsCount:normalizedRows.length,
-          normalizedSchema:'svt-energy-series-v1',
-          hasEmbeddedProduction,
-          productionDetectedInMainFile:hasEmbeddedProduction,
-          parserVersion:'v75-flexible-import'
-        }
-      };
+      const intervalMinutes = rows.length > 1 ? Math.max(1, Math.round((new Date(rows[1].timestamp)-new Date(rows[0].timestamp))/60000)) : 60;
+      return { rows, meta:{ fileName:fileNames.length > 1 ? `${fileNames.length} fișiere încărcate` : (fileNames[0] || 'fișier încărcat'), fileNames, sourceProfile:profiles.size > 1 ? 'multi_file_merged' : (Array.from(profiles)[0] || (mode === 'production' ? 'production_multi_file' : 'electric_multi_file')), intervalMinutes, fixedPriceRonKwh:tariff, rowsCount:rows.length, start, end, hasEmbeddedProduction, productionDetectedInMainFile:hasEmbeddedProduction, parserVersion:'v75' } };
     }
 
     async function parseAndMergeFiles(files, mode, tariff){
       const arr = Array.from(files || []);
       validateFiles(arr);
       const datasets = [];
-      const manualKey = mode === 'production' ? 'production' : mode === 'thermal' ? 'thermal' : 'consumption';
-      for(const file of arr){
-        const manual = manualParsedDatasets[manualKey];
-        if(manual?.dataset && sameFileMeta(file, manual.file)) datasets.push(manual.dataset);
-        else datasets.push(await SVTLoadCurveProfiles.parseFile(file, {mode, fixedPriceRonKwh:tariff, gasFactor:getGasFactor()}));
-      }
+      for(const file of arr){ datasets.push(await SVTLoadCurveProfiles.parseFile(file, {mode, fixedPriceRonKwh:tariff})); }
       return aggregateDatasets(datasets, mode, tariff);
-    }
-
-    function parserModeForType(type){
-      if(type === 'production') return 'production';
-      if(type === 'thermal') return 'thermal';
-      return 'electric';
-    }
-
-    function selectOptions(columns, selectedIndex, emptyLabel = 'Nu există / nu știu'){
-      const selected = Number(selectedIndex);
-      return `<option value="">${escapeHtml(emptyLabel)}</option>` + (columns || []).map(col => `<option value="${col.index}" ${col.index === selected ? 'selected' : ''}>${escapeHtml(col.label || `Coloana ${col.index + 1}`)}</option>`).join('');
-    }
-
-    async function showManualMapping(targetType, file, targetZoneEl, originalError){
-      if(!manualMappingBox || !file || !window.SVTLoadCurveProfiles?.inspectFile) {
-        showMessage('err', originalError?.message || 'Nu am putut interpreta automat fișierul.');
-        return;
-      }
-      const mode = parserModeForType(targetType);
-      let inspection;
-      try{
-        inspection = await SVTLoadCurveProfiles.inspectFile(file, {mode, fixedPriceRonKwh:getEffectiveTariffValue() || 0.75, gasFactor:getGasFactor()});
-      } catch(err){
-        showMessage('err', err.message || 'Nu am putut citi structura fișierului.');
-        return;
-      }
-      const sheets = inspection.sheets || [];
-      if(!sheets.length){
-        showMessage('err', 'Nu am găsit tabele în fișier. Încearcă un export Excel, CSV sau HTML.');
-        return;
-      }
-      let activeSheetIndex = 0;
-      const titleByType = targetType === 'thermal'
-        ? 'Ajută-ne să citim fișierul termic'
-        : targetType === 'production'
-          ? 'Ajută-ne să citim fișierul de producție'
-          : 'Ajută-ne să citim fișierul de consum';
-
-      const render = () => {
-        const sheet = sheets[activeSheetIndex] || sheets[0];
-        const columns = sheet.columns || [];
-        const detected = sheet.detectedMapping || {};
-        const productionMode = targetType === 'production';
-        const thermalMode = targetType === 'thermal';
-        manualMappingBox.hidden = false;
-        manualMappingBox.innerHTML = `
-          <h3>${escapeHtml(titleByType)}</h3>
-          <p>Nu trebuie să modifici fișierul. Alege coloanele pe care le recunoști, iar noi transformăm datele automat.</p>
-          <div class="manual-mapping-grid">
-            ${sheets.length > 1 ? `<label>Foaia din fișier<select id="manualMapSheet">${sheets.map((s, idx)=>`<option value="${idx}" ${idx === activeSheetIndex ? 'selected' : ''}>${escapeHtml(s.sheetName || `Foaia ${idx+1}`)}</option>`).join('')}</select></label>` : ''}
-            <label>Data și ora împreună<select id="manualMapTimestamp">${selectOptions(columns, detected.timestamp)}</select></label>
-            <label>Data<select id="manualMapDate">${selectOptions(columns, detected.date)}</select></label>
-            <label>Ora<select id="manualMapTime">${selectOptions(columns, detected.time)}</select></label>
-            ${productionMode ? `<label>Producția<select id="manualMapProduction">${selectOptions(columns, detected.production >= 0 ? detected.production : detected.consumption, 'Alege coloana')}</select></label>` : `<label>${thermalMode ? 'Consumul termic' : 'Consumul'}<select id="manualMapConsumption">${selectOptions(columns, detected.consumption >= 0 ? detected.consumption : detected.importEnergy, 'Alege coloana')}</select></label>`}
-            ${!productionMode ? `<label>Producție în același fișier<select id="manualMapProduction">${selectOptions(columns, detected.production)}</select></label>` : ''}
-            <label>Energie luată din rețea<select id="manualMapImport">${selectOptions(columns, detected.importEnergy)}</select></label>
-            <label>Energie trimisă în rețea<select id="manualMapExport">${selectOptions(columns, detected.exportEnergy)}</select></label>
-            <label>Cost în lei<select id="manualMapCost">${selectOptions(columns, detected.cost)}</select></label>
-            <label>Preț pe kWh<select id="manualMapTariff">${selectOptions(columns, detected.tariff)}</select></label>
-            <label>Coloana cu unitatea<select id="manualMapUnitColumn">${selectOptions(columns, detected.unit)}</select></label>
-            <label>Unitatea valorilor<select id="manualMapUnit">
-              <option value="kWh" selected>kWh</option>
-              <option value="MWh">MWh</option>
-              <option value="Wh">Wh</option>
-              <option value="Gcal">Gcal</option>
-              <option value="m3 gaz">m³ gaz</option>
-              <option value="kW">kW</option>
-              <option value="W">W</option>
-            </select></label>
-          </div>
-          <div class="manual-mapping-actions">
-            <button type="button" id="manualMapConfirm">Confirmă coloanele</button>
-            <button type="button" class="ghost" id="manualMapCancel">Renunță</button>
-          </div>
-        `;
-        const unitSelect = manualMappingBox.querySelector('#manualMapUnit');
-        if(unitSelect){
-          const detectedUnit = /mwh/i.test(file.name) ? 'MWh' : /gcal/i.test(file.name) ? 'Gcal' : /(m3|mc|gaz)/i.test(file.name) ? 'm3 gaz' : 'kWh';
-          unitSelect.value = detectedUnit;
-        }
-        const sheetSelect = manualMappingBox.querySelector('#manualMapSheet');
-        if(sheetSelect) sheetSelect.addEventListener('change', () => { activeSheetIndex = Number(sheetSelect.value || 0); render(); });
-        manualMappingBox.querySelector('#manualMapCancel')?.addEventListener('click', hideManualMapping);
-        manualMappingBox.querySelector('#manualMapConfirm')?.addEventListener('click', async () => {
-          const col = id => {
-            const value = manualMappingBox.querySelector(`#${id}`)?.value;
-            return value === '' || value === undefined ? null : Number(value);
-          };
-          const mapping = {
-            sheetName:sheet.sheetName || '',
-            headerRow:sheet.headerRow || 0,
-            unit:manualMappingBox.querySelector('#manualMapUnit')?.value || 'kWh',
-            columnMapping:{
-              timestamp:col('manualMapTimestamp'),
-              date:col('manualMapDate'),
-              time:col('manualMapTime'),
-              consumption:productionMode ? null : col('manualMapConsumption'),
-              production:col('manualMapProduction'),
-              importEnergy:col('manualMapImport'),
-              exportEnergy:col('manualMapExport'),
-              cost:col('manualMapCost'),
-              tariff:col('manualMapTariff'),
-              unit:col('manualMapUnitColumn')
-            }
-          };
-          const hasDate = mapping.columnMapping.timestamp !== null || mapping.columnMapping.date !== null;
-          const hasEnergy = productionMode ? mapping.columnMapping.production !== null : (mapping.columnMapping.consumption !== null || mapping.columnMapping.importEnergy !== null || mapping.columnMapping.production !== null);
-          if(!hasDate || !hasEnergy){
-            showMessage('err', 'Alege cel puțin coloana cu data și coloana cu energia.');
-            return;
-          }
-          try{
-            showMessage('warn', 'Citit fișierul cu maparea aleasă...');
-            const ds = await SVTLoadCurveProfiles.parseFileWithMapping(file, mapping, {mode, fixedPriceRonKwh:getEffectiveTariffValue() || 0.75, gasFactor:getGasFactor()});
-            manualParsedDatasets[targetType] = {file:fileMeta(file), dataset:ds};
-            renderImportSummary(targetZoneEl, ds, mode);
-            hideManualMapping();
-            showMessage('ok', 'Am citit fișierul și am salvat modelul pentru fișiere similare.');
-            validateForm();
-          } catch(err){
-            console.error(err);
-            showMessage('err', err.message || 'Nu am putut citi fișierul cu această mapare.');
-          }
-        });
-      };
-      render();
-      manualMappingBox.scrollIntoView({behavior:'smooth', block:'center'});
-      showMessage('warn', originalError?.message || 'Nu am putut recunoaște automat toate coloanele. Confirmă-le mai jos.');
     }
 
     async function handlePickedFiles(files, targetNameEl, targetZoneEl, targetType){
@@ -11241,54 +10276,36 @@ body[data-svt-ui="v157-professional"] .page{
       if(!arr.length) return;
       try{ validateFiles(arr); } catch(e){ showMessage('err', e.message || String(e)); return; }
       targetZoneEl.classList.add('has-file');
-      hideManualMapping();
-      clearImportSummary(targetZoneEl);
       if(targetType === 'consumption'){
         consumptionFiles = arr;
-        manualParsedDatasets.consumption = null;
-        setUploadSuccess(targetNameEl, targetZoneEl, arr);
-        clearMessage();
+        targetNameEl.textContent = arr.length === 1 ? 'Fișier încărcat cu succes!' : 'Fișiere încărcate cu succes!';
         embeddedProductionDetected = false;
         productionBox.classList.remove('embedded');
         try{
           const previewDataset = await parseAndMergeFiles(consumptionFiles, 'electric', Number(fixedTariff.value || 0.75));
-          renderImportSummary(targetZoneEl, previewDataset, 'electric');
           embeddedProductionDetected = !!(previewDataset?.meta?.productionDetectedInMainFile || previewDataset?.rows?.some(r => Number(r.pvKwh || 0) > 0));
           if(embeddedProductionDetected){
             hasProduction.checked = true;
             productionBox.classList.add('visible','embedded');
             const banner = document.getElementById('productionExistingBanner');
             if(banner) banner.textContent = 'Date producție existente în fișierul de consum încărcat mai sus';
+            clearMessage();
           } else {
             if(!hasProduction.checked) productionBox.classList.remove('visible');
+            clearMessage();
           }
-        } catch(e){ await showManualMapping('consumption', arr[0], targetZoneEl, e); }
+        } catch(e){ clearMessage(); }
       }
       if(targetType === 'production'){
         productionFiles = arr;
-        manualParsedDatasets.production = null;
-        setUploadSuccess(targetNameEl, targetZoneEl, arr);
+        targetNameEl.textContent = arr.length === 1 ? 'Fișier încărcat cu succes!' : 'Fișiere încărcate cu succes!';
         productionBox.classList.remove('embedded');
         embeddedProductionDetected = false;
-        try{
-          const previewDataset = await parseAndMergeFiles(productionFiles, 'production', Number(fixedTariff.value || 0.75));
-          renderImportSummary(targetZoneEl, previewDataset, 'production');
-          clearMessage();
-        } catch(e){ await showManualMapping('production', arr[0], targetZoneEl, e); }
-      }
-      if(targetType === 'thermal'){
-        thermalFiles = arr;
-        manualParsedDatasets.thermal = null;
-        setUploadSuccess(targetNameEl, targetZoneEl, arr);
-        try{
-          const previewDataset = await parseAndMergeFiles(thermalFiles, 'thermal', Number(fixedTariff.value || 0.75));
-          renderImportSummary(targetZoneEl, previewDataset, 'thermal');
-          clearMessage();
-        } catch(e){ await showManualMapping('thermal', arr[0], targetZoneEl, e); }
+        clearMessage();
       }
       if(targetType === 'invoice'){
         invoiceFile = arr[0];
-        setUploadSuccess(targetNameEl, targetZoneEl, [invoiceFile]);
+        targetNameEl.textContent = 'Fișier încărcat cu succes!';
         clearMessage();
       }
       validateForm();
@@ -11307,8 +10324,8 @@ body[data-svt-ui="v157-professional"] .page{
     function validateForm(){
       const tariffMethod = currentTariffInputMode();
       const effectiveTariff = getEffectiveTariffValue();
-      const tariffOk = currentTab === 'termic' ? true : tariffMethod === 'invoice_calculation'
-        ? Number(invoiceTotalValue?.value || 0) > 0 && Number(invoiceBilledConsumption?.value || 0) > 0 && effectiveTariff > 0
+      const tariffOk = tariffMethod === 'invoice_calculation'
+        ? effectiveTariff > 0
         : Number(fixedTariff.value) > 0 && effectiveTariff > 0;
       let dataOk = true;
       if(currentTab === 'electric'){
@@ -11338,7 +10355,7 @@ body[data-svt-ui="v157-professional"] .page{
 
     function createSVTDataFingerprint(dataset, tariff, loadMethod, sourceType){
       const rows = dataset?.rows || [];
-      const totalConsumption = rows.reduce((a,r)=>a + Number(r.electricKwh || r.thermalKwh || r.consumptionKwh || 0),0);
+      const totalConsumption = rows.reduce((a,r)=>a + Number(r.electricKwh || r.consumptionKwh || 0),0);
       const totalProduction = rows.reduce((a,r)=>a + Number(r.pvKwh || 0),0);
       const first = rows[0]?.timestamp || '';
       const last = rows[rows.length-1]?.timestamp || '';
@@ -11353,23 +10370,10 @@ body[data-svt-ui="v157-professional"] .page{
         if(!window.SVTLoadCurveProfiles || !window.SVTAnalysisEngine){ showMessage('err', 'Modulele de analiză nu s-au încărcat corect. Reîncarcă pagina cu Ctrl+F5.'); return; }
         showMessage('warn', 'Procesăm datele...');
         const tariffContext = buildTariffContext();
-        const tariff = Number(tariffContext.effectiveTariffRonKwh || tariffContext.effectiveTariffPreview || tariffContext.fixedTariff || 0.75);
+        const tariff = Number(tariffContext.effectiveTariffPreview || tariffContext.fixedTariff || 0.75);
         const consumptionDataSource = document.getElementById('consumptionDataSource')?.value || 'total';
         if(currentTab === 'termic'){
-          let thermalDataset = null;
-          if(thermalFiles.length){
-            try{
-              thermalDataset = await parseAndMergeFiles(thermalFiles, 'thermal', tariff);
-              thermalDataset.meta.fixedPriceRonKwh = tariff;
-              thermalDataset.meta.tariffDetails = tariffContext;
-              thermalDataset.meta.dataFingerprint = createSVTDataFingerprint(thermalDataset, tariff, 'thermal_file', 'thermal');
-              sessionStorage.setItem('svtDataset', JSON.stringify(thermalDataset));
-            } catch(err){
-              await showManualMapping('thermal', thermalFiles[0], thermalDrop, err);
-              return;
-            }
-          }
-          const navigatorContext = { selectedMode:'termic', loadMethod:thermalFiles.length ? 'thermal_file' : 'thermal', hasElectricData:false, hasThermalData:true, hasProduction:false, fixedTariffRonKwh:tariff, tariffDetails:tariffContext, dataFingerprint:thermalDataset?.meta?.dataFingerprint || '', thermal:{ monitored: document.getElementById('thermalMonitored')?.value || '', source: document.getElementById('thermalSource')?.value || '', annualValue: Number(document.getElementById('annualThermal')?.value || 0), unit: document.getElementById('thermalUnit')?.value || '', fileCount:thermalFiles.length, fileNames:thermalDataset?.meta?.fileNames || [], gasPcsFactor:getGasFactor() }, createdAt:new Date().toISOString() };
+          const navigatorContext = { selectedMode:'termic', loadMethod:'thermal', hasElectricData:false, hasThermalData:true, hasProduction:false, fixedTariffRonKwh:tariff, tariffDetails:tariffContext, thermal:{ monitored: document.getElementById('thermalMonitored')?.value || '', source: document.getElementById('thermalSource')?.value || '', annualValue: Number(document.getElementById('annualThermal')?.value || 0), unit: document.getElementById('thermalUnit')?.value || '' }, createdAt:new Date().toISOString() };
           sessionStorage.setItem('svtNavigatorContext', JSON.stringify(navigatorContext));
           localStorage.setItem('svtNavigatorContext', JSON.stringify(navigatorContext));
           window.location.href = './testeaza-gratuit.html';
@@ -11413,7 +10417,7 @@ body[data-svt-ui="v157-professional"] .page{
     tabTermic.addEventListener('click', () => setTab('termic'));
     methodFileCard.addEventListener('click', () => setLoadMethod('file'));
     if(window.methodInvoiceCard && methodInvoiceCard.addEventListener){ methodInvoiceCard.addEventListener('click', () => setLoadMethod('invoice')); }
-    hasProduction.addEventListener('change', () => { productionBox.classList.toggle('visible', hasProduction.checked); if(!hasProduction.checked){ productionBox.classList.remove('embedded'); embeddedProductionDetected = false; productionFiles = []; manualParsedDatasets.production = null; clearUploadSuccess(productionFileName, productionDrop); productionDrop.classList.remove('has-file'); } validateForm(); });
+    hasProduction.addEventListener('change', () => { productionBox.classList.toggle('visible', hasProduction.checked); if(!hasProduction.checked){ productionBox.classList.remove('embedded'); embeddedProductionDetected = false; productionFiles = []; productionFileName.textContent = ''; productionDrop.classList.remove('has-file'); } validateForm(); });
     if(tariffMethodInvoice) tariffMethodInvoice.addEventListener('change', () => { if(tariffMethodInvoice.checked) { setTariffMethod('invoice_calculation'); syncTariffFromInvoice(); } });
     if(tariffMethodKnown) tariffMethodKnown.addEventListener('change', () => { if(tariffMethodKnown.checked) setTariffMethod('direct_price'); });
     if(invoiceTotalValue) invoiceTotalValue.addEventListener('input', syncTariffFromInvoice);
@@ -11442,11 +10446,9 @@ body[data-svt-ui="v157-professional"] .page{
 
     wireDropZone(dropZone, fileInput, chooseBtn, fileName, 'consumption');
     wireDropZone(productionDrop, productionInput, productionChoose, productionFileName, 'production');
-    wireDropZone(thermalDrop, thermalInput, thermalChoose, thermalFileName, 'thermal');
     wireDropZone(invoiceDrop, invoiceInput, invoiceChoose, invoiceFileName, 'invoice');
-    if(gasPcsFactor) gasPcsFactor.addEventListener('change', () => { manualParsedDatasets.thermal = null; if(thermalFiles.length && thermalDrop) clearImportSummary(thermalDrop); });
     setTariffMethod('invoice_calculation', { keepAdvancedSelection:true });
-    setAdvancedPanelOpen(false);
+    setAdvancedPanelOpen(true);
     updateEffectiveTariff();
 
     function initDistributorHelpModal(){
@@ -11475,8 +10477,8 @@ body[data-svt-ui="v157-professional"] .page{
     <div class="svt139-modal" role="dialog" aria-modal="true" aria-labelledby="distHelpTitle">
       <button class="svt-modal-close svt139-close" type="button" id="closeDistributorHelp" aria-label="Închide">×</button>
       <header class="svt139-head">
-        <h2 id="distHelpTitle">Cum obții fișierul cu consumul pe ore?</h2>
-        <p>Alege portalul tău și caută un fișier cu dată, oră sau interval și consum. Dacă găsești doar factura, poți porni și cu o estimare.</p>
+        <h2 id="distHelpTitle">Cum obții fișierul orar / curba de sarcină?</h2>
+        <p>Alege sursa corectă de date. Pentru analiza exactă ai nevoie de dată, oră/interval și consum kWh.</p>
       </header>
       <nav class="svt139-tabs" id="distHelpTabs" role="tablist" aria-label="Surse date consum">
         <button type="button" class="svt139-tab active is-active" data-dist-tab="deer" aria-selected="true"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7 21h10M7 8l5-5 5 5M6 13h12M8 13l-2 8M16 13l2 8"/></svg><span>DEER</span></button><button type="button" class="svt139-tab" data-dist-tab="retele" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 5 14h6l-1 8 9-13h-6l0-7Z"/></svg><span>Rețele Electrice</span></button><button type="button" class="svt139-tab" data-dist-tab="delgaz" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4 0 7-3 7-7 0-3-2-5-4-7-.8-.8-1.6-1.7-2-3-2 1.5-3 3.5-3 6-1.5-.7-2.5-1.7-3-3-1.2 2-2 4.1-2 7 0 4 3 7 7 7Z"/></svg><span>Delgaz Grid</span></button><button type="button" class="svt139-tab" data-dist-tab="oltenia" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><circle cx="12" cy="16" r="3"/><path d="M10.5 10.2 12 13M13.5 13 15 10.2M11 8h2"/></svg><span>Distribuție Oltenia</span></button><button type="button" class="svt139-tab" data-dist-tab="furnizor" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Furnizor / aplicație</span></button>
@@ -11487,13 +10489,13 @@ body[data-svt-ui="v157-professional"] .page{
             <div class="svt139-art"><img class="svt157-illustration" src="assets/img/svt-help-modal/deer.png" alt="" aria-hidden="true"></div>
             <div class="svt139-copy">
               <h3>DEER — Transilvania Nord, Transilvania Sud, Muntenia Nord</h3>
-              <p>În portalul DEER poți vedea istoricul consumului pentru locul tău de consum. Dacă ai date pe ore sau pe intervale de 15 minute, descarcă-le în Excel sau CSV.</p>
+              <p>Portalul DEER permite accesul la date proprii de măsurare pentru locurile de consum din zonele de concesiune DEER. În funcție de tipul contorului și contul disponibil, poți consulta istoricul de consum și curbele de sarcină.</p>
             </div>
           </article>
           <div class="svt139-grid">
             <article class="svt139-steps">
               <div class="svt139-steps-head"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><h4>Pașii de urmat</h4></div>
-              <ol><li><b>1</b><span>Intră în portalul DEER / Portal date.</span></li><li><b>2</b><span>Creează cont sau autentifică-te.</span></li><li><b>3</b><span>Selectează locul de consum / POD.</span></li><li><b>4</b><span>Caută zona de consum pe ore sau date de măsurare.</span></li><li><b>5</b><span>Alege perioada dorită.</span></li><li><b>6</b><span>Descarcă fișierul, preferabil Excel/CSV.</span></li></ol>
+              <ol><li><b>1</b><span>Intră în portalul DEER / Portal date.</span></li><li><b>2</b><span>Creează cont sau autentifică-te.</span></li><li><b>3</b><span>Selectează locul de consum / POD.</span></li><li><b>4</b><span>Caută zona de date de măsurare / curbe de sarcină.</span></li><li><b>5</b><span>Alege perioada dorită.</span></li><li><b>6</b><span>Descarcă fișierul, preferabil Excel/CSV.</span></li></ol>
             </article>
             <aside class="svt139-side">
               <article class="svt139-card"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 13h6M9 17h5"/></svg></span><div class="svt139-card-copy"><h4>Ce fișier cauți?</h4><p>Excel/CSV cu dată, oră/interval și consum kWh.</p></div></article>
@@ -11509,22 +10511,22 @@ body[data-svt-ui="v157-professional"] .page{
             <div class="svt139-art"><img class="svt157-illustration" src="assets/img/svt-help-modal/retele.png" alt="" aria-hidden="true"></div>
             <div class="svt139-copy">
               <h3>Rețele Electrice România — Muntenia, Banat, Dobrogea</h3>
-              <p>În contul Rețele Electrice, zona Date de consum poate include istoricul citirilor și, pentru unele contoare inteligente, consumul detaliat pe ore sau pe intervale.</p>
+              <p>În contul Rețele Electrice, serviciul Date de consum include istoricul citirilor și, pentru contoare inteligente integrate în telecitire, curba de sarcină cu variația consumului în timp.</p>
             </div>
           </article>
           <div class="svt139-grid">
             <article class="svt139-steps">
               <div class="svt139-steps-head"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><h4>Pașii de urmat</h4></div>
-              <ol><li><b>1</b><span>Intră în contul tău Rețele Electrice.</span></li><li><b>2</b><span>Accesează Date de consum / Informații consum.</span></li><li><b>3</b><span>Selectează locul de consum / POD.</span></li><li><b>4</b><span>Caută consumul pe ore sau pe intervale.</span></li><li><b>5</b><span>Alege perioada analizată.</span></li><li><b>6</b><span>Exportă datele, dacă opțiunea este disponibilă.</span></li></ol>
+              <ol><li><b>1</b><span>Intră în contul tău Rețele Electrice.</span></li><li><b>2</b><span>Accesează Date de consum / Informații consum.</span></li><li><b>3</b><span>Selectează locul de consum / POD.</span></li><li><b>4</b><span>Deschide Curbe de sarcină.</span></li><li><b>5</b><span>Alege perioada analizată.</span></li><li><b>6</b><span>Exportă datele, dacă opțiunea este disponibilă.</span></li></ol>
             </article>
             <aside class="svt139-side">
               <article class="svt139-card"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 13h6M9 17h5"/></svg></span><div class="svt139-card-copy"><h4>Ce fișier cauți?</h4><p>Date orare sau la 15 minute, ideal în Excel/CSV.</p></div></article>
-              <article class="svt139-card"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 18h.01"/></svg></span><div class="svt139-card-copy"><h4>Atenție</h4><p>Dacă ai contor clasic sau nu ai istoric disponibil, este posibil să găsești doar consum lunar.</p></div></article>
+              <article class="svt139-card"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 18h.01"/></svg></span><div class="svt139-card-copy"><h4>Atenție</h4><p>Dacă ai contor clasic sau contor inteligent fără istoric disponibil, curba de sarcină poate să nu apară.</p></div></article>
             </aside>
           </div>
           <footer class="svt139-footer">
             <a class="svt139-cta" href="https://www.reteleelectrice.ro/ro/clienti/informatii-consum.html" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/><path d="M5 5h6"/><path d="M5 5v14h14v-6"/></svg><span>Deschide pagina Rețele Electrice</span></a>
-            <div class="svt139-sources"><strong>Surse și documentație</strong><div class="svt139-source-links"><a href="https://www.reteleelectrice.ro/ro/clienti/informatii-consum.html" target="_blank" rel="noopener">Rețele Electrice — Date de consum ↗</a></div></div>
+            <div class="svt139-sources"><strong>Surse și documentație</strong><div class="svt139-source-links"><a href="https://www.reteleelectrice.ro/ro/clienti/informatii-consum.html" target="_blank" rel="noopener">Rețele Electrice — Date de consum / curba de sarcină ↗</a></div></div>
           </footer>
         </section><section class="svt139-panel" data-dist-panel="delgaz" style="display:none">
           <article class="svt139-hero">
@@ -11553,7 +10555,7 @@ body[data-svt-ui="v157-professional"] .page{
             <div class="svt139-art"><img class="svt157-illustration" src="assets/img/svt-help-modal/oltenia.png" alt="" aria-hidden="true"></div>
             <div class="svt139-copy">
               <h3>Distribuție Energie Oltenia — Portal date măsurate / DEO Connect</h3>
-              <p>În portalul de date măsurate, tabul Reads poate afișa istoricul citirilor și consumul pe intervale de 15 minute. Caută varianta tabelară și exportă fișierul.</p>
+              <p>În portalul de date măsurate, tabul Reads permite vizualizarea istoricului citirilor și a curbei de sarcină. Datele pot fi afișate tabelar/grafic la interval de 15 minute și exportate sub formă de tabel.</p>
             </div>
           </article>
           <div class="svt139-grid">
@@ -11575,7 +10577,7 @@ body[data-svt-ui="v157-professional"] .page{
             <div class="svt139-art"><img class="svt157-illustration" src="assets/img/svt-help-modal/furnizor.png" alt="" aria-hidden="true"></div>
             <div class="svt139-copy">
               <h3>Furnizor / aplicație client — variantă de verificare</h3>
-              <p>Aplicația furnizorului poate afișa facturi, indexuri și istoric de consum, dar nu garantează export pe ore sau la 15 minute. Pentru date detaliate, verifică mai întâi portalul distribuitorului.</p>
+              <p>Aplicația furnizorului poate afișa facturi, indexuri și istoric de consum, dar nu garantează export orar sau la 15 minute. Pentru curba de sarcină completă, verifică mai întâi portalul distribuitorului.</p>
             </div>
           </article>
           <div class="svt139-grid">
@@ -11585,7 +10587,7 @@ body[data-svt-ui="v157-professional"] .page{
             </article>
             <aside class="svt139-side">
               <article class="svt139-card"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 13h6M9 17h5"/></svg></span><div class="svt139-card-copy"><h4>Ce fișier cauți?</h4><p>Export orar/15 minute, nu doar factura lunară.</p></div></article>
-              <article class="svt139-card"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 18h.01"/></svg></span><div class="svt139-card-copy"><h4>Atenție</h4><p>Factura lunară ajută la o estimare rapidă, dar nu arată exact orele în care consumi cel mai mult.</p></div></article>
+              <article class="svt139-card"><span class="svt139-iconbox"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5M12 18h.01"/></svg></span><div class="svt139-card-copy"><h4>Atenție</h4><p>Factura lunară nu este curba de sarcină. Este utilă pentru estimare, nu pentru analiză orară exactă.</p></div></article>
             </aside>
           </div>
           <footer class="svt139-footer">
@@ -11633,28 +10635,28 @@ body[data-svt-ui="v157-professional"] .page{
 
   const HELP = {
     unknown: {
-      kicker: "Recomandat pentru clienți",
-      title: "Nu știu",
-      body: "Lasă această opțiune dacă nu găsești informația pe factură. Pentru calculul simplu, prețul mediu din factură este suficient.",
-      example: "Folosește: total factură / consum facturat."
+      kicker: "Recomandat pentru clienti",
+      title: "Nu stiu",
+      body: "Lasa aceasta optiune daca nu stii nivelul de tensiune. Pentru calculul simplu, pretul mediu din factura este suficient deoarece include deja reteaua, taxele si TVA.",
+      example: "Foloseste: total factura / kWh facturati."
     },
     jt: {
-      kicker: "Consumator mic",
-      title: "Joasă tensiune",
-      body: "Este cazul cel mai des întâlnit pentru locuințe, birouri, magazine și firme mici.",
-      example: "Dacă nu ai post de transformare propriu, cel mai probabil ești aici."
+      kicker: "Joasa tensiune",
+      title: "JT - joasa tensiune",
+      body: "Este cazul cel mai des intalnit pentru locuinte, birouri, magazine si firme mici. Alimentarea este de regula 230/400 V.",
+      example: "Daca nu ai post trafo propriu, cel mai probabil esti la JT."
     },
     mt: {
-      kicker: "Consumator mediu",
-      title: "Medie tensiune",
-      body: "Este folosită de consumatori mai mari: hale, fabrici, clădiri comerciale mari sau locații cu post de transformare propriu.",
-      example: "Apare de obicei în contract sau aviz."
+      kicker: "Medie tensiune",
+      title: "MT - medie tensiune",
+      body: "Este folosita de consumatori mai mari: hale, fabrici, cladiri comerciale mari sau locatii cu post de transformare propriu.",
+      example: "Apare de obicei in contract/aviz ca racordare la 6-20 kV."
     },
     it: {
-      kicker: "Consumator foarte mare",
-      title: "Înaltă tensiune",
-      body: "Este specifică pentru consumatori industriali foarte mari.",
-      example: "Rar pentru clienți obișnuiți; apare clar în contract."
+      kicker: "Inalta tensiune",
+      title: "IT - inalta tensiune",
+      body: "Este specifica pentru consumatori industriali foarte mari, racordati direct la retele de inalta tensiune.",
+      example: "Rar pentru clienti obisnuiti; apare clar in contractele tehnice."
     }
   };
 
@@ -11869,15 +10871,8 @@ body[data-svt-ui="v157-professional"] .page{
         productionBox.classList.toggle("svt168-force-visible", on);
         if(!on){
           productionBox.classList.remove("embedded");
-          if(productionDrop){
-            productionDrop.classList.remove("has-file", "upload-complete");
-            const successLabel = productionDrop.querySelector(".upload-success-label");
-            if(successLabel) successLabel.remove();
-          }
-          if(productionFileName){
-            productionFileName.hidden = false;
-            productionFileName.textContent = "";
-          }
+          if(productionDrop) productionDrop.classList.remove("has-file");
+          if(productionFileName) productionFileName.textContent = "";
         }
       }
       hasProduction.addEventListener("change", syncProductionBox);
@@ -11887,168 +10882,5 @@ body[data-svt-ui="v157-professional"] .page{
 })();
 </script>
 <!-- SVT v168 safe source pv behavior END -->
-<!-- SVT v200 tariff contextual right-note behavior START -->
-<script id="svt-v200-tariff-contextual-right-note">
-(function(){
-  function ready(fn){
-    if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn);
-    else fn();
-  }
-  ready(function(){
-    const sideNote = document.getElementById("tariffSideNotes");
-    const note = document.getElementById("tariffAdvancedNotice");
-    if(!sideNote || !note) return;
-
-    function msg(title, body){
-      return "<strong>" + title + "</strong>" + body;
-    }
-
-    const help = {
-      invoice: msg("Calculeaza din factura", "Introdu totalul facturii si consumul. Calculam automat pretul pe kWh."),
-      direct: msg("Stiu pretul pe kWh", "Foloseste asta doar daca ai deja pretul mediu corect."),
-      total: msg("Total factură", "Scrie suma totală de plată, în lei."),
-      billed: msg("Consum din factură", "Scrie cantitatea de energie trecută pe factură."),
-      calculated: msg("Preț calculat", "Formula este simplă: total factură / consum facturat."),
-      fixed: msg("Preț mediu", "Scrie prețul mediu. Dacă nu ești sigur, calculează din factură."),
-      advanced: msg("Detalii suplimentare", "Opțional. Lasă nebifat dacă nu ai informația."),
-      basis: msg("Ce include prețul?", "Alege ce scrie pe factură. Dacă nu știi, folosește prețul final."),
-      finalGross: msg("Preț final", "Îl folosim direct. Nu mai adăugăm TVA sau taxe."),
-      activeEnergy: msg("Preț parțial", "Adăugăm estimativ costurile de rețea și TVA."),
-      withoutVat: msg("Fără TVA", "Adăugăm TVA estimativ peste prețul introdus."),
-      unknown: msg("Nu știi?", "Cel mai sigur este să calculezi din factură."),
-      distributor: msg("Zona distribuitorului", "Opțional. Ajută doar la estimări mai fine."),
-      voltage: msg("Tip racordare", "Opțional. Lasă Nu știu dacă nu apare pe factură."),
-      effective: msg("Preț folosit", "Acesta este prețul final folosit în analiză.")
-    };
-
-    function selectedBasisMessage(){
-      const advancedOpen = !!document.getElementById("tariffAdvancedCheck")?.checked;
-      const basis = document.getElementById("tariffPriceBasis")?.value || "unknown";
-      if(!advancedOpen || basis === "final_gross") return "";
-      if(basis === "active_energy_only") return help.activeEnergy;
-      if(basis === "without_vat") return help.withoutVat;
-      if(basis === "unknown") return help.unknown;
-      return "";
-    }
-
-    function render(html, state){
-      note.innerHTML = html || "";
-      sideNote.classList.toggle("is-contextual", !!html && state === "contextual");
-      sideNote.classList.toggle("is-persistent", !!html && state === "persistent");
-    }
-
-    function restore(){
-      const html = selectedBasisMessage();
-      render(html, html ? "persistent" : "");
-    }
-
-    function show(html){
-      render(html, "contextual");
-    }
-
-    function basisHoverMessage(){
-      const basis = document.getElementById("tariffPriceBasis")?.value || "final_gross";
-      if(basis === "final_gross") return help.finalGross;
-      if(basis === "active_energy_only") return help.activeEnergy;
-      if(basis === "without_vat") return help.withoutVat;
-      if(basis === "unknown") return help.unknown;
-      return help.basis;
-    }
-
-    const helpItems = [
-      {
-        selector:'label[for="tariffInputModeInvoice"]',
-        html:help.invoice
-      },
-      {
-        selector:'label[for="tariffInputModeDirect"]',
-        html:help.direct
-      },
-      {
-        selector:'label[for="invoiceTotalValue"], #invoiceTotalValue',
-        html:help.total
-      },
-      {
-        selector:'label[for="invoiceBilledConsumption"], #invoiceBilledConsumption',
-        html:help.billed
-      },
-      {
-        selector:'label[for="calculatedTariffPreview"], #calculatedTariffPreview',
-        html:help.calculated
-      },
-      {
-        selector:'label[for="fixedTariff"], #fixedTariff',
-        html:help.fixed
-      },
-      {
-        selector:'label[for="tariffAdvancedCheck"]',
-        html:help.advanced
-      },
-      {
-        selector:'label[for="tariffPriceBasis"], #tariffPriceBasis',
-        html:basisHoverMessage
-      },
-      {
-        selector:'label[for="tariffDistributor"], #tariffDistributor',
-        html:help.distributor
-      },
-      {
-        selector:'label[for="tariffVoltageLevel"], #tariffVoltageLevel',
-        html:help.voltage
-      },
-      {
-        selector:'label[for="effectiveTariffPreview"], #effectiveTariffPreview',
-        html:help.effective
-      }
-    ];
-
-    let restoreTimer = null;
-    helpItems.forEach(function(item){
-      document.querySelectorAll(item.selector).forEach(function(el){
-        function htmlForItem(){
-          return typeof item.html === "function" ? item.html() : item.html;
-        }
-        el.addEventListener("mouseenter", function(){
-          clearTimeout(restoreTimer);
-          show(htmlForItem());
-        });
-        el.addEventListener("mouseleave", function(){
-          clearTimeout(restoreTimer);
-          restoreTimer = setTimeout(restore, 120);
-        });
-        el.addEventListener("focusin", function(){
-          clearTimeout(restoreTimer);
-          show(htmlForItem());
-        });
-        el.addEventListener("focusout", function(){
-          clearTimeout(restoreTimer);
-          restoreTimer = setTimeout(restore, 120);
-        });
-        ["input","change"].forEach(function(eventName){
-          el.addEventListener(eventName, function(){
-            clearTimeout(restoreTimer);
-            restoreTimer = setTimeout(function(){
-              if(document.activeElement === el || el.matches(":hover")) show(htmlForItem());
-              else restore();
-            }, 40);
-          });
-        });
-      });
-    });
-
-    ["tariffPriceBasis","tariffDistributor","tariffVoltageLevel","tariffInputModeInvoice","tariffInputModeDirect","tariffAdvancedCheck"].forEach(function(id){
-      const el = document.getElementById(id);
-      if(el) el.addEventListener("change", function(){
-        setTimeout(function(){
-          if(document.activeElement !== el && !el.matches(":hover")) restore();
-        }, 90);
-      });
-    });
-
-    restore();
-  });
-})();
-</script>
-<!-- SVT v200 tariff contextual right-note behavior END -->
 </body>
 </html>
