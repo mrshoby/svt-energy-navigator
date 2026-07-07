@@ -89,7 +89,7 @@
   function analyzeQuestion1(consumptionDataset, options={}){
     const tariff = num(options.fixedTariffRonKwh) || 0.75;
     const rows = (consumptionDataset.rows || []).map(r => {
-      const consumption = Math.max(0, num(r.electricKwh));
+      const consumption = Math.max(0, num(r.electricKwh || r.thermalKwh || r.consumptionKwh));
       const production = Math.max(0, num(r.pvKwh));
       const grid = Math.max(consumption - production, 0);
       const surplus = Math.max(production - consumption, 0);

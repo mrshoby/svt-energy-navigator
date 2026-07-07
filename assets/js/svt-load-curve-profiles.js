@@ -259,6 +259,8 @@
   function detectUnit(fileName, aoa, headers=[]){
     const text = norm((fileName||"") + " " + extractText(aoa, 80) + " " + headers.join(" "));
     if (/(gcal|gigacal)/.test(text)) return {unit:"Gcal", multiplier:1163};
+    if (/(gigajoule|\bgj\b)/.test(text)) return {unit:"GJ", multiplier:277.7777778};
+    if (/(megajoule|\bmj\b)/.test(text)) return {unit:"MJ", multiplier:0.2777778};
     if (/(m3|m³|\bmc\b|metri cubi|\bgaz\b)/.test(text) && /(termic|thermal|\bgaz\b|caldura|căldură|pcs)/.test(text)) return {unit:"m3 gaz", multiplier:10.55};
     if (/\bmwh\b/.test(text)) return {unit:"MWh", multiplier:1000};
     if (/\bwh\b/.test(text) && !/\bkwh\b/.test(text)) return {unit:"Wh", multiplier:1/1000};
@@ -325,7 +327,7 @@
     ],
     unit:[
       [/^(unitate|unit|um|u\.m\.|umf|uom)$/, 26],
-      [/\b(kwh|mwh|wh|gcal|m3|m³|mc|kw|w)\b/, 10]
+      [/\b(kwh|mwh|wh|gcal|gj|mj|m3|m³|mc|kw|w)\b/, 10]
     ]
   };
 
@@ -400,7 +402,8 @@
       roles.importEnergy -= 8;
     }
     if (ctx.mode === "thermal" || /(termic|thermal|\bgaz\b|caldura|căldură|abur|gcal|m3|m³|\bmc\b)/.test(h)) {
-      roles.consumption += 8;
+      roles.consumption += 12;
+      if (/(energy|energie|cantitate|quantity|heat|caldura|thermal|termic|gcal|\bgj\b|\bmj\b|\bmwh\b|\bkwh\b)/.test(h)) roles.consumption += 14;
       roles.production -= 12;
     }
 
@@ -461,6 +464,8 @@
   function unitInfoFromText(text, ctx){
     const h = norm(text);
     if (/(gcal|gigacal)/.test(h)) return {unit:"Gcal", factor:1163, power:false};
+    if (/(gigajoule|\bgj\b)/.test(h)) return {unit:"GJ", factor:277.7777778, power:false};
+    if (/(megajoule|\bmj\b)/.test(h)) return {unit:"MJ", factor:0.2777778, power:false};
     if (/(m3|m³|\bmc\b|metri cubi|\bgaz\b)/.test(h)) return {unit:"m3 gaz", factor:ctx.gasFactor || 10.55, power:false};
     if (/\bmwh\b/.test(h)) return {unit:"MWh", factor:1000, power:false};
     if (/\bkwh\b/.test(h)) return {unit:"kWh", factor:1, power:false};
@@ -1144,7 +1149,7 @@
     for (let i=0; i<nheaders.length; i++){
       const h = nheaders[i];
       if (i === timestamp) continue;
-      if (/(termic|thermal|\bgaz\b|caldura|abur|m3)/.test(h)) { if (thermal<0) thermal=i; continue; }
+      if (/(termic|thermal|\bgaz\b|caldura|abur|m3|gcal|\bgj\b|\bmj\b)/.test(h)) { if (thermal<0) thermal=i; continue; }
       if (/(pv|solar|fotovoltaic|productie)/.test(h)) { if (pv<0) pv=i; continue; }
       if (/(pret|price|ron|tarif|pzu)/.test(h)) { if (price<0) price=i; continue; }
       if (/(er\+|reactiva consumata|kvarh del|kvarh import|kvarh consum)/.test(h)) { if (reactiveInd<0) reactiveInd=i; continue; }
@@ -1163,14 +1168,15 @@
     if (headerRow < 0) return null;
     const headers = aoa[headerRow].map((h,i)=>String(h || `Coloana ${i+1}`).trim());
     const cols = pickLongColumns(headers);
-    if (cols.timestamp < 0 || cols.electric < 0) return null;
+    if (cols.timestamp < 0 || (cols.electric < 0 && cols.thermal < 0)) return null;
     const unit = detectUnit(ctx.fileName, aoa, headers);
+    const thermalUnit = cols.thermal >= 0 ? unitInfoFromText(headers[cols.thermal], ctx) : null;
     const rows = [];
     for (let r=headerRow+1; r<aoa.length; r++){
       const line = aoa[r] || [];
       const d = parseDate(line[cols.timestamp]);
       if (!d || isNaN(d)) continue;
-      const electric = toNumber(line[cols.electric]) * unit.multiplier;
+      const electric = cols.electric >= 0 ? toNumber(line[cols.electric]) * unit.multiplier : 0;
       const rec = {
         timestamp:d.toISOString(),
         localLabel:d.toLocaleString("ro-RO", {dateStyle:"short", timeStyle:"short"}),
@@ -1181,7 +1187,7 @@
         electricExportKwh:cols.exportIdx>=0 ? Math.max(0,toNumber(line[cols.exportIdx])*unit.multiplier) : 0,
         reactiveInductiveKvarh:cols.reactiveInd>=0 ? Math.max(0,toNumber(line[cols.reactiveInd])) : 0,
         reactiveCapacitiveKvarh:cols.reactiveCap>=0 ? Math.max(0,toNumber(line[cols.reactiveCap])) : 0,
-        thermalKwh:cols.thermal>=0 ? Math.max(0,toNumber(line[cols.thermal]) * (ctx.mode==="thermal" && /m3/.test(norm(headers[cols.thermal])) ? (ctx.gasFactor || 10.55) : 1)) : 0,
+        thermalKwh:cols.thermal>=0 ? Math.max(0,toNumber(line[cols.thermal]) * (thermalUnit?.factor || unit.multiplier || 1)) : 0,
         pvKwh:cols.pv>=0 ? Math.max(0,toNumber(line[cols.pv])*unit.multiplier) : 0,
         priceRonKwh:cols.price>=0 ? Math.max(0,toNumber(line[cols.price])) : 0,
         sourceRow:r+1
@@ -1738,6 +1744,8 @@
       ? [parseFlexibleTable]
       : ctx.mode === "production"
         ? [parseProductionProfile, parseFlexibleTable, parseLongTimestamp, parseSplitDateOra, parseMonthlyMatrix, parseDayHourCs]
+        : ctx.mode === "thermal"
+          ? [parseFlexibleTable, parseLongTimestamp, parseSplitDateOra, parseMonthlyMatrix, parseDayHourCs, parseInvoiceFallback]
         : [parseLongTimestamp, parseSplitDateOra, parseMonthlyMatrix, parseDayHourCs, parseFlexibleTable, parseProductionProfile, parseInvoiceFallback];
     const results = parsers.map(fn => {
       try { return fn(cleaned, ctx); } catch(e) { return null; }

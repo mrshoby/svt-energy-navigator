@@ -9056,6 +9056,8 @@ body[data-svt-ui="v157-professional"]{
 .upload-flow-row .title-wrap{
   display:grid!important;
   align-content:center!important;
+  justify-content:start!important;
+  justify-items:start!important;
   min-height:42px!important;
 }
 .upload-flow-row .row-title{
@@ -9418,12 +9420,12 @@ body[data-energy-mode="termic"] .hero{
   min-height:672px!important;
 }
 body[data-energy-mode="termic"] #termicSection{
-  width:940px!important;
+  width:calc(100% - 32px)!important;
   max-width:100%!important;
   margin:2px auto 0!important;
 }
 body[data-energy-mode="termic"] #termicSection .thermal-shell{
-  width:940px!important;
+  width:100%!important;
   max-width:100%!important;
   height:128px!important;
   min-height:128px!important;
@@ -9552,6 +9554,9 @@ body[data-energy-mode="termic"] #termicSection .thermal-file-button{
 body[data-energy-mode="termic"] #termicSection .thermal-file-button svg{
   width:14px!important;
   height:14px!important;
+}
+body[data-energy-mode="termic"] #termicSection .thermal-selected-files{
+  display:none!important;
 }
 body[data-energy-mode="termic"] .actions{
   margin-top:clamp(44px,25vh,256px)!important;
@@ -9974,9 +9979,10 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
               </div>
             </div>
             <div class="thermal-upload-inline" id="thermalDrop">
-              <input id="thermalInput" type="file" hidden multiple accept=".csv,.txt,.xlsx,.xls,.xlsm,.html,.htm">
+              <input id="thermalInput" type="file" hidden multiple accept=".csv,.txt,.tsv,.xlsx,.xls,.xlsm,.html,.htm">
               <button type="button" class="thermal-file-button" id="thermalChoose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M20 16.7A4 4 0 0 1 16.3 21H7.7A4 4 0 0 1 4 16.7"/></svg>Alege fișier</button>
             </div>
+            <div class="selected-files thermal-selected-files" id="thermalFileName"></div>
           </div>
           <aside class="svt-thermal-side-note">Datele termice ajută la o estimare rapidă. Dacă ai fișier orar termic, îl poți încărca pentru o analiză mai bună.</aside>
         </section>
@@ -10013,6 +10019,11 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
     const thermalDrop = document.getElementById('thermalDrop');
     const thermalInput = document.getElementById('thermalInput');
     const thermalChoose = document.getElementById('thermalChoose');
+    const thermalFileName = document.getElementById('thermalFileName');
+    const thermalMonitored = document.getElementById('thermalMonitored');
+    const thermalSource = document.getElementById('thermalSource');
+    const annualThermal = document.getElementById('annualThermal');
+    const thermalUnit = document.getElementById('thermalUnit');
     const productionBox = document.getElementById('productionBox');
     const hasProduction = document.getElementById('hasProduction');
     const productionDrop = document.getElementById('productionDrop');
@@ -10044,6 +10055,8 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
     let loadMethod = 'file';
     let consumptionFiles = [];
     let productionFiles = [];
+    let thermalFiles = [];
+    let thermalDatasetCache = null;
     let invoiceFile = null;
     let embeddedProductionDetected = false;
 
@@ -10182,8 +10195,152 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
       return Number(fixedTariff?.value || 0) > 0 && effectiveTariff > 0;
     }
 
+    const THERMAL_UNIT_FACTORS = {
+      'kWh': 1,
+      'MWh': 1000,
+      'Gcal': 1163,
+      'GJ': 277.7777778,
+      'MJ': 0.2777778,
+      'm³ gaz': 10.55,
+      'm3 gaz': 10.55
+    };
+
+    function thermalUnitFactor(unit){
+      return THERMAL_UNIT_FACTORS[unit] || 1;
+    }
+
+    function thermalAnnualKwhFromInputs(){
+      const value = Number(annualThermal?.value || 0);
+      if(!(value > 0)) return 0;
+      return value * thermalUnitFactor(thermalUnit?.value || 'MWh');
+    }
+
+    function thermalRowsTotalKwh(dataset){
+      return (dataset?.rows || []).reduce((sum, row) => {
+        return sum + Number(row.thermalKwh || row.consumptionKwh || row.electricKwh || 0);
+      }, 0);
+    }
+
+    function formatThermalAnnualValue(value){
+      if(!(value > 0)) return '';
+      if(value >= 100) return value.toFixed(0);
+      if(value >= 10) return value.toFixed(1);
+      return value.toFixed(2);
+    }
+
+    function fillThermalAnnualFromDataset(dataset){
+      const totalKwh = thermalRowsTotalKwh(dataset);
+      if(!(totalKwh > 0) || !annualThermal) return;
+      const alreadyAuto = annualThermal.dataset.autofillSource === 'thermal-file';
+      if(annualThermal.value && !alreadyAuto) return;
+      const unit = thermalUnit?.value || 'MWh';
+      annualThermal.value = formatThermalAnnualValue(totalKwh / thermalUnitFactor(unit));
+      annualThermal.dataset.autofillSource = 'thermal-file';
+    }
+
+    function normalizeThermalDataset(dataset, tariff, sourceKind){
+      const rows = (dataset?.rows || []).map(row => {
+        const thermalKwh = Math.max(0, Number(row.thermalKwh || row.consumptionKwh || row.electricKwh || 0));
+        const price = Number(row.priceRonKwh || tariff || 0.75);
+        return {
+          ...row,
+          electricKwh: 0,
+          thermalKwh,
+          consumptionKwh: thermalKwh,
+          gridKwh: thermalKwh,
+          pvKwh: 0,
+          productionKwh: 0,
+          surplusKwh: 0,
+          priceRonKwh: price,
+          tariffRonKwh: Number(row.tariffRonKwh || price),
+          costRon: thermalKwh * price,
+          sourceType: 'thermal',
+          flowType: 'consumption'
+        };
+      });
+      const meta = {...(dataset?.meta || {})};
+      const totalThermalKwh = rows.reduce((sum, row) => sum + Number(row.thermalKwh || 0), 0);
+      return {
+        ...(dataset || {}),
+        rows,
+        meta:{
+          ...meta,
+          selectedMode:'termic',
+          energyMode:'termic',
+          sourceProfile: meta.sourceProfile || (sourceKind === 'file' ? 'thermal_file' : 'thermal_manual_estimate'),
+          sourceCategory: meta.sourceCategory || 'thermal',
+          rowsCount: rows.length,
+          totalThermalKwh,
+          fixedPriceRonKwh: tariff,
+          hasEmbeddedProduction:false,
+          productionDetectedInMainFile:false
+        }
+      };
+    }
+
+    function buildThermalManualDataset(tariff){
+      const annualKwh = thermalAnnualKwhFromInputs();
+      const rows = [];
+      if(!(annualKwh > 0)) return normalizeThermalDataset({ rows, meta:{} }, tariff, 'manual');
+      const source = thermalSource?.value || '';
+      const flatSource = /boiler electric/i.test(source);
+      const monthWeights = flatSource
+        ? [1.05,1.02,1.00,.98,.96,.95,.95,.95,.97,1.00,1.02,1.05]
+        : [1.55,1.35,1.05,.68,.38,.24,.22,.24,.40,.76,1.10,1.45];
+      const hourWeights = Array.from({length:24}, (_, hour) => {
+        if(hour >= 5 && hour <= 8) return 1.18;
+        if(hour >= 17 && hour <= 22) return 1.28;
+        if(hour >= 23 || hour <= 4) return .82;
+        return 1;
+      });
+      const year = new Date().getFullYear();
+      const start = new Date(year, 0, 1, 0, 0, 0, 0);
+      const end = new Date(year + 1, 0, 1, 0, 0, 0, 0);
+      const slots = [];
+      for(let t = start.getTime(); t < end.getTime(); t += 3600000){
+        const d = new Date(t);
+        const weight = monthWeights[d.getMonth()] * hourWeights[d.getHours()];
+        slots.push({date:d, weight});
+      }
+      const totalWeight = slots.reduce((sum, slot) => sum + slot.weight, 0) || 1;
+      for(const slot of slots){
+        const d = slot.date;
+        const thermalKwh = annualKwh * slot.weight / totalWeight;
+        rows.push({
+          timestamp:d.toISOString(),
+          localLabel:d.toLocaleString('ro-RO', {dateStyle:'short', timeStyle:'short'}),
+          dayKey:`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`,
+          hour:d.getHours(),
+          minute:d.getMinutes(),
+          electricKwh:0,
+          thermalKwh,
+          consumptionKwh:thermalKwh,
+          gridKwh:thermalKwh,
+          pvKwh:0,
+          priceRonKwh:tariff,
+          tariffRonKwh:tariff,
+          costRon:thermalKwh * tariff,
+          sourceType:'thermal',
+          flowType:'consumption'
+        });
+      }
+      return normalizeThermalDataset({
+        rows,
+        meta:{
+          fileName:'Estimare consum termic anual',
+          fileNames:[],
+          sourceProfile:'thermal_manual_estimate',
+          intervalMinutes:60,
+          estimated:true,
+          thermalSource:source,
+          annualInputValue:Number(annualThermal?.value || 0),
+          annualInputUnit:thermalUnit?.value || 'MWh'
+        }
+      }, tariff, 'manual');
+    }
+
     function thermalIsReadyForContinue(){
-      return Number(document.getElementById('annualThermal')?.value || 0) > 0;
+      return thermalFiles.length > 0 || thermalAnnualKwhFromInputs() > 0;
     }
 
     function buildTariffContext(){
@@ -10305,6 +10462,10 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
           const key = String(t);
           const existing = map.get(key) || { timestamp:new Date(t).toISOString(), localLabel:new Date(t).toLocaleString('ro-RO',{dateStyle:'short',timeStyle:'short'}), hour:new Date(t).getHours(), minute:new Date(t).getMinutes(), electricKwh:0, electricExportKwh:0, reactiveInductiveKvarh:0, reactiveCapacitiveKvarh:0, thermalKwh:0, pvKwh:0, priceRonKwh:tariff };
           if(mode === 'production') existing.pvKwh += Number(r.pvKwh || r.electricKwh || 0);
+          else if(mode === 'thermal'){
+            existing.thermalKwh += Number(r.thermalKwh || r.consumptionKwh || r.electricKwh || 0);
+            existing.pvKwh = 0;
+          }
           else {
             existing.electricKwh += Number(r.electricKwh || 0);
             existing.electricExportKwh += Number(r.electricExportKwh || 0);
@@ -10320,7 +10481,7 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
       const start = rows[0]?.timestamp || null;
       const end = rows[rows.length-1]?.timestamp || null;
       const intervalMinutes = rows.length > 1 ? Math.max(1, Math.round((new Date(rows[1].timestamp)-new Date(rows[0].timestamp))/60000)) : 60;
-      return { rows, meta:{ fileName:fileNames.length > 1 ? `${fileNames.length} fișiere încărcate` : (fileNames[0] || 'fișier încărcat'), fileNames, sourceProfile:profiles.size > 1 ? 'multi_file_merged' : (Array.from(profiles)[0] || (mode === 'production' ? 'production_multi_file' : 'electric_multi_file')), intervalMinutes, fixedPriceRonKwh:tariff, rowsCount:rows.length, start, end, hasEmbeddedProduction, productionDetectedInMainFile:hasEmbeddedProduction, parserVersion:'v75' } };
+      return { rows, meta:{ fileName:fileNames.length > 1 ? `${fileNames.length} fișiere încărcate` : (fileNames[0] || 'fișier încărcat'), fileNames, sourceProfile:profiles.size > 1 ? 'multi_file_merged' : (Array.from(profiles)[0] || (mode === 'production' ? 'production_multi_file' : (mode === 'thermal' ? 'thermal_multi_file' : 'electric_multi_file'))), intervalMinutes, fixedPriceRonKwh:tariff, rowsCount:rows.length, start, end, hasEmbeddedProduction:mode === 'thermal' ? false : hasEmbeddedProduction, productionDetectedInMainFile:mode === 'thermal' ? false : hasEmbeddedProduction, parserVersion:'v75' } };
     }
 
     async function parseAndMergeFiles(files, mode, tariff){
@@ -10363,6 +10524,24 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
         productionBox.classList.remove('embedded');
         embeddedProductionDetected = false;
         clearMessage();
+      }
+      if(targetType === 'thermal'){
+        thermalFiles = arr;
+        thermalDatasetCache = null;
+        targetNameEl.textContent = '';
+        clearMessage();
+        try{
+          thermalDatasetCache = normalizeThermalDataset(await parseAndMergeFiles(thermalFiles, 'thermal', getEffectiveTariffValue() || 0.75), getEffectiveTariffValue() || 0.75, 'file');
+          fillThermalAnnualFromDataset(thermalDatasetCache);
+          clearMessage();
+        } catch(e){
+          thermalFiles = [];
+          thermalDatasetCache = null;
+          if(thermalInput) thermalInput.value = '';
+          targetZoneEl.classList.remove('has-file');
+          resetUploadMeta(targetZoneEl);
+          showMessage('err', 'Fișierul termic nu a putut fi citit automat. Acceptăm tabele cu dată/oră și consum termic în kWh, MWh, Gcal, GJ, MJ sau m³ gaz.');
+        }
       }
       if(targetType === 'invoice'){
         invoiceFile = arr[0];
@@ -10431,7 +10610,7 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
 
     function createSVTDataFingerprint(dataset, tariff, loadMethod, sourceType){
       const rows = dataset?.rows || [];
-      const totalConsumption = rows.reduce((a,r)=>a + Number(r.electricKwh || r.consumptionKwh || 0),0);
+      const totalConsumption = rows.reduce((a,r)=>a + Number(r.electricKwh || r.thermalKwh || r.consumptionKwh || 0),0);
       const totalProduction = rows.reduce((a,r)=>a + Number(r.pvKwh || 0),0);
       const first = rows[0]?.timestamp || '';
       const last = rows[rows.length-1]?.timestamp || '';
@@ -10460,7 +10639,45 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
         const tariff = Number(tariffContext.effectiveTariffRonKwh || tariffContext.effectiveTariffPreview || tariffContext.fixedTariff || 0.75);
         const consumptionDataSource = document.getElementById('consumptionDataSource')?.value || 'total';
         if(currentTab === 'termic'){
-          const navigatorContext = { selectedMode:'termic', loadMethod:'thermal', hasElectricData:false, hasThermalData:true, hasProduction:false, fixedTariffRonKwh:tariff, tariffDetails:tariffContext, thermal:{ monitored: document.getElementById('thermalMonitored')?.value || '', source: document.getElementById('thermalSource')?.value || '', annualValue: Number(document.getElementById('annualThermal')?.value || 0), unit: document.getElementById('thermalUnit')?.value || '' }, createdAt:new Date().toISOString() };
+          let dataset;
+          const thermalDataSource = thermalFiles.length ? 'file' : 'manual_estimate';
+          if(thermalFiles.length){
+            dataset = thermalDatasetCache || normalizeThermalDataset(await parseAndMergeFiles(thermalFiles, 'thermal', tariff), tariff, 'file');
+          } else {
+            dataset = buildThermalManualDataset(tariff);
+          }
+          dataset = normalizeThermalDataset(dataset, tariff, thermalFiles.length ? 'file' : 'manual');
+          const totalThermalKwh = thermalRowsTotalKwh(dataset);
+          if(!(totalThermalKwh > 0)){
+            showMessage('err', 'Completează consumul anual estimat sau încarcă un fișier termic cu valori de consum.');
+            return;
+          }
+          dataset.meta.fixedPriceRonKwh = tariff;
+          dataset.meta.tariffDetails = tariffContext;
+          dataset.meta.thermalDataSource = thermalDataSource;
+          dataset.meta.thermalDetails = {
+            monitored: thermalMonitored?.value || '',
+            source: thermalSource?.value || '',
+            annualValue: Number(annualThermal?.value || 0),
+            unit: thermalUnit?.value || '',
+            annualKwh: thermalAnnualKwhFromInputs(),
+            fileCount: thermalFiles.length,
+            fileNames: thermalFiles.map(file => file.name)
+          };
+          dataset.meta.dataFingerprint = createSVTDataFingerprint(dataset, tariff, 'thermal', 'thermal');
+          clearDerivedQuestionResults();
+          const analysis = SVTAnalysisEngine.analyzeQuestion1(dataset, {fixedTariffRonKwh:tariff, mode:'thermal'});
+          analysis.question = 'Când consum energie termică scumpă?';
+          analysis.meta.loadMethod = 'thermal';
+          analysis.meta.selectedMode = 'termic';
+          analysis.meta.fileNames = dataset.meta.fileNames || [];
+          analysis.meta.thermalDataSource = thermalDataSource;
+          analysis.meta.dataFingerprint = dataset.meta.dataFingerprint;
+          analysis.meta.tariffDetails = tariffContext;
+          sessionStorage.setItem('svtDataset', JSON.stringify(dataset));
+          sessionStorage.setItem('svtAnalysis', JSON.stringify(analysis));
+          sessionStorage.setItem('svtData', JSON.stringify({ question:analysis.question, selectedMode:'termic', fixedTariffRonKwh:tariff, tariffDetails:tariffContext, loadMethod:'thermal', thermalDataSource, dataFingerprint:dataset.meta.dataFingerprint, hasProduction:false, fileNames:dataset.meta.fileNames || [], thermalTotalKwh:totalThermalKwh }));
+          const navigatorContext = { selectedMode:'termic', loadMethod:'thermal', thermalDataSource, hasElectricData:false, hasThermalData:true, hasProduction:false, hasHourlyFile:thermalFiles.length > 0, fixedTariffRonKwh:tariff, tariffDetails:tariffContext, dataFingerprint:dataset.meta.dataFingerprint, thermal:{ monitored: thermalMonitored?.value || '', source: thermalSource?.value || '', annualValue: Number(annualThermal?.value || 0), unit: thermalUnit?.value || '', annualKwh: thermalAnnualKwhFromInputs(), totalThermalKwh, fileCount: thermalFiles.length, fileNames: thermalFiles.map(file => file.name) }, createdAt:new Date().toISOString() };
           sessionStorage.setItem('svtNavigatorContext', JSON.stringify(navigatorContext));
           localStorage.setItem('svtNavigatorContext', JSON.stringify(navigatorContext));
           window.location.href = './testeaza-gratuit.html';
@@ -10548,22 +10765,22 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
     if(tariffAdvancedCheck) tariffAdvancedCheck.addEventListener('change', () => { setAdvancedPanelOpen(tariffAdvancedCheck.checked); updateEffectiveTariff(); });
     document.getElementById('invoiceConsumption').addEventListener('input', validateForm);
     document.getElementById('invoiceDays').addEventListener('input', validateForm);
-    document.getElementById('annualThermal').addEventListener('input', validateForm);
-    document.getElementById('thermalMonitored').addEventListener('change', validateForm);
-    document.getElementById('thermalSource').addEventListener('change', validateForm);
-    document.getElementById('thermalUnit').addEventListener('change', validateForm);
+    annualThermal?.addEventListener('input', () => {
+      if(annualThermal.dataset.autofillSource === 'thermal-file') annualThermal.dataset.autofillSource = '';
+      validateForm();
+    });
+    thermalMonitored?.addEventListener('change', validateForm);
+    thermalSource?.addEventListener('change', validateForm);
+    thermalUnit?.addEventListener('change', () => {
+      if(annualThermal?.dataset.autofillSource === 'thermal-file' && thermalDatasetCache) fillThermalAnnualFromDataset(thermalDatasetCache);
+      validateForm();
+    });
     continueBtn.addEventListener('click', continueFlow);
 
     wireDropZone(dropZone, fileInput, chooseBtn, fileName, 'consumption');
     wireDropZone(productionDrop, productionInput, productionChoose, productionFileName, 'production');
     wireDropZone(invoiceDrop, invoiceInput, invoiceChoose, invoiceFileName, 'invoice');
-    if(thermalChoose && thermalInput){
-      thermalChoose.addEventListener('click', () => thermalInput.click());
-      thermalInput.addEventListener('change', () => {
-        if(thermalDrop) thermalDrop.classList.toggle('has-file', thermalInput.files && thermalInput.files.length > 0);
-        validateForm();
-      });
-    }
+    wireDropZone(thermalDrop, thermalInput, thermalChoose, thermalFileName, 'thermal');
     const tariffMethodHelpText = {
       invoice_calculation: 'Calculeaza din factura: introdu totalul facturii si consumul facturat, iar aplicatia calculeaza automat pretul mediu pe kWh.',
       direct_price: 'Stiu deja pretul pe kWh: foloseste aceasta optiune cand ai deja pretul mediu si vrei sa il introduci direct.'
