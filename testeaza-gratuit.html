@@ -1789,6 +1789,34 @@
     overflow:visible!important;
   }
 }
+
+
+/* SVT v247 — Q1 realistic scenario detail window */
+.q1-scenario-info .q1-scenario-assumptions{
+  margin:10px 0 0!important;
+  padding:10px 12px 10px 28px!important;
+  border:1px solid rgba(13,148,74,.16)!important;
+  border-radius:14px!important;
+  background:rgba(240,253,244,.72)!important;
+  color:#27445d!important;
+  font-size:12px!important;
+  line-height:1.35!important;
+  font-weight:750!important;
+}
+.q1-scenario-info .q1-scenario-assumptions li{
+  margin:0 0 6px!important;
+}
+.q1-scenario-info .q1-scenario-assumptions li:last-child{
+  margin-bottom:0!important;
+}
+.q1-scenario-info .q1-scenario-caveat{
+  margin-top:10px!important;
+  color:#64748b!important;
+  font-size:11px!important;
+  line-height:1.35!important;
+  font-weight:850!important;
+}
+
 </style>
 </head>
 <body data-svt-stage="processing">
@@ -2399,16 +2427,32 @@
       const fixedTariff = q1FixedTariff(data);
       const dailyGrid = hourly.reduce((a,h)=>a + Number(h.gridKwh || 0), 0);
       const dailyFixedCost = hourly.reduce((a,h)=>a + Number(h.gridKwh || 0) * fixedTariff, 0);
+      const currentMeasuredCost = hourly.reduce((a,h)=>a + Number(h.cost || 0), 0) || dailyFixedCost;
       const expensiveKwh = hourly.reduce((a,h)=>a + Number(h.expensiveKwh || 0), 0);
       const surplusKwh = hourly.reduce((a,h)=>a + Number(h.surplusKwh || 0), 0);
-      const nonZeroLoads = hourly.map(h => Number(h.gridKwh || 0)).filter(v => v > 0);
-      const avgGrid = dailyGrid / Math.max(1, nonZeroLoads.length || 24);
-      const minGrid = nonZeroLoads.length ? Math.min(...nonZeroLoads) : 0;
-      const loadFactor = avgGrid > 0 ? minGrid / avgGrid : 0;
-      const cheapPzu = q1AverageCheapestPzuPrice(hourly, fixedTariff, scenarioContext);
-      const bessChargePrice = q1AverageCheapestBessChargePrice(hourly, fixedTariff, scenarioContext);
       const minUsefulSignal = Math.max(2, dailyFixedCost * 0.005);
-      const scenarioCost = savings => Math.max(0, dailyFixedCost - Number(savings || 0));
+      const scenarioCost = (baseCost, savings) => Math.max(0, Number(baseCost || 0) - Number(savings || 0));
+      const hourlyPrices = hourly.map(h => q1PzuPrice(h.hour, fixedTariff, scenarioContext));
+      const pzuMin = Math.min(...hourlyPrices);
+      const pzuMax = Math.max(...hourlyPrices);
+      const pzuAvg = hourlyPrices.reduce((a,b)=>a+b,0) / Math.max(1, hourlyPrices.length);
+      const cheapHours = hourly
+        .map(h => ({hour:h.hour, price:q1PzuPrice(h.hour, fixedTariff, scenarioContext)}))
+        .sort((a,b)=>a.price-b.price)
+        .slice(0,6);
+      const cheapPzu = cheapHours.reduce((a,x)=>a+x.price,0) / Math.max(1, cheapHours.length);
+      const expensiveByPrice = hourly
+        .map(h => ({...h, pzu:q1PzuPrice(h.hour, fixedTariff, scenarioContext)}))
+        .filter(h => Number(h.gridKwh || 0) > 0 && h.pzu > cheapPzu + 0.02)
+        .sort((a,b)=>b.pzu-a.pzu);
+      const fallbackExpensive = hourly.slice()
+        .filter(h => Number(h.expensiveKwh || 0) > 0 || Number(h.gridKwh || 0) > 0)
+        .map(h => ({...h, pzu:q1PzuPrice(h.hour, fixedTariff, scenarioContext)}))
+        .sort((a,b)=>(b.pzu * Number(b.gridKwh || 0)) - (a.pzu * Number(a.gridKwh || 0)));
+      const sourceHours = expensiveByPrice.length ? expensiveByPrice : fallbackExpensive;
+      const marketSourceText = scenarioContext?.marketData?.records?.length
+        ? 'prețuri PZU încărcate extern/scalate pe ziua analizată'
+        : 'profil PZU orientativ scalat la tariful introdus';
 
       const pzuBars = hourly.map(h => {
         const pzu = q1PzuPrice(h.hour, fixedTariff, scenarioContext);
@@ -2418,26 +2462,41 @@
       const pzuSavings = dailyFixedCost - pzuScenarioCost;
 
       const shiftBars = Array.from({length:24}, () => 0);
-      const shiftKwh = Math.min(expensiveKwh * 0.22, dailyGrid * 0.12, 120);
+      const shiftLimitKwh = Math.min(Math.max(0, dailyGrid * 0.08), Math.max(0, expensiveKwh * 0.18), 80);
       let shiftedKwh = 0;
-      q1AllocateByExpensiveHours(hourly, shiftKwh, (h, used) => {
-        const saving = Math.max(0, used * (q1PzuPrice(h.hour, fixedTariff, scenarioContext) - cheapPzu));
-        shiftBars[h.hour] += saving;
-        shiftedKwh += used;
-      });
+      let remainingShift = shiftLimitKwh;
+      for(const h of sourceHours){
+        if(remainingShift <= 0) break;
+        const movableFromHour = Math.min(Number(h.gridKwh || 0) * 0.25, remainingShift);
+        const savingPerKwh = Math.max(0, Number(h.pzu || 0) - cheapPzu);
+        if(movableFromHour > 0 && savingPerKwh > 0){
+          shiftBars[h.hour] += movableFromHour * savingPerKwh;
+          shiftedKwh += movableFromHour;
+          remainingShift -= movableFromHour;
+        }
+      }
       const shiftSavings = shiftBars.reduce((a,b)=>a+b,0);
 
       const reduceBars = Array.from({length:24}, () => 0);
-      const reduceKwh = Math.min(expensiveKwh * 0.10, dailyGrid * 0.06, 80);
+      const reduceLimitKwh = Math.min(Math.max(0, dailyGrid * 0.04), Math.max(0, expensiveKwh * 0.10), 50);
       let reducedKwh = 0;
-      q1AllocateByExpensiveHours(hourly, reduceKwh, (h, used) => {
-        reduceBars[h.hour] += used * fixedTariff;
-        reducedKwh += used;
-      });
+      let remainingReduce = reduceLimitKwh;
+      for(const h of sourceHours){
+        if(remainingReduce <= 0) break;
+        const hourGrid = Number(h.gridKwh || 0);
+        const hourMeasuredPrice = hourGrid > 0 && Number(h.cost || 0) > 0 ? Number(h.cost || 0) / hourGrid : fixedTariff;
+        const avoidedPrice = Math.max(0.01, hourMeasuredPrice || fixedTariff);
+        const reducible = Math.min(hourGrid * 0.10, remainingReduce);
+        if(reducible > 0){
+          reduceBars[h.hour] += reducible * avoidedPrice;
+          reducedKwh += reducible;
+          remainingReduce -= reducible;
+        }
+      }
       const reduceSavings = reduceBars.reduce((a,b)=>a+b,0);
 
       const pvUseBars = Array.from({length:24}, () => 0);
-      const pvUsefulKwh = Math.min(surplusKwh, expensiveKwh * 0.45, 120);
+      const pvUsefulKwh = Math.min(surplusKwh, expensiveKwh * 0.35, dailyGrid * 0.10, 80);
       let pvMoved = 0;
       q1AllocateByExpensiveHours(hourly, pvUsefulKwh, (h, used) => {
         pvUseBars[h.hour] += used * fixedTariff;
@@ -2450,28 +2509,54 @@
       const bessEconomics = q1BessEconomics(bessDefaults);
       const bessEfficiency = bessEconomics.efficiency;
       const bessSocWindow = bessEconomics.socWindow;
-      const bessReferenceKwh = Math.max(0, Number(bessDefaults.capacityMWh || 0) * 1000 * bessSocWindow);
-      const bessSizingLimit = bessReferenceKwh > 0 ? Math.min(bessReferenceKwh, Math.max(250, dailyGrid * 0.25)) : 250;
-      const bessCapacity = Math.min(expensiveKwh, Math.max(0, dailyGrid * 0.18), bessSizingLimit);
-      let bessShifted = 0;
-      let bessPvStored = Math.min(surplusKwh, bessCapacity);
-      let pvRemaining = bessPvStored;
+      const bessReferenceNominalKwh = Math.max(0, Number(bessDefaults.capacityMWh || 0) * 1000);
+      const referenceUsableKwh = bessReferenceNominalKwh > 0 ? bessReferenceNominalKwh * bessSocWindow : 0;
+      const demoUsableCapKwh = Math.min(Math.max(0, dailyGrid * 0.18), Math.max(0, expensiveKwh), referenceUsableKwh || 250);
+      const bessUsableKwh = Math.max(0, demoUsableCapKwh);
+      const bessNominalKwh = bessReferenceNominalKwh > 0 ? bessReferenceNominalKwh : (bessSocWindow > 0 ? bessUsableKwh / bessSocWindow : bessUsableKwh);
+      const exportTariff = typeof q2ExportTariff === 'function' ? q2ExportTariff(data) : 0;
+      const bessChargePrice = q1AverageCheapestBessChargePrice(hourly, fixedTariff, scenarioContext);
       const bessGridChargeCost = bessEconomics.chargeCostForDischargeRonKwh(bessChargePrice);
-      q1AllocateByExpensiveHours(hourly, bessCapacity, (h, used) => {
-        const fromPv = Math.min(used, pvRemaining);
-        pvRemaining -= fromPv;
-        const fromGrid = Math.max(0, used - fromPv);
+      const bessMinSpread = bessEconomics.minSpreadRonKwh(bessChargePrice);
+      let bessRemaining = bessUsableKwh;
+      let pvRemainingForBess = Math.min(surplusKwh, bessUsableKwh);
+      let bessShifted = 0;
+      let bessFromPv = 0;
+      let bessFromGrid = 0;
+      for(const h of sourceHours){
+        if(bessRemaining <= 0) break;
+        const hourNeed = Math.min(Number(h.gridKwh || 0) * 0.45, bessRemaining);
+        if(hourNeed <= 0) continue;
+        let usedTotal = 0;
+        const fromPv = Math.min(hourNeed, pvRemainingForBess);
+        if(fromPv > 0){
+          const pvNetSaving = Math.max(0, fromPv * Math.max(0, fixedTariff - exportTariff - bessEconomics.degradationRonKwh));
+          if(pvNetSaving > 0){
+            bessBars[h.hour] += pvNetSaving;
+            pvRemainingForBess -= fromPv;
+            bessFromPv += fromPv;
+            usedTotal += fromPv;
+          }
+        }
+        const remainingHourNeed = Math.max(0, hourNeed - usedTotal);
         const pzuAvoided = q1PzuPrice(h.hour, fixedTariff, scenarioContext);
-        const pvSaving = fromPv * fixedTariff;
-        const gridShiftSaving = Math.max(0, fromGrid * (pzuAvoided - bessGridChargeCost));
-        bessBars[h.hour] += pvSaving + gridShiftSaving;
-        bessShifted += used;
-      });
+        const gridSpread = pzuAvoided - bessGridChargeCost;
+        if(remainingHourNeed > 0 && gridSpread > 0){
+          const fromGrid = remainingHourNeed;
+          bessBars[h.hour] += fromGrid * gridSpread;
+          bessFromGrid += fromGrid;
+          usedTotal += fromGrid;
+        }
+        if(usedTotal > 0){
+          bessShifted += usedTotal;
+          bessRemaining -= usedTotal;
+        }
+      }
       const bessSavings = bessBars.reduce((a,b)=>a+b,0);
 
       const cogenBars = Array.from({length:24}, () => 0);
       const cogenUnitCost = Math.max(0.45, fixedTariff * 0.76);
-      const cogenCovered = Math.min(expensiveKwh * 0.60, dailyGrid * 0.35, 250);
+      const cogenCovered = Math.min(expensiveKwh * 0.45, dailyGrid * 0.25, 180);
       q1AllocateByExpensiveHours(hourly, cogenCovered, (h, used) => {
         cogenBars[h.hour] += Math.max(0, used * (fixedTariff - cogenUnitCost));
       });
@@ -2481,49 +2566,68 @@
         {
           key:'shift',
           title:'Cât economisesc dacă mut consumul în ore mai ieftine?',
-          short:'Pentru aparate sau procese care pot porni mai târziu.',
+          short:'Pentru consumuri flexibile care pot fi mutate fără să afecteze procesul.',
           chartTitle:'Economie estimată prin mutarea consumului',
           bars:shiftBars,
           savings:shiftSavings,
           affectedKwh:shiftedKwh,
           currentCost:dailyFixedCost,
-          scenarioCost:scenarioCost(shiftSavings),
+          scenarioCost:scenarioCost(dailyFixedCost, shiftSavings),
           score:shiftSavings + (shiftedKwh > 0 ? 8 : 0),
           force:shiftedKwh > 0,
-          note:`Estimare pe 24h: am presupus că până la ${fmt(shiftedKwh,1)} kWh din orele scumpe pot fi mutați în cele mai bune ore ale zilei.`
+          note:`Estimare pe 24h: am mutat doar o parte realistă din consum, până la ${fmt(shiftedKwh,1)} kWh, din orele cu preț mare către cele mai ieftine ore.`,
+          details:[
+            `Consum mutabil considerat: ${fmt(shiftedKwh,1)} kWh / 24h.`,
+            `Limită model: max. 8% din consumul zilei, 18% din orele scumpe sau 80 kWh.`,
+            `Ore țintă: cele mai ieftine 6 ore, preț mediu ${fmt(cheapPzu,2)} lei/kWh.`,
+            `Se calculează economie doar dacă ora mutată are preț mai mare decât ora țintă.`
+          ]
         },
         {
           key:'reduce_peak',
           title:'Cât economisesc dacă reduc consumul în orele scumpe?',
-          short:'Pentru orele în care consumi mult și energia costă mai mult.',
+          short:'Pentru consumatori necritici care pot fi opriți sau limitați temporar.',
           chartTitle:'Economie estimată prin reducerea consumului scump',
           bars:reduceBars,
           savings:reduceSavings,
           affectedKwh:reducedKwh,
-          currentCost:dailyFixedCost,
-          scenarioCost:scenarioCost(reduceSavings),
+          currentCost:currentMeasuredCost,
+          scenarioCost:scenarioCost(currentMeasuredCost, reduceSavings),
           score:reduceSavings + (reducedKwh > 0 ? 7 : 0),
           force:reducedKwh > 0,
-          note:`Estimare pe 24h: am redus orientativ ${fmt(reducedKwh,1)} kWh din orele cele mai scumpe. Este scenariul cel mai simplu când există consumatori necritici: climatizare, compresoare, pompe, încărcări sau procese care pot fi limitate.`
+          note:`Estimare pe 24h: am redus orientativ ${fmt(reducedKwh,1)} kWh din orele cele mai scumpe. Nu presupune oprirea producției critice, ci doar consum necritic.`,
+          details:[
+            `Reducere considerată: ${fmt(reducedKwh,1)} kWh / 24h.`,
+            `Limită model: max. 4% din consumul zilei, 10% din orele scumpe sau 50 kWh.`,
+            `Cost evitat: prețul efectiv al orei analizate, nu un câștig generic.`,
+            `Exemple potrivite: HVAC, pompe, compresoare, încărcări, procese necritice.`
+          ]
         },
         {
           key:'bess',
           title:'Cât economisesc cu o baterie?',
-          short:'Bateria păstrează energia și o folosește când curentul e scump.',
+          short:'Bateria este simulată doar dacă spreadul acoperă pierderile și uzura.',
           chartTitle:'Economie estimată cu baterie',
           bars:bessBars,
           savings:bessSavings,
           affectedKwh:bessShifted,
           currentCost:dailyFixedCost,
-          scenarioCost:scenarioCost(bessSavings),
+          scenarioCost:scenarioCost(dailyFixedCost, bessSavings),
           score:bessSavings + (surplusKwh > 0 ? 12 : 4),
           visible:bessShifted > 0 && bessSavings > minUsefulSignal,
-          note:`Estimare pe 24h: bateria este folosită doar acolo unde diferența de preț acoperă pierderile și uzura. Dacă există surplus fotovoltaic, acesta este folosit primul.`
+          force:bessShifted > 0,
+          note:`Estimare pe 24h: bateria folosește întâi surplusul PV, apoi încărcare din ore ieftine doar dacă diferența de preț acoperă randamentul, pierderile și uzura.`,
+          details:[
+            `Capacitate baterie orientativă: ${fmt(bessNominalKwh,0)} kWh nominal / ${fmt(bessUsableKwh,0)} kWh utili.`,
+            `Randament folosit: ${fmt(bessEfficiency * 100,0)}%; fereastră SoC: ${fmt(bessSocWindow * 100,0)}%.`,
+            `Energie descărcată: ${fmt(bessShifted,1)} kWh; din PV: ${fmt(bessFromPv,1)} kWh; din rețea ieftină: ${fmt(bessFromGrid,1)} kWh.`,
+            `Prag minim spread incl. pierderi/uzură: ${fmt(bessMinSpread,2)} lei/kWh. Cost încărcare echivalent: ${fmt(bessGridChargeCost,2)} lei/kWh.`
+          ]
         },
         {
           key:'pzu',
           title:'Cât economisesc dacă prețul se schimbă pe ore?',
-          short:'Compară costul tău cu un preț diferit de la o oră la alta.',
+          short:'Comparație între tariful introdus și un preț orar PZU estimat.',
           chartTitle:'Diferență estimată cu prețuri pe ore',
           bars:pzuBars,
           savings:pzuSavings,
@@ -2534,8 +2638,14 @@
           visible:Math.abs(pzuSavings) > minUsefulSignal,
           force:Math.abs(pzuSavings) > minUsefulSignal * 2,
           note:pzuSavings >= 0
-            ? 'Estimare pe 24h: pentru această zi, orele tale de consum par mai bune decât media zilnică.'
-            : 'Estimare pe 24h: pentru această zi, consumul cade în ore relativ scumpe, deci un preț orar ar putea crește costul dacă nu muți consumul.'
+            ? 'Estimare pe 24h: pentru această zi, profilul tău de consum cade suficient în ore mai bune, deci tariful orar ar putea reduce costul.'
+            : 'Estimare pe 24h: pentru această zi, tariful orar ar putea crește costul dacă nu muți sau reduci consumul în orele scumpe.',
+          details:[
+            `Tarif actual folosit ca reper: ${fmt(fixedTariff,2)} lei/kWh.`,
+            `Sursă preț orar: ${marketSourceText}.`,
+            `Interval preț orar estimat: ${fmt(pzuMin,2)} - ${fmt(pzuMax,2)} lei/kWh; medie simplă ${fmt(pzuAvg,2)} lei/kWh.`,
+            `Nu este economie garantată: dacă profilul cade în ore scumpe, rezultatul poate fi cost suplimentar.`
+          ]
         },
         {
           key:'pv_self_use',
@@ -2546,10 +2656,16 @@
           savings:pvUseSavings,
           affectedKwh:pvMoved,
           currentCost:dailyFixedCost,
-          scenarioCost:scenarioCost(pvUseSavings),
+          scenarioCost:scenarioCost(dailyFixedCost, pvUseSavings),
           score:pvUseSavings + 15,
           visible:surplusKwh > 1 && pvMoved > 0,
-          note:`Estimare pe 24h: am folosit ${fmt(pvMoved,1)} kWh din surplusul fotovoltaic în orele în care cumpărai energie scumpă din rețea. Pentru calcul exact este importantă potrivirea orară între invertor și consum.`
+          note:`Estimare pe 24h: am folosit ${fmt(pvMoved,1)} kWh din surplusul fotovoltaic în orele în care cumpărai energie scumpă din rețea. Pentru calcul exact este importantă potrivirea orară între invertor și consum.`,
+          details:[
+            `Surplus PV disponibil: ${fmt(surplusKwh,1)} kWh / 24h.`,
+            `Surplus folosit în model: ${fmt(pvMoved,1)} kWh / 24h.`,
+            `Valoare estimată: energia cumpărată evitată, nu venitul din injecție.`,
+            `Pentru rezultat exact trebuie export din invertor și curbă de consum pe aceeași zi.`
+          ]
         },
         {
           key:'cogen',
@@ -2560,10 +2676,16 @@
           savings:cogenSavings,
           affectedKwh:cogenCovered,
           currentCost:dailyFixedCost,
-          scenarioCost:scenarioCost(cogenSavings),
-          score:cogenSavings + (dailyGrid > 300 && loadFactor > 0.25 ? 10 : -20),
-          visible:dailyGrid > 300 && loadFactor > 0.20 && cogenSavings > minUsefulSignal,
-          note:`Estimare pe 24h: cogenerarea acoperă până la 60% din energia scumpă, cu cost electric net estimat la ${fmt(cogenUnitCost,2)} lei/kWh. Are sens mai ales dacă energia termică produsă este folosită local.`
+          scenarioCost:scenarioCost(dailyFixedCost, cogenSavings),
+          score:cogenSavings + (dailyGrid > 300 ? 6 : -20),
+          visible:dailyGrid > 300 && cogenSavings > minUsefulSignal,
+          note:`Estimare pe 24h: cogenerarea acoperă o parte din energia scumpă, cu cost electric net estimat la ${fmt(cogenUnitCost,2)} lei/kWh. Are sens doar dacă energia termică produsă este folosită local.`,
+          details:[
+            `Energie electrică acoperită în model: ${fmt(cogenCovered,1)} kWh / 24h.`,
+            `Cost electric net orientativ: ${fmt(cogenUnitCost,2)} lei/kWh.`,
+            `Scenariul este relevant numai dacă există necesar termic simultan.`,
+            `Nu înlocuiește dimensionarea tehnico-economică.`
+          ]
         }
       ];
 
@@ -2598,6 +2720,9 @@
 
     function q1ScenarioInfoHtml(scenario, mode='selected'){
       if(!scenario) return '';
+      const details = Array.isArray(scenario.details) && scenario.details.length
+        ? `<ul class="q1-scenario-assumptions">${scenario.details.map(item => `<li>${esc(item)}</li>`).join('')}</ul>`
+        : '';
       return `
         <small>${mode === 'hover' ? 'Info scenariu' : 'Scenariu selectat'}</small>
         <strong>${esc(scenario.title)}</strong>
@@ -2607,6 +2732,8 @@
           <span>${fmt(scenario.affectedKwh || 0,1)} kWh<b>energie influențată</b></span>
         </div>
         <p class="q1-scenario-side-note">${esc(scenario.note)}</p>
+        ${details}
+        <p class="q1-scenario-side-note q1-scenario-caveat">Estimare orientativă. Pentru ofertare reală se validează contractul, tarifele, puterea disponibilă, procesele mutabile și datele măsurate.</p>
       `;
     }
 
