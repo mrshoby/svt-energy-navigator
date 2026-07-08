@@ -9420,28 +9420,33 @@ body[data-energy-mode="termic"] .hero{
   min-height:672px!important;
 }
 body[data-energy-mode="termic"] #termicSection{
-  width:calc(100% - 32px)!important;
-  max-width:100%!important;
+  width:min(940px, calc(100% - 32px))!important;
+  max-width:min(940px, calc(100% - 32px))!important;
   margin:2px auto 0!important;
 }
 body[data-energy-mode="termic"] #termicSection .thermal-shell{
   width:100%!important;
   max-width:100%!important;
-  height:128px!important;
-  min-height:128px!important;
+  height:168px!important;
+  min-height:168px!important;
   margin:0 auto!important;
-  padding:23px 16px 18px!important;
+  padding:18px 16px 14px!important;
   display:grid!important;
-  grid-template-columns:154px 154px 154px 154px minmax(0,1fr) 144px!important;
-  grid-template-rows:21px 48px!important;
+  grid-template-columns:154px 154px 96px 154px minmax(0,1fr) 128px!important;
+  grid-template-rows:21px 43px 52px!important;
   column-gap:10px!important;
-  row-gap:10px!important;
+  row-gap:8px!important;
   align-items:flex-start!important;
   border:1px solid var(--border)!important;
   border-radius:16px!important;
   background:#fff!important;
   box-shadow:0 12px 26px rgba(15,23,42,.045)!important;
   box-sizing:border-box!important;
+}
+body[data-energy-mode="termic"] #termicSection .thermal-shell.is-advanced-open{
+  height:168px!important;
+  min-height:168px!important;
+  grid-template-rows:21px 43px 52px!important;
 }
 body[data-energy-mode="termic"] #termicSection .thermal-note{
   grid-column:1 / -1!important;
@@ -9480,10 +9485,11 @@ body[data-energy-mode="termic"] #termicSection .field{
   min-width:0!important;
   margin:0!important;
 }
-body[data-energy-mode="termic"] #termicSection .field:nth-child(1){grid-column:1!important;grid-row:2!important;}
-body[data-energy-mode="termic"] #termicSection .field:nth-child(2){grid-column:2!important;grid-row:2!important;}
-body[data-energy-mode="termic"] #termicSection .field:nth-child(3){grid-column:3!important;grid-row:2!important;}
-body[data-energy-mode="termic"] #termicSection .field:nth-child(4){grid-column:4!important;grid-row:2!important;}
+body[data-energy-mode="termic"] #termicSection .invoice-grid > .field:nth-child(1){grid-column:1!important;grid-row:2!important;}
+body[data-energy-mode="termic"] #termicSection .invoice-grid > .field:nth-child(2){grid-column:2!important;grid-row:2!important;}
+body[data-energy-mode="termic"] #termicSection .invoice-grid > .field:nth-child(3){grid-column:3!important;grid-row:2!important;}
+body[data-energy-mode="termic"] #termicSection .invoice-grid > .field:nth-child(4){grid-column:4!important;grid-row:2!important;}
+body[data-energy-mode="termic"] #termicSection .invoice-grid > .field:nth-child(5){grid-column:1!important;grid-row:3!important;align-self:end!important;}
 body[data-energy-mode="termic"] #termicSection .field label{
   margin:0!important;
   color:#07182b!important;
@@ -9513,6 +9519,11 @@ body[data-energy-mode="termic"] #termicSection .control{
   outline:none!important;
   box-sizing:border-box!important;
 }
+body[data-energy-mode="termic"] #termicSection .invoice-grid > .field:nth-child(3) .control{
+  width:96px!important;
+  min-width:96px!important;
+  max-width:96px!important;
+}
 body[data-energy-mode="termic"] #termicSection select.control{
   padding-right:24px!important;
 }
@@ -9521,7 +9532,7 @@ body[data-energy-mode="termic"] #termicSection .thermal-upload-inline{
   grid-row:2!important;
   align-self:end!important;
   justify-self:end!important;
-  width:144px!important;
+  width:128px!important;
   height:34px!important;
   min-height:34px!important;
   display:flex!important;
@@ -9533,7 +9544,7 @@ body[data-energy-mode="termic"] #termicSection .thermal-upload-inline{
   box-sizing:border-box!important;
 }
 body[data-energy-mode="termic"] #termicSection .thermal-file-button{
-  width:126px!important;
+  width:112px!important;
   height:28px!important;
   min-height:28px!important;
   display:inline-flex!important;
@@ -9550,6 +9561,72 @@ body[data-energy-mode="termic"] #termicSection .thermal-file-button{
   font-weight:1000!important;
   cursor:pointer!important;
   white-space:nowrap!important;
+}
+body[data-energy-mode="termic"] #termicSection .thermal-advanced-toggle{
+  grid-column:2 / span 2!important;
+  grid-row:3!important;
+  align-self:end!important;
+  justify-self:start!important;
+  width:250px!important;
+  max-width:250px!important;
+  display:flex!important;
+  align-items:flex-start!important;
+  gap:7px!important;
+  margin:0!important;
+  color:#07182b!important;
+  font-size:10.8px!important;
+  line-height:1.05!important;
+  font-weight:1000!important;
+  cursor:pointer!important;
+}
+body[data-energy-mode="termic"] #termicSection .thermal-advanced-toggle input{
+  width:15px!important;
+  height:15px!important;
+  margin:0!important;
+  accent-color:var(--green)!important;
+  flex:0 0 auto!important;
+}
+body[data-energy-mode="termic"] #termicSection .thermal-advanced-toggle span{
+  display:grid!important;
+  gap:2px!important;
+  min-width:0!important;
+}
+body[data-energy-mode="termic"] #termicSection .thermal-advanced-toggle strong{
+  display:block!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+body[data-energy-mode="termic"] #termicSection .thermal-advanced-toggle small{
+  display:block!important;
+  color:#66768d!important;
+  font-size:9.2px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+body[data-energy-mode="termic"] #termicSection .thermal-advanced-panel{
+  display:contents!important;
+  margin:0!important;
+  padding:0!important;
+}
+body[data-energy-mode="termic"] #termicSection .thermal-advanced-panel[hidden]{
+  display:none!important;
+}
+body[data-energy-mode="termic"] #termicSection .thermal-advanced-panel .field{
+  display:grid!important;
+  gap:5px!important;
+  align-self:end!important;
+}
+body[data-energy-mode="termic"] #termicSection .thermal-advanced-panel .field:nth-child(1){
+  grid-column:4!important;
+  grid-row:3!important;
+}
+body[data-energy-mode="termic"] #termicSection .thermal-advanced-panel .field:nth-child(2){
+  grid-column:5 / span 2!important;
+  grid-row:3!important;
 }
 body[data-energy-mode="termic"] #termicSection .thermal-file-button svg{
   width:14px!important;
@@ -9640,9 +9717,47 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
     grid-template-rows:auto!important;
     row-gap:10px!important;
   }
+  body[data-energy-mode="termic"] #termicSection .thermal-shell.is-advanced-open{
+    height:auto!important;
+    min-height:0!important;
+    grid-template-rows:auto!important;
+  }
   body[data-energy-mode="termic"] #termicSection .thermal-note,
   body[data-energy-mode="termic"] #termicSection .field,
   body[data-energy-mode="termic"] #termicSection .thermal-upload-inline{
+    grid-column:auto!important;
+    grid-row:auto!important;
+    width:100%!important;
+  }
+  body[data-energy-mode="termic"] #termicSection .invoice-grid > .field:nth-child(1),
+  body[data-energy-mode="termic"] #termicSection .invoice-grid > .field:nth-child(2),
+  body[data-energy-mode="termic"] #termicSection .invoice-grid > .field:nth-child(3),
+  body[data-energy-mode="termic"] #termicSection .invoice-grid > .field:nth-child(4),
+  body[data-energy-mode="termic"] #termicSection .invoice-grid > .field:nth-child(5){
+    grid-column:auto!important;
+    grid-row:auto!important;
+    width:100%!important;
+  }
+  body[data-energy-mode="termic"] #termicSection .thermal-advanced-toggle{
+    grid-column:auto!important;
+    grid-row:auto!important;
+    justify-self:start!important;
+    max-width:100%!important;
+  }
+  body[data-energy-mode="termic"] #termicSection .thermal-advanced-panel{
+    grid-column:1 / -1!important;
+    grid-row:auto!important;
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:10px!important;
+    width:100%!important;
+  }
+  body[data-energy-mode="termic"] #termicSection .thermal-advanced-panel[hidden]{
+    display:none!important;
+  }
+  body[data-energy-mode="termic"] #termicSection .thermal-advanced-panel .field,
+  body[data-energy-mode="termic"] #termicSection .thermal-advanced-panel .field:nth-child(1),
+  body[data-energy-mode="termic"] #termicSection .thermal-advanced-panel .field:nth-child(2){
     grid-column:auto!important;
     grid-row:auto!important;
     width:100%!important;
@@ -9673,10 +9788,29 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
   body[data-energy-mode="termic"] #termicSection .thermal-shell{
     grid-template-columns:1fr!important;
   }
+  body[data-energy-mode="termic"] #termicSection .thermal-advanced-panel{
+    grid-template-columns:1fr!important;
+  }
 }
 
 </style>
 <!-- SVT v174 bottom background fix END -->
+<!-- SVT v239 viewport vertical centering START -->
+<style id="svt-v239-viewport-vertical-centering">
+@media (min-width:721px){
+  body[data-svt-ui="v157-professional"] .page{
+    min-height:100vh!important;
+    min-height:100svh!important;
+    margin:0 auto!important;
+    align-items:center!important;
+    align-content:center!important;
+  }
+  body[data-svt-ui="v157-professional"] .hero{
+    align-self:center!important;
+  }
+}
+</style>
+<!-- SVT v239 viewport vertical centering END -->
 </head>
 <body data-energy-mode="electric" data-svt-ui="v157-professional">
   <div class="page">
@@ -9946,22 +10080,16 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
         </section>
 
         <section id="termicSection" style="display:none">
-          <div class="thermal-shell">
-            <div class="thermal-note"><strong>Date termice minime recomandate</strong></div>
-            <div class="invoice-grid">
-              <div class="field">
-                <label for="thermalMonitored">Ai consum termic monitorizat?</label>
-                <select class="control" id="thermalMonitored">
-                  <option>Da</option>
-                  <option selected>Nu / nu știu</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="thermalSource">Sursa principală de căldură</label>
-                <select class="control" id="thermalSource">
-                  <option>Gaz natural</option>
-                  <option>Boiler electric</option>
-                  <option>Pompă de căldură</option>
+            <div class="thermal-shell">
+              <div class="thermal-note"><strong>Date termice minime recomandate</strong></div>
+              <input type="hidden" id="thermalMonitored" value="Nu / nu știu">
+              <div class="invoice-grid">
+                <div class="field">
+                  <label for="thermalSource">Sursa principală de căldură</label>
+                  <select class="control" id="thermalSource">
+                    <option>Gaz natural</option>
+                    <option>Boiler electric</option>
+                    <option>Pompă de căldură</option>
                   <option>Abur / agent termic extern</option>
                   <option>Altă sursă</option>
                 </select>
@@ -9970,15 +10098,53 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
                 <label for="annualThermal">Consum anual estimat</label>
                 <input class="control" id="annualThermal" type="number" min="0" step="0.01" placeholder="ex. 850">
               </div>
-              <div class="field">
-                <label for="thermalUnit">Unitate</label>
-                <select class="control" id="thermalUnit">
-                  <option>MWh</option>
-                  <option>m³ gaz</option>
-                </select>
+                <div class="field">
+                  <label for="thermalUnit">Unitate</label>
+                  <select class="control" id="thermalUnit">
+                    <option>MWh</option>
+                    <option>m³ gaz</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="thermalTotalCost">Cost total (opțional)</label>
+                  <input class="control" id="thermalTotalCost" type="number" min="0" step="0.01" placeholder="lei">
+                </div>
+                <div class="field thermal-usage-field">
+                  <label for="thermalUsageType">Ce include consumul?</label>
+                  <select class="control" id="thermalUsageType">
+                    <option selected>Nu știu</option>
+                    <option>Încălzire</option>
+                    <option>Apă caldă</option>
+                    <option>Încălzire + apă caldă</option>
+                    <option>Proces / producție</option>
+                  </select>
+                </div>
               </div>
-            </div>
-            <div class="thermal-upload-inline" id="thermalDrop">
+              <label class="thermal-advanced-toggle" for="thermalAdvancedCheck">
+                <input type="checkbox" id="thermalAdvancedCheck">
+                <span><strong>Am detalii tehnice despre consum</strong><small>Opțional, pentru estimare mai exactă.</small></span>
+              </label>
+              <div class="thermal-advanced-panel" id="thermalAdvancedPanel" hidden>
+                <div class="field">
+                  <label for="thermalSchedule">Program folosire</label>
+                  <select class="control" id="thermalSchedule">
+                    <option selected>Nu știu</option>
+                    <option>Dimineața și seara</option>
+                    <option>Program de zi</option>
+                    <option>24/7</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="thermalSeasonality">Sezonalitate</label>
+                  <select class="control" id="thermalSeasonality">
+                    <option selected>Automat</option>
+                    <option>Mai mult iarna</option>
+                    <option>Constant tot anul</option>
+                  </select>
+                </div>
+                <input type="hidden" id="thermalCalculatedTariffPreview" value="0.00">
+              </div>
+              <div class="thermal-upload-inline" id="thermalDrop">
               <input id="thermalInput" type="file" hidden multiple accept=".csv,.txt,.tsv,.xlsx,.xls,.xlsm,.html,.htm">
               <button type="button" class="thermal-file-button" id="thermalChoose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M20 16.7A4 4 0 0 1 16.3 21H7.7A4 4 0 0 1 4 16.7"/></svg>Alege fișier</button>
             </div>
@@ -10024,6 +10190,13 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
     const thermalSource = document.getElementById('thermalSource');
     const annualThermal = document.getElementById('annualThermal');
     const thermalUnit = document.getElementById('thermalUnit');
+    const thermalTotalCost = document.getElementById('thermalTotalCost');
+    const thermalUsageType = document.getElementById('thermalUsageType');
+    const thermalAdvancedCheck = document.getElementById('thermalAdvancedCheck');
+    const thermalAdvancedPanel = document.getElementById('thermalAdvancedPanel');
+    const thermalSchedule = document.getElementById('thermalSchedule');
+    const thermalSeasonality = document.getElementById('thermalSeasonality');
+    const thermalCalculatedTariffPreview = document.getElementById('thermalCalculatedTariffPreview');
     const productionBox = document.getElementById('productionBox');
     const hasProduction = document.getElementById('hasProduction');
     const productionDrop = document.getElementById('productionDrop');
@@ -10107,6 +10280,10 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
     function formatTariff(value){
       return Number.isFinite(value) && value > 0 ? value.toFixed(2) : '0.00';
     }
+    function formatEffectiveTariff(value, basis){
+      if(!Number.isFinite(value) || value <= 0) return '0.00';
+      return basis === 'active_energy_only' ? value.toFixed(3) : value.toFixed(2);
+    }
 
     function setAdvancedPanelOpen(open){
       if(tariffAdvancedCheck) tariffAdvancedCheck.checked = !!open;
@@ -10169,7 +10346,7 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
         notice = 'Verifica pretul introdus. Pare neobisnuit pentru lei/kWh.';
       }
 
-      if(effectiveTariffPreview) effectiveTariffPreview.value = formatTariff(effectiveTariff);
+      if(effectiveTariffPreview) effectiveTariffPreview.value = formatEffectiveTariff(effectiveTariff, basis);
       updateTariffNotices(notice, warning);
       validateForm();
       return { inputMode, inputTariff, effectiveTariffRonKwh:effectiveTariff, basis, distributor, voltage, vatRate:TARIFF_VAT_RATE, notice, warning };
@@ -10215,6 +10392,28 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
       return value * thermalUnitFactor(thermalUnit?.value || 'MWh');
     }
 
+    function thermalCostFromInputs(){
+      const value = Number(thermalTotalCost?.value || 0);
+      return value > 0 ? value : 0;
+    }
+
+    function getThermalTariffValue(totalKwh, fallbackTariff){
+      const cost = thermalCostFromInputs();
+      if(cost > 0 && totalKwh > 0) return cost / totalKwh;
+      return Number(fallbackTariff || getEffectiveTariffValue() || 0.75);
+    }
+
+    function updateThermalCalculatedTariff(totalKwh){
+      const kwh = Number(totalKwh || thermalAnnualKwhFromInputs() || thermalRowsTotalKwh(thermalDatasetCache) || 0);
+      const tariff = thermalCostFromInputs() > 0 && kwh > 0 ? getThermalTariffValue(kwh, 0) : 0;
+      if(thermalCalculatedTariffPreview) thermalCalculatedTariffPreview.value = tariff > 0 ? tariff.toFixed(3) : '0.00';
+      return tariff;
+    }
+
+    function thermalText(value){
+      return String(value || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    }
+
     function thermalRowsTotalKwh(dataset){
       return (dataset?.rows || []).reduce((sum, row) => {
         return sum + Number(row.thermalKwh || row.consumptionKwh || row.electricKwh || 0);
@@ -10236,6 +10435,7 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
       const unit = thermalUnit?.value || 'MWh';
       annualThermal.value = formatThermalAnnualValue(totalKwh / thermalUnitFactor(unit));
       annualThermal.dataset.autofillSource = 'thermal-file';
+      updateThermalCalculatedTariff(totalKwh);
     }
 
     function normalizeThermalDataset(dataset, tariff, sourceKind){
@@ -10283,11 +10483,26 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
       const rows = [];
       if(!(annualKwh > 0)) return normalizeThermalDataset({ rows, meta:{} }, tariff, 'manual');
       const source = thermalSource?.value || '';
+      const usage = thermalText(thermalUsageType?.value || 'Nu stiu');
+      const advancedOpen = !!thermalAdvancedCheck?.checked;
+      const schedule = advancedOpen ? thermalText(thermalSchedule?.value || 'Nu stiu') : 'nu stiu';
+      const seasonality = advancedOpen ? thermalText(thermalSeasonality?.value || 'Automat') : 'automat';
       const flatSource = /boiler electric/i.test(source);
-      const monthWeights = flatSource
-        ? [1.05,1.02,1.00,.98,.96,.95,.95,.95,.97,1.00,1.02,1.05]
-        : [1.55,1.35,1.05,.68,.38,.24,.22,.24,.40,.76,1.10,1.45];
+      const constantUse = usage.includes('apa calda') && !usage.includes('incalzire');
+      const processUse = usage.includes('proces');
+      const forcedConstant = seasonality.includes('constant') || processUse || constantUse || flatSource;
+      const forcedWinter = seasonality.includes('iarna') || usage.includes('incalzire');
+      const monthWeights = forcedConstant
+        ? [1.03,1.02,1.00,.99,.98,.97,.97,.97,.98,1.00,1.02,1.03]
+        : forcedWinter
+          ? [1.62,1.42,1.12,.70,.34,.18,.16,.18,.36,.78,1.14,1.50]
+          : [1.38,1.25,1.04,.76,.52,.38,.36,.38,.54,.82,1.08,1.28];
       const hourWeights = Array.from({length:24}, (_, hour) => {
+        if(schedule.includes('24/7')) return 1;
+        if(schedule.includes('program de zi')) return hour >= 7 && hour < 19 ? 1.32 : .62;
+        if(schedule.includes('dimineata')) return (hour >= 5 && hour <= 8) || (hour >= 17 && hour <= 22) ? 1.42 : .72;
+        if(constantUse) return (hour >= 6 && hour <= 9) || (hour >= 18 && hour <= 22) ? 1.35 : .82;
+        if(processUse) return hour >= 8 && hour < 18 ? 1.45 : .55;
         if(hour >= 5 && hour <= 8) return 1.18;
         if(hour >= 17 && hour <= 22) return 1.28;
         if(hour >= 23 || hour <= 4) return .82;
@@ -10333,6 +10548,10 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
           intervalMinutes:60,
           estimated:true,
           thermalSource:source,
+          thermalUsageType:thermalUsageType?.value || 'Nu știu',
+          thermalAdvancedEnabled:advancedOpen,
+          thermalSchedule:advancedOpen ? (thermalSchedule?.value || 'Nu știu') : 'Nu știu',
+          thermalSeasonality:advancedOpen ? (thermalSeasonality?.value || 'Automat') : 'Automat',
           annualInputValue:Number(annualThermal?.value || 0),
           annualInputUnit:thermalUnit?.value || 'MWh'
         }
@@ -10365,6 +10584,13 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
     }
 
     window.SVTUpdateEffectiveTariff = updateEffectiveTariff;
+
+    function setThermalAdvancedOpen(open){
+      if(thermalAdvancedCheck) thermalAdvancedCheck.checked = !!open;
+      if(thermalAdvancedPanel) thermalAdvancedPanel.hidden = !open;
+      document.querySelector('#termicSection .thermal-shell')?.classList.toggle('is-advanced-open', !!open);
+      validateForm();
+    }
 
     function setTariffMethod(method, options = {}){
       const normalized = normalizeTariffMethod(method);
@@ -10636,14 +10862,21 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
         }
         showMessage('warn', 'Procesăm datele...');
         const tariffContext = buildTariffContext();
-        const tariff = Number(tariffContext.effectiveTariffRonKwh || tariffContext.effectiveTariffPreview || tariffContext.fixedTariff || 0.75);
+        let tariff = Number(tariffContext.effectiveTariffRonKwh || tariffContext.effectiveTariffPreview || tariffContext.fixedTariff || 0.75);
         const consumptionDataSource = document.getElementById('consumptionDataSource')?.value || 'total';
         if(currentTab === 'termic'){
           let dataset;
           const thermalDataSource = thermalFiles.length ? 'file' : 'manual_estimate';
+          const baseTariff = tariff;
           if(thermalFiles.length){
-            dataset = thermalDatasetCache || normalizeThermalDataset(await parseAndMergeFiles(thermalFiles, 'thermal', tariff), tariff, 'file');
+            dataset = thermalDatasetCache || normalizeThermalDataset(await parseAndMergeFiles(thermalFiles, 'thermal', baseTariff), baseTariff, 'file');
+            dataset = normalizeThermalDataset(dataset, baseTariff, 'file');
+            const parsedThermalKwh = thermalRowsTotalKwh(dataset);
+            tariff = getThermalTariffValue(parsedThermalKwh, baseTariff);
+            updateThermalCalculatedTariff(parsedThermalKwh);
           } else {
+            tariff = getThermalTariffValue(thermalAnnualKwhFromInputs(), baseTariff);
+            updateThermalCalculatedTariff(thermalAnnualKwhFromInputs());
             dataset = buildThermalManualDataset(tariff);
           }
           dataset = normalizeThermalDataset(dataset, tariff, thermalFiles.length ? 'file' : 'manual');
@@ -10652,12 +10885,21 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
             showMessage('err', 'Completează consumul anual estimat sau încarcă un fișier termic cu valori de consum.');
             return;
           }
+          tariffContext.thermalTotalCost = thermalCostFromInputs();
+          tariffContext.thermalCalculatedTariffRonKwh = Number(thermalCalculatedTariffPreview?.value || 0);
+          tariffContext.thermalEffectiveTariffRonKwh = tariff;
           dataset.meta.fixedPriceRonKwh = tariff;
           dataset.meta.tariffDetails = tariffContext;
           dataset.meta.thermalDataSource = thermalDataSource;
           dataset.meta.thermalDetails = {
             monitored: thermalMonitored?.value || '',
             source: thermalSource?.value || '',
+            usageType: thermalUsageType?.value || 'Nu știu',
+            totalCost: thermalCostFromInputs(),
+            calculatedTariffRonKwh: Number(thermalCalculatedTariffPreview?.value || 0),
+            advancedEnabled: !!thermalAdvancedCheck?.checked,
+            schedule: thermalSchedule?.value || 'Nu știu',
+            seasonality: thermalSeasonality?.value || 'Automat',
             annualValue: Number(annualThermal?.value || 0),
             unit: thermalUnit?.value || '',
             annualKwh: thermalAnnualKwhFromInputs(),
@@ -10677,7 +10919,7 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
           sessionStorage.setItem('svtDataset', JSON.stringify(dataset));
           sessionStorage.setItem('svtAnalysis', JSON.stringify(analysis));
           sessionStorage.setItem('svtData', JSON.stringify({ question:analysis.question, selectedMode:'termic', fixedTariffRonKwh:tariff, tariffDetails:tariffContext, loadMethod:'thermal', thermalDataSource, dataFingerprint:dataset.meta.dataFingerprint, hasProduction:false, fileNames:dataset.meta.fileNames || [], thermalTotalKwh:totalThermalKwh }));
-          const navigatorContext = { selectedMode:'termic', loadMethod:'thermal', thermalDataSource, hasElectricData:false, hasThermalData:true, hasProduction:false, hasHourlyFile:thermalFiles.length > 0, fixedTariffRonKwh:tariff, tariffDetails:tariffContext, dataFingerprint:dataset.meta.dataFingerprint, thermal:{ monitored: thermalMonitored?.value || '', source: thermalSource?.value || '', annualValue: Number(annualThermal?.value || 0), unit: thermalUnit?.value || '', annualKwh: thermalAnnualKwhFromInputs(), totalThermalKwh, fileCount: thermalFiles.length, fileNames: thermalFiles.map(file => file.name) }, createdAt:new Date().toISOString() };
+          const navigatorContext = { selectedMode:'termic', loadMethod:'thermal', thermalDataSource, hasElectricData:false, hasThermalData:true, hasProduction:false, hasHourlyFile:thermalFiles.length > 0, fixedTariffRonKwh:tariff, tariffDetails:tariffContext, dataFingerprint:dataset.meta.dataFingerprint, thermal:{ monitored: thermalMonitored?.value || '', source: thermalSource?.value || '', usageType: thermalUsageType?.value || 'Nu știu', totalCost: thermalCostFromInputs(), calculatedTariffRonKwh: Number(thermalCalculatedTariffPreview?.value || 0), advancedEnabled: !!thermalAdvancedCheck?.checked, schedule: thermalSchedule?.value || 'Nu știu', seasonality: thermalSeasonality?.value || 'Automat', annualValue: Number(annualThermal?.value || 0), unit: thermalUnit?.value || '', annualKwh: thermalAnnualKwhFromInputs(), totalThermalKwh, fileCount: thermalFiles.length, fileNames: thermalFiles.map(file => file.name) }, createdAt:new Date().toISOString() };
           sessionStorage.setItem('svtNavigatorContext', JSON.stringify(navigatorContext));
           localStorage.setItem('svtNavigatorContext', JSON.stringify(navigatorContext));
           window.location.href = './testeaza-gratuit.html';
@@ -10767,12 +11009,22 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
     document.getElementById('invoiceDays').addEventListener('input', validateForm);
     annualThermal?.addEventListener('input', () => {
       if(annualThermal.dataset.autofillSource === 'thermal-file') annualThermal.dataset.autofillSource = '';
+      updateThermalCalculatedTariff();
       validateForm();
     });
     thermalMonitored?.addEventListener('change', validateForm);
     thermalSource?.addEventListener('change', validateForm);
+    thermalUsageType?.addEventListener('change', validateForm);
+    thermalTotalCost?.addEventListener('input', () => {
+      updateThermalCalculatedTariff();
+      validateForm();
+    });
+    thermalAdvancedCheck?.addEventListener('change', () => setThermalAdvancedOpen(thermalAdvancedCheck.checked));
+    thermalSchedule?.addEventListener('change', validateForm);
+    thermalSeasonality?.addEventListener('change', validateForm);
     thermalUnit?.addEventListener('change', () => {
       if(annualThermal?.dataset.autofillSource === 'thermal-file' && thermalDatasetCache) fillThermalAnnualFromDataset(thermalDatasetCache);
+      updateThermalCalculatedTariff();
       validateForm();
     });
     continueBtn.addEventListener('click', continueFlow);
