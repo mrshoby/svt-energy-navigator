@@ -1,0 +1,35 @@
+# v57 — Q5 Useful Additional Energy Analysis
+
+Implementare:
+- activează întrebarea 5: `Cât din energia suplimentar produsă ar fi utilizabilă util?`;
+- întrebarea 5 depinde de întrebarea 4;
+- dacă Q4 nu este calculată, apare `Date incomplete · estimează producția suplimentară`;
+- formular Q5 preia automat:
+  - curba de consum;
+  - producția existentă/PV, dacă există;
+  - producția suplimentară din Q4;
+  - zero-export și limitare injecție din Q4;
+  - tariful fix din încărcare;
+- utilizatorul completează:
+  - zero-export;
+  - limitare injecție;
+  - consumuri mutabile;
+  - kWh/zi mutabili;
+  - BESS da/nu;
+  - capacitate BESS;
+  - randament BESS;
+  - tarif consum;
+  - tarif export;
+- calculează:
+  - energie suplimentară totală;
+  - utilizare locală directă;
+  - energie utilizabilă prin flexibilitate;
+  - energie utilizabilă prin BESS;
+  - export/surplus;
+  - limitat/pierdut;
+  - procent utilizabil local;
+  - valoare economică estimată;
+- afișează:
+  - rezumat;
+  - grafic distribuție energie;
+  - tabel orar pe zile, cu scroll orizontal.

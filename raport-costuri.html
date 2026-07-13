@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Raport costuri energie | SVT Energy Navigator</title>
+  <link rel="stylesheet" href="./styles.css"/>
+  <link rel="stylesheet" href="./upload-flow.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body class="svt-report-page">
+  <div id="loading" class="svt-loading">
+    <div>
+      <div class="svt-spinner"></div>
+      <h1>Se generează analiza...</h1>
+      <p>Datele încărcate sunt transformate într-un raport simplu.</p>
+    </div>
+  </div>
+
+  <main id="report" class="svt-report-shell svt-hidden">
+    <div class="svt-flow-top">
+      <a class="svt-back" href="./incarcare-curba-sarcina.html">← Încarcă alt fișier</a>
+      <button class="svt-btn secondary" onclick="window.print()">Salvează PDF</button>
+    </div>
+
+    <section class="svt-report-header">
+      <div>
+        <p class="svt-kicker">RAPORT FUNCȚIONAL · MODUL 1</p>
+        <h1>Când mă costă cel mai mult energia?</h1>
+        <p>Raport calculat din fișierul: <strong id="reportFile">-</strong>. Analiza arată orele cu cost mare, ce consumuri pot fi mutate și economia estimată.</p>
+      </div>
+      <div class="svt-score"><div><span id="scoreValue">-</span><small>/100</small></div></div>
+    </section>
+
+    <section class="svt-metrics">
+      <div class="svt-metric"><div class="icon">💸</div><strong id="kpiCost">-</strong><small>cost estimat la prețul mediu</small></div>
+      <div class="svt-metric"><div class="icon">🟢</div><strong id="kpiSaving">-</strong><small>economie totală posibilă</small></div>
+      <div class="svt-metric"><div class="icon">⚡</div><strong id="kpiPeak">-</strong><small>cel mai mare consum estimat</small></div>
+      <div class="svt-metric"><div class="icon">▥</div><strong id="kpiEnergy">-</strong><small>energie electrică analizată</small></div>
+    </section>
+
+    <section class="svt-card">
+      <div class="svt-card-head"><div><h2>Consumul încărcat</h2><p>Consum electric și energie produsă de panouri, dacă a fost încărcată.</p></div></div>
+      <div class="svt-chart"><canvas id="chartLoad"></canvas></div>
+    </section>
+
+    <section class="svt-two">
+      <div class="svt-card">
+        <h2>Cost pe ore</h2><p>Orele cu cost mare devin prioritare pentru optimizare.</p>
+        <div class="svt-chart"><canvas id="chartCostHour"></canvas></div>
+      </div>
+      <div class="svt-card">
+        <h2>Preț fix vs. preț pe ore</h2><p>Vedem cât ai fi plătit dacă energia era mai ieftină sau mai scumpă în funcție de oră.</p>
+        <div class="svt-chart"><canvas id="chartPzu"></canvas></div>
+      </div>
+    </section>
+
+    <section class="svt-card">
+      <h2>Intervale scumpe detectate</h2>
+      <p>Top intervale în care consumul din rețea generează cost ridicat.</p>
+      <div id="findings" class="svt-findings" style="margin-top:14px"></div>
+    </section>
+
+    <section class="svt-card">
+      <h2>Recomandări prioritizate</h2>
+      <p>Recomandări generate pe baza datelor încărcate, fără AI extern și fără valori demo forțate.</p>
+      <div id="recommendations" class="svt-findings" style="margin-top:14px"></div>
+    </section>
+
+    <section class="svt-card">
+      <h2>Ce ar trebui să fac mâine?</h2>
+      <p>Plan simplu bazat pe intervalele scumpe detectate și consumul tău real.</p>
+      <div id="plan" class="svt-plan" style="margin-top:14px"></div>
+    </section>
+
+    <div class="svt-footer-actions">
+      <a class="svt-btn secondary" href="./testeaza-gratuit.html">← Alege altă analiză</a>
+      <a class="svt-btn" href="./incarcare-curba-sarcina.html">Încarcă alt fișier</a>
+    </div>
+  </main>
+
+  <script src="./assets/js/svt-price-profiles.js"></script>
+  <script src="./assets/js/svt-analysis-engine.js"></script>
+  <script src="./assets/js/svt-report-renderer.js"></script>
+  <script>
+    setTimeout(() => {
+      let analysis = null;
+      try { analysis = JSON.parse(sessionStorage.getItem('svtAnalysis') || 'null'); } catch(e) {}
+      if (!analysis) {
+        document.getElementById('loading').innerHTML = '<div><h1>Nu există date analizate</h1><p>Te rugăm să încarci fișierul cu consumul înainte de raport.</p><p><a class="svt-btn" href="./incarcare-curba-sarcina.html">Încarcă date</a></p></div>';
+        return;
+      }
+      document.getElementById('loading').classList.add('svt-hidden');
+      document.getElementById('report').classList.remove('svt-hidden');
+      SVTReportRenderer.render(analysis);
+    }, 850);
+  </script>
+</body>
+</html>

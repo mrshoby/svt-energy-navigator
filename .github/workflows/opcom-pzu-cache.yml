@@ -1,0 +1,41 @@
+name: SVT OPCOM PZU GitHub Cache
+
+on:
+  workflow_dispatch:
+  schedule:
+    # GitHub cron is UTC. 15 minute cadence, non-aggressive for OPCOM.
+    - cron: "*/15 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: opcom-pzu-cache
+  cancel-in-progress: true
+
+jobs:
+  update-opcom-pzu:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Fetch OPCOM PZU CSV and write SVT JSON cache
+        run: node scripts/fetch-opcom-pzu-cache.mjs
+
+      - name: Commit cache if changed
+        run: |
+          git config user.name "svt-opcom-cache-bot"
+          git config user.email "svt-opcom-cache-bot@users.noreply.github.com"
+          git add data/opcom/pzu/*.json
+          if git diff --cached --quiet; then
+            echo "No OPCOM cache changes."
+          else
+            git commit -m "data: update SVT OPCOM PZU cache [skip ci]"
+            git push
+          fi
