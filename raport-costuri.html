@@ -81,11 +81,12 @@
 
   <script src="./assets/js/svt-price-profiles.js"></script>
   <script src="./assets/js/svt-analysis-engine.js"></script>
+  <script src="./assets/js/svt-safe-storage.js?v=248"></script>
   <script src="./assets/js/svt-report-renderer.js"></script>
   <script>
     setTimeout(() => {
       let analysis = null;
-      try { analysis = JSON.parse(sessionStorage.getItem('svtAnalysis') || 'null'); } catch(e) {}
+      try { analysis = window.SVTSafeStorage?.getAnalysis ? window.SVTSafeStorage.getAnalysis(window.SVTAnalysisEngine) : JSON.parse(sessionStorage.getItem('svtAnalysis') || 'null'); } catch(e) {}
       if (!analysis) {
         document.getElementById('loading').innerHTML = '<div><h1>Nu există date analizate</h1><p>Te rugăm să încarci fișierul cu consumul înainte de raport.</p><p><a class="svt-btn" href="./incarcare-curba-sarcina.html">Încarcă date</a></p></div>';
         return;

@@ -9811,6 +9811,179 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
 }
 </style>
 <!-- SVT v239 viewport vertical centering END -->
+<!-- SVT v248 full responsive + overlap guard START -->
+<style id="svt-v248-full-responsive-overlap-guard">
+/* Keeps the progress tracker and all form controls in normal flow at reduced viewport widths. */
+html,body{max-width:100%!important;overflow-x:hidden!important;}
+.page,.hero,.wizard-shell,.flow-list,.flow-row,.flow-left,.row-right,.title-wrap,.actions{min-width:0!important;box-sizing:border-box!important;}
+img,canvas,svg{max-width:100%;}
+
+@media (max-width:1600px){
+  body[data-svt-ui="v157-professional"] .page,
+  body[data-svt-ui="v157-professional"] .page.page{
+    width:min(1180px,calc(100% - 24px))!important;
+    max-width:1180px!important;
+    min-height:auto!important;
+    margin:12px auto 24px!important;
+    padding:0!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    align-content:normal!important;
+    justify-content:flex-start!important;
+    gap:12px!important;
+  }
+  body[data-svt-ui="v157-professional"] .svt-progress.svt-progress-outside{
+    position:relative!important;
+    inset:auto!important;
+    order:0!important;
+    z-index:2!important;
+    width:min(680px,100%)!important;
+    min-width:0!important;
+    max-width:680px!important;
+    height:auto!important;
+    margin:0 auto!important;
+    padding:0 8px!important;
+    display:grid!important;
+    grid-template-columns:34px minmax(28px,1fr) 34px minmax(28px,1fr) 34px minmax(28px,1fr) 34px!important;
+    grid-template-rows:34px auto!important;
+    column-gap:7px!important;
+    row-gap:5px!important;
+    align-items:center!important;
+    justify-items:center!important;
+    transform:none!important;
+    pointer-events:none!important;
+  }
+  body[data-svt-ui="v157-professional"] .svt-progress.svt-progress-outside .svt-progress-dot{
+    width:34px!important;height:34px!important;min-width:34px!important;min-height:34px!important;
+    border-radius:12px!important;padding:0!important;grid-row:1!important;
+  }
+  body[data-svt-ui="v157-professional"] .svt-progress.svt-progress-outside [data-step-dot="1"]{grid-column:1!important;grid-row:1!important;}
+  body[data-svt-ui="v157-professional"] .svt-progress.svt-progress-outside [data-step-dot="2"]{grid-column:3!important;grid-row:1!important;}
+  body[data-svt-ui="v157-professional"] .svt-progress.svt-progress-outside [data-step-dot="3"]{grid-column:5!important;grid-row:1!important;}
+  body[data-svt-ui="v157-professional"] .svt-progress.svt-progress-outside [data-step-dot="4"]{grid-column:7!important;grid-row:1!important;}
+  body[data-svt-ui="v157-professional"] .svt-progress.svt-progress-outside .svt-progress-line{
+    grid-row:1!important;width:100%!important;min-width:0!important;height:2px!important;min-height:2px!important;
+    justify-self:stretch!important;align-self:center!important;margin:0!important;
+  }
+  body[data-svt-ui="v157-professional"] .svt-progress.svt-progress-outside .svt-progress-line:nth-child(2){grid-column:2!important;grid-row:1!important;}
+  body[data-svt-ui="v157-professional"] .svt-progress.svt-progress-outside .svt-progress-line:nth-child(4){grid-column:4!important;grid-row:1!important;}
+  body[data-svt-ui="v157-professional"] .svt-progress.svt-progress-outside .svt-progress-line:nth-child(6){grid-column:6!important;grid-row:1!important;}
+  body[data-svt-ui="v157-professional"] .svt-progress.svt-progress-outside .svt-progress-label{
+    grid-row:2!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important;
+    display:block!important;justify-self:center!important;text-align:center!important;white-space:normal!important;
+    font-size:10px!important;line-height:1.12!important;
+  }
+  body[data-svt-ui="v157-professional"] .svt-progress.svt-progress-outside [data-step-label="1"]{grid-column:1!important;grid-row:2!important;}
+  body[data-svt-ui="v157-professional"] .svt-progress.svt-progress-outside [data-step-label="2"]{grid-column:3!important;grid-row:2!important;}
+  body[data-svt-ui="v157-professional"] .svt-progress.svt-progress-outside [data-step-label="3"]{grid-column:5!important;grid-row:2!important;}
+  body[data-svt-ui="v157-professional"] .svt-progress.svt-progress-outside [data-step-label="4"]{grid-column:7!important;grid-row:2!important;}
+  body[data-svt-ui="v157-professional"] .hero{
+    order:1!important;grid-column:auto!important;align-self:stretch!important;
+    width:100%!important;max-width:1180px!important;min-height:0!important;margin:0 auto!important;
+  }
+  .tariff-flow-row #tariffSideNotes,
+  .tariff-flow-row #tariffAdvancedNotice,
+  .tariff-flow-row .svt162-voltage-help,
+  #tariffVoltageHelpPanel{
+    position:static!important;inset:auto!important;transform:none!important;
+    width:100%!important;min-width:0!important;max-width:100%!important;max-height:none!important;
+    margin:10px 0 0!important;box-sizing:border-box!important;
+  }
+}
+
+@media (max-width:1180px){
+  body[data-svt-ui="v157-professional"] .hero{padding:26px 18px 20px!important;border-radius:24px!important;}
+  body[data-svt-ui="v157-professional"] .hero h1{font-size:clamp(36px,5.3vw,52px)!important;line-height:1.03!important;padding:0 8px!important;}
+  body[data-svt-ui="v157-professional"] .hero .sub{font-size:clamp(13px,1.7vw,16px)!important;padding:0 10px!important;}
+  .flow-list,.energy-switch-list,.thermal-shell,.actions{width:100%!important;max-width:100%!important;}
+  .flow-row,.svt194-tariff-row.flow-row{width:100%!important;max-width:100%!important;}
+}
+
+@media (max-width:1040px){
+  .flow-row,.upload-flow-row,.pv-flow-row,.svt194-tariff-row.flow-row{
+    height:auto!important;min-height:0!important;padding:13px 14px!important;
+    grid-template-columns:minmax(0,1fr)!important;row-gap:12px!important;align-items:start!important;
+  }
+  .flow-row>.flow-left,.svt194-tariff-row.flow-row>.flow-left,
+  .svt194-tariff-row.flow-row>.svt194-tariff-left.flow-left{
+    width:100%!important;min-width:0!important;height:auto!important;max-height:none!important;
+  }
+  .row-right,.upload-flow-row .row-right,.pv-flow-row .row-right.pv-row-right,
+  #productionBox.production-box-inline{
+    width:100%!important;min-width:0!important;max-width:100%!important;
+    justify-content:flex-start!important;justify-self:stretch!important;flex-wrap:wrap!important;
+  }
+  .upload-flow-row #dropZone.file-inline,
+  .file-inline,#productionDrop.file-inline.upload-zone,#productionBox .file-inline.upload-zone,
+  .thermal-upload-inline{
+    width:100%!important;min-width:0!important;max-width:100%!important;height:auto!important;min-height:42px!important;
+    justify-self:stretch!important;
+  }
+  .svt194-tariff-card,.svt194-tariff-main,.svt194-tariff-head,
+  .svt194-tariff-methods,.svt194-invoice-fields,.svt194-direct-fields,.svt194-advanced-panel{
+    width:100%!important;min-width:0!important;max-width:100%!important;height:auto!important;min-height:0!important;
+  }
+  .svt194-tariff-card{
+    display:grid!important;grid-template-columns:1fr!important;grid-template-rows:auto!important;gap:12px!important;overflow:visible!important;
+  }
+  .svt194-tariff-card>*{grid-column:1!important;grid-row:auto!important;}
+  .svt194-tariff-methods,.svt194-invoice-fields,.svt194-direct-fields,.svt194-advanced-panel{
+    display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;
+  }
+  .svt194-tariff-head span,.svt194-tariff-head .row-title{white-space:normal!important;}
+  .pv-flow-row .pv-check-under-title{white-space:normal!important;width:auto!important;}
+  .actions{gap:12px!important;}
+}
+
+@media (max-width:760px){
+  body[data-svt-ui="v157-professional"] .page{width:100%!important;margin:0!important;padding:10px!important;gap:10px!important;}
+  body[data-svt-ui="v157-professional"] .hero{padding:22px 12px 16px!important;border-radius:20px!important;}
+  body[data-svt-ui="v157-professional"] .hero h1{font-size:clamp(30px,9vw,42px)!important;line-height:1.02!important;margin-bottom:8px!important;}
+  body[data-svt-ui="v157-professional"] .hero .sub{font-size:13px!important;margin-bottom:15px!important;}
+  .flow-list,.energy-switch-list{gap:10px!important;}
+  .flow-row{border-radius:17px!important;padding:12px!important;}
+  .flow-left{grid-template-columns:38px 28px minmax(0,1fr)!important;column-gap:9px!important;align-items:center!important;}
+  .row-title{font-size:16px!important;white-space:normal!important;}
+  .row-subtitle,.svt168-source-subrow .row-subtitle{font-size:11px!important;white-space:normal!important;}
+  .energy-switch-row .row-right{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;}
+  #tabElectric,#tabTermic,.energy-switch-row #tabElectric,.energy-switch-row #tabTermic{
+    width:100%!important;min-width:0!important;max-width:none!important;flex:auto!important;
+  }
+  #methodFileCard.source-choice,.choice-btn.method{width:100%!important;min-width:0!important;max-width:100%!important;}
+  .file-inline .file-button,.thermal-file-button{flex:0 0 auto!important;}
+  .file-inline .file-meta{min-width:0!important;white-space:normal!important;overflow-wrap:anywhere!important;}
+  .svt194-tariff-methods,.svt194-invoice-fields,.svt194-direct-fields,.svt194-advanced-panel,
+  body[data-energy-mode="termic"] #termicSection .thermal-shell,
+  body[data-energy-mode="termic"] #termicSection .thermal-advanced-panel{
+    grid-template-columns:1fr!important;
+  }
+  .actions{flex-direction:column-reverse!important;align-items:stretch!important;}
+  .actions .btn{width:100%!important;min-width:0!important;max-width:100%!important;}
+}
+
+@media (max-width:520px){
+  body[data-svt-ui="v157-professional"] .svt-progress.svt-progress-outside{
+    width:100%!important;grid-template-columns:28px minmax(12px,1fr) 28px minmax(12px,1fr) 28px minmax(12px,1fr) 28px!important;
+    grid-template-rows:28px auto!important;column-gap:3px!important;padding:0!important;
+  }
+  body[data-svt-ui="v157-professional"] .svt-progress.svt-progress-outside .svt-progress-dot{
+    width:28px!important;height:28px!important;min-width:28px!important;min-height:28px!important;border-radius:10px!important;font-size:12px!important;
+  }
+  body[data-svt-ui="v157-professional"] .svt-progress.svt-progress-outside .svt-progress-label{
+    font-size:8px!important;line-height:1.05!important;overflow-wrap:anywhere!important;
+  }
+  body[data-svt-ui="v157-professional"] .hero{padding-left:9px!important;padding-right:9px!important;}
+  .flow-row{padding:10px!important;}
+  .flow-left{grid-template-columns:34px 25px minmax(0,1fr)!important;column-gap:7px!important;}
+  .icon-badge{width:34px!important;height:34px!important;min-width:34px!important;border-radius:11px!important;}
+  .count-badge{width:25px!important;height:25px!important;min-width:25px!important;font-size:12px!important;}
+  .choice-btn{font-size:12px!important;padding:0 9px!important;}
+  .file-inline,.upload-zone{padding:7px!important;gap:7px!important;}
+  .file-inline .file-button,.thermal-file-button{padding:0 9px!important;font-size:11px!important;}
+}
+</style>
+<!-- SVT v248 full responsive + overlap guard END -->
 </head>
 <body data-energy-mode="electric" data-svt-ui="v157-professional">
   <div class="page">
@@ -10165,6 +10338,7 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
 
   <script src="./assets/js/svt-load-curve-profiles.js?v=217-old-ui-data-learning"></script>
   <script src="./assets/js/svt-analysis-engine.js?v=75-reference-layout"></script>
+  <script src="./assets/js/svt-safe-storage.js?v=248"></script>
   <script>
     const tabElectric = document.getElementById('tabElectric');
     const tabTermic = document.getElementById('tabTermic');
@@ -10846,6 +11020,18 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
 
     function clearDerivedQuestionResults(){ ['svtForecastQ3','svtPotentialQ4','svtUsefulEnergyQ5','svtFlexibleLoadsQ6'].forEach(k => { try{ sessionStorage.removeItem(k); }catch(e){} }); }
 
+    async function storeSVTNavigationPayload(dataset, analysis, data, navigatorContext){
+      if(window.SVTSafeStorage?.storeNavigationPayload){
+        return window.SVTSafeStorage.storeNavigationPayload({dataset, analysis, data, context:navigatorContext});
+      }
+      sessionStorage.setItem('svtDataset', JSON.stringify(dataset));
+      sessionStorage.setItem('svtAnalysis', JSON.stringify(analysis));
+      sessionStorage.setItem('svtData', JSON.stringify(data));
+      sessionStorage.setItem('svtNavigatorContext', JSON.stringify(navigatorContext));
+      try{ localStorage.setItem('svtNavigatorContext', JSON.stringify(navigatorContext)); }catch(e){}
+      return {dataset,analysis,fullDatasetRetained:false};
+    }
+
     async function continueFlow(){
       try{
         if(!window.SVTLoadCurveProfiles || !window.SVTAnalysisEngine){ showMessage('err', 'Modulele de analiză nu s-au încărcat corect. Reîncarcă pagina cu Ctrl+F5.'); return; }
@@ -10916,12 +11102,9 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
           analysis.meta.thermalDataSource = thermalDataSource;
           analysis.meta.dataFingerprint = dataset.meta.dataFingerprint;
           analysis.meta.tariffDetails = tariffContext;
-          sessionStorage.setItem('svtDataset', JSON.stringify(dataset));
-          sessionStorage.setItem('svtAnalysis', JSON.stringify(analysis));
-          sessionStorage.setItem('svtData', JSON.stringify({ question:analysis.question, selectedMode:'termic', fixedTariffRonKwh:tariff, tariffDetails:tariffContext, loadMethod:'thermal', thermalDataSource, dataFingerprint:dataset.meta.dataFingerprint, hasProduction:false, fileNames:dataset.meta.fileNames || [], thermalTotalKwh:totalThermalKwh }));
+          const navigationData = { question:analysis.question, selectedMode:'termic', fixedTariffRonKwh:tariff, tariffDetails:tariffContext, loadMethod:'thermal', thermalDataSource, dataFingerprint:dataset.meta.dataFingerprint, hasProduction:false, fileNames:dataset.meta.fileNames || [], thermalTotalKwh:totalThermalKwh };
           const navigatorContext = { selectedMode:'termic', loadMethod:'thermal', thermalDataSource, hasElectricData:false, hasThermalData:true, hasProduction:false, hasHourlyFile:thermalFiles.length > 0, fixedTariffRonKwh:tariff, tariffDetails:tariffContext, dataFingerprint:dataset.meta.dataFingerprint, thermal:{ monitored: thermalMonitored?.value || '', source: thermalSource?.value || '', usageType: thermalUsageType?.value || 'Nu știu', totalCost: thermalCostFromInputs(), calculatedTariffRonKwh: Number(thermalCalculatedTariffPreview?.value || 0), advancedEnabled: !!thermalAdvancedCheck?.checked, schedule: thermalSchedule?.value || 'Nu știu', seasonality: thermalSeasonality?.value || 'Automat', annualValue: Number(annualThermal?.value || 0), unit: thermalUnit?.value || '', annualKwh: thermalAnnualKwhFromInputs(), totalThermalKwh, fileCount: thermalFiles.length, fileNames: thermalFiles.map(file => file.name) }, createdAt:new Date().toISOString() };
-          sessionStorage.setItem('svtNavigatorContext', JSON.stringify(navigatorContext));
-          localStorage.setItem('svtNavigatorContext', JSON.stringify(navigatorContext));
+          await storeSVTNavigationPayload(dataset, analysis, navigationData, navigatorContext);
           window.location.href = './testeaza-gratuit.html';
           return;
         }
@@ -10957,14 +11140,15 @@ body[data-energy-mode="termic"] .svt-thermal-side-note{
         analysis.meta.consumptionDataSource = consumptionDataSource;
         analysis.meta.dataFingerprint = dataset.meta.dataFingerprint;
         analysis.meta.tariffDetails = tariffContext;
-        sessionStorage.setItem('svtDataset', JSON.stringify(dataset));
-        sessionStorage.setItem('svtAnalysis', JSON.stringify(analysis));
-        sessionStorage.setItem('svtData', JSON.stringify({ question:analysis.question, fixedTariffRonKwh:tariff, tariffDetails:tariffContext, loadMethod, consumptionDataSource, dataFingerprint:dataset.meta.dataFingerprint, hasProduction:analysis.meta.hasProduction || !!dataset.meta.hasEmbeddedProduction, invoiceFileName:invoiceFile ? invoiceFile.name : null, fileNames:dataset.meta.fileNames || [], productionFileNames:dataset.meta.productionFileNames || [] }));
+        const navigationData = { question:analysis.question, fixedTariffRonKwh:tariff, tariffDetails:tariffContext, loadMethod, consumptionDataSource, dataFingerprint:dataset.meta.dataFingerprint, hasProduction:analysis.meta.hasProduction || !!dataset.meta.hasEmbeddedProduction, invoiceFileName:invoiceFile ? invoiceFile.name : null, fileNames:dataset.meta.fileNames || [], productionFileNames:dataset.meta.productionFileNames || [] };
         const navigatorContext = { selectedMode: currentTab, loadMethod, hasElectricData: currentTab === 'electric', hasThermalData: currentTab === 'termic', hasProduction: !!((hasProduction.checked && productionFiles.length) || embeddedProductionDetected || dataset.meta.hasEmbeddedProduction), hasInvoiceOnly: loadMethod === 'invoice', hasHourlyFile: loadMethod === 'file' && consumptionFiles.length > 0, fixedTariffRonKwh: tariff, tariffDetails:tariffContext, consumptionDataSource, dataFingerprint: dataset.meta.dataFingerprint, fileCount: consumptionFiles.length, productionFileCount: productionFiles.length, thermal:{ monitored: document.getElementById('thermalMonitored')?.value || '', source: document.getElementById('thermalSource')?.value || '', annualValue: Number(document.getElementById('annualThermal')?.value || 0), unit: document.getElementById('thermalUnit')?.value || '' }, createdAt: new Date().toISOString() };
-        sessionStorage.setItem('svtNavigatorContext', JSON.stringify(navigatorContext));
-        localStorage.setItem('svtNavigatorContext', JSON.stringify(navigatorContext));
+        await storeSVTNavigationPayload(dataset, analysis, navigationData, navigatorContext);
         window.location.href = './testeaza-gratuit.html';
-      } catch(err){ console.error(err); showMessage('err', err.message || 'Nu am putut procesa datele încărcate.'); }
+      } catch(err){
+        console.error(err);
+        const quota = window.SVTSafeStorage?.quotaError?.(err) || /quota|exceed/i.test(String(err?.name || '') + ' ' + String(err?.message || ''));
+        showMessage('err', quota ? 'Datele sunt foarte mari și browserul nu le-a putut salva nici după compactare. Reîncarcă pagina și încearcă din nou; fișierul original nu este modificat.' : (err.message || 'Nu am putut procesa datele încărcate.'));
+      }
     }
 
     tabElectric.addEventListener('click', () => setTab('electric'));

@@ -1883,6 +1883,7 @@
   <script src="./assets/js/svt-load-curve-profiles.js?v=51-engine-fix"></script>
   <script src="./assets/js/svt-external-energy-data.js?v=221-opcom-pzu"></script>
   <script src="./assets/js/svt-analysis-engine.js?v=51-engine-fix"></script>
+  <script src="./assets/js/svt-safe-storage.js?v=248"></script>
   <script>
     const allQuestions = [
       {id:1, icon:'📈', title:'Când mă costă cel mai mult consumul de energie?', groups:['electric'], active:true},
@@ -1918,11 +1919,13 @@
       catch(e){ return {}; }
     }
     function getAnalysis(){
+      if(window.SVTSafeStorage?.getAnalysis) return window.SVTSafeStorage.getAnalysis(window.SVTAnalysisEngine);
       try { return JSON.parse(sessionStorage.getItem('svtAnalysis') || '{}'); }
       catch(e){ return {}; }
     }
 
     function getDataset(){
+      if(window.SVTSafeStorage?.getDataset) return window.SVTSafeStorage.getDataset();
       try { return JSON.parse(sessionStorage.getItem('svtDataset') || '{}'); }
       catch(e){ return {}; }
     }
@@ -3058,7 +3061,7 @@
           </div>
         `;
 
-        const currentDataset = JSON.parse(sessionStorage.getItem('svtDataset') || '{}');
+        const currentDataset = getDataset();
         if(!currentDataset?.rows?.length) throw new Error('Nu există fișierul cu consumul salvat. Revino la pagina de încărcare și adaugă întâi consumul electric.');
 
         const tariff = Number(currentDataset.meta?.fixedPriceRonKwh || getContext().fixedTariffRonKwh || 0.75);
@@ -3083,10 +3086,17 @@
         ctx.productionFileCount = files.length;
         ctx.createdAt = new Date().toISOString();
 
-        sessionStorage.setItem('svtDataset', JSON.stringify(merged));
-        sessionStorage.setItem('svtAnalysis', JSON.stringify(updatedAnalysis));
-        sessionStorage.setItem('svtNavigatorContext', JSON.stringify(ctx));
-        localStorage.setItem('svtNavigatorContext', JSON.stringify(ctx));
+        const currentData = (() => { try{return JSON.parse(sessionStorage.getItem('svtData') || '{}')}catch(e){return {}} })();
+        currentData.hasProduction = true;
+        currentData.productionFileNames = merged.meta.productionFileNames || [];
+        if(window.SVTSafeStorage?.storeNavigationPayload){
+          await window.SVTSafeStorage.storeNavigationPayload({dataset:merged, analysis:updatedAnalysis, data:currentData, context:ctx});
+        }else{
+          sessionStorage.setItem('svtDataset', JSON.stringify(merged));
+          sessionStorage.setItem('svtAnalysis', JSON.stringify(updatedAnalysis));
+          sessionStorage.setItem('svtNavigatorContext', JSON.stringify(ctx));
+          try{ localStorage.setItem('svtNavigatorContext', JSON.stringify(ctx)); }catch(e){}
+        }
 
         renderQuestion2Result(box, updatedAnalysis);
         card.classList.remove('loading','needs-data');
@@ -3575,7 +3585,7 @@
     }
 
     function getDefaultPvInputs(){
-      const ds = (() => { try{return JSON.parse(sessionStorage.getItem('svtDataset') || '{}')}catch(e){return {}} })();
+      const ds = (() => { try{return getDataset()}catch(e){return {}} })();
       const names = [
         ...(ds?.meta?.productionFileNames || []),
         ...(ds?.meta?.fileNames || [])
@@ -3815,7 +3825,7 @@
 
 
     function getQ4Defaults(){
-      const ds = (() => { try{return JSON.parse(sessionStorage.getItem('svtDataset') || '{}')}catch(e){return {}} })();
+      const ds = (() => { try{return getDataset()}catch(e){return {}} })();
       const q3 = (() => { try{return JSON.parse(sessionStorage.getItem('svtForecastQ3') || '{}')}catch(e){return {}} })();
       const ctx = getContext();
 
@@ -4043,7 +4053,7 @@
     }
 
     function getAnnualizedDayConsumption(){
-      const ds = (() => { try{return JSON.parse(sessionStorage.getItem('svtDataset') || '{}')}catch(e){return {}} })();
+      const ds = (() => { try{return getDataset()}catch(e){return {}} })();
       const rows = ds.rows || [];
       if(rows.length < 2) return {annualDayKwh:0, annualTotalKwh:0, days:0};
       const start = new Date(rows[0].timestamp);
@@ -4193,7 +4203,7 @@
 
 
     function getQ5Defaults(){
-      const ds = (() => { try{return JSON.parse(sessionStorage.getItem('svtDataset') || '{}')}catch(e){return {}} })();
+      const ds = (() => { try{return getDataset()}catch(e){return {}} })();
       const q4 = (() => { try{return JSON.parse(sessionStorage.getItem('svtPotentialQ4') || '{}')}catch(e){return {}} })();
       const ctx = getContext();
       const fixed = Number(ds?.meta?.fixedPriceRonKwh || ctx.fixedTariffRonKwh || 0.75);
@@ -4242,7 +4252,7 @@
 
     function renderQuestion5Form(box, card){
       const q4 = (() => { try{return JSON.parse(sessionStorage.getItem('svtPotentialQ4') || '{}')}catch(e){return {}} })();
-      const ds = (() => { try{return JSON.parse(sessionStorage.getItem('svtDataset') || '{}')}catch(e){return {}} })();
+      const ds = (() => { try{return getDataset()}catch(e){return {}} })();
 
       if(!q4?.results?.annualKwh){
         box.innerHTML = `
@@ -4403,7 +4413,7 @@
 
     function calculateQ5UsefulEnergy(box, card){
       try{
-        const ds = JSON.parse(sessionStorage.getItem('svtDataset') || '{}');
+        const ds = getDataset();
         const q4 = JSON.parse(sessionStorage.getItem('svtPotentialQ4') || '{}');
         if(!ds?.rows?.length) throw new Error('Lipsește fișierul cu consumul.');
         if(!q4?.results?.annualKwh) throw new Error('Lipsește producția suplimentară estimată din întrebarea 4.');
@@ -4757,7 +4767,7 @@
 
 
     function getQ6Defaults(){
-      const ds = (() => { try{return JSON.parse(sessionStorage.getItem('svtDataset') || '{}')}catch(e){return {}} })();
+      const ds = (() => { try{return getDataset()}catch(e){return {}} })();
       const q5 = (() => { try{return JSON.parse(sessionStorage.getItem('svtUsefulEnergyQ5') || '{}')}catch(e){return {}} })();
       const ctx = getContext();
       const tariff = Number(ds?.meta?.fixedPriceRonKwh || q5?.inputs?.tariffConsumption || ctx.fixedTariffRonKwh || 0.75);
@@ -4908,7 +4918,7 @@
     }
 
     function buildQ6HourlySignals(){
-      const ds = (() => { try{return JSON.parse(sessionStorage.getItem('svtDataset') || '{}')}catch(e){return {}} })();
+      const ds = (() => { try{return getDataset()}catch(e){return {}} })();
       const q4 = (() => { try{return JSON.parse(sessionStorage.getItem('svtPotentialQ4') || '{}')}catch(e){return {}} })();
       const rows = ds.rows || [];
       const additionalProfile = q4?.results?.annualKwh ? buildQ5AdditionalProfile(ds, q4) : [];
