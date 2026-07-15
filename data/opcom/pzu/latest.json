@@ -1,22 +1,24 @@
 {
   "ok": true,
+  "deliveryDay": "2026-07-03",
   "source": "OPCOM PZU / ROPEX_DAM_15min",
-  "sourceMode": "external-cache-github",
-  "currency": "Lei/MWh",
-  "granularity": "15m",
+  "sourceMode": "manual-seed-opcom-direct",
+  "fetchedAtUtc": "2026-07-03T07:48:25.001Z",
+  "updatedAtUtc": "2026-07-03T07:48:25.001Z",
+  "sourceUrl": "https://www.opcom.ro/rapoarte-pzu-raportPIP-export-csv/3/7/2026/ro",
   "intervals": 96,
-  "min": 433,
-  "max": 1781,
-  "avg": 785,
+  "minPriceLeiMwh": 45,
+  "maxPriceLeiMwh": 1371,
+  "avgPriceLeiMwh": 571,
   "records": [
     {
       "interval": 1,
       "i": 0,
       "hour": 0,
       "label": "00:00",
-      "price": 829,
-      "priceLeiMwh": 829,
-      "rawPriceLeiMwh": 828.74,
+      "price": 927,
+      "priceLeiMwh": 927,
+      "rawPriceLeiMwh": 927.37,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -24,9 +26,9 @@
       "i": 1,
       "hour": 0.25,
       "label": "00:15",
-      "price": 809,
-      "priceLeiMwh": 809,
-      "rawPriceLeiMwh": 808.62,
+      "price": 890,
+      "priceLeiMwh": 890,
+      "rawPriceLeiMwh": 890.12,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -34,9 +36,9 @@
       "i": 2,
       "hour": 0.5,
       "label": "00:30",
-      "price": 806,
-      "priceLeiMwh": 806,
-      "rawPriceLeiMwh": 805.63,
+      "price": 853,
+      "priceLeiMwh": 853,
+      "rawPriceLeiMwh": 852.93,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -44,9 +46,9 @@
       "i": 3,
       "hour": 0.75,
       "label": "00:45",
-      "price": 766,
-      "priceLeiMwh": 766,
-      "rawPriceLeiMwh": 766.31,
+      "price": 707,
+      "priceLeiMwh": 707,
+      "rawPriceLeiMwh": 707.01,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -54,9 +56,9 @@
       "i": 4,
       "hour": 1,
       "label": "01:00",
-      "price": 787,
-      "priceLeiMwh": 787,
-      "rawPriceLeiMwh": 787.47,
+      "price": 889,
+      "priceLeiMwh": 889,
+      "rawPriceLeiMwh": 888.99,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -64,9 +66,9 @@
       "i": 5,
       "hour": 1.25,
       "label": "01:15",
-      "price": 759,
-      "priceLeiMwh": 759,
-      "rawPriceLeiMwh": 758.92,
+      "price": 831,
+      "priceLeiMwh": 831,
+      "rawPriceLeiMwh": 830.98,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -74,9 +76,9 @@
       "i": 6,
       "hour": 1.5,
       "label": "01:30",
-      "price": 748,
-      "priceLeiMwh": 748,
-      "rawPriceLeiMwh": 747.95,
+      "price": 690,
+      "priceLeiMwh": 690,
+      "rawPriceLeiMwh": 690.2,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -84,9 +86,9 @@
       "i": 7,
       "hour": 1.75,
       "label": "01:45",
-      "price": 730,
-      "priceLeiMwh": 730,
-      "rawPriceLeiMwh": 729.82,
+      "price": 668,
+      "priceLeiMwh": 668,
+      "rawPriceLeiMwh": 667.54,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -94,9 +96,9 @@
       "i": 8,
       "hour": 2,
       "label": "02:00",
-      "price": 740,
-      "priceLeiMwh": 740,
-      "rawPriceLeiMwh": 740.02,
+      "price": 750,
+      "priceLeiMwh": 750,
+      "rawPriceLeiMwh": 750,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -104,9 +106,9 @@
       "i": 9,
       "hour": 2.25,
       "label": "02:15",
-      "price": 724,
-      "priceLeiMwh": 724,
-      "rawPriceLeiMwh": 723.74,
+      "price": 704,
+      "priceLeiMwh": 704,
+      "rawPriceLeiMwh": 704.32,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -114,9 +116,9 @@
       "i": 10,
       "hour": 2.5,
       "label": "02:30",
-      "price": 726,
-      "priceLeiMwh": 726,
-      "rawPriceLeiMwh": 726.11,
+      "price": 744,
+      "priceLeiMwh": 744,
+      "rawPriceLeiMwh": 743.51,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -124,9 +126,9 @@
       "i": 11,
       "hour": 2.75,
       "label": "02:45",
-      "price": 719,
-      "priceLeiMwh": 719,
-      "rawPriceLeiMwh": 718.5,
+      "price": 696,
+      "priceLeiMwh": 696,
+      "rawPriceLeiMwh": 695.64,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -134,9 +136,9 @@
       "i": 12,
       "hour": 3,
       "label": "03:00",
-      "price": 714,
-      "priceLeiMwh": 714,
-      "rawPriceLeiMwh": 714.43,
+      "price": 774,
+      "priceLeiMwh": 774,
+      "rawPriceLeiMwh": 773.84,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -144,9 +146,9 @@
       "i": 13,
       "hour": 3.25,
       "label": "03:15",
-      "price": 705,
-      "priceLeiMwh": 705,
-      "rawPriceLeiMwh": 705.42,
+      "price": 696,
+      "priceLeiMwh": 696,
+      "rawPriceLeiMwh": 695.56,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -154,9 +156,9 @@
       "i": 14,
       "hour": 3.5,
       "label": "03:30",
-      "price": 710,
-      "priceLeiMwh": 710,
-      "rawPriceLeiMwh": 710.48,
+      "price": 691,
+      "priceLeiMwh": 691,
+      "rawPriceLeiMwh": 690.96,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -164,9 +166,9 @@
       "i": 15,
       "hour": 3.75,
       "label": "03:45",
-      "price": 708,
-      "priceLeiMwh": 708,
-      "rawPriceLeiMwh": 708.22,
+      "price": 687,
+      "priceLeiMwh": 687,
+      "rawPriceLeiMwh": 687.32,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -174,9 +176,9 @@
       "i": 16,
       "hour": 4,
       "label": "04:00",
-      "price": 714,
-      "priceLeiMwh": 714,
-      "rawPriceLeiMwh": 714.43,
+      "price": 667,
+      "priceLeiMwh": 667,
+      "rawPriceLeiMwh": 666.75,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -184,9 +186,9 @@
       "i": 17,
       "hour": 4.25,
       "label": "04:15",
-      "price": 722,
-      "priceLeiMwh": 722,
-      "rawPriceLeiMwh": 721.63,
+      "price": 702,
+      "priceLeiMwh": 702,
+      "rawPriceLeiMwh": 702.29,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -194,9 +196,9 @@
       "i": 18,
       "hour": 4.5,
       "label": "04:30",
-      "price": 732,
-      "priceLeiMwh": 732,
-      "rawPriceLeiMwh": 732.16,
+      "price": 710,
+      "priceLeiMwh": 710,
+      "rawPriceLeiMwh": 710.1,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -204,9 +206,9 @@
       "i": 19,
       "hour": 4.75,
       "label": "04:45",
-      "price": 752,
-      "priceLeiMwh": 752,
-      "rawPriceLeiMwh": 751.93,
+      "price": 780,
+      "priceLeiMwh": 780,
+      "rawPriceLeiMwh": 780.35,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -214,9 +216,9 @@
       "i": 20,
       "hour": 5,
       "label": "05:00",
-      "price": 737,
-      "priceLeiMwh": 737,
-      "rawPriceLeiMwh": 736.8,
+      "price": 696,
+      "priceLeiMwh": 696,
+      "rawPriceLeiMwh": 695.89,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -224,9 +226,9 @@
       "i": 21,
       "hour": 5.25,
       "label": "05:15",
-      "price": 779,
-      "priceLeiMwh": 779,
-      "rawPriceLeiMwh": 779.27,
+      "price": 693,
+      "priceLeiMwh": 693,
+      "rawPriceLeiMwh": 693.27,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -234,9 +236,9 @@
       "i": 22,
       "hour": 5.5,
       "label": "05:30",
-      "price": 794,
-      "priceLeiMwh": 794,
-      "rawPriceLeiMwh": 794.22,
+      "price": 686,
+      "priceLeiMwh": 686,
+      "rawPriceLeiMwh": 685.92,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -244,9 +246,9 @@
       "i": 23,
       "hour": 5.75,
       "label": "05:45",
-      "price": 829,
-      "priceLeiMwh": 829,
-      "rawPriceLeiMwh": 829.43,
+      "price": 691,
+      "priceLeiMwh": 691,
+      "rawPriceLeiMwh": 691.44,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -254,9 +256,9 @@
       "i": 24,
       "hour": 6,
       "label": "06:00",
-      "price": 855,
-      "priceLeiMwh": 855,
-      "rawPriceLeiMwh": 855,
+      "price": 887,
+      "priceLeiMwh": 887,
+      "rawPriceLeiMwh": 886.66,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -264,9 +266,9 @@
       "i": 25,
       "hour": 6.25,
       "label": "06:15",
-      "price": 886,
-      "priceLeiMwh": 886,
-      "rawPriceLeiMwh": 886.14,
+      "price": 794,
+      "priceLeiMwh": 794,
+      "rawPriceLeiMwh": 794.32,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -274,9 +276,9 @@
       "i": 26,
       "hour": 6.5,
       "label": "06:30",
-      "price": 876,
-      "priceLeiMwh": 876,
-      "rawPriceLeiMwh": 875.59,
+      "price": 728,
+      "priceLeiMwh": 728,
+      "rawPriceLeiMwh": 727.65,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -284,9 +286,9 @@
       "i": 27,
       "hour": 6.75,
       "label": "06:45",
-      "price": 865,
-      "priceLeiMwh": 865,
-      "rawPriceLeiMwh": 864.6,
+      "price": 646,
+      "priceLeiMwh": 646,
+      "rawPriceLeiMwh": 646.01,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -294,9 +296,9 @@
       "i": 28,
       "hour": 7,
       "label": "07:00",
-      "price": 901,
-      "priceLeiMwh": 901,
-      "rawPriceLeiMwh": 901.2,
+      "price": 755,
+      "priceLeiMwh": 755,
+      "rawPriceLeiMwh": 754.76,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -304,9 +306,9 @@
       "i": 29,
       "hour": 7.25,
       "label": "07:15",
-      "price": 873,
-      "priceLeiMwh": 873,
-      "rawPriceLeiMwh": 872.68,
+      "price": 621,
+      "priceLeiMwh": 621,
+      "rawPriceLeiMwh": 620.81,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -314,9 +316,9 @@
       "i": 30,
       "hour": 7.5,
       "label": "07:30",
-      "price": 860,
-      "priceLeiMwh": 860,
-      "rawPriceLeiMwh": 860.42,
+      "price": 553,
+      "priceLeiMwh": 553,
+      "rawPriceLeiMwh": 552.55,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -324,9 +326,9 @@
       "i": 31,
       "hour": 7.75,
       "label": "07:45",
-      "price": 832,
-      "priceLeiMwh": 832,
-      "rawPriceLeiMwh": 832.38,
+      "price": 420,
+      "priceLeiMwh": 420,
+      "rawPriceLeiMwh": 420.03,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -334,9 +336,9 @@
       "i": 32,
       "hour": 8,
       "label": "08:00",
-      "price": 876,
-      "priceLeiMwh": 876,
-      "rawPriceLeiMwh": 875.53,
+      "price": 630,
+      "priceLeiMwh": 630,
+      "rawPriceLeiMwh": 629.9,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -344,9 +346,9 @@
       "i": 33,
       "hour": 8.25,
       "label": "08:15",
-      "price": 682,
-      "priceLeiMwh": 682,
-      "rawPriceLeiMwh": 682.31,
+      "price": 454,
+      "priceLeiMwh": 454,
+      "rawPriceLeiMwh": 454.21,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -354,9 +356,9 @@
       "i": 34,
       "hour": 8.5,
       "label": "08:30",
-      "price": 638,
-      "priceLeiMwh": 638,
-      "rawPriceLeiMwh": 638.02,
+      "price": 377,
+      "priceLeiMwh": 377,
+      "rawPriceLeiMwh": 376.57,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -364,9 +366,9 @@
       "i": 35,
       "hour": 8.75,
       "label": "08:45",
-      "price": 578,
-      "priceLeiMwh": 578,
-      "rawPriceLeiMwh": 578.04,
+      "price": 127,
+      "priceLeiMwh": 127,
+      "rawPriceLeiMwh": 127.19,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -374,9 +376,9 @@
       "i": 36,
       "hour": 9,
       "label": "09:00",
-      "price": 623,
-      "priceLeiMwh": 623,
-      "rawPriceLeiMwh": 623.13,
+      "price": 513,
+      "priceLeiMwh": 513,
+      "rawPriceLeiMwh": 513.41,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -384,9 +386,9 @@
       "i": 37,
       "hour": 9.25,
       "label": "09:15",
-      "price": 577,
-      "priceLeiMwh": 577,
-      "rawPriceLeiMwh": 577.43,
+      "price": 154,
+      "priceLeiMwh": 154,
+      "rawPriceLeiMwh": 153.95,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -394,9 +396,9 @@
       "i": 38,
       "hour": 9.5,
       "label": "09:30",
-      "price": 577,
-      "priceLeiMwh": 577,
-      "rawPriceLeiMwh": 576.9,
+      "price": 63,
+      "priceLeiMwh": 63,
+      "rawPriceLeiMwh": 63.19,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -404,9 +406,9 @@
       "i": 39,
       "hour": 9.75,
       "label": "09:45",
-      "price": 565,
-      "priceLeiMwh": 565,
-      "rawPriceLeiMwh": 564.75,
+      "price": 55,
+      "priceLeiMwh": 55,
+      "rawPriceLeiMwh": 54.61,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -414,9 +416,9 @@
       "i": 40,
       "hour": 10,
       "label": "10:00",
-      "price": 690,
-      "priceLeiMwh": 690,
-      "rawPriceLeiMwh": 690.2,
+      "price": 63,
+      "priceLeiMwh": 63,
+      "rawPriceLeiMwh": 63.34,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -424,9 +426,9 @@
       "i": 41,
       "hour": 10.25,
       "label": "10:15",
-      "price": 576,
-      "priceLeiMwh": 576,
-      "rawPriceLeiMwh": 575.85,
+      "price": 48,
+      "priceLeiMwh": 48,
+      "rawPriceLeiMwh": 47.92,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -434,9 +436,9 @@
       "i": 42,
       "hour": 10.5,
       "label": "10:30",
-      "price": 505,
-      "priceLeiMwh": 505,
-      "rawPriceLeiMwh": 505.49,
+      "price": 50,
+      "priceLeiMwh": 50,
+      "rawPriceLeiMwh": 50.38,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -444,9 +446,9 @@
       "i": 43,
       "hour": 10.75,
       "label": "10:45",
-      "price": 508,
-      "priceLeiMwh": 508,
-      "rawPriceLeiMwh": 508.46,
+      "price": 51,
+      "priceLeiMwh": 51,
+      "rawPriceLeiMwh": 50.8,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -454,9 +456,9 @@
       "i": 44,
       "hour": 11,
       "label": "11:00",
-      "price": 564,
-      "priceLeiMwh": 564,
-      "rawPriceLeiMwh": 563.62,
+      "price": 53,
+      "priceLeiMwh": 53,
+      "rawPriceLeiMwh": 52.74,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -464,9 +466,9 @@
       "i": 45,
       "hour": 11.25,
       "label": "11:15",
-      "price": 537,
-      "priceLeiMwh": 537,
-      "rawPriceLeiMwh": 537.37,
+      "price": 53,
+      "priceLeiMwh": 53,
+      "rawPriceLeiMwh": 52.73,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -474,9 +476,9 @@
       "i": 46,
       "hour": 11.5,
       "label": "11:30",
-      "price": 518,
-      "priceLeiMwh": 518,
-      "rawPriceLeiMwh": 517.73,
+      "price": 48,
+      "priceLeiMwh": 48,
+      "rawPriceLeiMwh": 48.07,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -484,9 +486,9 @@
       "i": 47,
       "hour": 11.75,
       "label": "11:45",
-      "price": 503,
-      "priceLeiMwh": 503,
-      "rawPriceLeiMwh": 503.48,
+      "price": 48,
+      "priceLeiMwh": 48,
+      "rawPriceLeiMwh": 48.49,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -494,9 +496,9 @@
       "i": 48,
       "hour": 12,
       "label": "12:00",
-      "price": 544,
-      "priceLeiMwh": 544,
-      "rawPriceLeiMwh": 544.3,
+      "price": 45,
+      "priceLeiMwh": 45,
+      "rawPriceLeiMwh": 44.89,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -504,9 +506,9 @@
       "i": 49,
       "hour": 12.25,
       "label": "12:15",
-      "price": 497,
-      "priceLeiMwh": 497,
-      "rawPriceLeiMwh": 497.04,
+      "price": 51,
+      "priceLeiMwh": 51,
+      "rawPriceLeiMwh": 51.38,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -514,9 +516,9 @@
       "i": 50,
       "hour": 12.5,
       "label": "12:30",
-      "price": 491,
-      "priceLeiMwh": 491,
-      "rawPriceLeiMwh": 491.11,
+      "price": 53,
+      "priceLeiMwh": 53,
+      "rawPriceLeiMwh": 52.79,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -524,9 +526,9 @@
       "i": 51,
       "hour": 12.75,
       "label": "12:45",
-      "price": 486,
-      "priceLeiMwh": 486,
-      "rawPriceLeiMwh": 485.82,
+      "price": 62,
+      "priceLeiMwh": 62,
+      "rawPriceLeiMwh": 61.7,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -534,9 +536,9 @@
       "i": 52,
       "hour": 13,
       "label": "13:00",
-      "price": 503,
-      "priceLeiMwh": 503,
-      "rawPriceLeiMwh": 503.23,
+      "price": 68,
+      "priceLeiMwh": 68,
+      "rawPriceLeiMwh": 67.75,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -544,9 +546,9 @@
       "i": 53,
       "hour": 13.25,
       "label": "13:15",
-      "price": 495,
-      "priceLeiMwh": 495,
-      "rawPriceLeiMwh": 495.23,
+      "price": 71,
+      "priceLeiMwh": 71,
+      "rawPriceLeiMwh": 71.2,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -554,9 +556,9 @@
       "i": 54,
       "hour": 13.5,
       "label": "13:30",
-      "price": 478,
-      "priceLeiMwh": 478,
-      "rawPriceLeiMwh": 478.08,
+      "price": 66,
+      "priceLeiMwh": 66,
+      "rawPriceLeiMwh": 66.46,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -564,9 +566,9 @@
       "i": 55,
       "hour": 13.75,
       "label": "13:45",
-      "price": 483,
-      "priceLeiMwh": 483,
-      "rawPriceLeiMwh": 483.46,
+      "price": 66,
+      "priceLeiMwh": 66,
+      "rawPriceLeiMwh": 66.17,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -574,9 +576,9 @@
       "i": 56,
       "hour": 14,
       "label": "14:00",
-      "price": 433,
-      "priceLeiMwh": 433,
-      "rawPriceLeiMwh": 432.5,
+      "price": 60,
+      "priceLeiMwh": 60,
+      "rawPriceLeiMwh": 59.9,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -584,9 +586,9 @@
       "i": 57,
       "hour": 14.25,
       "label": "14:15",
-      "price": 439,
-      "priceLeiMwh": 439,
-      "rawPriceLeiMwh": 438.6,
+      "price": 69,
+      "priceLeiMwh": 69,
+      "rawPriceLeiMwh": 69.25,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -594,9 +596,9 @@
       "i": 58,
       "hour": 14.5,
       "label": "14:30",
-      "price": 484,
-      "priceLeiMwh": 484,
-      "rawPriceLeiMwh": 483.57,
+      "price": 111,
+      "priceLeiMwh": 111,
+      "rawPriceLeiMwh": 110.61,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -604,9 +606,9 @@
       "i": 59,
       "hour": 14.75,
       "label": "14:45",
-      "price": 525,
-      "priceLeiMwh": 525,
-      "rawPriceLeiMwh": 525.32,
+      "price": 309,
+      "priceLeiMwh": 309,
+      "rawPriceLeiMwh": 308.74,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -614,9 +616,9 @@
       "i": 60,
       "hour": 15,
       "label": "15:00",
-      "price": 454,
-      "priceLeiMwh": 454,
-      "rawPriceLeiMwh": 453.79,
+      "price": 270,
+      "priceLeiMwh": 270,
+      "rawPriceLeiMwh": 269.94,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -624,9 +626,9 @@
       "i": 61,
       "hour": 15.25,
       "label": "15:15",
-      "price": 467,
-      "priceLeiMwh": 467,
-      "rawPriceLeiMwh": 467.07,
+      "price": 266,
+      "priceLeiMwh": 266,
+      "rawPriceLeiMwh": 265.8,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -634,9 +636,9 @@
       "i": 62,
       "hour": 15.5,
       "label": "15:30",
-      "price": 554,
-      "priceLeiMwh": 554,
-      "rawPriceLeiMwh": 553.68,
+      "price": 76,
+      "priceLeiMwh": 76,
+      "rawPriceLeiMwh": 76.37,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -644,9 +646,9 @@
       "i": 63,
       "hour": 15.75,
       "label": "15:45",
-      "price": 594,
-      "priceLeiMwh": 594,
-      "rawPriceLeiMwh": 594.42,
+      "price": 173,
+      "priceLeiMwh": 173,
+      "rawPriceLeiMwh": 172.53,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -654,9 +656,9 @@
       "i": 64,
       "hour": 16,
       "label": "16:00",
-      "price": 567,
-      "priceLeiMwh": 567,
-      "rawPriceLeiMwh": 567.22,
+      "price": 59,
+      "priceLeiMwh": 59,
+      "rawPriceLeiMwh": 58.72,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -664,9 +666,9 @@
       "i": 65,
       "hour": 16.25,
       "label": "16:15",
-      "price": 651,
-      "priceLeiMwh": 651,
-      "rawPriceLeiMwh": 650.56,
+      "price": 118,
+      "priceLeiMwh": 118,
+      "rawPriceLeiMwh": 117.98,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -674,9 +676,9 @@
       "i": 66,
       "hour": 16.5,
       "label": "16:30",
-      "price": 768,
-      "priceLeiMwh": 768,
-      "rawPriceLeiMwh": 768.19,
+      "price": 497,
+      "priceLeiMwh": 497,
+      "rawPriceLeiMwh": 496.51,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -684,9 +686,9 @@
       "i": 67,
       "hour": 16.75,
       "label": "16:45",
-      "price": 807,
-      "priceLeiMwh": 807,
-      "rawPriceLeiMwh": 806.77,
+      "price": 636,
+      "priceLeiMwh": 636,
+      "rawPriceLeiMwh": 636.48,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -694,9 +696,9 @@
       "i": 68,
       "hour": 17,
       "label": "17:00",
-      "price": 723,
-      "priceLeiMwh": 723,
-      "rawPriceLeiMwh": 722.93,
+      "price": 613,
+      "priceLeiMwh": 613,
+      "rawPriceLeiMwh": 612.72,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -704,9 +706,9 @@
       "i": 69,
       "hour": 17.25,
       "label": "17:15",
-      "price": 801,
-      "priceLeiMwh": 801,
-      "rawPriceLeiMwh": 801.34,
+      "price": 696,
+      "priceLeiMwh": 696,
+      "rawPriceLeiMwh": 695.61,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -714,9 +716,9 @@
       "i": 70,
       "hour": 17.5,
       "label": "17:30",
-      "price": 900,
-      "priceLeiMwh": 900,
-      "rawPriceLeiMwh": 900.34,
+      "price": 918,
+      "priceLeiMwh": 918,
+      "rawPriceLeiMwh": 917.54,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -724,9 +726,9 @@
       "i": 71,
       "hour": 17.75,
       "label": "17:45",
-      "price": 959,
-      "priceLeiMwh": 959,
-      "rawPriceLeiMwh": 958.96,
+      "price": 870,
+      "priceLeiMwh": 870,
+      "rawPriceLeiMwh": 870.2,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -734,9 +736,9 @@
       "i": 72,
       "hour": 18,
       "label": "18:00",
-      "price": 908,
-      "priceLeiMwh": 908,
-      "rawPriceLeiMwh": 908.23,
+      "price": 696,
+      "priceLeiMwh": 696,
+      "rawPriceLeiMwh": 695.54,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -744,9 +746,9 @@
       "i": 73,
       "hour": 18.25,
       "label": "18:15",
-      "price": 995,
-      "priceLeiMwh": 995,
-      "rawPriceLeiMwh": 995.11,
+      "price": 1012,
+      "priceLeiMwh": 1012,
+      "rawPriceLeiMwh": 1012,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -754,9 +756,9 @@
       "i": 74,
       "hour": 18.5,
       "label": "18:30",
-      "price": 1049,
-      "priceLeiMwh": 1049,
-      "rawPriceLeiMwh": 1049,
+      "price": 1371,
+      "priceLeiMwh": 1371,
+      "rawPriceLeiMwh": 1371.28,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -764,9 +766,9 @@
       "i": 75,
       "hour": 18.75,
       "label": "18:45",
-      "price": 1071,
-      "priceLeiMwh": 1071,
-      "rawPriceLeiMwh": 1070.98,
+      "price": 1351,
+      "priceLeiMwh": 1351,
+      "rawPriceLeiMwh": 1350.93,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -774,9 +776,9 @@
       "i": 76,
       "hour": 19,
       "label": "19:00",
-      "price": 1059,
-      "priceLeiMwh": 1059,
-      "rawPriceLeiMwh": 1059.25,
+      "price": 718,
+      "priceLeiMwh": 718,
+      "rawPriceLeiMwh": 717.96,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -784,9 +786,9 @@
       "i": 77,
       "hour": 19.25,
       "label": "19:15",
-      "price": 1449,
-      "priceLeiMwh": 1449,
-      "rawPriceLeiMwh": 1449.06,
+      "price": 910,
+      "priceLeiMwh": 910,
+      "rawPriceLeiMwh": 910.32,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -794,9 +796,9 @@
       "i": 78,
       "hour": 19.5,
       "label": "19:30",
-      "price": 1736,
-      "priceLeiMwh": 1736,
-      "rawPriceLeiMwh": 1736.43,
+      "price": 960,
+      "priceLeiMwh": 960,
+      "rawPriceLeiMwh": 959.72,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -804,9 +806,9 @@
       "i": 79,
       "hour": 19.75,
       "label": "19:45",
-      "price": 1781,
-      "priceLeiMwh": 1781,
-      "rawPriceLeiMwh": 1780.57,
+      "price": 1012,
+      "priceLeiMwh": 1012,
+      "rawPriceLeiMwh": 1012,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -814,9 +816,9 @@
       "i": 80,
       "hour": 20,
       "label": "20:00",
-      "price": 1127,
-      "priceLeiMwh": 1127,
-      "rawPriceLeiMwh": 1126.66,
+      "price": 896,
+      "priceLeiMwh": 896,
+      "rawPriceLeiMwh": 895.84,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -824,9 +826,9 @@
       "i": 81,
       "hour": 20.25,
       "label": "20:15",
-      "price": 1352,
-      "priceLeiMwh": 1352,
-      "rawPriceLeiMwh": 1352.14,
+      "price": 975,
+      "priceLeiMwh": 975,
+      "rawPriceLeiMwh": 975.4,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -834,9 +836,9 @@
       "i": 82,
       "hour": 20.5,
       "label": "20:30",
-      "price": 1287,
-      "priceLeiMwh": 1287,
-      "rawPriceLeiMwh": 1287.25,
+      "price": 1012,
+      "priceLeiMwh": 1012,
+      "rawPriceLeiMwh": 1012,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -844,9 +846,9 @@
       "i": 83,
       "hour": 20.75,
       "label": "20:45",
-      "price": 1170,
-      "priceLeiMwh": 1170,
-      "rawPriceLeiMwh": 1170.33,
+      "price": 1252,
+      "priceLeiMwh": 1252,
+      "rawPriceLeiMwh": 1251.51,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -854,9 +856,9 @@
       "i": 84,
       "hour": 21,
       "label": "21:00",
-      "price": 1195,
-      "priceLeiMwh": 1195,
-      "rawPriceLeiMwh": 1194.51,
+      "price": 1371,
+      "priceLeiMwh": 1371,
+      "rawPriceLeiMwh": 1370.52,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -864,9 +866,9 @@
       "i": 85,
       "hour": 21.25,
       "label": "21:15",
-      "price": 1026,
-      "priceLeiMwh": 1026,
-      "rawPriceLeiMwh": 1026.48,
+      "price": 1207,
+      "priceLeiMwh": 1207,
+      "rawPriceLeiMwh": 1206.91,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -874,9 +876,9 @@
       "i": 86,
       "hour": 21.5,
       "label": "21:30",
-      "price": 1033,
-      "priceLeiMwh": 1033,
-      "rawPriceLeiMwh": 1032.7,
+      "price": 850,
+      "priceLeiMwh": 850,
+      "rawPriceLeiMwh": 849.81,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -884,9 +886,9 @@
       "i": 87,
       "hour": 21.75,
       "label": "21:45",
-      "price": 1013,
-      "priceLeiMwh": 1013,
-      "rawPriceLeiMwh": 1013.12,
+      "price": 794,
+      "priceLeiMwh": 794,
+      "rawPriceLeiMwh": 793.81,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -894,9 +896,9 @@
       "i": 88,
       "hour": 22,
       "label": "22:00",
-      "price": 1047,
-      "priceLeiMwh": 1047,
-      "rawPriceLeiMwh": 1046.73,
+      "price": 881,
+      "priceLeiMwh": 881,
+      "rawPriceLeiMwh": 881.38,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -904,9 +906,9 @@
       "i": 89,
       "hour": 22.25,
       "label": "22:15",
-      "price": 994,
-      "priceLeiMwh": 994,
-      "rawPriceLeiMwh": 994.44,
+      "price": 824,
+      "priceLeiMwh": 824,
+      "rawPriceLeiMwh": 824.3,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -914,9 +916,9 @@
       "i": 90,
       "hour": 22.5,
       "label": "22:30",
-      "price": 983,
-      "priceLeiMwh": 983,
-      "rawPriceLeiMwh": 983.47,
+      "price": 800,
+      "priceLeiMwh": 800,
+      "rawPriceLeiMwh": 800.19,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -924,9 +926,9 @@
       "i": 91,
       "hour": 22.75,
       "label": "22:45",
-      "price": 919,
-      "priceLeiMwh": 919,
-      "rawPriceLeiMwh": 919.23,
+      "price": 735,
+      "priceLeiMwh": 735,
+      "rawPriceLeiMwh": 734.9,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -934,9 +936,9 @@
       "i": 92,
       "hour": 23,
       "label": "23:00",
-      "price": 938,
-      "priceLeiMwh": 938,
-      "rawPriceLeiMwh": 937.6,
+      "price": 799,
+      "priceLeiMwh": 799,
+      "rawPriceLeiMwh": 798.95,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -944,9 +946,9 @@
       "i": 93,
       "hour": 23.25,
       "label": "23:15",
-      "price": 900,
-      "priceLeiMwh": 900,
-      "rawPriceLeiMwh": 899.92,
+      "price": 752,
+      "priceLeiMwh": 752,
+      "rawPriceLeiMwh": 751.96,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -954,9 +956,9 @@
       "i": 94,
       "hour": 23.5,
       "label": "23:30",
-      "price": 888,
-      "priceLeiMwh": 888,
-      "rawPriceLeiMwh": 887.77,
+      "price": 739,
+      "priceLeiMwh": 739,
+      "rawPriceLeiMwh": 739.11,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     },
     {
@@ -964,15 +966,10 @@
       "i": 95,
       "hour": 23.75,
       "label": "23:45",
-      "price": 863,
-      "priceLeiMwh": 863,
-      "rawPriceLeiMwh": 863.38,
+      "price": 672,
+      "priceLeiMwh": 672,
+      "rawPriceLeiMwh": 671.71,
       "source": "OPCOM PZU / ROPEX_DAM_15min"
     }
-  ],
-  "deliveryDay": "2026-07-15",
-  "sourceUrl": "https://www.opcom.ro/rapoarte-pzu-raportPIP-export-csv/15/7/2026/ro",
-  "pageUrl": "https://www.opcom.ro/grafice-ip-raportPIP-si-volumTranzactionat/ro",
-  "updatedAtUtc": "2026-07-15T03:32:25.749Z",
-  "generatedBy": "GitHub Actions / scripts/fetch-opcom-pzu-cache.mjs"
+  ]
 }
