@@ -4,7 +4,7 @@
   "sourceMode": "github-actions-ingest",
   "deliveryDay": "2026-07-28",
   "sourceUrl": "https://www.opcom.ro/rapoarte-pzu-raportPIP-export-csv/28/7/2026/ro",
-  "generatedAtUtc": "2026-07-28T00:53:52.530Z",
+  "generatedAtUtc": "2026-07-28T03:57:35.686Z",
   "httpStatus": 200,
   "intervals": 96,
   "latestFile": "data/opcom/pzu/latest.json"
