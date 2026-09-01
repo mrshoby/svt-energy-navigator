@@ -1,18 +1,11 @@
 {
-  "ok": false,
+  "ok": true,
   "source": "OPCOM PZU / ROPEX_DAM_15min",
   "sourceMode": "github-actions-ingest",
   "deliveryDay": "2026-09-01",
   "sourceUrl": "https://www.opcom.ro/rapoarte-pzu-raportPIP-export-csv/1/9/2026/ro",
-  "generatedAtUtc": "2026-09-01T06:29:23.341Z",
-  "httpStatus": 403,
-  "status": "opcom-unavailable-preserve-last-cache",
-  "stale": true,
-  "error": "OPCOM HTTP 403",
-  "lastGoodDeliveryDay": "2026-09-01",
-  "lastGoodUpdatedAtUtc": "2026-09-01T01:16:49.195Z",
-  "lastGoodIntervals": 96,
-  "latestFilePreserved": true,
-  "fallbackStrategy": "SVT Worker should use ENTSO-E A44 live price when OPCOM cache is missing/stale/unavailable.",
-  "note": "OPCOM fetch failed. latest.json was not overwritten and the workflow exits successfully so scheduled GitHub Actions do not stay red."
+  "generatedAtUtc": "2026-09-01T11:57:04.228Z",
+  "httpStatus": 200,
+  "intervals": 96,
+  "latestFile": "data/opcom/pzu/latest.json"
 }
