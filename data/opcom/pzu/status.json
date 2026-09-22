@@ -2,9 +2,9 @@
   "ok": true,
   "source": "OPCOM PZU / ROPEX_DAM_15min",
   "sourceMode": "github-actions-ingest",
-  "deliveryDay": "2026-09-21",
-  "sourceUrl": "https://www.opcom.ro/rapoarte-pzu-raportPIP-export-csv/21/9/2026/ro",
-  "generatedAtUtc": "2026-09-21T23:47:26.273Z",
+  "deliveryDay": "2026-09-22",
+  "sourceUrl": "https://www.opcom.ro/rapoarte-pzu-raportPIP-export-csv/22/9/2026/ro",
+  "generatedAtUtc": "2026-09-22T03:05:49.508Z",
   "httpStatus": 200,
   "intervals": 96,
   "latestFile": "data/opcom/pzu/latest.json"
